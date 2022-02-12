@@ -39,6 +39,57 @@ require'nvim-treesitter.configs'.setup {
         max_file_lines = nil, -- Do not enable for files with more than n lines, int
         -- colors = {}, -- table of hex strings
         -- termcolors = {} -- table of colour name strings
+    },
+    
+    
+    textobjects = {
+        select = {
+            enable = true,
+            lookahead = true,
+            keymaps  = {
+                ["af"] = "@function.outer",
+                ["if"] = "@function.inner",
+                ["aC"] = "@class.outer",
+                ["iC"] = "@class.inner",
+                ["aL"] = "@loop.outer",
+                ["iL"] = "@loop.inner",
+                ["ac"] = "@conditional.outer",
+                ["ic"] = "@conditional.inner",
+                
+            }
+        },
+        move = {
+            enable = true,
+            set_jumps = true,
+            goto_next_start = {
+               ["]f"] = "@function.outer",
+               ["]<Leader>c"] = "@class.outer",
+               ["]l"] = "@loop.outer",
+               ["]c"] = "@conditional.outer",
+            },
+            
+            goto_next_end = {
+                ["]F"] = "@function.outer",
+                ["]<Leader>C"] = "@class.outer",
+                ["]L"] = "@loop.outer",
+                ["]C"] = "@conditional.outer",
+            },
+
+            goto_previous_start = {
+               ["[f"] = "@function.outer",
+               ["[<Leader>c"] = "@class.outer",
+               ["[l"] = "@loop.outer",
+               ["[c"] = "@conditional.outer",
+            },
+
+            goto_previous_end = {
+
+               ["[F"] = "@function.outer",
+               ["[<Leader>C"] = "@class.outer",
+               ["[L"] = "@loop.outer",
+               ["[C"] = "@conditional.outer",
+            }
+        }
     }
 }
 EOF

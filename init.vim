@@ -31,7 +31,6 @@ autocmd BufRead,BufNewFile *.jl      set filetype=julia
 autocmd BufEnter * silent! lcd %:p:h
 
 
-
 " keybinding remap for global keys
 let mapleader = ' '
 imap jk <Esc>
@@ -101,8 +100,6 @@ if !exists('g:vscode')
         " support browser
         " Plug 'glacambre/firenvim'
 
-        
-
     call plug#end()
 
     "let g:tokyonight_style = "day"
@@ -123,9 +120,9 @@ if !exists('g:vscode')
     " set guifont=Fira_Code:h22
     
     " source for treesitter config, airline config, autoformatter config
-    so /Users/northyear/.config/nvim/nvimtsconf.vim
-    so /Users/northyear/.config/nvim/arlineconf.vim
-    so /Users/northyear/.config/nvim/autoFormatConf.vim
+    so /Users/northyear/.config/nvim/conf_nvim_ts.vim
+    so /Users/northyear/.config/nvim/conf_airline.vim
+    so /Users/northyear/.config/nvim/conf_autofm.vim
 
     
 else 
@@ -152,22 +149,11 @@ else
         " input method when switch to normal mode
         Plug 'ybian/smartim'
 
-
-
-
     call plug#end()
     
-    so /Users/northyear/.config/nvim/vstsconf.vim
+    so /Users/northyear/.config/nvim/conf_vs_ts.vim
 
 endif
-
-
-" change the indentation style for R
-" ie the newline indentatino for () is identical to {}
-let r_indent_align_args = 0
-let r_indent_ess_comments = 0
-let r_indent_ess_compatible = 0
-
 
 " define some customized shortcut globally
 nmap gs <Plug>(easymotion-s2)

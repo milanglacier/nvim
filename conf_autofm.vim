@@ -44,3 +44,9 @@ set cpt=.,k,w,b
 set completeopt=menu,menuone,noselect
 " suppress annoy messages.
 set shortmess+=c
+
+" change the indentation style for R
+" ie the newline indentatino for () is identical to {}
+let r_indent_align_args = 0
+let r_indent_ess_comments = 0
+let r_indent_ess_compatible = 0
