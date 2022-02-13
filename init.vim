@@ -31,10 +31,6 @@ autocmd BufRead,BufNewFile *.jl      set filetype=julia
 autocmd BufEnter * silent! lcd %:p:h
 
 
-" keybinding remap for global keys
-let mapleader = ' '
-imap jk <Esc>
-" let g:mapleader = ' '
 
 " function to enabling the same plugin (at different fork), primarily
 " for vscode neovim extension.
@@ -65,7 +61,7 @@ if !exists('g:vscode')
         " Set the advanced text editing and jumping plug
         Plug 'easymotion/vim-easymotion'
         Plug 'tpope/vim-surround'
-        Plug 'preservim/nerdcommenter'
+        " Plug 'preservim/nerdcommenter'
         Plug 'tpope/vim-commentary'
         Plug 'tpope/vim-repeat'
         " Plug 'vim-scripts/argtextobj.vim'
@@ -100,6 +96,10 @@ if !exists('g:vscode')
         " support browser
         " Plug 'glacambre/firenvim'
 
+        " file explorer
+        Plug 'kyazdani42/nvim-web-devicons' " for file icons
+        Plug 'kyazdani42/nvim-tree.lua'
+
     call plug#end()
 
     "let g:tokyonight_style = "day"
@@ -123,6 +123,9 @@ if !exists('g:vscode')
     so /Users/northyear/.config/nvim/conf_nvim_ts.vim
     so /Users/northyear/.config/nvim/conf_airline.vim
     so /Users/northyear/.config/nvim/conf_autofm.vim
+    so /Users/northyear/.config/nvim/conf_autopair.vim
+    so /Users/northyear/.config/nvim/conf_nvim_tree.vim
+
 
     
 else 
@@ -134,7 +137,7 @@ else
         Plug 'asvetliakov/vim-easymotion', { 'as': 'vsc-easymotion' }
 
         Plug 'tpope/vim-surround'
-        Plug 'preservim/nerdcommenter'
+        " Plug 'preservim/nerdcommenter'
         Plug 'tpope/vim-commentary'
         Plug 'tpope/vim-repeat'
         Plug 'vim-scripts/argtextobj.vim'
@@ -160,7 +163,13 @@ nmap gs <Plug>(easymotion-s2)
 
 " some customized configuration for plugins
 let g:EasyMotion_smartcase = 1
-let g:NERDCreateDefaultMappings = 1
+" let g:NERDCreateDefaultMappings = 1
 
-
+" keybinding remap for global keys
+let mapleader = ' '
+imap jk <Esc>
+" let g:mapleader = ' '
+" let ctrl-a move to the beginning of the line
+inoremap <C-a> <home>
+inoremap <C-e> <end>
 

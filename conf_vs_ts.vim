@@ -1,3 +1,4 @@
+
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
     -- One of "all", "maintained" (parsers with maintainers), or a list of languages
@@ -9,6 +10,7 @@ require'nvim-treesitter.configs'.setup {
     -- List of parsers to ignore installing
     -- ignore_install = { "javascript" },
 
+
     incremental_selection = {
         enable = true,
         keymaps = {
@@ -18,6 +20,7 @@ require'nvim-treesitter.configs'.setup {
             node_decremental = '<S-TAB>',
         },
     },
+    
     
     textobjects = {
         select = {
@@ -32,6 +35,8 @@ require'nvim-treesitter.configs'.setup {
                 ["iL"] = "@loop.inner",
                 ["ac"] = "@conditional.outer",
                 ["ic"] = "@conditional.inner",
+                ["i<Leader>e"] = "@call.inner",
+                ["a<Leader>e"] = "@call.outer",
                 
             }
         },
@@ -43,6 +48,7 @@ require'nvim-treesitter.configs'.setup {
                ["]<Leader>c"] = "@class.outer",
                ["]l"] = "@loop.outer",
                ["]c"] = "@conditional.outer",
+               ["]<Leader>e"] = "@call.outer",
             },
             
             goto_next_end = {
@@ -50,6 +56,7 @@ require'nvim-treesitter.configs'.setup {
                 ["]<Leader>C"] = "@class.outer",
                 ["]L"] = "@loop.outer",
                 ["]C"] = "@conditional.outer",
+                ["]<Leader>E"] = "@call.outer",
             },
 
             goto_previous_start = {
@@ -57,6 +64,7 @@ require'nvim-treesitter.configs'.setup {
                ["[<Leader>c"] = "@class.outer",
                ["[l"] = "@loop.outer",
                ["[c"] = "@conditional.outer",
+               ["[<Leader>e"] = "@call.outer",
             },
 
             goto_previous_end = {
@@ -65,6 +73,7 @@ require'nvim-treesitter.configs'.setup {
                ["[<Leader>C"] = "@class.outer",
                ["[L"] = "@loop.outer",
                ["[C"] = "@conditional.outer",
+               ["[<Leader>E"] = "@call.outer",
             }
         }
     }
