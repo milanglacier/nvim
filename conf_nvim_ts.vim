@@ -32,6 +32,12 @@ require'nvim-treesitter.configs'.setup {
         -- termcolors = {} -- table of colour name strings
     },
 
+    indent = {
+    
+        enable = true
+    
+    },
+
     incremental_selection = {
         enable = true,
         keymaps = {
@@ -58,6 +64,8 @@ require'nvim-treesitter.configs'.setup {
                 ["ic"] = "@conditional.inner",
                 ["i<Leader>e"] = "@call.inner",
                 ["a<Leader>e"] = "@call.outer",
+                ["a<Leader>a"] = "@parameter.outer",
+                ["i<Leader>a"] = "@parameter.inner", 
                 
             }
         },
@@ -70,6 +78,7 @@ require'nvim-treesitter.configs'.setup {
                ["]l"] = "@loop.outer",
                ["]c"] = "@conditional.outer",
                ["]<Leader>e"] = "@call.outer",
+               ["]a"] = "@parameter.outer",
             },
             
             goto_next_end = {
@@ -78,6 +87,8 @@ require'nvim-treesitter.configs'.setup {
                 ["]L"] = "@loop.outer",
                 ["]C"] = "@conditional.outer",
                 ["]<Leader>E"] = "@call.outer",
+                ["]A"] = "@parameter.outer",
+
             },
 
             goto_previous_start = {
@@ -86,6 +97,7 @@ require'nvim-treesitter.configs'.setup {
                ["[l"] = "@loop.outer",
                ["[c"] = "@conditional.outer",
                ["[<Leader>e"] = "@call.outer",
+               ["[a"] = "@parameter.outer",
             },
 
             goto_previous_end = {
@@ -95,8 +107,13 @@ require'nvim-treesitter.configs'.setup {
                ["[L"] = "@loop.outer",
                ["[C"] = "@conditional.outer",
                ["[<Leader>E"] = "@call.outer",
+               ["[A"] = "@parameter.outer",
             }
         }
     }
 }
+
+local ft_to_parser = require"nvim-treesitter.parsers".filetype_to_parsername
+ft_to_parser.rmd = "r" 
+-- the someft filetype will use the python parser and queries.
 EOF

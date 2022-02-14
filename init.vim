@@ -25,7 +25,6 @@ set ignorecase smartcase
 
 filetype plugin indent on
 
-autocmd BufRead,BufNewFile *.jl      set filetype=julia
 
 " set the derminal working at the current directory
 autocmd BufEnter * silent! lcd %:p:h
@@ -67,6 +66,7 @@ if !exists('g:vscode')
         " Plug 'vim-scripts/argtextobj.vim'
         Plug 'michaeljsmith/vim-indent-object'
         Plug 'wellle/targets.vim'
+        Plug 'Raimondi/delimitMate'
 
         " Tree sitter for enhanced text obj and syntax capturality
         Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -78,8 +78,11 @@ if !exists('g:vscode')
         Plug 'vim-pandoc/vim-rmarkdown', {'for': 'rmarkdown'}
 
         " Set FZF for file search
-        Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-        Plug 'junegunn/fzf.vim'
+        " Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+        " Plug 'junegunn/fzf.vim'
+        Plug 'nvim-lua/plenary.nvim'
+        Plug 'nvim-telescope/telescope.nvim'
+        Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
         " a simple format code plugin
         Plug 'pappasam/vim-filetype-formatter', {'for': ['r', 'rmarkdown', 'python', 'markdown']}
@@ -91,7 +94,7 @@ if !exists('g:vscode')
 
         " Deal with input method, automatically changed to English
         " input method when switch to normal mode
-        Plug 'ybian/smartim'
+        Plug 'milanglacier/smartim'
         
         " support browser
         " Plug 'glacambre/firenvim'
@@ -110,21 +113,16 @@ if !exists('g:vscode')
     set background=light
     colorscheme solarized
 
-    " Enable C-bpfn to move cursor when in editor mode
-    inoremap <C-b> <Left>
-    inoremap <C-f> <Right>
-    inoremap <C-p> <Up>
-    inoremap <C-n> <Down>
 
     " set fontsize for firenvim
-    " set guifont=Fira_Code:h22
+    set guifont=AnonymicePowerline ":h22
     
     " source for treesitter config, airline config, autoformatter config
     so /Users/northyear/.config/nvim/conf_nvim_ts.vim
     so /Users/northyear/.config/nvim/conf_airline.vim
     so /Users/northyear/.config/nvim/conf_autofm.vim
-    so /Users/northyear/.config/nvim/conf_autopair.vim
     so /Users/northyear/.config/nvim/conf_nvim_tree.vim
+    so /Users/northyear/.config/nvim/conf_telescope.vim
 
 
     
@@ -150,7 +148,7 @@ else
 
         " Deal with input method, automatically changed to English
         " input method when switch to normal mode
-        Plug 'ybian/smartim'
+        Plug 'milanglacier/smartim'
 
     call plug#end()
     
@@ -173,3 +171,8 @@ imap jk <Esc>
 inoremap <C-a> <home>
 inoremap <C-e> <end>
 
+" Enable C-bpfn to move cursor when in editor mode
+inoremap <C-b> <Left>
+inoremap <C-f> <Right>
+inoremap <C-p> <Up>
+inoremap <C-n> <Down>

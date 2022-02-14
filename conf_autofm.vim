@@ -4,6 +4,8 @@ augroup pandoc_syntax
     au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
 augroup END
 
+autocmd BufRead,BufNewFile *.jl      set filetype=julia
+
 " Create mapping for filetype-formatter only for
 " py and r, rmd, md, and julia
 " NOTE THAT:
@@ -23,8 +25,8 @@ autocmd FileType julia vnoremap <leader>fm :JuliaFormatterFormat<CR>
 
 " Let the code-formatter plugin to enable format R
 let g:vim_filetype_formatter_commands = {
-\ 'r': 'Rscript ~/Downloads/Rformat/fmt.R',
-\ 'rmarkdown': 'Rscript ~/Downloads/Rformat/fmt.R',
+\ 'r': 'Rscript /Users/northyear/.config/nvim/format/fmt.R',
+\ 'rmarkdown': 'Rscript /Users/northyear/.config/nvim/format/fmt.R',
 \ 'python': '/opt/homebrew/caskroom/miniforge/base/bin/python -m black -q -'
 \ }
 
