@@ -89,8 +89,8 @@ if !exists('g:vscode')
         Plug 'kdheepak/JuliaFormatter.vim', { 'for': 'julia'}
 
         " Very simple, naive completion
-        Plug 'skywind3000/vim-auto-popmenu'
-        Plug 'skywind3000/vim-dict'
+        " Plug 'skywind3000/vim-auto-popmenu'
+        " Plug 'skywind3000/vim-dict'
 
         " Deal with input method, automatically changed to English
         " input method when switch to normal mode
@@ -102,6 +102,18 @@ if !exists('g:vscode')
         " file explorer
         Plug 'kyazdani42/nvim-web-devicons' " for file icons
         Plug 'kyazdani42/nvim-tree.lua'
+
+        " Finally LSP config
+        Plug 'neovim/nvim-lspconfig'
+        Plug 'hrsh7th/cmp-nvim-lsp'
+        Plug 'hrsh7th/cmp-buffer'
+        Plug 'hrsh7th/cmp-path'
+        Plug 'hrsh7th/cmp-cmdline'
+        Plug 'hrsh7th/nvim-cmp'
+
+        Plug 'L3MON4D3/LuaSnip'
+        Plug 'saadparwaiz1/cmp_luasnip'
+
 
     call plug#end()
 
@@ -115,7 +127,7 @@ if !exists('g:vscode')
 
 
     " set fontsize for firenvim
-    set guifont=AnonymicePowerline ":h22
+    " set guifont=AnonymicePowerline ":h22
     
     " source for treesitter config, airline config, autoformatter config
     so /Users/northyear/.config/nvim/conf_nvim_ts.vim
@@ -123,6 +135,8 @@ if !exists('g:vscode')
     so /Users/northyear/.config/nvim/conf_autofm.vim
     so /Users/northyear/.config/nvim/conf_nvim_tree.vim
     so /Users/northyear/.config/nvim/conf_telescope.vim
+    so /Users/northyear/.config/nvim/conf_lspconfig.vim
+
 
 
     

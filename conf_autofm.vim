@@ -16,12 +16,12 @@ autocmd BufRead,BufNewFile *.jl      set filetype=julia
 
 augroup autoformat_mappings
     autocmd!
-    autocmd FileType r,rmd,python,markdown.pandoc nnoremap <silent> <leader>fm :FiletypeFormat<cr>
-    autocmd FileType r,rmd,python,markdown.pandoc vnoremap <silent> <leader>fm :FiletypeFormat<cr>
+    autocmd FileType r,rmd,python,markdown.pandoc nnoremap <silent> <leader>fl :FiletypeFormat<cr>
+    autocmd FileType r,rmd,python,markdown.pandoc vnoremap <silent> <leader>fl :FiletypeFormat<cr>
 augroup END
 
-autocmd FileType julia nnoremap <leader>fm :JuliaFormatterFormat<CR>
-autocmd FileType julia vnoremap <leader>fm :JuliaFormatterFormat<CR>
+autocmd FileType julia nnoremap <leader>fl :JuliaFormatterFormat<CR>
+autocmd FileType julia vnoremap <leader>fl :JuliaFormatterFormat<CR>
 
 " Let the code-formatter plugin to enable format R
 let g:vim_filetype_formatter_commands = {
@@ -39,13 +39,13 @@ let g:vim_filetype_formatter_commands = {
 " a R, python and Julia dictionary and 
 " put the .dict file into the corresponding place
 " where the plug folder is located
-let g:apc_enable_ft = {'*':1}
+" let g:apc_enable_ft = {'*':1}
 " source for dictionary, current or other loaded buffers, see ':help cpt'
-set cpt=.,k,w,b
+" set cpt=.,k,w,b
 " don't select the first item.
-set completeopt=menu,menuone,noselect
+" set completeopt=menu,menuone,noselect
 " suppress annoy messages.
-set shortmess+=c
+" set shortmess+=c
 
 " change the indentation style for R
 " ie the newline indentatino for () is identical to {}
