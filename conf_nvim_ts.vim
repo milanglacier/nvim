@@ -113,7 +113,5 @@ require'nvim-treesitter.configs'.setup {
     }
 }
 
-local ft_to_parser = require"nvim-treesitter.parsers".filetype_to_parsername
-ft_to_parser.rmd = "r" 
--- the someft filetype will use the python parser and queries.
+
 EOF

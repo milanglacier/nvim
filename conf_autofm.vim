@@ -23,13 +23,15 @@ augroup END
 autocmd FileType julia nnoremap <leader>fl :JuliaFormatterFormat<CR>
 autocmd FileType julia vnoremap <leader>fl :JuliaFormatterFormat<CR>
 
-" Let the code-formatter plugin to enable format R
-let g:vim_filetype_formatter_commands = {
-\ 'r': 'Rscript /Users/northyear/.config/nvim/format/fmt.R',
-\ 'rmarkdown': 'Rscript /Users/northyear/.config/nvim/format/fmt.R',
-\ 'python': '/opt/homebrew/caskroom/miniforge/base/bin/python -m black -q -'
-\ }
+" Let the code-formatter plugin to enable format R, py
 
+if has('nvim') && !empty($CONDA_PREFIX)
+let g:vim_filetype_formatter_commands = {
+\ 'r': 'Rscript ~/.config/nvim/format/fmt.R',
+\ 'rmarkdown': 'Rscript ~/.config/nvim/format/fmt.R',
+\ 'python': $CONDA_PREFIX . '/bin/python -m black -q -'
+\ }
+endif
 
 " Set up for simple code completion
 " enable this plugin for filetypes, '*' for all files.

@@ -25,9 +25,9 @@ let g:nvim_tree_window_picker_exclude = {
 let g:nvim_tree_special_files = { 'README.md': 1, 'Makefile': 1, 'MAKEFILE': 1 } " List of filenames that gets highlighted with NvimTreeSpecialFile
 let g:nvim_tree_show_icons = {
     \ 'git': 1,
-    \ 'folders': 0,
-    \ 'files': 0,
-    \ 'folder_arrows': 0,
+    \ 'folders': 1,
+    \ 'files': 1,
+    \ 'folder_arrows': 1,
     \ }
 "If 0, do not show the icons for one of 'git' 'folder' and 'files'
 "1 by default, notice that if 'files' is 1, it will only display
@@ -37,33 +37,35 @@ let g:nvim_tree_show_icons = {
 
 " default will show icon by default if no icon is provided
 " default shows no icon by default
+
 let g:nvim_tree_icons = {
-    \ 'default': ' ',
-    \ 'symlink': ' ',
+    \ 'default': '',
+    \ 'symlink': '',
     \ 'git': {
     \   'unstaged': "✗",
     \   'staged': "✓",
-    \   'unmerged': " ",
+    \   'unmerged': "",
     \   'renamed': "➜",
     \   'untracked': "★",
-    \   'deleted': " ",
+    \   'deleted': "",
     \   'ignored': "◌"
     \   },
     \ 'folder': {
-    \   'arrow_open': " ",
-    \   'arrow_closed': " ",
-    \   'default': " ",
-    \   'open': " ",
-    \   'empty': " ",
-    \   'empty_open': " ",
-    \   'symlink': " ",
-    \   'symlink_open': " ",
+    \   'arrow_open': "",
+    \   'arrow_closed': "",
+    \   'default': "",
+    \   'open': "",
+    \   'empty': "",
+    \   'empty_open': "",
+    \   'symlink': "",
+    \   'symlink_open': "",
     \   }
     \ }
 
-nnoremap <D-b> :NvimTreeToggle<CR>
-nnoremap <leader>r :NvimTreeRefresh<CR>
-nnoremap <leader>n :NvimTreeFindFile<CR>
+
+nnoremap <leader>tt :NvimTreeToggle<CR>
+" nnoremap <leader>r :NvimTreeRefresh<CR>
+" nnoremap <leader>n :NvimTreeFindFile<CR>
 " NvimTreeOpen, NvimTreeClose, NvimTreeFocus, NvimTreeFindFileToggle, and NvimTreeResize are also available if you need them
 
 set termguicolors " this variable must be enabled for colors to be applied properly

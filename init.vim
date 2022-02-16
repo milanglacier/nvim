@@ -29,7 +29,11 @@ filetype plugin indent on
 " set the derminal working at the current directory
 autocmd BufEnter * silent! lcd %:p:h
 
-
+" you have to define your <leader> key very early
+" as if you define your leader key to be <spc> 
+" later than your map key which used <Leader>
+" then you probably find that this map won't working.
+let mapleader = ' '
 
 " function to enabling the same plugin (at different fork), primarily
 " for vscode neovim extension.
@@ -40,6 +44,9 @@ function! Cond(Cond, ...)
   let opts = get(a:000, 0, {})
   return a:Cond ? opts : extend(opts, { 'on': [], 'for': [] })
 endfunction
+
+
+set guifont=Code_new_Roman_Nerd_Font_Complete:h17
 
 " condition brach for different setting in nvim terminal and vscode
 if !exists('g:vscode')
@@ -100,10 +107,9 @@ if !exists('g:vscode')
         " Plug 'glacambre/firenvim'
 
         " file explorer
-        Plug 'kyazdani42/nvim-web-devicons' " for file icons
         Plug 'kyazdani42/nvim-tree.lua'
 
-        " Finally LSP config
+        " LSP config
         Plug 'neovim/nvim-lspconfig'
         Plug 'hrsh7th/cmp-nvim-lsp'
         Plug 'hrsh7th/cmp-buffer'
@@ -111,11 +117,25 @@ if !exists('g:vscode')
         Plug 'hrsh7th/cmp-cmdline'
         Plug 'hrsh7th/nvim-cmp'
 
+        " Completion
         Plug 'L3MON4D3/LuaSnip'
         Plug 'saadparwaiz1/cmp_luasnip'
 
+        " Variables Outline
+        " Plug 'stevearc/aerial.nvim'
+        Plug 'simrat39/symbols-outline.nvim'
+
+        " REPL
+        Plug 'jalvesaq/Nvim-R'
+        Plug 'jalvesaq/vimcmdline'
+
+        
+        Plug 'kyazdani42/nvim-web-devicons'
+
 
     call plug#end()
+
+    set shell=zsh
 
     "let g:tokyonight_style = "day"
     "colorscheme tokyonight
@@ -135,7 +155,16 @@ if !exists('g:vscode')
     so /Users/northyear/.config/nvim/conf_autofm.vim
     so /Users/northyear/.config/nvim/conf_nvim_tree.vim
     so /Users/northyear/.config/nvim/conf_telescope.vim
+    
+    
+    so /Users/northyear/.config/nvim/conf_cmp.vim
     so /Users/northyear/.config/nvim/conf_lspconfig.vim
+    so /Users/northyear/.config/nvim/conf_nvim-R.vim
+    so /Users/northyear/.config/nvim/conf_move_tabs.vim
+    so /Users/northyear/.config/nvim/conf_cmdline.vim
+    so /Users/northyear/.config/nvim/conf_sym_otln.vim
+    " so /Users/northyear/.config/nvim/conf_aerial.vim
+    
 
 
 
@@ -167,18 +196,19 @@ else
     call plug#end()
     
     so /Users/northyear/.config/nvim/conf_vs_ts.vim
+    so /Users/northyear/.config/nvim/conf_move_tabs.vim
 
 endif
 
 " define some customized shortcut globally
-nmap gs <Plug>(easymotion-s2)
+nnoremap gs <Plug>(easymotion-s2)
 
 " some customized configuration for plugins
 let g:EasyMotion_smartcase = 1
 " let g:NERDCreateDefaultMappings = 1
 
 " keybinding remap for global keys
-let mapleader = ' '
+
 imap jk <Esc>
 " let g:mapleader = ' '
 " let ctrl-a move to the beginning of the line
@@ -190,3 +220,4 @@ inoremap <C-b> <Left>
 inoremap <C-f> <Right>
 inoremap <C-p> <Up>
 inoremap <C-n> <Down>
+
