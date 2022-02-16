@@ -1,5 +1,6 @@
-1. Note that I use anaconda for python. So in order to let terminal within neovim correctly find ipython,
-we need to put `.zshenv` into your home directory.
+1. Note that I use conda, so I set `let g:CONDA_PATHNAME = "your $CONDA_PREFIX"` at the start
+of my `init.vim`. I found that source `conda init` in `.zshenv` would
+make the start of nvim very slow, and I decide to not do it.
 
 2. `devicons` should be the one that's last to be plugged in.
 

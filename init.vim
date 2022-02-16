@@ -48,6 +48,8 @@ endfunction
 
 set guifont=Code_new_Roman_Nerd_Font_Complete:h17
 
+let g:CONDA_PATHNAME = "/opt/homebrew/Caskroom/miniforge/base"
+
 " condition brach for different setting in nvim terminal and vscode
 if !exists('g:vscode')
 
@@ -61,11 +63,13 @@ if !exists('g:vscode')
         Plug 'altercation/vim-colors-solarized'
 
         " Set the theme for statusbar
-        Plug 'vim-airline/vim-airline'
-        Plug 'vim-airline/vim-airline-themes'
+        Plug 'nvim-lualine/lualine.nvim'
+        " Plug 'vim-airline/vim-airline'
+        " Plug 'vim-airline/vim-airline-themes'
 
         " Set the advanced text editing and jumping plug
-        Plug 'easymotion/vim-easymotion'
+        " Plug 'easymotion/vim-easymotion'
+        Plug 'searleser97/vim-sneak'
         Plug 'tpope/vim-surround'
         " Plug 'preservim/nerdcommenter'
         Plug 'tpope/vim-commentary'
@@ -135,7 +139,7 @@ if !exists('g:vscode')
 
     call plug#end()
 
-    set shell=zsh
+    " set shell=zsh
 
     "let g:tokyonight_style = "day"
     "colorscheme tokyonight
@@ -148,26 +152,25 @@ if !exists('g:vscode')
 
     " set fontsize for firenvim
     " set guifont=AnonymicePowerline ":h22
+
+    lua require('conf_lualine')
     
     " source for treesitter config, airline config, autoformatter config
-    so /Users/northyear/.config/nvim/conf_nvim_ts.vim
-    so /Users/northyear/.config/nvim/conf_airline.vim
-    so /Users/northyear/.config/nvim/conf_autofm.vim
-    so /Users/northyear/.config/nvim/conf_nvim_tree.vim
-    so /Users/northyear/.config/nvim/conf_telescope.vim
+    lua require("conf_treesitter")
+    source /Users/northyear/.config/nvim/conf_autofm.vim
+    source /Users/northyear/.config/nvim/conf_nvim_tree.vim
+    lua require('conf_nvim_tree')
+    lua require('conf_telescope')
     
     
-    so /Users/northyear/.config/nvim/conf_cmp.vim
-    so /Users/northyear/.config/nvim/conf_lspconfig.vim
-    so /Users/northyear/.config/nvim/conf_nvim-R.vim
-    so /Users/northyear/.config/nvim/conf_move_tabs.vim
-    so /Users/northyear/.config/nvim/conf_cmdline.vim
-    so /Users/northyear/.config/nvim/conf_sym_otln.vim
-    " so /Users/northyear/.config/nvim/conf_aerial.vim
+    lua require('conf_cmp')
+    lua require('conf_lspconfig')
+    source /Users/northyear/.config/nvim/conf_lspconfig.vim
+    source /Users/northyear/.config/nvim/conf_nvim-R.vim
+    source /Users/northyear/.config/nvim/conf_move_tabs.vim
+    source /Users/northyear/.config/nvim/conf_cmdline.vim
+    lua require("conf_sym_otln")
     
-
-
-
     
 else 
     " configuration only valid in vscode neovim mode 
@@ -175,7 +178,8 @@ else
     
     call plug#begin()
 
-        Plug 'asvetliakov/vim-easymotion', { 'as': 'vsc-easymotion' }
+        " Plug 'asvetliakov/vim-easymotion', { 'as': 'vsc-easymotion' }
+        Plug 'searleser97/vim-sneak'
 
         Plug 'tpope/vim-surround'
         " Plug 'preservim/nerdcommenter'
@@ -195,17 +199,19 @@ else
 
     call plug#end()
     
-    so /Users/northyear/.config/nvim/conf_vs_ts.vim
-    so /Users/northyear/.config/nvim/conf_move_tabs.vim
+    lua require("conf_treesitter")
+    " so /Users/northyear/.config/nvim/conf_move_tabs.vim
 
 endif
 
 " define some customized shortcut globally
-nnoremap gs <Plug>(easymotion-s2)
+" nnoremap gs <Plug>(easymotion-s2)
 
 " some customized configuration for plugins
-let g:EasyMotion_smartcase = 1
+" let g:EasyMotion_smartcase = 1
 " let g:NERDCreateDefaultMappings = 1
+let g:sneak#label = 1
+let g:sneak#use_ic_scs = 1
 
 " keybinding remap for global keys
 

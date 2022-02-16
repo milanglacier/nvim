@@ -1,5 +1,3 @@
-
-lua << EOF
 local cmp = require'cmp'
 
   cmp.setup({
@@ -54,4 +52,3 @@ local cmp = require'cmp'
       { name = 'cmdline' }
     })
   })
-EOF

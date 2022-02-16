@@ -1,4 +1,3 @@
-lua << EOF
 local opts = { noremap=true, silent=true }
 
 vim.g.symbols_outline = {
@@ -55,5 +54,3 @@ vim.g.symbols_outline = {
 }
 
 vim.api.nvim_set_keymap('n', '<leader>so', '<cmd>SymbolsOutline<CR>', opts)
-EOF
-

@@ -25,11 +25,11 @@ autocmd FileType julia vnoremap <leader>fl :JuliaFormatterFormat<CR>
 
 " Let the code-formatter plugin to enable format R, py
 
-if has('nvim') && !empty($CONDA_PREFIX)
+if has('nvim') && !empty(CONDA_PATHNAME)
 let g:vim_filetype_formatter_commands = {
 \ 'r': 'Rscript ~/.config/nvim/format/fmt.R',
 \ 'rmarkdown': 'Rscript ~/.config/nvim/format/fmt.R',
-\ 'python': $CONDA_PREFIX . '/bin/python -m black -q -'
+\ 'python': CONDA_PATHNAME . '/bin/python -m black -q -'
 \ }
 endif
 
