@@ -46,7 +46,6 @@ function! Cond(Cond, ...)
 endfunction
 
 
-set guifont=Code_new_Roman_Nerd_Font_Complete:h17
 
 let g:CONDA_PATHNAME = "/opt/homebrew/Caskroom/miniforge/base"
 
@@ -55,6 +54,7 @@ if !exists('g:vscode')
 
     let $NVIM_TUI_ENABLE_TRUE_COLOR=1
     set termguicolors
+    set guifont=Code_new_Roman_Nerd_Font_Complete:h17
 
     call plug#begin()
 
@@ -131,6 +131,9 @@ if !exists('g:vscode')
         Plug 'jalvesaq/Nvim-R', {'for': ['r', 'rmarkdown']}
         Plug 'jalvesaq/vimcmdline'
 
+        " Git
+        Plug 'f-person/git-blame.nvim'
+
         
         Plug 'kyazdani42/nvim-web-devicons'
 
@@ -148,8 +151,6 @@ if !exists('g:vscode')
     colorscheme solarized
 
 
-    " set fontsize for firenvim
-    " set guifont=AnonymicePowerline ":h22
 
     lua require('conf_lualine')
     
@@ -178,14 +179,13 @@ else
     
     call plug#begin()
 
-        " Plug 'asvetliakov/vim-easymotion', { 'as': 'vsc-easymotion' }
         Plug 'searleser97/vim-sneak'
 
         Plug 'tpope/vim-surround'
         " Plug 'preservim/nerdcommenter'
         Plug 'tpope/vim-commentary'
         Plug 'tpope/vim-repeat'
-        Plug 'vim-scripts/argtextobj.vim'
+        " Plug 'vim-scripts/argtextobj.vim'
         Plug 'wellle/targets.vim'
         " Plug 'michaeljsmith/vim-indent-object'
 
@@ -201,14 +201,10 @@ else
     
     lua require("conf_treesitter")
     " so /Users/northyear/.config/nvim/conf_move_tabs.vim
-
+    
 endif
 
 " define some customized shortcut globally
-" nnoremap gs <Plug>(easymotion-s2)
-
-" some customized configuration for plugins
-" let g:EasyMotion_smartcase = 1
 " let g:NERDCreateDefaultMappings = 1
 let g:sneak#label = 1
 let g:sneak#use_ic_scs = 1
