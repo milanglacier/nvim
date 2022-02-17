@@ -33,8 +33,8 @@ end
 -- Setup lspconfig.
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-require'lspconfig'.jedi_language_server.setup{
-    cmd = {vim.api.nvim_eval("CONDA_PATHNAME") .. "/bin/jedi-language-server"},
+require'lspconfig'.pylsp.setup{
+    cmd = {vim.api.nvim_eval("CONDA_PATHNAME") .. "/bin/pylsp"},
     on_attach = on_attach,
     flags = {
         -- This will be the default in neovim 0.7+

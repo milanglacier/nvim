@@ -64,8 +64,6 @@ if !exists('g:vscode')
 
         " Set the theme for statusbar
         Plug 'nvim-lualine/lualine.nvim'
-        " Plug 'vim-airline/vim-airline'
-        " Plug 'vim-airline/vim-airline-themes'
 
         " Set the advanced text editing and jumping plug
         " Plug 'easymotion/vim-easymotion'
@@ -85,8 +83,9 @@ if !exists('g:vscode')
         Plug 'p00f/nvim-ts-rainbow'
 
         " Set markdown syntax highlighting
-        Plug 'vim-pandoc/vim-pandoc-syntax', {'for': ['rmarkdown', 'markdown']}
-        Plug 'vim-pandoc/vim-rmarkdown', {'for': 'rmarkdown'}
+        Plug 'vim-pandoc/vim-pandoc-syntax', {'for': ['r', 'rmarkdown', 'python', 'markdown.pandoc']}
+        Plug 'vim-pandoc/vim-rmarkdown', {'for': ['rmarkdown']}
+        Plug 'iamcco/markdown-preview.nvim' , { 'do': 'cd app && yarn install'  }
 
         " Set FZF for file search
         " Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -96,7 +95,7 @@ if !exists('g:vscode')
         Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
         " a simple format code plugin
-        Plug 'pappasam/vim-filetype-formatter', {'for': ['r', 'rmarkdown', 'python', 'markdown']}
+        Plug 'pappasam/vim-filetype-formatter', {'for': ['r', 'rmarkdown', 'python', 'markdown.pandoc']}
         Plug 'kdheepak/JuliaFormatter.vim', { 'for': 'julia'}
 
         " Very simple, naive completion
@@ -126,11 +125,10 @@ if !exists('g:vscode')
         Plug 'saadparwaiz1/cmp_luasnip'
 
         " Variables Outline
-        " Plug 'stevearc/aerial.nvim'
         Plug 'simrat39/symbols-outline.nvim'
 
         " REPL
-        Plug 'jalvesaq/Nvim-R'
+        Plug 'jalvesaq/Nvim-R', {'for': ['r', 'rmarkdown']}
         Plug 'jalvesaq/vimcmdline'
 
         
@@ -157,19 +155,21 @@ if !exists('g:vscode')
     
     " source for treesitter config, airline config, autoformatter config
     lua require("conf_treesitter")
-    source /Users/northyear/.config/nvim/conf_autofm.vim
-    source /Users/northyear/.config/nvim/conf_nvim_tree.vim
+    source ~/.config/nvim/conf_autofm.vim
+    source ~/.config/nvim/conf_nvim_tree.vim
     lua require('conf_nvim_tree')
     lua require('conf_telescope')
     
     
     lua require('conf_cmp')
     lua require('conf_lspconfig')
-    source /Users/northyear/.config/nvim/conf_lspconfig.vim
-    source /Users/northyear/.config/nvim/conf_nvim-R.vim
-    source /Users/northyear/.config/nvim/conf_move_tabs.vim
-    source /Users/northyear/.config/nvim/conf_cmdline.vim
+    source ~/.config/nvim/conf_lspconfig.vim
+    source ~/.config/nvim/conf_nvim-R.vim
+    source ~/.config/nvim/conf_move_tabs.vim
+    source ~/.config/nvim/conf_cmdline.vim
     lua require("conf_sym_otln")
+
+    source ~/.config/nvim/conf_mkdp.vim
     
     
 else 

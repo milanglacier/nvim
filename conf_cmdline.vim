@@ -9,6 +9,6 @@ let cmdline_map_quit           = '<LocalLeader>rq' "REPL quit
 
 
 let cmdline_app           = {}
-let cmdline_app['python']   = 'ipython'
+let cmdline_app['python']   = CONDA_PATHNAME . '/bin/ipython'
 
 let cmdline_follow_colorscheme = 1
