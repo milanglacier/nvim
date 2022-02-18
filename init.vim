@@ -151,10 +151,10 @@ if !exists('g:vscode')
     colorscheme solarized
 
 
+    source ~/.config/nvim/conf_builtin_extend.vim
 
     lua require('conf_lualine')
     
-    " source for treesitter config, airline config, autoformatter config
     lua require("conf_treesitter")
     source ~/.config/nvim/conf_autofm.vim
     source ~/.config/nvim/conf_nvim_tree.vim
@@ -164,13 +164,13 @@ if !exists('g:vscode')
     
     lua require('conf_cmp')
     lua require('conf_lspconfig')
-    source ~/.config/nvim/conf_lspconfig.vim
     source ~/.config/nvim/conf_nvim-R.vim
     source ~/.config/nvim/conf_move_tabs.vim
     source ~/.config/nvim/conf_cmdline.vim
     lua require("conf_sym_otln")
 
     source ~/.config/nvim/conf_mkdp.vim
+    source ~/.config/nvim/conf_sneak.vim
     
     
 else 
@@ -200,26 +200,11 @@ else
     call plug#end()
     
     lua require("conf_treesitter")
-    " so /Users/northyear/.config/nvim/conf_move_tabs.vim
+    source ~/.config/nvim/conf_sneak.vim
+    source ~/.config/nvim/conf_builtin_extend.vim
     
 endif
 
-" define some customized shortcut globally
-" let g:NERDCreateDefaultMappings = 1
-let g:sneak#label = 1
-let g:sneak#use_ic_scs = 1
 
-" keybinding remap for global keys
 
-imap jk <Esc>
-" let g:mapleader = ' '
-" let ctrl-a move to the beginning of the line
-inoremap <C-a> <home>
-inoremap <C-e> <end>
-
-" Enable C-bpfn to move cursor when in editor mode
-inoremap <C-b> <Left>
-inoremap <C-f> <Right>
-inoremap <C-p> <Up>
-inoremap <C-n> <Down>
 

@@ -9,11 +9,11 @@ let R_disable_cmds = ['RSetwd', 'RDputObj', 'RSummary']
 " map jk as modified esc to exit terminal insert mode
 tnoremap jk <C-\><C-n> 
 
-function! s:customNvimRMappings()
-   nmap <buffer> <LocalLeader>rs <Plug>RStart
-endfunction
+" function! s:customNvimRMappings()
+"    nmap <buffer> <LocalLeader>rs <Plug>RStart
+" endfunction
 
 augroup myNvimR
    au!
-   autocmd FileType r,rmd call s:customNvimRMappings()
+   autocmd FileType r,rmd nmap <buffer> <LocalLeader>rs <Plug>RStart
 augroup end

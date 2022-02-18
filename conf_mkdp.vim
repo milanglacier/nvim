@@ -89,4 +89,5 @@ let g:mkdp_page_title = '「${name}」'
 " these filetypes will have MarkdownPreview... commands
 let g:mkdp_filetypes = ['markdown.pandoc', 'markdown']
 
-nnoremap <LocalLeader>mp <Plug>MarkdownPreviewToggle<cr>
+nnoremap <silent> <LocalLeader>mp :MarkdownPreview<cr>
+nnoremap <silent> <LocalLeader>mq :MarkdownPreviewStop<cr>

@@ -24,9 +24,6 @@ local on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>fm', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
-    -- require("aerial").on_attach(client, bufnr)
-
-
 end
 
 
@@ -75,4 +72,15 @@ vim.api.nvim_set_keymap('n', '<Leader>do', '<cmd>lua vim.diagnostic.open_float()
 vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
 vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
 vim.api.nvim_set_keymap('n', '<Leader>ds', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+
+
+
+vim.fn.sign_define("DiagnosticSignError", { text = "✗", texthl = "DiagnosticSignError" })
+vim.fn.sign_define("DiagnosticSignWarn", { text = "!", texthl = "DiagnosticSignWarn" })
+vim.fn.sign_define("DiagnosticSignInformation", { text = "", texthl = "DiagnosticSignInfo" })
+vim.fn.sign_define("DiagnosticSignHint", { text = "", texthl = "DiagnosticSignHint" })
+
+vim.cmd([[
+set completeopt=menu,menuone,noselect
+]])
 
