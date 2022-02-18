@@ -1,7 +1,7 @@
 
 " keybinding remap for global keys
 
-imap jk <Esc>
+inoremap jk <Esc>
 " let g:mapleader = ' '
 " let ctrl-a move to the beginning of the line
 inoremap <C-a> <home>
@@ -13,6 +13,8 @@ inoremap <C-f> <Right>
 inoremap <C-p> <Up>
 inoremap <C-n> <Down>
 
+nnoremap <Leader>cd :cd %:h<cr>
+nnoremap <Leader>cu :cd ..<cr>
 
 augroup highlight_yank
     autocmd!

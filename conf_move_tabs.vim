@@ -52,3 +52,5 @@ nnoremap ∑ <C-w>w
 nnoremap † <C-w>T
 " <A-q>
 nnoremap œ <C-w>q
+" <A-v>
+nnoremap √ <C-w>v

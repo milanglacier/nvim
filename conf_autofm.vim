@@ -28,7 +28,7 @@ autocmd FileType julia vnoremap <leader>fl :JuliaFormatterFormat<CR>
 if has('nvim') && !empty(CONDA_PATHNAME)
 let g:vim_filetype_formatter_commands = {
 \ 'r': 'Rscript ~/.config/nvim/format/fmt.R',
-\ 'rmarkdown': 'Rscript ~/.config/nvim/format/fmt.R',
+\ 'rmd': 'Rscript ~/.config/nvim/format/fmt.R',
 \ 'python': CONDA_PATHNAME . '/bin/python -m black -q -'
 \ }
 endif
@@ -54,3 +54,5 @@ endif
 let r_indent_align_args = 0
 let r_indent_ess_comments = 0
 let r_indent_ess_compatible = 0
+
+let g:pandoc#syntax#conceal#blacklist = ['subscript', 'superscript', 'atx']

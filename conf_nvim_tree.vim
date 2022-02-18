@@ -64,8 +64,9 @@ let g:nvim_tree_icons = {
 
 
 nnoremap <leader>tt :NvimTreeToggle<CR>
-" nnoremap <leader>r :NvimTreeRefresh<CR>
-" nnoremap <leader>n :NvimTreeFindFile<CR>
+" nnoremap <leader>tr :NvimTreeRefresh<CR>
+nnoremap <leader>tf :NvimTreeFindFileToggle<CR>
+" nnoremap <leader>tfc :NvimTreeFocus<CR>
 " NvimTreeOpen, NvimTreeClose, NvimTreeFocus, NvimTreeFindFileToggle, and NvimTreeResize are also available if you need them
 
 set termguicolors " this variable must be enabled for colors to be applied properly

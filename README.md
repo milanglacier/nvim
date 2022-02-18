@@ -7,3 +7,7 @@ make the start of nvim very slow, and I decide to not do it.
 3. You should define `<leader>` key mappings before defining any keymaps that uses `<Leader>`.
 
 4. nerd font need to be installed. One of the font is provided in the repository.
+
+5. A somewhat annoying things compared to vscode is that I cannot manually set the workspace folder.
+As a workaround, I set `<leader>cd` to change working directory to current file,
+and `<leader>cu` to move upward one level

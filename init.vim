@@ -26,8 +26,8 @@ set ignorecase smartcase
 filetype plugin indent on
 
 
-" set the derminal working at the current directory
-autocmd BufEnter * silent! lcd %:p:h
+" set the terminal working at the current directory
+" autocmd BufEnter * silent! lcd %:p:h
 
 " you have to define your <leader> key very early
 " as if you define your leader key to be <spc> 
@@ -60,7 +60,8 @@ if !exists('g:vscode')
 
         " Set the Theme for nvim
         " Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
-        Plug 'altercation/vim-colors-solarized'
+        " Plug 'altercation/vim-colors-solarized'
+        Plug 'EdenEast/nightfox.nvim'
 
         " Set the theme for statusbar
         Plug 'nvim-lualine/lualine.nvim'
@@ -83,7 +84,7 @@ if !exists('g:vscode')
         Plug 'p00f/nvim-ts-rainbow'
 
         " Set markdown syntax highlighting
-        Plug 'vim-pandoc/vim-pandoc-syntax', {'for': ['r', 'rmarkdown', 'python', 'markdown.pandoc']}
+        Plug 'vim-pandoc/vim-pandoc-syntax', {'for': ['r', 'rmd', 'python', 'markdown.pandoc']}
         Plug 'vim-pandoc/vim-rmarkdown', {'for': ['rmarkdown']}
         Plug 'iamcco/markdown-preview.nvim' , { 'do': 'cd app && yarn install'  }
 
@@ -95,7 +96,7 @@ if !exists('g:vscode')
         Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
         " a simple format code plugin
-        Plug 'pappasam/vim-filetype-formatter', {'for': ['r', 'rmarkdown', 'python', 'markdown.pandoc']}
+        Plug 'pappasam/vim-filetype-formatter', {'for': ['r', 'rmd', 'python', 'markdown.pandoc']}
         Plug 'kdheepak/JuliaFormatter.vim', { 'for': 'julia'}
 
         " Very simple, naive completion
@@ -119,6 +120,7 @@ if !exists('g:vscode')
         Plug 'hrsh7th/cmp-path'
         Plug 'hrsh7th/cmp-cmdline'
         Plug 'hrsh7th/nvim-cmp'
+        Plug 'tami5/lspsaga.nvim'
 
         " Completion
         Plug 'L3MON4D3/LuaSnip'
@@ -128,7 +130,7 @@ if !exists('g:vscode')
         Plug 'simrat39/symbols-outline.nvim'
 
         " REPL
-        Plug 'jalvesaq/Nvim-R', {'for': ['r', 'rmarkdown']}
+        Plug 'jalvesaq/Nvim-R', {'for': ['r', 'rmd']}
         Plug 'jalvesaq/vimcmdline'
 
         " Git
@@ -148,7 +150,7 @@ if !exists('g:vscode')
     syntax enable
 
     set background=light
-    colorscheme solarized
+    colorscheme nightfox
 
 
     source ~/.config/nvim/conf_builtin_extend.vim
@@ -163,6 +165,7 @@ if !exists('g:vscode')
     
     
     lua require('conf_cmp')
+    lua require('conf_saga')
     lua require('conf_lspconfig')
     source ~/.config/nvim/conf_nvim-R.vim
     source ~/.config/nvim/conf_move_tabs.vim
