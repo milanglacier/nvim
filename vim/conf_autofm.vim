@@ -41,8 +41,10 @@ endif
 " a R, python and Julia dictionary and 
 " put the .dict file into the corresponding place
 " where the plug folder is located
+"
 " let g:apc_enable_ft = {'*':1}
 " source for dictionary, current or other loaded buffers, see ':help cpt'
+"
 " set cpt=.,k,w,b
 " don't select the first item.
 " set completeopt=menu,menuone,noselect

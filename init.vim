@@ -40,10 +40,10 @@ let mapleader = ' '
 " to use it, you need to copy two lines of installation commamnd
 " in !exists('g:vscode') branch, as you need to call
 " `:PlugInstall` in nvim terminal to install the fork for Vscode
-function! Cond(Cond, ...)
-  let opts = get(a:000, 0, {})
-  return a:Cond ? opts : extend(opts, { 'on': [], 'for': [] })
-endfunction
+" function! Cond(Cond, ...)
+"   let opts = get(a:000, 0, {})
+"   return a:Cond ? opts : extend(opts, { 'on': [], 'for': [] })
+" endfunction
 
 
 
@@ -67,7 +67,6 @@ if !exists('g:vscode')
         Plug 'nvim-lualine/lualine.nvim'
 
         " Set the advanced text editing and jumping plug
-        " Plug 'easymotion/vim-easymotion'
         Plug 'searleser97/vim-sneak'
         Plug 'tpope/vim-surround'
         " Plug 'preservim/nerdcommenter'
@@ -89,8 +88,6 @@ if !exists('g:vscode')
         Plug 'iamcco/markdown-preview.nvim' , { 'do': 'cd app && yarn install'  }
 
         " Set FZF for file search
-        " Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-        " Plug 'junegunn/fzf.vim'
         Plug 'nvim-lua/plenary.nvim'
         Plug 'nvim-telescope/telescope.nvim'
         Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
@@ -99,7 +96,7 @@ if !exists('g:vscode')
         Plug 'pappasam/vim-filetype-formatter', {'for': ['r', 'rmd', 'python', 'markdown.pandoc']}
         Plug 'kdheepak/JuliaFormatter.vim', { 'for': 'julia'}
 
-        " Very simple, naive completion
+        " Very simple, naive completion without LSP
         " Plug 'skywind3000/vim-auto-popmenu'
         " Plug 'skywind3000/vim-dict'
 
@@ -132,6 +129,7 @@ if !exists('g:vscode')
         " REPL
         Plug 'jalvesaq/Nvim-R', {'for': ['r', 'rmd']}
         Plug 'jalvesaq/vimcmdline'
+        Plug 's1n7ax/nvim-terminal'
 
         " Git
         Plug 'f-person/git-blame.nvim'
@@ -144,22 +142,25 @@ if !exists('g:vscode')
 
     " set shell=zsh
 
-    "let g:tokyonight_style = "day"
-    "colorscheme tokyonight
-
     syntax enable
+    
+lua << EOF
 
-    set background=light
-    colorscheme nightfox
+    time = os.date("*t")
+    if (time.hour <= 7) or (time.hour >= 23) then
+            vim.cmd("colorscheme nightfox")
+    else
+            vim.cmd("colorscheme dawnfox")
+    end
+EOF
 
-
-    source ~/.config/nvim/conf_builtin_extend.vim
+    source ~/.config/nvim/vim/conf_builtin_extend.vim
 
     lua require('conf_lualine')
     
     lua require("conf_treesitter")
-    source ~/.config/nvim/conf_autofm.vim
-    source ~/.config/nvim/conf_nvim_tree.vim
+    source ~/.config/nvim/vim/conf_autofm.vim
+    source ~/.config/nvim/vim/conf_nvim_tree.vim
     lua require('conf_nvim_tree')
     lua require('conf_telescope')
     
@@ -167,13 +168,15 @@ if !exists('g:vscode')
     lua require('conf_cmp')
     lua require('conf_saga')
     lua require('conf_lspconfig')
-    source ~/.config/nvim/conf_nvim-R.vim
-    source ~/.config/nvim/conf_move_tabs.vim
-    source ~/.config/nvim/conf_cmdline.vim
+    source ~/.config/nvim/vim/conf_nvim-R.vim
+    source ~/.config/nvim/vim/conf_move_tabs.vim
+    source ~/.config/nvim/vim/conf_cmdline.vim
     lua require("conf_sym_otln")
 
-    source ~/.config/nvim/conf_mkdp.vim
-    source ~/.config/nvim/conf_sneak.vim
+    source ~/.config/nvim/vim/conf_mkdp.vim
+    source ~/.config/nvim/vim/conf_sneak.vim
+
+    lua require("conf_terminal")
     
     
 else 
@@ -190,7 +193,7 @@ else
         Plug 'tpope/vim-repeat'
         " Plug 'vim-scripts/argtextobj.vim'
         Plug 'wellle/targets.vim'
-        " Plug 'michaeljsmith/vim-indent-object'
+        Plug 'michaeljsmith/vim-indent-object'
 
         " Tree sitter for enhanced text obj and syntax capturality
         Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -203,8 +206,8 @@ else
     call plug#end()
     
     lua require("conf_treesitter")
-    source ~/.config/nvim/conf_sneak.vim
-    source ~/.config/nvim/conf_builtin_extend.vim
+    source ~/.config/nvim/vim/conf_sneak.vim
+    source ~/.config/nvim/vim/conf_builtin_extend.vim
     
 endif
 

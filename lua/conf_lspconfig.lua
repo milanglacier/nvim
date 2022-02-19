@@ -31,23 +31,17 @@ local on_attach = function(client, bufnr)
 
     -- hover
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gh', "<cmd>lua require('lspsaga.hover').render_hover_doc()<CR>", opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-f>', "<cmd>lua require('lspsaga.hover').smart_scroll_with_saga(4)<CR>", opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-d>', "<cmd>lua require('lspsaga.hover').smart_scroll_with_saga(-4)<CR>", opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-f>', "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>", opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-b>', "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>", opts)
 
     -- signaturehelp
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>sh', "<cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>", opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-f>', "<cmd>lua require('lspsaga.signaturehelp').smart_scroll_with_saga(4)<CR>", opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-d>', "<cmd>lua require('lspsaga.signaturehelp').smart_scroll_with_saga(-4)<CR>", opts)
 
     -- rename
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    
+
     -- preview definition
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', "<cmd>lua require'lspsaga.provider'.preview_definition()<CR>", opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-f>', "<cmd>lua require('lspsaga.provider').smart_scroll_with_saga(4)<CR>", opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-d>', "<cmd>lua require('lspsaga.provider').smart_scroll_with_saga(-4)<CR>", opts)
-
-
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>gd', "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
 
 
