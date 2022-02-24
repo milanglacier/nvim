@@ -21,46 +21,64 @@ local on_attach = function(client, bufnr)
     --
     
     -- find definition and reference simutaneously
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', "<cmd>lua require'lspsaga.provider'.lsp_finder()<CR>", opts)
+    -- vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', "<cmd>lua require'lspsaga.provider'.lsp_finder()<CR>", opts)
     -- open a seperate window to show reference
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>gr', "<cmd>lua vim.lsp.buf.references()<CR>", opts)
+
+
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr',
+        "<cmd>lua require 'telescope.builtin'.lsp_references({jump_type = 'vsplit'})<CR>", opts)
 
     -- code action
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>ca', "<cmd>lua require('lspsaga.codeaction').code_action()<CR>", opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'v', '<Leader>ca', "<C-U>lua lua require('lspsaga.codeaction').range_code_action()<CR>", opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>ca',
+        "<cmd>lua require('lspsaga.codeaction').code_action()<CR>", opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'v', '<Leader>ca',
+        "<C-U>lua lua require('lspsaga.codeaction').range_code_action()<CR>", opts)
 
     -- hover
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gh', "<cmd>lua require('lspsaga.hover').render_hover_doc()<CR>", opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-f>', "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>", opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-b>', "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>", opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gh',
+        "<cmd>lua require('lspsaga.hover').render_hover_doc()<CR>", opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-f>',
+        "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>", opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-b>',
+        "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>", opts)
 
     -- signaturehelp
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>sh', "<cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>", opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>sh',
+        "<cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>", opts)
 
     -- rename
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>rn',
+        '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
 
     -- preview definition
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', "<cmd>lua require'lspsaga.provider'.preview_definition()<CR>", opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>gd', "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
+    -- vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', "<cmd>lua require'lspsaga.provider'.preview_definition()<CR>", opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd',
+        "<cmd>lua require 'telescope.builtin'.lsp_definitions({jump_type = 'vsplit'})<CR>", opts)
+    -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>gd', "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
 
 
     -- workspace
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n',
+        '<Leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n',
+        '<Leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n',
+        '<Leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
 
     -- format
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>fm', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
 
     -- diagnostic
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>ds', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n',
+        '<Leader>ds', "<cmd>lua require'telescope.builtin'.diagnostics()<CR>", opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '[d', ":Lspsaga diagnostic_jump_prev<CR>", opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', ']d', ":Lspsaga diagnostic_jump_next<CR>", opts)
     -- diagnostic show in line or in cursor
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>dl', "<cmd>lua require'lspsaga.diagnostic'.show_line_diagnostics()<CR>", opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>dc', "<cmd>lua require'lspsaga.diagnostic'.show_cursor_diagnostics()<CR>", opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n',
+        '<Leader>dl', "<cmd>lua require'lspsaga.diagnostic'.show_line_diagnostics()<CR>", opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n',
+        '<Leader>dc', "<cmd>lua require'lspsaga.diagnostic'.show_cursor_diagnostics()<CR>", opts)
 
 end
 

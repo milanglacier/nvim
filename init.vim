@@ -54,7 +54,7 @@ if !exists('g:vscode')
 
     let $NVIM_TUI_ENABLE_TRUE_COLOR=1
     set termguicolors
-    set guifont=Code_new_Roman_Nerd_Font_Complete:h17
+    set guifont=Code_new_Roman_Nerd_Font_Complete:h16
 
     call plug#begin()
 
@@ -75,7 +75,7 @@ if !exists('g:vscode')
         " Plug 'vim-scripts/argtextobj.vim'
         Plug 'michaeljsmith/vim-indent-object'
         Plug 'wellle/targets.vim'
-        Plug 'Raimondi/delimitMate'
+        Plug 'windwp/nvim-autopairs'
 
         " Tree sitter for enhanced text obj and syntax capturality
         Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -87,7 +87,7 @@ if !exists('g:vscode')
         Plug 'vim-pandoc/vim-rmarkdown', {'for': ['rmarkdown']}
         Plug 'iamcco/markdown-preview.nvim' , { 'do': 'cd app && yarn install'  }
 
-        " Set FZF for file search
+        " Fuzzy finder for file search
         Plug 'nvim-lua/plenary.nvim'
         Plug 'nvim-telescope/telescope.nvim'
         Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
@@ -119,11 +119,12 @@ if !exists('g:vscode')
         Plug 'hrsh7th/nvim-cmp'
         Plug 'tami5/lspsaga.nvim'
 
+
         " Completion
         Plug 'L3MON4D3/LuaSnip'
         Plug 'saadparwaiz1/cmp_luasnip'
 
-        " Variables Outline
+        " Symbol Outline
         Plug 'simrat39/symbols-outline.nvim'
 
         " REPL
@@ -133,6 +134,11 @@ if !exists('g:vscode')
 
         " Git
         Plug 'f-person/git-blame.nvim'
+        Plug 'TimUntersberger/neogit'
+        Plug 'sindrets/diffview.nvim'
+
+        "automatically set the root
+        Plug 'ygm2/rooter.nvim'
 
         
         Plug 'kyazdani42/nvim-web-devicons'
@@ -177,6 +183,8 @@ EOF
     source ~/.config/nvim/vim/conf_sneak.vim
 
     lua require("conf_terminal")
+    lua require("conf_autopairs")
+    lua require("conf_snippets")
     
     
 else 

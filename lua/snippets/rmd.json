@@ -1,0 +1,54 @@
+{
+	"create r code chunk": {
+		"prefix": "rc",
+		"body": [
+			"```{r}",
+			"$0",
+			"\n",
+			"\n",
+			"```"
+		],
+		"description": "create r code chunk"
+	}, 
+	
+
+	"create r plot code chunk": {
+		"prefix": "rp",
+		"body": [
+			"```{r plot, fig.align = 'center', fig.height=3, fig.cap = '', out.width='0.75\\linewidth'}",
+			"$0",
+			"\n",
+			"\n",
+			"```{r}"
+		],
+		"description": "create r plot code chunk"
+	},
+
+	"create rmd meta data": {
+
+		"prefix": "yaml",
+		"body": [
+			"---",
+			"title: 'rmd title'",
+			"author: 'Rongzhao Yan'",
+			"date: '12/14/2021'",
+			"output: ",
+			"    bookdown::pdf_document2:",
+			"      toc: False",
+			"      includes:",
+			"            in_header: tem.tex",
+			"bibliography: citation.bib",
+			"---",
+                        "\n",
+			"```{r setup, include=FALSE}",
+			"knitr::opts_chunk$set(echo = TRUE, warning = F, message = F)",
+			"options(scipen = 10)",
+			"```",
+			"$0"
+		],
+		"description": "create rmd metadata"
+
+
+
+	}
+}

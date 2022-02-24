@@ -1,0 +1,23 @@
+{
+    "name": "my-snippers",
+    "engines": {
+      "vscode": "^1.11.0"
+    },
+    "contributes": {
+      "snippets": [
+        {
+          "language": "r",
+          "path": "./r.json"
+        },
+        {
+          "language": "rmd",
+          "path": "./rmd.json"
+        },
+        {
+          "language": "python",
+          "path": "./python.json"
+        }
+
+      ]
+    }
+  }

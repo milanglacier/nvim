@@ -54,3 +54,8 @@ nnoremap † <C-w>T
 nnoremap œ <C-w>q
 " <A-v>
 nnoremap √ <C-w>v
+" <A-hjkl>
+nnoremap ˙ <C-w>h
+nnoremap ∆ <C-w>j
+nnoremap ˚ <C-w>k
+nnoremap ¬ <C-w>l

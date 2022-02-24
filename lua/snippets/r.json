@@ -1,0 +1,13 @@
+{
+	"create python code chunk": {
+		"prefix": "rc",
+		"body": [
+			"# %%",
+			"$0",
+			"\n",
+			"\n",
+			"# %%"
+		],
+		"description": "create python code chunk"
+	}
+}
