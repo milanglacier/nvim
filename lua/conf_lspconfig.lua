@@ -12,7 +12,7 @@ local on_attach = function(client, bufnr)
     -- See `:help vim.lsp.*` for documentation on any of the below functions
     --  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
     --  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-    -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>td', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
     --
     --  vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
     -- vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
@@ -25,6 +25,7 @@ local on_attach = function(client, bufnr)
     -- open a seperate window to show reference
 
 
+    -- reference
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr',
         "<cmd>lua require 'telescope.builtin'.lsp_references({jump_type = 'vsplit'})<CR>", opts)
 
@@ -32,7 +33,7 @@ local on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>ca',
         "<cmd>lua require('lspsaga.codeaction').code_action()<CR>", opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'v', '<Leader>ca',
-        "<C-U>lua lua require('lspsaga.codeaction').range_code_action()<CR>", opts)
+        ":<C-U>lua require('lspsaga.codeaction').range_code_action()<CR>", opts)
 
     -- hover
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gh',
@@ -50,12 +51,12 @@ local on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>rn',
         '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
 
-    -- preview definition
-    -- vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', "<cmd>lua require'lspsaga.provider'.preview_definition()<CR>", opts)
+    -- go to definition, implementation
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd',
         "<cmd>lua require 'telescope.builtin'.lsp_definitions({jump_type = 'vsplit'})<CR>", opts)
-    -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>gd', "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-
+    vim.api.nvim_buf_set_keymap(bufnr, 'n',
+        '<Leader>gi', "<cmd>lua require'telescope.builtin'.lsp_implementations({jump_type = 'vsplit'})<CR>", opts)
+    -- vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', "<cmd>lua require'lspsaga.provider'.preview_definition()<CR>", opts)
 
     -- workspace
     vim.api.nvim_buf_set_keymap(bufnr, 'n',
@@ -67,6 +68,7 @@ local on_attach = function(client, bufnr)
 
     -- format
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>fm', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'v', '<Leader>fl', ':<C-U>lua vim.lsp.buf.range_formatting()<CR>', opts)
 
 
     -- diagnostic
@@ -122,6 +124,13 @@ require'lspconfig'.julials.setup{
     capabilities = capabilities,
 
 }
+
+
+require'lspconfig'.clangd.setup{
+    on_attach = on_attach,
+    capabilities = capabilities
+}
+
 
 vim.fn.sign_define("DiagnosticSignError", { text = "✗", texthl = "DiagnosticSignError" })
 vim.fn.sign_define("DiagnosticSignWarn", { text = "!", texthl = "DiagnosticSignWarn" })

@@ -49,10 +49,5 @@ saga.init_lsp_saga {
     rename_action_keys = {
         quit = {'<C-c>', '<ESC>'},exec = '<CR>'  -- quit can be a table
     },
+    code_action_prompt = {enable = false}
 }
-
--- open/close float terminal
-vim.cmd([[
-nnoremap <silent> <LocalLeader>ft :Lspsaga open_floaterm<CR>
-tnoremap <silent> <LocalLeader>ft <C-\><C-n>:Lspsaga close_floaterm<CR>
-]])

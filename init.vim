@@ -54,28 +54,32 @@ if !exists('g:vscode')
 
     let $NVIM_TUI_ENABLE_TRUE_COLOR=1
     set termguicolors
-    set guifont=Code_new_Roman_Nerd_Font_Complete:h16
+    set guifont=Code_new_Roman_Nerd_Font_Complete:h15
 
     call plug#begin()
 
         " Set the Theme for nvim
         " Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
-        " Plug 'altercation/vim-colors-solarized'
         Plug 'EdenEast/nightfox.nvim'
 
         " Set the theme for statusbar
         Plug 'nvim-lualine/lualine.nvim'
+        " Plug 'sunjon/shade.nvim'
+
+        "automatically set the root
+        Plug 'ygm2/rooter.nvim'
 
         " Set the advanced text editing and jumping plug
         Plug 'searleser97/vim-sneak'
         Plug 'tpope/vim-surround'
         " Plug 'preservim/nerdcommenter'
-        Plug 'tpope/vim-commentary'
+        Plug 'numToStr/Comment.nvim'
         Plug 'tpope/vim-repeat'
         " Plug 'vim-scripts/argtextobj.vim'
         Plug 'michaeljsmith/vim-indent-object'
         Plug 'wellle/targets.vim'
         Plug 'windwp/nvim-autopairs'
+        Plug 'lukas-reineke/indent-blankline.nvim'
 
         " Tree sitter for enhanced text obj and syntax capturality
         Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -85,18 +89,14 @@ if !exists('g:vscode')
         " Set markdown syntax highlighting
         Plug 'vim-pandoc/vim-pandoc-syntax', {'for': ['r', 'rmd', 'python', 'markdown.pandoc']}
         Plug 'vim-pandoc/vim-rmarkdown', {'for': ['rmarkdown']}
-        Plug 'iamcco/markdown-preview.nvim' , { 'do': 'cd app && yarn install'  }
+        Plug 'iamcco/markdown-preview.nvim' , { 'do': 'cd app && yarn install', 'for': ['markdown.pandoc', 'rmd']  }
 
         " Fuzzy finder for file search
         Plug 'nvim-lua/plenary.nvim'
         Plug 'nvim-telescope/telescope.nvim'
         Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
-        " a simple format code plugin
-        Plug 'pappasam/vim-filetype-formatter', {'for': ['r', 'rmd', 'python', 'markdown.pandoc']}
-        Plug 'kdheepak/JuliaFormatter.vim', { 'for': 'julia'}
-
-        " Very simple, naive completion without LSP
+        " very simple, naive completion without LSP
         " Plug 'skywind3000/vim-auto-popmenu'
         " Plug 'skywind3000/vim-dict'
 
@@ -137,10 +137,17 @@ if !exists('g:vscode')
         Plug 'TimUntersberger/neogit'
         Plug 'sindrets/diffview.nvim'
 
-        "automatically set the root
-        Plug 'ygm2/rooter.nvim'
+        " Debugger
+        Plug 'mfussenegger/nvim-dap', {'for': ['python']}
+        Plug 'mfussenegger/nvim-dap-python', {'for': ['python']}
+        Plug 'rcarriga/nvim-dap-ui', {'for': ['python']}
+        Plug 'nvim-telescope/telescope-dap.nvim', {'for': ['python']}
+        Plug 'theHamsta/nvim-dap-virtual-text', {'for': ['python']}
 
-        
+        " search and replace file
+        Plug 'windwp/nvim-spectre'
+
+
         Plug 'kyazdani42/nvim-web-devicons'
 
 
@@ -163,9 +170,14 @@ EOF
     source ~/.config/nvim/vim/conf_builtin_extend.vim
 
     lua require('conf_lualine')
+    lua require('conf_indent')
+    " lua require('conf_shade')
+
+    lua require('conf_comment')
+
     
     lua require("conf_treesitter")
-    source ~/.config/nvim/vim/conf_autofm.vim
+    source ~/.config/nvim/vim/conf_pandoc.vim
     source ~/.config/nvim/vim/conf_nvim_tree.vim
     lua require('conf_nvim_tree')
     lua require('conf_telescope')
@@ -185,6 +197,10 @@ EOF
     lua require("conf_terminal")
     lua require("conf_autopairs")
     lua require("conf_snippets")
+
+    lua require("conf_dap")
+
+    lua require("conf_spectre")
     
     
 else 
@@ -197,7 +213,7 @@ else
 
         Plug 'tpope/vim-surround'
         " Plug 'preservim/nerdcommenter'
-        Plug 'tpope/vim-commentary'
+        Plug 'numToStr/Comment.nvim'
         Plug 'tpope/vim-repeat'
         " Plug 'vim-scripts/argtextobj.vim'
         Plug 'wellle/targets.vim'
@@ -210,13 +226,15 @@ else
         " Deal with input method, automatically changed to English
         " input method when switch to normal mode
         Plug 'milanglacier/smartim'
+        Plug 'asvetliakov/vim-easymotion'
 
     call plug#end()
     
+    lua require('conf_comment')
     lua require("conf_treesitter")
     source ~/.config/nvim/vim/conf_sneak.vim
     source ~/.config/nvim/vim/conf_builtin_extend.vim
-    
+
 endif
 
 

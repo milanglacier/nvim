@@ -87,7 +87,7 @@ let g:mkdp_page_title = '「${name}」'
 
 " recognized filetypes
 " these filetypes will have MarkdownPreview... commands
-let g:mkdp_filetypes = ['markdown.pandoc', 'markdown']
+let g:mkdp_filetypes = ['markdown.pandoc', 'markdown', 'rmd']
 
 nnoremap <silent> <LocalLeader>mp :MarkdownPreview<cr>
 nnoremap <silent> <LocalLeader>mq :MarkdownPreviewStop<cr>
