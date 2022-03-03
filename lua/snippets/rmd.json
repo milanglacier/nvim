@@ -15,11 +15,11 @@
 	"create r plot code chunk": {
 		"prefix": "rp",
 		"body": [
-			"```{r plot, fig.align = 'center', fig.height=3, fig.cap = '', out.width='0.75\\linewidth'}",
+			"```{r plot, fig.align = 'center', fig.height=3, fig.cap = '', out.width='0.75\\\\\\\\linewidth'}",
 			"$0",
 			"\n",
 			"\n",
-			"```{r}"
+			"```"
 		],
 		"description": "create r plot code chunk"
 	},
@@ -41,7 +41,7 @@
 			"---",
                         "\n",
 			"```{r setup, include=FALSE}",
-			"knitr::opts_chunk$set(echo = TRUE, warning = F, message = F)",
+			"knitr::opts_chunk\\$set(echo = TRUE, warning = F, message = F)",
 			"options(scipen = 10)",
 			"```",
 			"$0"
