@@ -35,6 +35,8 @@ filetype plugin indent on
 " then you probably find that this map won't working.
 let mapleader = ' '
 
+set clipboard+=unnamedplus
+
 " function to enabling the same plugin (at different fork), primarily
 " for vscode neovim extension.
 " to use it, you need to copy two lines of installation commamnd
@@ -125,7 +127,9 @@ if !exists('g:vscode')
         Plug 'saadparwaiz1/cmp_luasnip'
 
         " Symbol Outline
-        Plug 'simrat39/symbols-outline.nvim'
+        " Plug 'simrat39/symbols-outline.nvim'
+        Plug 'stevearc/aerial.nvim'
+        Plug 'onsails/lspkind-nvim'
 
         " REPL
         Plug 'jalvesaq/Nvim-R', {'for': ['r', 'rmd']}
@@ -181,6 +185,8 @@ EOF
     source ~/.config/nvim/vim/conf_nvim_tree.vim
     lua require('conf_nvim_tree')
     lua require('conf_telescope')
+
+    lua require("conf_aerial")
     
     
     lua require('conf_cmp')
@@ -189,7 +195,7 @@ EOF
     source ~/.config/nvim/vim/conf_nvim-R.vim
     source ~/.config/nvim/vim/conf_move_tabs.vim
     source ~/.config/nvim/vim/conf_cmdline.vim
-    lua require("conf_sym_otln")
+    " lua require("conf_sym_otln")
 
     source ~/.config/nvim/vim/conf_mkdp.vim
     source ~/.config/nvim/vim/conf_sneak.vim

@@ -82,6 +82,9 @@ local on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, 'n',
         '<Leader>dc', "<cmd>lua require'lspsaga.diagnostic'.show_cursor_diagnostics()<CR>", opts)
 
+    require("aerial").on_attach(client, bufnr)
+
+
 end
 
 
