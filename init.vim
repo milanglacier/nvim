@@ -33,9 +33,9 @@ filetype plugin indent on
 " as if you define your leader key to be <spc> 
 " later than your map key which used <Leader>
 " then you probably find that this map won't working.
-let mapleader = ' '
 
 set clipboard+=unnamedplus
+
 
 " function to enabling the same plugin (at different fork), primarily
 " for vscode neovim extension.
@@ -66,13 +66,16 @@ if !exists('g:vscode')
 
         " Set the theme for statusbar
         Plug 'nvim-lualine/lualine.nvim'
+        Plug 'alvarosevilla95/luatab.nvim'
         " Plug 'sunjon/shade.nvim'
 
         "automatically set the root
         Plug 'ygm2/rooter.nvim'
+        Plug 'ahmedkhalf/project.nvim'
 
         " Set the advanced text editing and jumping plug
         Plug 'searleser97/vim-sneak'
+
         Plug 'tpope/vim-surround'
         " Plug 'preservim/nerdcommenter'
         Plug 'numToStr/Comment.nvim'
@@ -80,6 +83,9 @@ if !exists('g:vscode')
         " Plug 'vim-scripts/argtextobj.vim'
         Plug 'michaeljsmith/vim-indent-object'
         Plug 'wellle/targets.vim'
+        Plug 'AndrewRadev/dsf.vim'
+
+
         Plug 'windwp/nvim-autopairs'
         Plug 'lukas-reineke/indent-blankline.nvim'
 
@@ -178,14 +184,19 @@ EOF
     " lua require('conf_shade')
 
     lua require('conf_comment')
+    source ~/.config/nvim/vim/conf_dsf.vim
 
     
     lua require("conf_treesitter")
     source ~/.config/nvim/vim/conf_pandoc.vim
+
     source ~/.config/nvim/vim/conf_nvim_tree.vim
     lua require('conf_nvim_tree')
-    lua require('conf_telescope')
 
+    lua require('conf_telescope')
+    lua require('conf_project_nvim')
+
+    lua require("conf_lspkind")
     lua require("conf_aerial")
     
     
@@ -223,6 +234,7 @@ else
         Plug 'tpope/vim-repeat'
         " Plug 'vim-scripts/argtextobj.vim'
         Plug 'wellle/targets.vim'
+        Plug 'AndrewRadev/dsf.vim'
         Plug 'michaeljsmith/vim-indent-object'
 
         " Tree sitter for enhanced text obj and syntax capturality
@@ -237,6 +249,7 @@ else
     call plug#end()
     
     lua require('conf_comment')
+    source ~/.config/nvim/vim/conf_dsf.vim
     lua require("conf_treesitter")
     source ~/.config/nvim/vim/conf_sneak.vim
     source ~/.config/nvim/vim/conf_builtin_extend.vim

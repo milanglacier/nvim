@@ -34,5 +34,9 @@ require('lualine').setup {
         lualine_z = {}
     },
     tabline = {},
-    extensions = {},
+    extensions = {"aerial", "nvim-tree"},
 }
+
+luatab = require("luatab")
+
+luatab.setup{}
