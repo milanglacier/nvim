@@ -42,20 +42,13 @@ function MoveToNextTab()
   exe "b".l:cur_buf
 endfunc
 
-" <A-f>
-nnoremap ƒ :call MoveToNextTab()<CR><C-w>L
-" <A-b>
-nnoremap ∫ :call MoveToPrevTab()<CR><C-w>L
-" <A-w>
-nnoremap ∑ <C-w>w
-" <A-t>
-nnoremap † <C-w>T
-" <A-q>
-nnoremap œ <C-w>q
-" <A-v>
-nnoremap √ <C-w>v
-" <A-hjkl>
-nnoremap ˙ <C-w>h
-nnoremap ∆ <C-w>j
-nnoremap ˚ <C-w>k
-nnoremap ¬ <C-w>l
+nnoremap <A-f> :call MoveToNextTab()<CR><C-w>L
+nnoremap <A-b> :call MoveToPrevTab()<CR><C-w>L
+nnoremap <A-w> <C-w>w
+nnoremap <A-t> <C-w>T
+nnoremap <A-q> <C-w>q
+nnoremap <A-v> <C-w>v
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l

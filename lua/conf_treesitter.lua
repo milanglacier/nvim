@@ -76,7 +76,7 @@ require'nvim-treesitter.configs'.setup {
                 ["]<Leader>c"] = "@class.outer",
                 ["]l"] = "@loop.outer",
                 ["]c"] = "@conditional.outer",
-                ["]<Leader>e"] = "@call.outer",
+                ["]e"] = "@call.outer",
                 ["]a"] = "@parameter.outer",
             },
 
@@ -85,7 +85,7 @@ require'nvim-treesitter.configs'.setup {
                 ["]<Leader>C"] = "@class.outer",
                 ["]L"] = "@loop.outer",
                 ["]C"] = "@conditional.outer",
-                ["]<Leader>E"] = "@call.outer",
+                ["]E"] = "@call.outer",
                 ["]A"] = "@parameter.outer",
 
             },
@@ -95,7 +95,7 @@ require'nvim-treesitter.configs'.setup {
                 ["[<Leader>c"] = "@class.outer",
                 ["[l"] = "@loop.outer",
                 ["[c"] = "@conditional.outer",
-                ["[<Leader>e"] = "@call.outer",
+                ["[e"] = "@call.outer",
                 ["[a"] = "@parameter.outer",
             },
 
@@ -105,7 +105,7 @@ require'nvim-treesitter.configs'.setup {
                 ["[<Leader>C"] = "@class.outer",
                 ["[L"] = "@loop.outer",
                 ["[C"] = "@conditional.outer",
-                ["[<Leader>E"] = "@call.outer",
+                ["[E"] = "@call.outer",
                 ["[A"] = "@parameter.outer",
             }
         }

@@ -54,6 +54,8 @@ let g:CONDA_PATHNAME = "/opt/homebrew/Caskroom/miniforge/base"
 " condition brach for different setting in nvim terminal and vscode
 if !exists('g:vscode')
 
+    set mouse=a
+
     let $NVIM_TUI_ENABLE_TRUE_COLOR=1
     set termguicolors
     set guifont=Code_new_Roman_Nerd_Font_Complete:h15
@@ -76,6 +78,7 @@ if !exists('g:vscode')
         " Set the advanced text editing and jumping plug
         Plug 'searleser97/vim-sneak'
 
+        Plug 'milanglacier/regreplop.vim'
         Plug 'tpope/vim-surround'
         " Plug 'preservim/nerdcommenter'
         Plug 'numToStr/Comment.nvim'
@@ -228,6 +231,7 @@ else
 
         Plug 'searleser97/vim-sneak'
 
+        Plug 'milanglacier/regreplop.vim'
         Plug 'tpope/vim-surround'
         " Plug 'preservim/nerdcommenter'
         Plug 'numToStr/Comment.nvim'

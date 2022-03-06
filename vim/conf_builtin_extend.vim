@@ -32,6 +32,14 @@ tnoremap <C-e> <end>
 nnoremap <Leader>cd :cd %:h<cr>
 nnoremap <Leader>cu :cd ..<cr>
 
+if exists('g:vscode')
+    " π is <Options-p> in mac
+    " since vscode doesn't
+    " send <A-p> command to vim.
+    nmap <silent> π <Plug>ReplaceMotion
+    nmap <silent> πp <Plug>ReplaceLine
+    vmap <silent> π <Plug>ReplaceVisual
+endif
 augroup highlight_yank
     autocmd!
     au TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=400}
