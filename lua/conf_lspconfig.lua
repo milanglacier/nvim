@@ -10,7 +10,7 @@ local on_attach = function(client, bufnr)
 
     -- Mappings.
     -- See `:help vim.lsp.*` for documentation on any of the below functions
-    --  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+    -- vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
     --  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>td', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
     --
@@ -19,7 +19,7 @@ local on_attach = function(client, bufnr)
     -- vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
     -- vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
     --
-    
+
     -- find definition and reference simutaneously
     -- vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', "<cmd>lua require'lspsaga.provider'.lsp_finder()<CR>", opts)
     -- open a seperate window to show reference
@@ -27,7 +27,7 @@ local on_attach = function(client, bufnr)
 
     -- reference
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr',
-        "<cmd>lua require 'telescope.builtin'.lsp_references({jump_type = 'vsplit'})<CR>", opts)
+        "<cmd>lua require 'telescope.builtin'.lsp_references({layout_strategy = 'vertical', jump_type = 'tab'})<CR>", opts)
 
     -- code action
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>ca',
@@ -53,9 +53,9 @@ local on_attach = function(client, bufnr)
 
     -- go to definition, implementation
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd',
-        "<cmd>lua require 'telescope.builtin'.lsp_definitions({jump_type = 'vsplit'})<CR>", opts)
+        "<cmd>lua require 'telescope.builtin'.lsp_definitions({layout_strategy = 'vertical', jump_type = 'tab'})<CR>", opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n',
-        '<Leader>gi', "<cmd>lua require'telescope.builtin'.lsp_implementations({jump_type = 'vsplit'})<CR>", opts)
+        '<Leader>gi', "<cmd>lua require'telescope.builtin'.lsp_implementations({layout_strategy = 'vertical', jump_type = 'tab'})<CR>", opts)
     -- vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', "<cmd>lua require'lspsaga.provider'.preview_definition()<CR>", opts)
 
     -- workspace
@@ -121,9 +121,9 @@ require'lspconfig'.julials.setup{
         -- This will be the default in neovim 0.7+
         debounce_text_changes = 150,
     },
-    root_dir = function(fname) 
-        return util.root_pattern 'Project.toml'(fname) or util.find_git_ancestor(fname) 
-    end, 
+    root_dir = function(fname)
+        return util.root_pattern 'Project.toml'(fname) or util.find_git_ancestor(fname)
+    end,
     capabilities = capabilities,
 
 }
@@ -134,6 +134,36 @@ require'lspconfig'.clangd.setup{
     capabilities = capabilities
 }
 
+local runtime_path = vim.split(package.path, ';')
+table.insert(runtime_path, "lua/?.lua")
+table.insert(runtime_path, "lua/?/init.lua")
+
+require'lspconfig'.sumneko_lua.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+        Lua = {
+            runtime = {
+                -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+                version = 'LuaJIT',
+                -- Setup your lua path
+                path = runtime_path,
+            },
+            diagnostics = {
+                -- Get the language server to recognize the `vim` global
+                globals = {'vim'},
+            },
+            workspace = {
+                -- Make the server aware of Neovim runtime files
+                library = vim.api.nvim_get_runtime_file("", true),
+            },
+            -- Do not send telemetry data containing a randomized but unique identifier
+            telemetry = {
+                enable = false,
+            },
+        },
+    },
+}
 
 vim.fn.sign_define("DiagnosticSignError", { text = "✗", texthl = "DiagnosticSignError" })
 vim.fn.sign_define("DiagnosticSignWarn", { text = "!", texthl = "DiagnosticSignWarn" })
