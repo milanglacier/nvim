@@ -32,6 +32,8 @@ tnoremap <C-e> <end>
 nnoremap <Leader>cd :cd %:h<cr>
 nnoremap <Leader>cu :cd ..<cr>
 
+let g:cursorhold_updatetime = 750
+
 if exists('g:vscode')
     " π is <Options-p> in mac
     " since vscode doesn't

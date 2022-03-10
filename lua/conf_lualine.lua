@@ -12,7 +12,7 @@ require('lualine').setup {
         lualine_b = {'branch', 'diff', 'diagnostics'},
         lualine_c = {'filename'},
         lualine_x = {
-            'encoding', 
+            'encoding',
             {'fileformat',
                 max_length = vim.o.columns / 5,
                 symbols = {
@@ -37,6 +37,4 @@ require('lualine').setup {
     extensions = {"aerial", "nvim-tree"},
 }
 
-luatab = require("luatab")
-
-luatab.setup{}
+require("luatab").setup{}

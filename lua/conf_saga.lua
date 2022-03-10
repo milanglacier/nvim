@@ -36,7 +36,7 @@ local saga = require 'lspsaga'
 -- like server_filetype_map = {metals = {'sbt', 'scala'}}
 -- server_filetype_map = {}
 
-saga.init_lsp_saga {
+saga.setup {
     finder_action_keys = {
         open = {'o', '<cr>'},
         vsplit = 'v',split = 's',
@@ -49,5 +49,6 @@ saga.init_lsp_saga {
     rename_action_keys = {
         quit = {'<C-c>', '<ESC>'},exec = '<CR>'  -- quit can be a table
     },
-    code_action_prompt = {enable = false}
+    code_action_prompt = {enable = false},
+    max_preview_lines = 100
 }
