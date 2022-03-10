@@ -56,15 +56,18 @@ if !exists('g:vscode')
 
     set mouse=a
 
-    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-    set termguicolors
-    set guifont=Code_new_Roman_Nerd_Font_Complete:h15
-
     call plug#begin()
 
         " Set the Theme for nvim
         " Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
         Plug 'EdenEast/nightfox.nvim'
+        Plug 'rose-pine/neovim', {'as': 'rose-pine'}
+        Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+        Plug 'sainnhe/everforest'
+        Plug 'norcalli/nvim-colorizer.lua'
+
+        " Fix bugs
+        Plug 'antoinemadec/FixCursorHold.nvim'
 
         " Set the theme for statusbar
         Plug 'nvim-lualine/lualine.nvim'
@@ -165,20 +168,8 @@ if !exists('g:vscode')
 
 
     call plug#end()
-
-    " set shell=zsh
-
-    syntax enable
     
-lua << EOF
-
-    time = os.date("*t")
-    if (time.hour <= 7) or (time.hour >= 23) then
-            vim.cmd("colorscheme nightfox")
-    else
-            vim.cmd("colorscheme dawnfox")
-    end
-EOF
+    lua require("conf_colorscheme")
 
     source ~/.config/nvim/vim/conf_builtin_extend.vim
 
@@ -229,6 +220,10 @@ else
     
     call plug#begin()
 
+
+        " Fix bugs
+        Plug 'antoinemadec/FixCursorHold.nvim'
+
         Plug 'searleser97/vim-sneak'
 
         Plug 'milanglacier/regreplop.vim'
@@ -248,7 +243,7 @@ else
         " Deal with input method, automatically changed to English
         " input method when switch to normal mode
         Plug 'milanglacier/smartim'
-        Plug 'asvetliakov/vim-easymotion'
+        " Plug 'asvetliakov/vim-easymotion'
 
     call plug#end()
     
