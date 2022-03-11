@@ -1,6 +1,5 @@
 
 " keybinding remap for global keys
-
 inoremap jk <Esc>
 tnoremap jk <C-\><C-n> 
 

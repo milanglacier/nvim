@@ -58,8 +58,9 @@ if !exists('g:vscode')
 
     call plug#begin()
 
-        " Set the Theme for nvim
-        " Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+        Plug 'lewis6991/impatient.nvim'
+        Plug 'nathom/filetype.nvim'
+
         Plug 'EdenEast/nightfox.nvim'
         Plug 'rose-pine/neovim', {'as': 'rose-pine'}
         Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
@@ -169,9 +170,12 @@ if !exists('g:vscode')
 
     call plug#end()
     
-    lua require("conf_colorscheme")
+    lua require("impatient")
+    lua require("conf_filetype")
 
     source ~/.config/nvim/vim/conf_builtin_extend.vim
+
+    lua require("conf_colorscheme")
 
     lua require('conf_lualine')
     lua require('conf_indent')
@@ -221,6 +225,9 @@ else
     call plug#begin()
 
 
+        Plug 'lewis6991/impatient.nvim'
+        Plug 'nathom/filetype.nvim'
+
         " Fix bugs
         Plug 'antoinemadec/FixCursorHold.nvim'
 
@@ -247,11 +254,15 @@ else
 
     call plug#end()
     
+    lua require("impatient")
+    lua require("conf_filetype")
+
+    source ~/.config/nvim/vim/conf_builtin_extend.vim
+
     lua require('conf_comment')
     source ~/.config/nvim/vim/conf_dsf.vim
     lua require("conf_treesitter")
     source ~/.config/nvim/vim/conf_sneak.vim
-    source ~/.config/nvim/vim/conf_builtin_extend.vim
 
 endif
 
