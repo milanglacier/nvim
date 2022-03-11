@@ -35,7 +35,7 @@ telescope.setup {
 
             vertical = {
 
-
+                preview_cutoff = 30
             }
 
         },
