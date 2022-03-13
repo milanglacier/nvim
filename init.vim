@@ -54,6 +54,7 @@ let g:CONDA_PATHNAME = "/opt/homebrew/Caskroom/miniforge/base"
 " condition brach for different setting in nvim terminal and vscode
 if !exists('g:vscode')
 
+    syntax enable
     set mouse=a
 
     call plug#begin()
@@ -61,11 +62,10 @@ if !exists('g:vscode')
         Plug 'lewis6991/impatient.nvim'
         Plug 'nathom/filetype.nvim'
 
-        Plug 'EdenEast/nightfox.nvim'
+        Plug 'milanglacier/nightfox.nvim'
         Plug 'rose-pine/neovim', {'as': 'rose-pine'}
         Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
         Plug 'sainnhe/everforest'
-        Plug 'norcalli/nvim-colorizer.lua'
 
         " Fix bugs
         Plug 'antoinemadec/FixCursorHold.nvim'
@@ -73,6 +73,7 @@ if !exists('g:vscode')
         " Set the theme for statusbar
         Plug 'nvim-lualine/lualine.nvim'
         Plug 'alvarosevilla95/luatab.nvim'
+        Plug 'rcarriga/nvim-notify'
         " Plug 'sunjon/shade.nvim'
 
         "automatically set the root
@@ -82,7 +83,6 @@ if !exists('g:vscode')
         " Set the advanced text editing and jumping plug
         Plug 'searleser97/vim-sneak'
 
-        Plug 'milanglacier/regreplop.vim'
         Plug 'tpope/vim-surround'
         " Plug 'preservim/nerdcommenter'
         Plug 'numToStr/Comment.nvim'
@@ -91,10 +91,11 @@ if !exists('g:vscode')
         Plug 'michaeljsmith/vim-indent-object'
         Plug 'wellle/targets.vim'
         Plug 'AndrewRadev/dsf.vim'
-
-
+        Plug 'svermeulen/vim-subversive'
         Plug 'windwp/nvim-autopairs'
         Plug 'lukas-reineke/indent-blankline.nvim'
+        
+        Plug 'norcalli/nvim-colorizer.lua'
 
         " Tree sitter for enhanced text obj and syntax capturality
         Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -102,8 +103,8 @@ if !exists('g:vscode')
         Plug 'p00f/nvim-ts-rainbow'
 
         " Set markdown syntax highlighting
-        Plug 'vim-pandoc/vim-pandoc-syntax', {'for': ['r', 'rmd', 'python', 'markdown.pandoc']}
-        Plug 'vim-pandoc/vim-rmarkdown', {'for': ['rmarkdown']}
+        Plug 'vim-pandoc/vim-pandoc-syntax', {'for': ['rmd', 'markdown.pandoc']}
+        Plug 'vim-pandoc/vim-rmarkdown', {'for': ['rmd'], 'branch': 'official-filetype'}
         Plug 'iamcco/markdown-preview.nvim' , { 'do': 'cd app && yarn install', 'for': ['markdown.pandoc', 'rmd']  }
 
         " Fuzzy finder for file search
@@ -123,25 +124,28 @@ if !exists('g:vscode')
         " Plug 'glacambre/firenvim'
 
         " file explorer
-        Plug 'kyazdani42/nvim-tree.lua'
+        Plug 'kyazdani42/nvim-tree.lua', {'on': 'NvimTreeToggle'}
 
         " LSP config
         Plug 'neovim/nvim-lspconfig'
+        Plug 'tami5/lspsaga.nvim'
+
+        " Completion
         Plug 'hrsh7th/cmp-nvim-lsp'
         Plug 'hrsh7th/cmp-buffer'
         Plug 'hrsh7th/cmp-path'
         Plug 'hrsh7th/cmp-cmdline'
         Plug 'hrsh7th/nvim-cmp'
-        Plug 'tami5/lspsaga.nvim'
-
-
-        " Completion
+        Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
+        Plug 'hrsh7th/cmp-nvim-lua'
+        Plug 'hrsh7th/cmp-omni'
+        Plug 'kdheepak/cmp-latex-symbols'
         Plug 'L3MON4D3/LuaSnip'
         Plug 'saadparwaiz1/cmp_luasnip'
 
         " Symbol Outline
         " Plug 'simrat39/symbols-outline.nvim'
-        Plug 'stevearc/aerial.nvim'
+        Plug 'stevearc/aerial.nvim', {'on': 'AerialToggle'}
         Plug 'onsails/lspkind-nvim'
 
         " REPL
@@ -151,8 +155,8 @@ if !exists('g:vscode')
 
         " Git
         Plug 'f-person/git-blame.nvim'
-        Plug 'TimUntersberger/neogit'
-        Plug 'sindrets/diffview.nvim'
+        Plug 'TimUntersberger/neogit', {'on': 'Neogit'}
+        Plug 'sindrets/diffview.nvim', {'on': ['DiffviewOpen', 'DiffviewFileHistory']}
 
         " Debugger
         Plug 'mfussenegger/nvim-dap', {'for': ['python']}
@@ -170,7 +174,7 @@ if !exists('g:vscode')
 
     call plug#end()
     
-    lua require("impatient")
+    lua require("impatient").enable_profile()
     lua require("conf_filetype")
 
     source ~/.config/nvim/vim/conf_builtin_extend.vim
@@ -179,10 +183,13 @@ if !exists('g:vscode')
 
     lua require('conf_lualine')
     lua require('conf_indent')
+    lua require('conf_notify')
+    
     " lua require('conf_shade')
 
     lua require('conf_comment')
     source ~/.config/nvim/vim/conf_dsf.vim
+    source ~/.config/nvim/vim/conf_subversive.vim
 
     
     lua require("conf_treesitter")
@@ -233,7 +240,6 @@ else
 
         Plug 'searleser97/vim-sneak'
 
-        Plug 'milanglacier/regreplop.vim'
         Plug 'tpope/vim-surround'
         " Plug 'preservim/nerdcommenter'
         Plug 'numToStr/Comment.nvim'
@@ -242,6 +248,7 @@ else
         Plug 'wellle/targets.vim'
         Plug 'AndrewRadev/dsf.vim'
         Plug 'michaeljsmith/vim-indent-object'
+        Plug 'svermeulen/vim-subversive'
 
         " Tree sitter for enhanced text obj and syntax capturality
         Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -263,6 +270,7 @@ else
     source ~/.config/nvim/vim/conf_dsf.vim
     lua require("conf_treesitter")
     source ~/.config/nvim/vim/conf_sneak.vim
+    source ~/.config/nvim/vim/conf_subversive.vim
 
 endif
 
