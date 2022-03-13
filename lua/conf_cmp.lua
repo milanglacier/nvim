@@ -24,13 +24,15 @@ cmp.setup({
 
     },
     sources = cmp.config.sources({
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' }, -- For luasnip users.
-        -- { name = 'ultisnips' }, -- For ultisnips users.
-        -- { name = 'snippy' }, -- For snippy users.
+        { name = 'nvim_lsp' },
+        { name = 'luasnip' }, -- For luasnip users.
+        { name = 'latex_symbols' }, -- For luasnip users.
+        { name = 'cmp-lsp-signature-help' }, -- For luasnip users.
+        { name = 'omni' }, -- For luasnip users.
+        { name = 'nvim_lua' }, -- For luasnip users.
     }, {
         { name = 'buffer' },
-        }
+    }
     ),
     formatting = {
         format = lspkind.cmp_format({
@@ -47,7 +49,7 @@ cmp.setup({
 -- Set configuration for specific filetype.
 cmp.setup.filetype('gitcommit', {
     sources = cmp.config.sources({
-    { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it. 
+    { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
     }, {
         { name = 'buffer' },
         })
