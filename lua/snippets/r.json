@@ -1,5 +1,5 @@
 {
-	"create python code chunk": {
+	"create r code chunk": {
 		"prefix": "rc",
 		"body": [
 			"# %%",
@@ -8,6 +8,13 @@
 			"\n",
 			"# %%"
 		],
-		"description": "create python code chunk"
-	}
+		"description": "create R code chunk"
+	},
+
+        "pipe symbol": {
+            "prefix": "pip",
+            "body": ["%>% $0"],
+            "description": "pipe"
+        }
+
 }
