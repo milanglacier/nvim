@@ -37,4 +37,3 @@ require('lualine').setup {
     extensions = {"aerial", "nvim-tree"},
 }
 
-require("luatab").setup{}

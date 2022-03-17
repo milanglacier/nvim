@@ -35,7 +35,7 @@ nnoremap <Leader>cu :cd ..<cr>
 nnoremap ]b :bn<cr>
 nnoremap [b :bp<cr>
 
-let g:cursorhold_updatetime = 750
+" let g:cursorhold_updatetime = 750
 
 augroup highlight_yank
     autocmd!
