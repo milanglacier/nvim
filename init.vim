@@ -172,10 +172,13 @@ if !exists('g:vscode')
     call plug#end()
 
     lua require("impatient").enable_profile()
+
     lua require("conf_filetype")
 
     source ~/.config/nvim/vim/conf_builtin_extend.vim
     source ~/.config/nvim/vim/conf_move_tabs.vim
+
+    lua require("conf_colorscheme")
 
     lua require("conf_colorscheme")
 
@@ -265,6 +268,7 @@ else
     source ~/.config/nvim/vim/conf_dsf.vim
     lua require("conf_treesitter")
     source ~/.config/nvim/vim/conf_sneak.vim
+
     source ~/.config/nvim/vim/conf_subversive.vim
 
 endif
