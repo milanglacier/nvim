@@ -6,7 +6,7 @@ local opts = { noremap=true, silent=true }
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
     -- Enable completion triggered by <c-x><c-o>
-    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+    -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
     -- Mappings.
     -- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -46,6 +46,7 @@ local on_attach = function(client, bufnr)
     -- signaturehelp
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>sh',
         "<cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>", opts)
+    -- "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
 
     -- rename
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>rn',
@@ -83,6 +84,7 @@ local on_attach = function(client, bufnr)
         '<Leader>dc', "<cmd>lua require'lspsaga.diagnostic'.show_cursor_diagnostics()<CR>", opts)
 
     require("aerial").on_attach(client, bufnr)
+    require("conf_signature").on_attach(bufnr)
 
 
 end
@@ -90,6 +92,12 @@ end
 
 -- Setup lspconfig.
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+-- copied from https://github.com/ray-x/lsp_signature.nvim/blob/master/tests/init_paq.lua
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+capabilities.textDocument.completion.completionItem.resolveSupport = {
+    properties = { "documentation", "detail", "additionalTextEdits" },
+}
 
 require'lspconfig'.pylsp.setup{
     cmd = {vim.api.nvim_eval("CONDA_PATHNAME") .. "/bin/pylsp"},

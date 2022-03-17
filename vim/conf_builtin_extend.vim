@@ -31,16 +31,12 @@ tnoremap <C-e> <end>
 nnoremap <Leader>cd :cd %:h<cr>
 nnoremap <Leader>cu :cd ..<cr>
 
-let g:cursorhold_updatetime = 750
+" jump between buffers
+nnoremap ]b :bn<cr>
+nnoremap [b :bp<cr>
 
-if exists('g:vscode')
-    " π is <Options-p> in mac
-    " since vscode doesn't
-    " send <A-p> command to vim.
-    nmap <silent> π <Plug>ReplaceMotion
-    nmap <silent> πp <Plug>ReplaceLine
-    vmap <silent> π <Plug>ReplaceVisual
-endif
+" let g:cursorhold_updatetime = 750
+
 augroup highlight_yank
     autocmd!
     au TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=400}

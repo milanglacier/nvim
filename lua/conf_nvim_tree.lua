@@ -2,5 +2,12 @@
 
 -- following options are the default
 -- each of these are documented in `:help nvim-tree.OPTION_NAME`
-require'nvim-tree'.setup{} 
+require'nvim-tree'.setup{
+    view = {
+        mappins = {
+              { key = "?", action = "toggle_help" },
+
+        }
+    }
+}
 

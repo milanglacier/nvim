@@ -47,8 +47,20 @@
 			"$0"
 		],
 		"description": "create rmd metadata"
+	},
 
+        "pipe symbol": {
+            "prefix": "pip",
+            "body": [
+                "%>% $0"
+            ],
+            "description": "pipe"
+        },
 
-
-	}
+        "i.i.d symbol": {
+            "prefix": "iid",
+            "body": ["\\overset{\\mathrm{iid}}{\\sim} $0"
+            ],
+            "description": "iid from"
+        }
 }

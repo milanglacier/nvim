@@ -1,4 +1,3 @@
-require('telescope').load_extension('fzf')
 
 local telescope = require('telescope')
 telescope.setup {
@@ -37,12 +36,15 @@ telescope.setup {
 
                 preview_cutoff = 30
             }
-
         },
+        cache_picker = {num_pickers = 2, limit_entries = 100}
         -- wrap_results = true,
+    },
+    extensions = {
     }
 }
 
+require('telescope').load_extension('fzf')
 require'nvim-web-devicons'.setup()
 
 local opts = {noremap=true}
@@ -55,6 +57,9 @@ vim.api.nvim_set_keymap('n', '<leader>fk', '<cmd>Telescope keymaps<cr>', opts)
 vim.api.nvim_set_keymap('n', '<leader>fc', '<cmd>Telescope commands<cr>', opts)
 vim.api.nvim_set_keymap('n', '<leader>ft', '<cmd>Telescope treesitter<cr>', opts)
 vim.api.nvim_set_keymap('n', '<leader>fs', '<cmd>Telescope lsp_document_symbols<cr>', opts)
+vim.api.nvim_set_keymap('n', '<leader>fr', '<cmd>Telescope registers<cr>', opts)
+vim.api.nvim_set_keymap('n', '<leader>fj', '<cmd>Telescope jumplist<cr>', opts)
 
+vim.api.nvim_set_keymap('n', '<leader>F', '<cmd>Telescope<cr>', opts)
 
 
