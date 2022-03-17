@@ -25,11 +25,10 @@ cmp.setup({
     },
     sources = cmp.config.sources({
         { name = 'nvim_lsp' },
+        { name = 'omni' },
         { name = 'luasnip' }, -- For luasnip users.
-        { name = 'latex_symbols' }, -- For luasnip users.
-        { name = 'cmp-lsp-signature-help' }, -- For luasnip users.
-        { name = 'omni' }, -- For luasnip users.
-        { name = 'nvim_lua' }, -- For luasnip users.
+        { name = 'latex_symbols' },
+        { name = 'nvim_lua' },
     }, {
         { name = 'buffer' },
     }
