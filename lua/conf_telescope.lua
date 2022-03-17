@@ -55,6 +55,7 @@ vim.api.nvim_set_keymap('n', '<leader>fk', '<cmd>Telescope keymaps<cr>', opts)
 vim.api.nvim_set_keymap('n', '<leader>fc', '<cmd>Telescope commands<cr>', opts)
 vim.api.nvim_set_keymap('n', '<leader>ft', '<cmd>Telescope treesitter<cr>', opts)
 vim.api.nvim_set_keymap('n', '<leader>fs', '<cmd>Telescope lsp_document_symbols<cr>', opts)
+vim.api.nvim_set_keymap('n', '<leader>fr', '<cmd>Telescope registers<cr>', opts)
 vim.api.nvim_set_keymap('n', '<leader>F', '<cmd>Telescope<cr>', opts)
 
 
