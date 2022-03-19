@@ -54,19 +54,28 @@ require'nvim-treesitter.configs'.setup {
             enable = true,
             lookahead = true,
             keymaps  = {
-                ["aF"] = "@function.outer",
-                ["iF"] = "@function.inner",
+                ["af"] = "@function.outer",
+                ["if"] = "@function.inner",
+
                 ["aC"] = "@class.outer",
                 ["iC"] = "@class.inner",
-                ["aL"] = "@loop.outer",
-                ["iL"] = "@loop.inner",
+                ["a<leader>c"] = "@class.outer",
+                ["i<leader>c"] = "@class.inner",
+
+                ["al"] = "@loop.outer",
+                ["il"] = "@loop.inner",
+
                 ["ac"] = "@conditional.outer",
                 ["ic"] = "@conditional.inner",
                 ["ie"] = "@call.inner",
                 ["ae"] = "@call.outer",
                 ["a<Leader>a"] = "@parameter.outer",
-                ["i<Leader>a"] = "@parameter.inner", 
-
+                ["i<Leader>a"] = "@parameter.inner",
+                -- latex textobjects
+                ["<LocalLeader>f"] = "@frame.outer",
+                ["<LocalLeader>s"] = "@statement.outer",
+                ["<LocalLeader>b"] = "@block.outer",
+                ["<localLeader>c"] = "@class.outer",
             }
         },
         move = {
@@ -110,7 +119,16 @@ require'nvim-treesitter.configs'.setup {
                 ["[A"] = "@parameter.outer",
             }
         }
-    }
+    },
+    matchup = {
+        enable = true,              -- mandatory, false will disable the whole extension
+        disable_virtual_text = true,
+        -- disable = { "c", "ruby" },  -- optional, list of language that will be disabled
+    },
+
 }
 
-
+if not vim.g.vscode then
+    vim.api.nvim_set_keymap('o', '<leader>T', ":<C-U>lua require('tsht').nodes()<CR>", {silent = true})
+    vim.api.nvim_set_keymap('v', '<leader>T', ":<C-U>lua require('tsht').nodes()<CR>", {noremap = true, silent = true})
+end

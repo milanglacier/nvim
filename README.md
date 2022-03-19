@@ -20,20 +20,27 @@ the initials are often conflicted.
     As of now: some of the text objects are defined as:
 
 
-    1. `aF`, `iF`, the (entire/inner) body of a function.
-    2. `af`, `if`, the (entire/inner) call of a function (defined by `dsf.vim`).
-    3. `aL`,`iL`, the (entire/inner) body of a loop
-        (Note that I used L instead of l, as l is used in `targets.vim`
-        to refer to the "last" object).
-    4. `ae`, `ie`, the (entire/inner) body of an expression
-        (similar to a call of a function, but `ae` is defined by `treesitter`,
+    1. `af`, `if`, the (entire/inner) body of a function.
+    3. `al`,`il`, the (entire/inner) body of a loop
+        (Note that I used l so I changed `targets.vim`'s config
+        to refer `N` to as the "previous" object).
+    4. `ae`, `ie`, the (entire/inner) body of an expression.
+        (when in `rmd`, the functionality is provided by dsf,
+        otherwise it is provied by treesitter,
         the twos behave a bit differently.)
     5. `ac`, `ic`, the (entire/inner) body of a if-else condition.
-    6. `aC`,`iC`, the (entire/inner) body of a class.
+    6. `aC`,`iC`, `a<leader>c`, `i<leader>c` the (entire/inner) body of a class.
     7. `aa`, `ia` as the (inner/entire) body of an argument.
         (this is defined by `targets.vim`),
-        `ina`, `ila` refers to the inner part of the next/last argument.
+        `ina`, `iNa` refers to the inner part of the next/last argument.
     8. `a<Leader>a`, `i<Leader>a`, the same as `ia`, `aa`, but is defined via `treesitter`.
+    9. `latex` specific textobj is defined via `<localleader>`:
+        1. `<localleader>f` refers to a frame (no `a`/`i` prefix).
+        2. `<localleader>s` refers to a statement.
+        3. `<localleader>b` refers to a block.
+        3. `<localleader>c` refers to a class (section/subsection).
+    10. `<Leader>T` provides a way to select textobjs
+    based on labels (like easy-motion or sneak).
 
 7. The jump-to defined via `treesitter` is a bit more
    confusing/non-coherent with text objects.
