@@ -4,6 +4,8 @@ inoremap jk <Esc>
 tnoremap jk <C-\><C-n> 
 
 let mapleader = ' '
+map <space><space> <LocalLeader>
+map <BS> <LocalLeader>
 
 " let g:mapleader = ' '
 " let ctrl-a move to the beginning of the line
