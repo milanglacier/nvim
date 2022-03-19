@@ -23,10 +23,13 @@ local colorSchemePick = function(style, theme)
             vim.g.tokyonight_style = "night"
             vim.cmd("colorscheme tokyonight")
             vim.o.background = "dark"
-        else
+        elseif theme == 4 then
             vim.g.everforest_background = 'soft'
             vim.o.background = "dark"
             vim.cmd("colorscheme everforest")
+        else
+            vim.o.background = "dark"
+            vim.cmd("colorscheme gruvbox")
         end
 
     else
@@ -38,10 +41,13 @@ local colorSchemePick = function(style, theme)
         elseif theme == 3 then
             vim.g.tokyonight_style = "day"
             vim.cmd("colorscheme tokyonight")
-        else
+        elseif theme == 4 then
             vim.g.everforest_background = 'soft'
             vim.o.background = "light"
             vim.cmd("colorscheme everforest")
+        else
+            vim.o.background = "light"
+            vim.cmd("colorscheme gruvbox")
         end
     end
 
@@ -49,7 +55,7 @@ end
 
 math.randomseed(os.time()) -- random initialize
 math.random(); math.random(); math.random() -- warming up
-local rd = math.random(1, 4)
+local rd = math.random(1, 5)
 
 local time = os.date("*t")
 local init_style = 1
@@ -74,7 +80,7 @@ colorschemePicker.quickColorScheme = function()
         end
     )
 
-    vim.ui.input({prompt = "1: fox, 2: rose-pine, 3: tokyo, 4: forest"},
+    vim.ui.input({prompt = "1: fox, 2: rose-pine, 3: tokyo, 4: forest, 5: gruvbox"},
         function(x)
             thm = tonumber(x)
         end
@@ -83,7 +89,7 @@ colorschemePicker.quickColorScheme = function()
     colorSchemePick(styl, thm)
 end
 
-vim.api.nvim_set_keymap("n", "<LocalLeader><Localleader>cs", ":lua require('conf_colorscheme').quickColorScheme()<CR>", {noremap = true})
+vim.api.nvim_set_keymap("n", "<Localleader>cs", ":lua require('conf_colorscheme').quickColorScheme()<CR>", {noremap = true})
 
 return colorschemePicker
 
