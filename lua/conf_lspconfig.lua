@@ -122,6 +122,11 @@ require'lspconfig'.r_language_server.setup{
     --end
 
 }
+require'lspconfig'.texlab.setup{
+    on_attach = on_attach,
+    flags = {debounce_text_changes = 150},
+    capabilities = capabilities
+}
 
 require'lspconfig'.julials.setup{
     on_attach = on_attach,
@@ -129,9 +134,6 @@ require'lspconfig'.julials.setup{
         -- This will be the default in neovim 0.7+
         debounce_text_changes = 150,
     },
-    root_dir = function(fname)
-        return util.root_pattern 'Project.toml'(fname) or util.find_git_ancestor(fname)
-    end,
     capabilities = capabilities,
 
 }
@@ -171,6 +173,10 @@ require'lspconfig'.sumneko_lua.setup {
             },
         },
     },
+}
+require'lspconfig'.vimls.setup{
+    on_attach = on_attach,
+    capabilities = capabilities,
 }
 
 vim.fn.sign_define("DiagnosticSignError", { text = "✗", texthl = "DiagnosticSignError" })

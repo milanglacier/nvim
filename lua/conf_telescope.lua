@@ -4,6 +4,11 @@ telescope.setup {
     pickers = {
         find_files = {
             find_command = {'rg', '--files', '--iglob', '!.git', '--hidden'},
+        },
+
+        keymaps = {
+
+            modes = { "n", "i", "c", "x", "v", "o", "", "!" }
         }
     },
     defaults = {
@@ -59,6 +64,7 @@ vim.api.nvim_set_keymap('n', '<leader>ft', '<cmd>Telescope treesitter<cr>', opts
 vim.api.nvim_set_keymap('n', '<leader>fs', '<cmd>Telescope lsp_document_symbols<cr>', opts)
 vim.api.nvim_set_keymap('n', '<leader>fr', '<cmd>Telescope registers<cr>', opts)
 vim.api.nvim_set_keymap('n', '<leader>fj', '<cmd>Telescope jumplist<cr>', opts)
+vim.api.nvim_set_keymap('n', '<leader>fo', '<cmd>Telescope oldfiles<cr>', opts)
 
 vim.api.nvim_set_keymap('n', '<leader>F', '<cmd>Telescope<cr>', opts)
 

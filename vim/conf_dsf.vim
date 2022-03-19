@@ -6,8 +6,10 @@ nmap <silent> csf <Plug>DsfChange
 nmap <silent> dsnf <Plug>DsfNextDelete
 nmap <silent> csnf <Plug>DsfNextChange
 
-omap <silent> af <Plug>DsfTextObjectA
-xmap <silent> af <Plug>DsfTextObjectA
-omap <silent> if <Plug>DsfTextObjectI
-xmap <silent> if <Plug>DsfTextObjectI
-
+augroup dsfForRmd
+    au!
+    autocmd FileType rmd omap <silent><buffer> ae <Plug>DsfTextObjectA
+    autocmd FileType rmd xmap <silent><buffer> ae <Plug>DsfTextObjectA
+    autocmd FileType rmd omap <silent><buffer> ie <Plug>DsfTextObjectI
+    autocmd FileType rmd xmap <silent><buffer> ie <Plug>DsfTextObjectI
+augroup end

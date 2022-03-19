@@ -13,7 +13,6 @@ au BufWrite /private/etc/pw.* set nowritebackup nobackup
 
 let skip_defaults_vim=1
 
-
 " above is the default setting when installing neovim. Will not change it
 " following is my setting
 set nu
@@ -66,9 +65,11 @@ if !exists('g:vscode')
     Plug 'rose-pine/neovim', {'as': 'rose-pine'}
     Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
     Plug 'sainnhe/everforest'
+    Plug 'mhdahmad/gruvbox.lua'
 
-    " Fix bugs
+    " Fix bugs and Utilites
     Plug 'antoinemadec/FixCursorHold.nvim'
+    Plug 'max397574/better-escape.nvim'
 
     " Set the theme for statusbar
     Plug 'nvim-lualine/lualine.nvim'
@@ -88,9 +89,10 @@ if !exists('g:vscode')
     Plug 'michaeljsmith/vim-indent-object'
     Plug 'wellle/targets.vim'
     Plug 'AndrewRadev/dsf.vim'
-    Plug 'svermeulen/vim-subversive'
     Plug 'windwp/nvim-autopairs'
     Plug 'lukas-reineke/indent-blankline.nvim'
+    Plug 'gbprod/substitute.nvim'
+    Plug 'andymass/vim-matchup'
 
     Plug 'norcalli/nvim-colorizer.lua'
 
@@ -98,6 +100,7 @@ if !exists('g:vscode')
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
     Plug 'nvim-treesitter/nvim-treesitter-textobjects'
     Plug 'p00f/nvim-ts-rainbow'
+    Plug 'mfussenegger/nvim-treehopper'
 
     " Set markdown syntax highlighting
     Plug 'vim-pandoc/vim-pandoc-syntax', {'for': ['rmd', 'markdown.pandoc']}
@@ -178,7 +181,7 @@ if !exists('g:vscode')
     source ~/.config/nvim/vim/conf_builtin_extend.vim
     source ~/.config/nvim/vim/conf_move_tabs.vim
 
-    lua require("conf_colorscheme")
+    lua require("conf_better_escape")
 
     lua require("conf_colorscheme")
 
@@ -190,12 +193,13 @@ if !exists('g:vscode')
 
     lua require('conf_comment')
     source ~/.config/nvim/vim/conf_dsf.vim
-    source ~/.config/nvim/vim/conf_subversive.vim
+    lua require('conf_substitute')
+    source ~/.config/nvim/vim/conf_targets.vim
+    source ~/.config/nvim/vim/conf_matchup.vim
 
 
     lua require("conf_treesitter")
 
-    source ~/.config/nvim/vim/conf_nvim_tree.vim
     lua require('conf_nvim_tree')
 
     lua require('conf_telescope')
@@ -246,16 +250,18 @@ else
     Plug 'wellle/targets.vim'
     Plug 'AndrewRadev/dsf.vim'
     Plug 'michaeljsmith/vim-indent-object'
-    Plug 'svermeulen/vim-subversive'
+    Plug 'gbprod/substitute.nvim'
+    Plug 'andymass/vim-matchup'
 
     " Tree sitter for enhanced text obj and syntax capturality
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
     Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+    Plug 'mfussenegger/nvim-treehopper'
 
     " Deal with input method, automatically changed to English
     " input method when switch to normal mode
     Plug 'milanglacier/smartim'
-    " Plug 'asvetliakov/vim-easymotion'
+    Plug 'asvetliakov/vim-easymotion'
 
     call plug#end()
 
@@ -265,11 +271,13 @@ else
     source ~/.config/nvim/vim/conf_builtin_extend.vim
 
     lua require('conf_comment')
+    lua require('conf_substitute')
     source ~/.config/nvim/vim/conf_dsf.vim
+    source ~/.config/nvim/vim/conf_targets.vim
+    source ~/.config/nvim/vim/conf_matchup.vim
     lua require("conf_treesitter")
     source ~/.config/nvim/vim/conf_sneak.vim
 
-    source ~/.config/nvim/vim/conf_subversive.vim
 
 endif
 
