@@ -1,1 +1,1 @@
-let g:targets_nl = 'nN'
+let g:targets_nl = ['n', 'N']
