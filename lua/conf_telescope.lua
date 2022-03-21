@@ -67,5 +67,6 @@ vim.api.nvim_set_keymap('n', '<leader>fj', '<cmd>Telescope jumplist<cr>', opts)
 vim.api.nvim_set_keymap('n', '<leader>fo', '<cmd>Telescope oldfiles<cr>', opts)
 
 vim.api.nvim_set_keymap('n', '<leader>F', '<cmd>Telescope<cr>', opts)
+vim.api.nvim_set_keymap('n', '<leader>C', '<cmd>Telescope command_history<cr>', opts)
 
 
