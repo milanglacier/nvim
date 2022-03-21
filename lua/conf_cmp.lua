@@ -9,6 +9,7 @@ cmp.setup({
         end,
     },
     mapping = {
+
         ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
         ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
         ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
@@ -21,16 +22,15 @@ cmp.setup({
         ['<tab>'] = cmp.mapping.confirm({ select = true }),
         ['<ESC>'] = cmp.mapping.abort(),
 
-
     },
     sources = cmp.config.sources({
         { name = 'nvim_lsp' },
         { name = 'omni' },
         { name = 'luasnip' }, -- For luasnip users.
-        { name = 'latex_symbols' },
         { name = 'nvim_lua' },
     }, {
         { name = 'buffer' },
+        { name = 'latex_symbols' },
     }
     ),
     formatting = {
