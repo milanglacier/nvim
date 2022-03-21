@@ -40,7 +40,7 @@ saga.setup {
     finder_action_keys = {
         open = {'o', '<cr>'},
         vsplit = 'v',split = 's',
-        quit = {'q', '<ESC>'},scroll_down = '<C-f>', scroll_up = '<C-b>' 
+        quit = {'q', '<ESC>'}, scroll_down = '<C-f>', scroll_up = '<C-b>'
         -- quit can be a table
     },
     code_action_keys = {
