@@ -12,7 +12,7 @@ require("lspkind").init({
         Namespace = "",
         Package = ""
     }
-    
+
 
 
 })
