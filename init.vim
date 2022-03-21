@@ -75,6 +75,7 @@ if !exists('g:vscode')
     Plug 'nvim-lualine/lualine.nvim'
     Plug 'alvarosevilla95/luatab.nvim'
     Plug 'rcarriga/nvim-notify'
+    Plug 'echasnovski/mini.nvim'
 
     "automatically set the root
     Plug 'ygm2/rooter.nvim'
@@ -90,9 +91,9 @@ if !exists('g:vscode')
     Plug 'wellle/targets.vim'
     Plug 'AndrewRadev/dsf.vim'
     Plug 'windwp/nvim-autopairs'
-    Plug 'lukas-reineke/indent-blankline.nvim'
     Plug 'gbprod/substitute.nvim'
     Plug 'andymass/vim-matchup'
+    Plug 'tommcdo/vim-exchange'
 
     Plug 'norcalli/nvim-colorizer.lua'
 
@@ -127,7 +128,6 @@ if !exists('g:vscode')
 
     " LSP config
     Plug 'neovim/nvim-lspconfig'
-    Plug 'tami5/lspsaga.nvim'
 
     " Completion
     Plug 'hrsh7th/cmp-nvim-lsp'
@@ -142,9 +142,15 @@ if !exists('g:vscode')
     Plug 'saadparwaiz1/cmp_luasnip'
 
     " Symbol Outline and signature help
+    Plug 'tami5/lspsaga.nvim'
     Plug 'stevearc/aerial.nvim', {'on': 'AerialToggle'}
     Plug 'onsails/lspkind-nvim'
     Plug 'ray-x/lsp_signature.nvim'
+    Plug 'jose-elias-alvarez/null-ls.nvim'
+    Plug 'ThePrimeagen/refactoring.nvim'
+
+    " lua development
+    Plug 'folke/lua-dev.nvim'
 
     " REPL
     " Plug 'jalvesaq/Nvim-R', {'for': ['r', 'rmd']}
@@ -154,7 +160,7 @@ if !exists('g:vscode')
 
 
     " Git
-    Plug 'f-person/git-blame.nvim'
+    Plug 'lewis6991/gitsigns.nvim'
     Plug 'TimUntersberger/neogit', {'on': 'Neogit'}
     Plug 'sindrets/diffview.nvim', {'on': ['DiffviewOpen', 'DiffviewFileHistory']}
 
@@ -187,8 +193,8 @@ if !exists('g:vscode')
 
     lua require('conf_lualine')
     lua require('conf_notify')
-    lua require('conf_indent')
     lua require('conf_luatab')
+    lua require('conf_mini')
 
 
     lua require('conf_comment')
@@ -212,6 +218,8 @@ if !exists('g:vscode')
     lua require('conf_saga')
     lua require('conf_lspconfig')
     lua require('conf_signature')
+    lua require('conf_nullls')
+    lua require('conf_refactor')
 
     source ~/.config/nvim/vim/conf_pandoc.vim
     " source ~/.config/nvim/vim/conf_nvim-R.vim
@@ -227,6 +235,7 @@ if !exists('g:vscode')
 
     lua require("conf_dap")
     lua require("conf_spectre")
+    lua require('conf_gitsigns')
 
 
 else 
@@ -252,6 +261,7 @@ else
     Plug 'michaeljsmith/vim-indent-object'
     Plug 'gbprod/substitute.nvim'
     Plug 'andymass/vim-matchup'
+    Plug 'tommcdo/vim-exchange'
 
     " Tree sitter for enhanced text obj and syntax capturality
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -261,7 +271,6 @@ else
     " Deal with input method, automatically changed to English
     " input method when switch to normal mode
     Plug 'milanglacier/smartim'
-    Plug 'asvetliakov/vim-easymotion'
 
     call plug#end()
 

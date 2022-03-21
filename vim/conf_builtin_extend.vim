@@ -1,4 +1,3 @@
-
 " keybinding remap for global keys
 inoremap jk <Esc>
 tnoremap jk <C-\><C-n> 
@@ -6,9 +5,6 @@ tnoremap jk <C-\><C-n>
 let mapleader = ' '
 map <space><space> <LocalLeader>
 map <BS> <LocalLeader>
-
-" let g:mapleader = ' '
-" let ctrl-a move to the beginning of the line
 
 " Enable emacs style keybinding in insert mode
 inoremap <C-b> <Left>
@@ -43,3 +39,15 @@ augroup highlight_yank
     autocmd!
     au TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=400}
 augroup END
+
+let g:ping_cursor_flash_milliseconds = 400
+
+function! s:PingCursor()
+  set cursorline cursorcolumn
+  redraw
+  execute 'sleep' g:ping_cursor_flash_milliseconds . 'm'
+  set nocursorline nocursorcolumn
+endfunction
+
+command PingCursor :call s:PingCursor()
+noremap <leader>pc :PingCursor<cr>
