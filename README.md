@@ -52,3 +52,6 @@ the initials are often conflicted.
     5. `aA[]` is used to jump-between arguments.
     6. `eE[]` is used to jump-between function calls.
 
+8. Note that `tree-sitter` will turn `syntax off`, and `pandoc-syntax` and `pandoc-rmarkdown`
+relies on the builtin `syntax`, so we need to load `config.pandoc` before we load `config.treesitter`
+

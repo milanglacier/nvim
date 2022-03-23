@@ -20,9 +20,9 @@ local on_attach = function(client, bufnr)
     -- vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
     --
 
-    -- find definition and reference simutaneously
+    -- find definition and reference simultaneously
     -- vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', "<cmd>lua require'lspsaga.provider'.lsp_finder()<CR>", opts)
-    -- open a seperate window to show reference
+    -- open a separate window to show reference
 
 
     -- reference
@@ -33,7 +33,7 @@ local on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>ca',
         "<cmd>lua require('lspsaga.codeaction').code_action()<CR>", opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'v', '<Leader>ca',
-        ":<C-U>lua require('lspsaga.codeaction').range_code_action()<CR>", opts)
+        ":lua require('lspsaga.codeaction').range_code_action()<CR>", opts)
 
     -- hover
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gh',
@@ -84,7 +84,7 @@ local on_attach = function(client, bufnr)
         '<Leader>dc', "<cmd>lua require'lspsaga.diagnostic'.show_cursor_diagnostics()<CR>", opts)
 
     require("aerial").on_attach(client, bufnr)
-    require("conf_signature").on_attach(bufnr)
+    require("conf.signature").on_attach(bufnr)
 
 
 end
@@ -92,15 +92,15 @@ end
 
 -- Setup lspconfig.
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-
--- copied from https://github.com/ray-x/lsp_signature.nvim/blob/master/tests/init_paq.lua
+-- --
+-- -- -- copied from https://github.com/ray-x/lsp_signature.nvim/blob/master/tests/init_paq.lua
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.completion.completionItem.resolveSupport = {
     properties = { "documentation", "detail", "additionalTextEdits" },
 }
 
 require'lspconfig'.pylsp.setup{
-    cmd = {vim.api.nvim_eval("CONDA_PATHNAME") .. "/bin/pylsp"},
+    cmd = {vim.g.CONDA_PATHNAME .. "/bin/pylsp"},
     on_attach = on_attach,
     flags = {
         -- This will be the default in neovim 0.7+
@@ -186,8 +186,3 @@ vim.fn.sign_define("DiagnosticSignError", { text = "✗", texthl = "DiagnosticSi
 vim.fn.sign_define("DiagnosticSignWarn", { text = "!", texthl = "DiagnosticSignWarn" })
 vim.fn.sign_define("DiagnosticSignInformation", { text = "", texthl = "DiagnosticSignInfo" })
 vim.fn.sign_define("DiagnosticSignHint", { text = "", texthl = "DiagnosticSignHint" })
-
-vim.cmd([[
-set completeopt=menu,menuone,noselect
-]])
-

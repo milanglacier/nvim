@@ -1,60 +1,6 @@
-" Configuration file for vim
-set modelines=0		" CVE-2007-2438
+if not vim.g.vscode then
 
-" Normally we use vim-extensions. If you want true vi-compatibility
-" remove change the following statements
-set nocompatible	" Use Vim defaults instead of 100% vi compatibility
-set backspace=2		" more powerful backspacing
-
-" Don't write backup file if vim is being called by "crontab -e"
-au BufWrite /private/tmp/crontab.* set nowritebackup nobackup
-" Don't write backup file if vim is being called by "chpass"
-au BufWrite /private/etc/pw.* set nowritebackup nobackup
-
-let skip_defaults_vim=1
-
-" above is the default setting when installing neovim. Will not change it
-" following is my setting
-set nu
-set autoindent
-set softtabstop=4 expandtab shiftwidth=4
-set autoindent
-set showcmd
-set ignorecase smartcase
-
-filetype plugin indent on
-
-
-" set the terminal working at the current directory
-" autocmd BufEnter * silent! lcd %:p:h
-
-" you have to define your <leader> key very early
-" as if you define your leader key to be <spc> 
-" later than your map key which used <Leader>
-" then you probably find that this map won't working.
-
-set clipboard+=unnamedplus
-
-
-" function to enabling the same plugin (at different fork), primarily
-" for vscode neovim extension.
-" to use it, you need to copy two lines of installation commamnd
-" in !exists('g:vscode') branch, as you need to call
-" `:PlugInstall` in nvim terminal to install the fork for Vscode
-" function! Cond(Cond, ...)
-"   let opts = get(a:000, 0, {})
-"   return a:Cond ? opts : extend(opts, { 'on': [], 'for': [] })
-" endfunction
-
-
-
-let g:CONDA_PATHNAME = "/opt/homebrew/Caskroom/miniforge/base"
-
-" condition brach for different setting in nvim terminal and vscode
-if !exists('g:vscode')
-
-    syntax enable
-    set mouse=a
+    vim.cmd [[    
 
     call plug#begin()
 
@@ -67,7 +13,7 @@ if !exists('g:vscode')
     Plug 'sainnhe/everforest'
     Plug 'mhdahmad/gruvbox.lua'
 
-    " Fix bugs and Utilites
+    " Fix bugs and Utilities
     Plug 'antoinemadec/FixCursorHold.nvim'
     Plug 'max397574/better-escape.nvim'
 
@@ -104,8 +50,8 @@ if !exists('g:vscode')
     Plug 'mfussenegger/nvim-treehopper'
 
     " Set markdown syntax highlighting
-    Plug 'vim-pandoc/vim-pandoc-syntax', {'for': ['rmd', 'markdown.pandoc']}
-    Plug 'vim-pandoc/vim-rmarkdown', {'for': ['rmd'], 'branch': 'official-filetype'}
+    Plug 'vim-pandoc/vim-pandoc-syntax' , {'for': ['rmd', 'markdown.pandoc']}
+    Plug 'vim-pandoc/vim-rmarkdown' ,  {'branch': 'official-filetype', 'for': 'rmd'}
     Plug 'iamcco/markdown-preview.nvim' , { 'do': 'cd app && yarn install', 'for': ['markdown.pandoc', 'rmd']  }
 
     " Fuzzy finder for file search
@@ -174,76 +120,17 @@ if !exists('g:vscode')
     " search and replace file
     Plug 'windwp/nvim-spectre'
 
-
     Plug 'kyazdani42/nvim-web-devicons'
-
 
     call plug#end()
 
-    lua require("impatient").enable_profile()
+    ]]
 
-    lua require("conf_filetype")
+else
 
-    source ~/.config/nvim/vim/conf_builtin_extend.vim
-    source ~/.config/nvim/vim/conf_move_tabs.vim
-
-    lua require("conf_better_escape")
-
-    lua require("conf_colorscheme")
-
-    lua require('conf_lualine')
-    lua require('conf_notify')
-    lua require('conf_luatab')
-    lua require('conf_mini')
-
-
-    lua require('conf_comment')
-    source ~/.config/nvim/vim/conf_dsf.vim
-    lua require('conf_substitute')
-    source ~/.config/nvim/vim/conf_targets.vim
-    source ~/.config/nvim/vim/conf_matchup.vim
-
-
-    lua require("conf_treesitter")
-
-    lua require('conf_nvim_tree')
-
-    lua require('conf_telescope')
-    lua require('conf_project_nvim')
-
-    lua require("conf_lspkind")
-    lua require("conf_aerial")
-
-    lua require('conf_cmp')
-    lua require('conf_saga')
-    lua require('conf_lspconfig')
-    lua require('conf_signature')
-    lua require('conf_nullls')
-    lua require('conf_refactor')
-
-    source ~/.config/nvim/vim/conf_pandoc.vim
-    " source ~/.config/nvim/vim/conf_nvim-R.vim
-    " source ~/.config/nvim/vim/conf_cmdline.vim
-    lua require("conf_iron")
-
-    source ~/.config/nvim/vim/conf_mkdp.vim
-    source ~/.config/nvim/vim/conf_sneak.vim
-
-    lua require("conf_terminal")
-    lua require("conf_autopairs")
-    lua require("conf_snippets")
-
-    lua require("conf_dap")
-    lua require("conf_spectre")
-    lua require('conf_gitsigns')
-
-
-else 
-    " configuration only valid in vscode neovim mode 
-
+    vim.cmd [[
 
     call plug#begin()
-
 
     Plug 'lewis6991/impatient.nvim'
     Plug 'nathom/filetype.nvim'
@@ -274,22 +161,6 @@ else
 
     call plug#end()
 
-    lua require("impatient")
-    lua require("conf_filetype")
+    ]]
 
-    source ~/.config/nvim/vim/conf_builtin_extend.vim
-
-    lua require('conf_comment')
-    lua require('conf_substitute')
-    source ~/.config/nvim/vim/conf_dsf.vim
-    source ~/.config/nvim/vim/conf_targets.vim
-    source ~/.config/nvim/vim/conf_matchup.vim
-    lua require("conf_treesitter")
-    source ~/.config/nvim/vim/conf_sneak.vim
-
-
-endif
-
-
-
-
+end

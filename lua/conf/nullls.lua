@@ -12,17 +12,17 @@ null_ls.setup {
         null_ls.builtins.code_actions.gitsigns,
         null_ls.builtins.code_actions.proselint.with {
             command = vim.g.CONDA_PATHNAME .. '/bin/proselint',
-            filetypes = {'markdown', 'markdown.pandoc', 'tex', 'rmd'}
+            filetypes = { 'markdown', 'markdown.pandoc', 'tex', 'rmd' },
         },
         null_ls.builtins.diagnostics.proselint.with {
             command = vim.g.CONDA_PATHNAME .. '/bin/proselint',
-            filetypes = {'markdown', 'markdown.pandoc', 'tex', 'rmd'}
+            filetypes = { 'markdown', 'markdown.pandoc', 'tex', 'rmd' },
         },
         null_ls.builtins.code_actions.refactoring,
         null_ls.builtins.diagnostics.codespell.with {
             command = vim.g.CONDA_PATHNAME .. '/bin/codespell',
-            disabled_filetypes = { "NeogitCommitMessage" }
+            disabled_filetypes = { 'NeogitCommitMessage' },
         },
-
+        null_ls.builtins.diagnostics.chktex,
     },
 }
