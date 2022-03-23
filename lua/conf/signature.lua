@@ -8,10 +8,11 @@ function M.on_attach(bufnr)
         handler_opts = {
             border = "double"
         },
+        floating_window = false,
         toggle_key = "<A-x>",
         floating_window_off_x = 15, -- adjust float windows x position.
         floating_window_off_y = 15,
-        -- hint_enable = true,
+        hint_enable = false,
         -- hint_prefix = "",
         -- doc_lines = 5,
         time_interval = 100,
