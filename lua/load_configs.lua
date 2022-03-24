@@ -18,9 +18,9 @@ if not vim.g.vscode then
     require 'conf.comment'
     require 'conf.dsf'
     require 'conf.substitute'
-
     require 'conf.targets'
     require 'conf.matchup'
+    require 'conf.surround'
     require 'conf.sneak'
 
     require 'conf.pandoc'
@@ -64,6 +64,7 @@ else
     require 'conf.substitute'
     require 'conf.targets'
     require 'conf.matchup'
+    require 'conf.surround'
     require 'conf.sneak'
 
     require 'conf.treesitter'

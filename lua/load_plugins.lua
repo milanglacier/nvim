@@ -28,9 +28,9 @@ if not vim.g.vscode then
     Plug 'ahmedkhalf/project.nvim'
 
     " Set the advanced text editing and jumping plug
-    Plug 'searleser97/vim-sneak'
+    Plug 'justinmk/vim-sneak'
 
-    Plug 'tpope/vim-surround'
+    Plug 'ur4ltz/surround.nvim'
     Plug 'numToStr/Comment.nvim'
     Plug 'tpope/vim-repeat'
     Plug 'michaeljsmith/vim-indent-object'
@@ -138,9 +138,9 @@ else
     " Fix bugs
     Plug 'antoinemadec/FixCursorHold.nvim'
 
-    Plug 'searleser97/vim-sneak'
+    Plug 'justinmk/vim-sneak'
 
-    Plug 'tpope/vim-surround'
+    Plug 'ur4ltz/surround.nvim'
     Plug 'numToStr/Comment.nvim'
     Plug 'tpope/vim-repeat'
     Plug 'wellle/targets.vim'
