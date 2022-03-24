@@ -45,7 +45,7 @@ function M.PingCursor()
     vim.o.cursorcolumn = true
 
     vim.cmd 'redraw'
-    vim.cmd 'sleep 400m'
+    vim.cmd 'sleep 1000m'
 
     vim.o.cursorline = false
     vim.o.cursorcolumn = false

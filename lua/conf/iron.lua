@@ -2,22 +2,23 @@ vim.g.iron_map_defaults = 0
 vim.g.iron_map_extended = 0
 
 local iron = require("iron")
+local mypath = require('bin_path')
 
 iron.core.add_repl_definitions{
     r = {
         radian = {
-            command = {vim.g.CONDA_PATHNAME .. "/bin/radian"},
+            command = {mypath.radian},
         }
     },
 
     rmd = {
         radian = {
-            command = {vim.g.CONDA_PATHNAME .. "/bin/radian"},
+            command = {mypath.radian},
         }
     },
 }
 
-require('iron.fts.python').ipython.command = vim.g.CONDA_PATHNAME .. "/bin/ipython"
+require('iron.fts.python').ipython.command = mypath.ipython
 
 iron.core.set_config {
     preferred = {

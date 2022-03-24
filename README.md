@@ -1,17 +1,45 @@
-1. Note that I use conda, so I set `let g:CONDA_PATHNAME = "your $CONDA_PREFIX"` at the start
-of my `init.vim`. I found that source `conda init` in `.zshenv` would
-make the start of nvim very slow, and I decide to not do it.
+# Dependencies
 
-2. `devicons` should be the one that's last to be plugged in.
+* To use `markdown.preview.nvim`, you need to have `npm` and `yarn` installed.
 
-3. You should define `<leader>` key mappings before defining any keymaps that uses `<Leader>`
-I use `<Space>` as `<Leader>`.
+* To use `lspconfig`, you need to have the corresponding lsp installed:
+    * `R` support requires `R` package `R-language-server` installed.
+    * `python` support requires `python` package `pylsp` installed.
+    * `lua` support requires `lua-language-server` installed.
+    * `latex` support requires `texlab` installed.
+`chktex` (latex linter) requires `texlive` distro installed.
+    * `vim script` support requires `vim-language-server` installed, which requires `npm` installed.
+    * `c/cpp` support requires `clangd` installed.
 
-4. nerd font need to be installed. One of the font is provided in the repository.
+* I use `homebrew` as package manager, so prebuild binaries provided by `homebrew`
+    are automatically included in my `PATH`,
+    including:
+    * `npm` and `npm` installed packages.
+    * `texlab`, `lua-language-server`.
 
-5. A somewhat annoying things compared to vscode is that I cannot manually set the workspace folder.
-As a workaround, I set `<leader>cd` to change working directory to current file,
-and `<leader>cu` to move upward one level
+* In general, `R`, `c/cpp` (if installed by `xcode-select install`), `texlive` are automatically included in the `PATH`.
+
+* Some of the binaries provided by other package managers
+are not automatically included in the `PATH`,
+including `cargo`, `conda`.
+    Then I create `lua/bin_path.lua` to manually specify
+    the `PATHs` of them.
+
+* Binaries' paths need to be manually specified:
+    * if need to use debugger: `DAP.nvim`:
+        * `python` (I use `conda`'s python)
+    * if need to use REPL: `iron.nvim`:
+        * `radian` (a R REPL)
+        * `ipython`
+    * if need to use `null-ls.nvim`:
+        * `stylua` (Lua formatter)
+        * `selene` (Lua linter)
+        * `codespell` (spell checker)
+        * `proselint` (English writing checker)
+
+* Nerd font need to be installed. One of the font is provided in the repository.
+
+# Text Obj mappings
 
 6. One of the most annoying things in vim is how to define mnemonic key bindings
 yet not leading to conflict/confusing. Especially for text objects,
@@ -26,7 +54,7 @@ the initials are often conflicted.
         to refer `N` to as the "previous" object).
     4. `ae`, `ie`, the (entire/inner) body of an expression.
         (when in `rmd`, the functionality is provided by dsf,
-        otherwise it is provied by treesitter,
+        otherwise it is provided by treesitter,
         the twos behave a bit differently.)
     5. `ac`, `ic`, the (entire/inner) body of a if-else condition.
     6. `aC`,`iC`, `a<leader>c`, `i<leader>c` the (entire/inner) body of a class.
@@ -51,6 +79,8 @@ the initials are often conflicted.
     4. `fF[]` is used to jump-between functions.
     5. `aA[]` is used to jump-between arguments.
     6. `eE[]` is used to jump-between function calls.
+
+# Other Notes
 
 8. Note that `tree-sitter` will turn `syntax off`, and `pandoc-syntax` and `pandoc-rmarkdown`
 relies on the builtin `syntax`, so we need to load `config.pandoc` before we load `config.treesitter`

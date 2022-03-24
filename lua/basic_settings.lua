@@ -21,8 +21,6 @@ vim.o.completeopt = 'menu,menuone,noselect'
 
 vim.g.did_load_filetypes = 1
 
-vim.g.CONDA_PATHNAME = '/opt/homebrew/Caskroom/miniforge/base'
-
 if not vim.g.vscode then
     vim.o.mouse = 'a'
     vim.env.NVIM_TUI_ENABLE_TRUE_COLOR = 1
