@@ -76,8 +76,7 @@ starter.setup {
             { action = 'Telescope find_files', name = 'find files', section = 'Telescope' },
             { action = 'Telescope command_history', name = 'command history', section = 'Telescope' },
             { action = 'Telescope jumplist', name = 'jumplist', section = 'Telescope' },
-            { action = 'Telescope colorscheme', name = 'themes', section = 'Telescope' },
-            { action = [[lua require("conf_colorscheme").randomPick()]], name = 'pick one!', section = 'Telescope' },
+            { action = [[lua require("conf.colorscheme").randomPick()]], name = 'pick one theme!', section = 'Telescope' },
             { name = 'edit new buffer', action = 'enew', section = 'Builtin actions' },
             { name = 'quit Neovim', action = 'qall!', section = 'Builtin actions' },
         },
@@ -88,6 +87,7 @@ starter.setup {
     },
     starter.gen_hook.padding(5, 2),
     footer = footVerse[math.random(1, footVerse.length)],
+    query_updaters = [[abcdefhijklmnopqrsuvwxyz]],
 }
 
 require('mini.indentscope').setup {

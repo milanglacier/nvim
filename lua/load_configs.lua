@@ -1,7 +1,6 @@
 if not vim.g.vscode then
 
     require 'conf.impatient'
-    -- require 'conf.filetype'
 
     require 'conf.builtin_extend'
     require 'conf.move_tabs'
@@ -57,7 +56,6 @@ if not vim.g.vscode then
 else
 
     require 'conf.impatient'
-    require 'conf.filetype'
 
     require 'conf.builtin_extend'
 
