@@ -1,26 +1,27 @@
 local null_ls = require 'null-ls'
 local cargo = '/Users/northyear/.cargo'
+local mypath = require('bin_path')
 
 null_ls.setup {
     sources = {
         null_ls.builtins.formatting.stylua.with {
-            command = cargo .. '/bin/stylua',
+            command = mypath.stylua,
         },
         null_ls.builtins.diagnostics.selene.with {
-            command = cargo .. '/bin/selene',
+            command = mypath.selene,
         },
         null_ls.builtins.code_actions.gitsigns,
         null_ls.builtins.code_actions.proselint.with {
-            command = vim.g.CONDA_PATHNAME .. '/bin/proselint',
+            command = mypath.proselint,
             filetypes = { 'markdown', 'markdown.pandoc', 'tex', 'rmd' },
         },
         null_ls.builtins.diagnostics.proselint.with {
-            command = vim.g.CONDA_PATHNAME .. '/bin/proselint',
+            command = mypath.proselint,
             filetypes = { 'markdown', 'markdown.pandoc', 'tex', 'rmd' },
         },
         null_ls.builtins.code_actions.refactoring,
         null_ls.builtins.diagnostics.codespell.with {
-            command = vim.g.CONDA_PATHNAME .. '/bin/codespell',
+            command = mypath.codespell,
             disabled_filetypes = { 'NeogitCommitMessage' },
         },
         null_ls.builtins.diagnostics.chktex,

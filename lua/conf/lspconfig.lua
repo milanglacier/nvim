@@ -100,7 +100,7 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
 }
 
 require'lspconfig'.pylsp.setup{
-    cmd = {vim.g.CONDA_PATHNAME .. "/bin/pylsp"},
+    cmd = {require 'bin_path'.pylsp},
     on_attach = on_attach,
     flags = {
         -- This will be the default in neovim 0.7+
