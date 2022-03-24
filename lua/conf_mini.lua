@@ -1,9 +1,9 @@
 require('mini.cursorword').setup {}
 require('mini.misc').setup {}
 
-local starter = require('mini.starter')
+local starter = require 'mini.starter'
 
-local header_verse = {
+local headerVerse = {
 
     [[
 Bright star, would I were steadfast as thee art!
@@ -29,12 +29,11 @@ Complete the dark confessions her veins spell.
 浴兰汤兮沐芳，华采衣兮若英。
 灵连蜷兮既留，烂昭昭兮未央。
 蹇将憺兮寿宫，与日月兮齐光。
-- 《云中君》
-    ]],
-    length = 6
+- 《云中君》]],
+    length = 6,
 }
 
-local foot_verse = {
+local footVerse = {
     [[
 Whispers antiphonal in the azure swing...
 - Hart Crane]],
@@ -60,38 +59,52 @@ Are overtaken.
 雷填填兮雨冥冥，猨啾啾兮狖夜鸣。
 风飒飒兮木萧萧，思公子兮徒离忧。
 - 《山鬼》]],
-    length = 6
+    length = 6,
 }
 
 math.randomseed(os.time()) -- random initialize
-math.random(); math.random(); math.random() -- warming up
+local _ = math.random()
+_ = math.random()
+_ = math.random() -- warming up
 
-starter.setup{
-    header = header_verse[math.random(1, header_verse.length)],
+starter.setup {
+    header = headerVerse[math.random(1, headerVerse.length)],
     items = {
-        starter.sections.telescope({'projects', 'oldfiles', 'find_files', 'command_history', 'colorscheme', 'jumplist'}),
+        {
+            { action = 'Telescope projects', name = 'recent projects', section = 'Telescope' },
+            { action = 'Telescope oldfiles', name = 'old files', section = 'Telescope' },
+            { action = 'Telescope find_files', name = 'find files', section = 'Telescope' },
+            { action = 'Telescope command_history', name = 'command history', section = 'Telescope' },
+            { action = 'Telescope jumplist', name = 'jumplist', section = 'Telescope' },
+            { action = 'Telescope colorscheme', name = 'themes', section = 'Telescope' },
+            { action = [[lua require("conf_colorscheme").randomPick()]], name = 'pick one!', section = 'Telescope' },
+            { name = 'edit new buffer', action = 'enew', section = 'Builtin actions' },
+            { name = 'quit Neovim', action = 'qall!', section = 'Builtin actions' },
+        },
     },
     content_hooks = {
         starter.gen_hook.adding_bullet(),
         starter.gen_hook.aligning('center', 'center'),
     },
-    starter.gen_hook.padding(3, 2),
-    footer = foot_verse[math.random(1, foot_verse.length)],
+    starter.gen_hook.padding(5, 2),
+    footer = footVerse[math.random(1, footVerse.length)],
 }
 
 require('mini.indentscope').setup {
     mappings = {
         object_scope = '',
         object_scope_with_border = '',
-    }
+    },
 }
 
-vim.cmd([[
+vim.cmd [[
     hi MiniCursorword None
+    hi MiniCursorwordCurrent None
     hi link MiniCursorword CursorLine
-]])
+    hi link MiniCursorwordCurrent CursorLine
+]]
 
 local keymap = vim.api.nvim_set_keymap
 
-keymap('n', "<Leader>bd", "<cmd>lua require('mini.bufremove').delete()<CR>", {noremap = true, silent = true})
-keymap('n', "<Leader>bh", "<cmd>lua require('mini.bufremove').delete()<CR>", {noremap = true, silent = true})
+keymap('n', '<Leader>bd', "<cmd>lua require('mini.bufremove').delete()<CR>", { noremap = true, silent = true })
+keymap('n', '<Leader>bh', "<cmd>lua require('mini.bufremove').delete()<CR>", { noremap = true, silent = true })

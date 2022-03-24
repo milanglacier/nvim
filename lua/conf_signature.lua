@@ -11,9 +11,10 @@ function M.on_attach(bufnr)
         toggle_key = "<A-x>",
         floating_window_off_x = 15, -- adjust float windows x position.
         floating_window_off_y = 15,
-        -- hint_enable = true,
-        -- hint_prefix = "",
-        -- doc_lines = 5,
+        hint_enable = true,
+        hint_prefix = "",
+        doc_lines = 5,
+        floating_window = false,
         time_interval = 100,
 
     }, bufnr)

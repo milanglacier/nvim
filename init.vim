@@ -22,8 +22,8 @@ set autoindent
 set showcmd
 set ignorecase smartcase
 
-filetype plugin indent on
-
+" filetype plugin indent on
+" only vim need to explicitly set this line
 
 " set the terminal working at the current directory
 " autocmd BufEnter * silent! lcd %:p:h
@@ -34,6 +34,8 @@ filetype plugin indent on
 " then you probably find that this map won't working.
 
 set clipboard+=unnamedplus
+set completeopt=menu,menuone,noselect
+let g:did_load_filetypes = 1
 
 
 " function to enabling the same plugin (at different fork), primarily
@@ -50,7 +52,7 @@ set clipboard+=unnamedplus
 
 let g:CONDA_PATHNAME = "/opt/homebrew/Caskroom/miniforge/base"
 
-" condition brach for different setting in nvim terminal and vscode
+" condition branch for different setting in nvim terminal and vscode
 if !exists('g:vscode')
 
     syntax enable
@@ -67,7 +69,7 @@ if !exists('g:vscode')
     Plug 'sainnhe/everforest'
     Plug 'mhdahmad/gruvbox.lua'
 
-    " Fix bugs and Utilites
+    " Fix bugs and Utilities
     Plug 'antoinemadec/FixCursorHold.nvim'
     Plug 'max397574/better-escape.nvim'
 
@@ -180,8 +182,7 @@ if !exists('g:vscode')
 
     call plug#end()
 
-    lua require("impatient").enable_profile()
-
+    lua require('conf_impatient')
     lua require("conf_filetype")
 
     source ~/.config/nvim/vim/conf_builtin_extend.vim
@@ -274,7 +275,7 @@ else
 
     call plug#end()
 
-    lua require("impatient")
+    lua require("conf_impatient")
     lua require("conf_filetype")
 
     source ~/.config/nvim/vim/conf_builtin_extend.vim
