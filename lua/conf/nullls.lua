@@ -1,5 +1,4 @@
 local null_ls = require 'null-ls'
-local cargo = '/Users/northyear/.cargo'
 local mypath = require('bin_path')
 
 null_ls.setup {

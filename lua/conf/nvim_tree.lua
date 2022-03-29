@@ -31,7 +31,7 @@ vim.g.nvim_tree_icons = {
 require'nvim-tree'.setup{
     view = {
         mappings = {
-        { key = "?", action = "toggle_help" },
+            list = { {key = "?", action = "toggle_help" } },
 
         }
     }
