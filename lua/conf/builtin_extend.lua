@@ -5,7 +5,6 @@ keymap('t', 'jk', [[<C-\><C-n>]], { noremap = true })
 
 vim.g.mapleader = ' '
 keymap('', [[<Space><Space>]], [[<LocalLeader>]], {})
-keymap('', [[<BS>]], [[<LocalLeader>]], {})
 
 keymap('i', '<C-b>', '<Left>', { noremap = true })
 keymap('i', '<C-p>', '<Up>', { noremap = true })
@@ -30,6 +29,8 @@ keymap('n', '<Leader>cu', [[:cd ..<cr>]], { noremap = true })
 
 keymap('n', ']b', [[:bn<cr>]], { noremap = true })
 keymap('n', '[b', [[:bp<cr>]], { noremap = true })
+
+keymap('n', '<Leader>to', [[:tabonly<cr>]], { noremap = true })
 
 vim.cmd [[
 augroup highlight_yank
