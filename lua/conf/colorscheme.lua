@@ -31,8 +31,9 @@ local nightSchemeOptions = {
     },
     { name = 'gruvbox' },
     { name = 'minischeme' },
+    { name = 'kanagawa' },
 
-    length = 6,
+    length = 7,
 }
 
 local daySchemeOptions = {
@@ -56,14 +57,14 @@ local daySchemeOptions = {
     length = 5,
 }
 
-local colorSchemePick = function(style, theme)
-    if style == 1 then
+local colorSchemePick = function(bg, theme)
+    if bg == 1 then -- background = dark
         if nightSchemeOptions[theme]['cmd'] ~= nil then
             nightSchemeOptions[theme].cmd()
         end
 
         colorschemeCmd('dark', nightSchemeOptions[theme].name)
-    else
+    else -- background = light
         if daySchemeOptions[theme]['cmd'] ~= nil then
             daySchemeOptions[theme].cmd()
         end
@@ -79,18 +80,18 @@ function colorschemePicker.randomPick()
     _ = math.random() -- warming up
 
     local time = os.date '*t'
-    local initStyle = 1
+    local bg = 1
     local rd = 0
 
     if (time.hour <= 7) or (time.hour >= 23) then
-        initStyle = 1
+        bg = 1
         rd = math.random(1, nightSchemeOptions.length)
     else
-        initStyle = 2
+        bg = 2
         rd = math.random(1, daySchemeOptions.length)
     end
 
-    colorSchemePick(initStyle, rd)
+    colorSchemePick(bg, rd)
 end
 
 colorschemePicker.randomPick()

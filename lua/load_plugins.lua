@@ -12,6 +12,7 @@ if not vim.g.vscode then
     Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
     Plug 'sainnhe/everforest'
     Plug 'mhdahmad/gruvbox.lua'
+    Plug 'rebelot/kanagawa.nvim'
 
     " Fix bugs and Utilities
     Plug 'antoinemadec/FixCursorHold.nvim'
