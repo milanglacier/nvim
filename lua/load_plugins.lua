@@ -41,6 +41,9 @@ if not vim.g.vscode then
     Plug 'gbprod/substitute.nvim'
     Plug 'andymass/vim-matchup'
     Plug 'tommcdo/vim-exchange'
+    Plug 'kana/vim-textobj-user'
+    Plug 'D4KU/vim-textobj-chainmember'
+    Plug 'thinca/vim-textobj-between'
 
     Plug 'norcalli/nvim-colorizer.lua'
 
@@ -87,6 +90,7 @@ if not vim.g.vscode then
     Plug 'kdheepak/cmp-latex-symbols'
     Plug 'L3MON4D3/LuaSnip'
     Plug 'saadparwaiz1/cmp_luasnip'
+    Plug 'rafamadriz/friendly-snippets'
 
     " Symbol Outline and signature help
     Plug 'tami5/lspsaga.nvim'
@@ -150,6 +154,9 @@ else
     Plug 'gbprod/substitute.nvim'
     Plug 'andymass/vim-matchup'
     Plug 'tommcdo/vim-exchange'
+    Plug 'kana/vim-textobj-user'
+    Plug 'D4KU/vim-textobj-chainmember'
+    Plug 'thinca/vim-textobj-between'
 
     " Tree sitter for enhanced text obj and syntax capturality
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}

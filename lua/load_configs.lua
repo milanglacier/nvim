@@ -22,6 +22,7 @@ if not vim.g.vscode then
     require 'conf.matchup'
     require 'conf.surround'
     require 'conf.sneak'
+    require 'conf.textobj'
 
     require 'conf.pandoc'
 
@@ -66,6 +67,7 @@ else
     require 'conf.matchup'
     require 'conf.surround'
     require 'conf.sneak'
+    require 'conf.textobj'
 
     require 'conf.treesitter'
 end
