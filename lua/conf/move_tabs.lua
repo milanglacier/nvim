@@ -1,6 +1,6 @@
 local M = {}
 
-function M.MoveToPrevTab()
+function M.move_to_prev_tab()
     if vim.fn.tabpagenr '$' == 1 and vim.fn.winnr '$' == 1 then
         return
     end
@@ -22,7 +22,7 @@ function M.MoveToPrevTab()
     vim.cmd('b' .. cur_buf)
 end
 
-function M.MoveToNextTab()
+function M.move_to_next_tab()
 
     if vim.fn.tabpagenr '$' == 1 and vim.fn.winnr '$' == 1 then
         return
@@ -47,8 +47,8 @@ end
 
 local keymap = vim.api.nvim_set_keymap
 
-keymap('n', '<A-f>', [[<cmd>lua require("conf.move_tabs").MoveToNextTab()<CR>]], {noremap = true})
-keymap('n', '<A-b>', [[<cmd>lua require("conf.move_tabs").MoveToPrevTab()<CR>]], {noremap = true})
+keymap('n', '<A-f>', [[<cmd>lua require("conf.move_tabs").move_to_prev_tab()<CR>]], {noremap = true})
+keymap('n', '<A-b>', [[<cmd>lua require("conf.move_tabs").move_to_next_tab()<CR>]], {noremap = true})
 
 keymap('n', '<A-w>', [[<C-w>w]], {noremap = true})
 keymap('n', '<A-t>', [[<C-w>T]], {noremap = true})

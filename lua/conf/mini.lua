@@ -4,7 +4,7 @@ require('mini.misc').setup {}
 if vim.fn.has 'nvim-0.7' == 1 then
     local starter = require 'mini.starter'
 
-    local headerVerse = {
+    local header_verse = {
 
         [[
 Bright star, would I were steadfast as thee art!
@@ -24,7 +24,7 @@ Complete the dark confessions her veins spell.
 - 《湘夫人》]],
         [[
 美人迈兮音尘阙，隔千里兮共明月。
-临风叹兮将焉歇，川路长兮不可越。
+临风叹兮将焉歇，川路长兮不可越！
 - 《月赋》]],
         [[
 浴兰汤兮沐芳，华采衣兮若英。
@@ -34,7 +34,7 @@ Complete the dark confessions her veins spell.
         length = 6,
     }
 
-    local footVerse = {
+    local foot_verse = {
         [[
 Whispers antiphonal in the azure swing...
 - Hart Crane]],
@@ -69,7 +69,7 @@ Are overtaken.
     _ = math.random() -- warming up
 
     starter.setup {
-        header = headerVerse[math.random(1, headerVerse.length)],
+        header = header_verse[math.random(1, header_verse.length)],
         items = {
             {
                 { action = 'Telescope projects', name = 'recent projects', section = 'Telescope' },
@@ -78,7 +78,7 @@ Are overtaken.
                 { action = 'Telescope command_history', name = 'command history', section = 'Telescope' },
                 { action = 'Telescope jumplist', name = 'jumplist', section = 'Telescope' },
                 {
-                    action = [[lua require("conf.colorscheme").randomPick()]],
+                    action = [[lua require("conf.colorscheme").pick_randomly()]],
                     name = 'pick one theme!',
                     section = 'Telescope',
                 },
@@ -91,7 +91,7 @@ Are overtaken.
             starter.gen_hook.aligning('center', 'center'),
         },
         starter.gen_hook.padding(5, 2),
-        footer = footVerse[math.random(1, footVerse.length)],
+        footer = foot_verse[math.random(1, foot_verse.length)],
         query_updaters = [[abcdefhijklmnopqrsuvwxyz]],
     }
 end

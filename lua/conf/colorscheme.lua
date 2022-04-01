@@ -1,13 +1,13 @@
 require('colorizer').setup()
 
-local colorschemePicker = {}
+local ColorschemePicker = {}
 
-local function colorschemeCmd(bg, theme)
+local function colorscheme_cmd(bg, theme)
     vim.o.background = bg
     vim.cmd('colorscheme ' .. theme)
 end
 
-local nightSchemeOptions = {
+local night_scheme_options = {
 
     { name = 'nightfox' },
     {
@@ -36,7 +36,7 @@ local nightSchemeOptions = {
     length = 7,
 }
 
-local daySchemeOptions = {
+local day_scheme_options = {
 
     { name = 'dawnfox' },
     { name = 'rose-pine' },
@@ -57,23 +57,23 @@ local daySchemeOptions = {
     length = 5,
 }
 
-local colorSchemePick = function(bg, theme)
+local pick_colorscheme = function(bg, theme)
     if bg == 1 then -- background = dark
-        if nightSchemeOptions[theme]['cmd'] ~= nil then
-            nightSchemeOptions[theme].cmd()
+        if night_scheme_options[theme]['cmd'] ~= nil then
+            night_scheme_options[theme].cmd()
         end
 
-        colorschemeCmd('dark', nightSchemeOptions[theme].name)
+        colorscheme_cmd('dark', night_scheme_options[theme].name)
     else -- background = light
-        if daySchemeOptions[theme]['cmd'] ~= nil then
-            daySchemeOptions[theme].cmd()
+        if day_scheme_options[theme]['cmd'] ~= nil then
+            day_scheme_options[theme].cmd()
         end
 
-        colorschemeCmd('light', daySchemeOptions[theme].name)
+        colorscheme_cmd('light', day_scheme_options[theme].name)
     end
 end
 
-function colorschemePicker.randomPick()
+function ColorschemePicker.pick_randomly()
     math.randomseed(os.time()) -- random initialize
     local _ = math.random()
     _ = math.random()
@@ -85,18 +85,18 @@ function colorschemePicker.randomPick()
 
     if (time.hour <= 7) or (time.hour >= 23) then
         bg = 1
-        rd = math.random(1, nightSchemeOptions.length)
+        rd = math.random(1, night_scheme_options.length)
     else
         bg = 2
-        rd = math.random(1, daySchemeOptions.length)
+        rd = math.random(1, day_scheme_options.length)
     end
 
-    colorSchemePick(bg, rd)
+    pick_colorscheme(bg, rd)
 end
 
-colorschemePicker.randomPick()
+ColorschemePicker.pick_randomly()
 
-local function getAllThemeNames(schemeOptions)
+local function concat_all_theme_names(schemeOptions)
     local allNames = ''
     for i, theme in ipairs(schemeOptions) do
         allNames = allNames .. i .. ':' .. theme.name .. ' '
@@ -105,7 +105,7 @@ local function getAllThemeNames(schemeOptions)
     return allNames
 end
 
-colorschemePicker.quickColorScheme = function()
+ColorschemePicker.pick_quickly = function()
     local bg = 1
     local theme = 1
 
@@ -113,20 +113,20 @@ colorschemePicker.quickColorScheme = function()
         bg = tonumber(x)
     end)
 
-    local prompt = bg == 1 and getAllThemeNames(nightSchemeOptions) or getAllThemeNames(daySchemeOptions)
+    local prompt = bg == 1 and concat_all_theme_names(night_scheme_options) or concat_all_theme_names(day_scheme_options)
 
     vim.ui.input({ prompt = prompt }, function(x)
         theme = tonumber(x)
     end)
 
-    colorSchemePick(bg, theme)
+    pick_colorscheme(bg, theme)
 end
 
 vim.api.nvim_set_keymap(
     'n',
     '<Localleader>cs',
-    ":lua require('conf.colorscheme').quickColorScheme()<CR>",
+    ":lua require('conf.colorscheme').pick_quickly()<CR>",
     { noremap = true }
 )
 
-return colorschemePicker
+return ColorschemePicker

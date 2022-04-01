@@ -41,7 +41,7 @@ augroup END
 
 local M = {}
 
-function M.PingCursor()
+function M.ping_cursor()
     vim.o.cursorline = true
     vim.o.cursorcolumn = true
 
@@ -52,6 +52,6 @@ function M.PingCursor()
     vim.o.cursorcolumn = false
 end
 
-keymap('n', '<Leader>pc', '<cmd>lua require("conf.builtin_extend").PingCursor()<CR>', { noremap = true })
+keymap('n', '<Leader>pc', '<cmd>lua require("conf.builtin_extend").ping_cursor()<CR>', { noremap = true })
 
 return M
