@@ -1,7 +1,6 @@
-require'nvim-treesitter.configs'.setup {
+require('nvim-treesitter.configs').setup {
     -- One of "all", "maintained" (parsers with maintainers), or a list of languages
-    ensure_installed = {"python", "r", "latex",
-        "julia", "bash", "vim", "lua", "cpp", "lua"},
+    ensure_installed = { 'python', 'r', 'latex', 'julia', 'bash', 'vim', 'lua', 'cpp', 'lua' },
 
     -- Install languages synchronously (only applied to `ensure_installed`)
     sync_install = false,
@@ -34,8 +33,7 @@ require'nvim-treesitter.configs'.setup {
 
     indent = {
 
-        enable = true
-
+        enable = true,
     },
 
     incremental_selection = {
@@ -48,87 +46,97 @@ require'nvim-treesitter.configs'.setup {
         },
     },
 
-
     textobjects = {
         select = {
             enable = true,
             lookahead = true,
-            keymaps  = {
-                ["af"] = "@function.outer",
-                ["if"] = "@function.inner",
+            keymaps = {
+                ['af'] = '@function.outer',
+                ['if'] = '@function.inner',
 
-                ["aC"] = "@class.outer",
-                ["iC"] = "@class.inner",
-                ["a<leader>c"] = "@class.outer",
-                ["i<leader>c"] = "@class.inner",
+                ['aC'] = '@class.outer',
+                ['iC'] = '@class.inner',
+                ['a<leader>c'] = '@class.outer',
+                ['i<leader>c'] = '@class.inner',
 
-                ["al"] = "@loop.outer",
-                ["il"] = "@loop.inner",
+                ['al'] = '@loop.outer',
+                ['il'] = '@loop.inner',
 
-                ["ac"] = "@conditional.outer",
-                ["ic"] = "@conditional.inner",
-                ["ie"] = "@call.inner",
-                ["ae"] = "@call.outer",
-                ["a<Leader>a"] = "@parameter.outer",
-                ["i<Leader>a"] = "@parameter.inner",
+                ['ac'] = '@conditional.outer',
+                ['ic'] = '@conditional.inner',
+                ['ie'] = '@call.inner',
+                ['ae'] = '@call.outer',
+                ['a<Leader>a'] = '@parameter.outer',
+                ['i<Leader>a'] = '@parameter.inner',
                 -- latex textobjects
-                ["<LocalLeader>f"] = "@frame.outer",
-                ["<LocalLeader>s"] = "@statement.outer",
-                ["<LocalLeader>b"] = "@block.outer",
-                ["<localLeader>c"] = "@class.outer",
-            }
+                ['<LocalLeader>f'] = '@frame.outer',
+                ['<LocalLeader>s'] = '@statement.outer',
+                ['<LocalLeader>b'] = '@block.outer',
+                ['<localLeader>c'] = '@class.outer',
+            },
         },
         move = {
             enable = true,
             set_jumps = true,
             goto_next_start = {
-                ["]f"] = "@function.outer",
-                ["]<Leader>c"] = "@class.outer",
-                ["]l"] = "@loop.outer",
-                ["]c"] = "@conditional.outer",
-                ["]e"] = "@call.outer",
-                ["]a"] = "@parameter.outer",
+                [']f'] = '@function.outer',
+                [']<Leader>c'] = '@class.outer',
+                [']l'] = '@loop.outer',
+                [']c'] = '@conditional.outer',
+                [']e'] = '@call.outer',
+                [']a'] = '@parameter.outer',
             },
 
             goto_next_end = {
-                ["]F"] = "@function.outer",
-                ["]<Leader>C"] = "@class.outer",
-                ["]L"] = "@loop.outer",
-                ["]C"] = "@conditional.outer",
-                ["]E"] = "@call.outer",
-                ["]A"] = "@parameter.outer",
-
+                [']F'] = '@function.outer',
+                [']<Leader>C'] = '@class.outer',
+                [']L'] = '@loop.outer',
+                [']C'] = '@conditional.outer',
+                [']E'] = '@call.outer',
+                [']A'] = '@parameter.outer',
             },
 
             goto_previous_start = {
-                ["[f"] = "@function.outer",
-                ["[<Leader>c"] = "@class.outer",
-                ["[l"] = "@loop.outer",
-                ["[c"] = "@conditional.outer",
-                ["[e"] = "@call.outer",
-                ["[a"] = "@parameter.outer",
+                ['[f'] = '@function.outer',
+                ['[<Leader>c'] = '@class.outer',
+                ['[l'] = '@loop.outer',
+                ['[c'] = '@conditional.outer',
+                ['[e'] = '@call.outer',
+                ['[a'] = '@parameter.outer',
             },
 
             goto_previous_end = {
 
-                ["[F"] = "@function.outer",
-                ["[<Leader>C"] = "@class.outer",
-                ["[L"] = "@loop.outer",
-                ["[C"] = "@conditional.outer",
-                ["[E"] = "@call.outer",
-                ["[A"] = "@parameter.outer",
-            }
-        }
+                ['[F'] = '@function.outer',
+                ['[<Leader>C'] = '@class.outer',
+                ['[L'] = '@loop.outer',
+                ['[C'] = '@conditional.outer',
+                ['[E'] = '@call.outer',
+                ['[A'] = '@parameter.outer',
+            },
+        },
     },
+
     matchup = {
-        enable = true,              -- mandatory, false will disable the whole extension
+        enable = true, -- mandatory, false will disable the whole extension
         disable_virtual_text = true,
         -- disable = { "c", "ruby" },  -- optional, list of language that will be disabled
     },
-
 }
 
 if not vim.g.vscode then
-    vim.api.nvim_set_keymap('o', '<leader>T', ":<C-U>lua require('tsht').nodes()<CR>", {silent = true})
-    vim.api.nvim_set_keymap('v', '<leader>T', ":<C-U>lua require('tsht').nodes()<CR>", {noremap = true, silent = true})
+    vim.api.nvim_set_keymap('o', '<leader>T', ":<C-U>lua require('tsht').nodes()<CR>", { silent = true })
+    vim.api.nvim_set_keymap(
+        'v',
+        '<leader>T',
+        ":<C-U>lua require('tsht').nodes()<CR>",
+        { noremap = true, silent = true }
+    )
+    vim.api.nvim_set_keymap('n', '<leader>sw', '<cmd>ISwap<cr>', { noremap = true, silent = true })
+    vim.api.nvim_set_keymap('n', '<leader>sW', '<cmd>ISwapWith<cr>', { noremap = true, silent = true })
+
+    require('treesitter-context').setup {
+        enable = false,
+        throttle = true,
+    }
 end
