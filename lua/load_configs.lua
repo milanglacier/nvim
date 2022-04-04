@@ -20,7 +20,6 @@ if not vim.g.vscode then
     require 'conf.substitute'
     require 'conf.targets'
     require 'conf.matchup'
-    require 'conf.surround'
     require 'conf.sneak'
     require 'conf.textobj'
 
@@ -65,7 +64,6 @@ else
     require 'conf.substitute'
     require 'conf.targets'
     require 'conf.matchup'
-    require 'conf.surround'
     require 'conf.sneak'
     require 'conf.textobj'
 

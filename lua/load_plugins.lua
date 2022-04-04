@@ -1,5 +1,4 @@
 if not vim.g.vscode then
-
     vim.cmd [[    
 
     call plug#begin()
@@ -31,7 +30,7 @@ if not vim.g.vscode then
     " Set the advanced text editing and jumping plug
     Plug 'justinmk/vim-sneak'
 
-    Plug 'ur4ltz/surround.nvim'
+    Plug 'tpope/vim-surround'
     Plug 'numToStr/Comment.nvim'
     Plug 'tpope/vim-repeat'
     Plug 'michaeljsmith/vim-indent-object'
@@ -52,6 +51,8 @@ if not vim.g.vscode then
     Plug 'nvim-treesitter/nvim-treesitter-textobjects'
     Plug 'p00f/nvim-ts-rainbow'
     Plug 'mfussenegger/nvim-treehopper'
+    Plug 'mizlan/iswap.nvim'
+    Plug 'romgrk/nvim-treesitter-context'
 
     " Set markdown syntax highlighting
     Plug 'vim-pandoc/vim-pandoc-syntax' , {'for': ['rmd', 'markdown.pandoc']}
@@ -130,9 +131,7 @@ if not vim.g.vscode then
     call plug#end()
 
     ]]
-
 else
-
     vim.cmd [[
 
     call plug#begin()
@@ -145,7 +144,7 @@ else
 
     Plug 'justinmk/vim-sneak'
 
-    Plug 'ur4ltz/surround.nvim'
+    Plug 'tpope/vim-surround'
     Plug 'numToStr/Comment.nvim'
     Plug 'tpope/vim-repeat'
     Plug 'wellle/targets.vim'
@@ -161,7 +160,6 @@ else
     " Tree sitter for enhanced text obj and syntax capturality
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
     Plug 'nvim-treesitter/nvim-treesitter-textobjects'
-    Plug 'mfussenegger/nvim-treehopper'
 
     " Deal with input method, automatically changed to English
     " input method when switch to normal mode
@@ -170,5 +168,4 @@ else
     call plug#end()
 
     ]]
-
 end
