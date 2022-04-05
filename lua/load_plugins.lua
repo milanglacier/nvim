@@ -56,8 +56,8 @@ if not vim.g.vscode then
 
     " Set markdown syntax highlighting
     Plug 'vim-pandoc/vim-pandoc-syntax' , {'for': ['rmd', 'markdown.pandoc']}
-    Plug 'vim-pandoc/vim-rmarkdown' ,  {'branch': 'official-filetype', 'for': 'rmd'}
-    Plug 'iamcco/markdown-preview.nvim' , { 'do': 'cd app && yarn install', 'for': ['markdown.pandoc', 'rmd']  }
+    Plug 'vim-pandoc/vim-rmarkdown' , {'branch': 'official-filetype', 'for': 'rmd' }
+    Plug 'iamcco/markdown-preview.nvim' , { 'do': 'cd app && yarn install' , 'for': ['markdown.pandoc', 'rmd'] }
 
     " Fuzzy finder for file search
     Plug 'nvim-lua/plenary.nvim'

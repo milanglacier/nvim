@@ -80,8 +80,8 @@ local on_attach = function(client, bufnr)
     -- diagnostic show in line or in cursor
     vim.api.nvim_buf_set_keymap(bufnr, 'n',
         '<Leader>dl', "<cmd>lua require'lspsaga.diagnostic'.show_line_diagnostics()<CR>", opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n',
-        '<Leader>dc', "<cmd>lua require'lspsaga.diagnostic'.show_cursor_diagnostics()<CR>", opts)
+    -- vim.api.nvim_buf_set_keymap(bufnr, 'n',
+    --     '<Leader>dc', "<cmd>lua require'lspsaga.diagnostic'.show_cursor_diagnostics()<CR>", opts)
 
     require("aerial").on_attach(client, bufnr)
     require("conf.signature").on_attach(bufnr)
