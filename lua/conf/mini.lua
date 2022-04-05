@@ -131,7 +131,7 @@ vim.cmd [[
 
 local keymap = vim.api.nvim_set_keymap
 
-keymap('n', '<Leader>bd', "<cmd>lua require('mini.bufremove').delete()<CR>", { noremap = true, silent = true })
-keymap('n', '<Leader>bh', "<cmd>lua require('mini.bufremove').delete()<CR>", { noremap = true, silent = true })
+keymap('n', '<Leader>bd', "<cmd>lua require('mini.bufremove').delete(force = true)<CR>", { noremap = true, silent = true })
+keymap('n', '<Leader>bw', "<cmd>lua require('mini.bufremove').wipeout(force = true)<CR>", { noremap = true, silent = true })
 
 return M

@@ -31,6 +31,8 @@ keymap('n', ']b', [[:bn<cr>]], { noremap = true })
 keymap('n', '[b', [[:bp<cr>]], { noremap = true })
 
 keymap('n', '<Leader>to', [[:tabonly<cr>]], { noremap = true })
+keymap('n', '<Leader>tn', [[:tabnew<cr>]], { noremap = true })
+keymap('n', '<Leader>tc', [[:tabclose<cr>]], { noremap = true })
 
 vim.cmd [[
 augroup highlight_yank
