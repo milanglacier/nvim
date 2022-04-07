@@ -1,5 +1,7 @@
 require('spectre').setup()
 
-vim.api.nvim_set_keymap('n', '<Leader>rg', "<cmd>lua require('spectre').open()<CR>", {noremap = true})
-vim.api.nvim_set_keymap('v', '<Leader>rg', "<cmd>lua require('spectre').open_visual()<CR>", {noremap = true})
+local keymap = vim.api.nvim_set_keymap
+
+keymap('n', '<Leader>rg', "<cmd>lua require('spectre').open()<CR>", {noremap = true})
+keymap('v', '<Leader>rg', "<cmd>lua require('spectre').open_visual()<CR>", {noremap = true})
 
