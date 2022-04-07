@@ -1,5 +1,3 @@
-require('colorizer').setup()
-
 local ColorschemePicker = {}
 
 local function colorscheme_cmd(bg, theme)
