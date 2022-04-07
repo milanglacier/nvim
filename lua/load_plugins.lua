@@ -29,14 +29,12 @@ if not vim.g.vscode then
 
     " Set the advanced text editing and jumping plug
     Plug 'justinmk/vim-sneak'
-
     Plug 'tpope/vim-surround'
     Plug 'numToStr/Comment.nvim'
     Plug 'tpope/vim-repeat'
     Plug 'michaeljsmith/vim-indent-object'
     Plug 'wellle/targets.vim'
     Plug 'AndrewRadev/dsf.vim'
-    Plug 'windwp/nvim-autopairs'
     Plug 'gbprod/substitute.nvim'
     Plug 'andymass/vim-matchup'
     Plug 'tommcdo/vim-exchange'
@@ -45,6 +43,7 @@ if not vim.g.vscode then
     Plug 'thinca/vim-textobj-between'
 
     Plug 'norcalli/nvim-colorizer.lua'
+    Plug 'windwp/nvim-autopairs'
 
     " Tree sitter for enhanced text obj and syntax capturality
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -77,8 +76,6 @@ if not vim.g.vscode then
     " file explorer
     Plug 'kyazdani42/nvim-tree.lua', {'on': 'NvimTreeToggle'}
 
-    " LSP config
-    Plug 'neovim/nvim-lspconfig'
 
     " Completion
     Plug 'hrsh7th/cmp-nvim-lsp'
@@ -93,7 +90,8 @@ if not vim.g.vscode then
     Plug 'saadparwaiz1/cmp_luasnip'
     Plug 'rafamadriz/friendly-snippets'
 
-    " Symbol Outline and signature help
+    " LSP config
+    Plug 'neovim/nvim-lspconfig'
     Plug 'tami5/lspsaga.nvim'
     Plug 'stevearc/aerial.nvim', {'on': 'AerialToggle'}
     Plug 'onsails/lspkind-nvim'
