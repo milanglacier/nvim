@@ -1,3 +1,6 @@
+vim.cmd [[packadd! vim-pandoc-syntax]]
+vim.cmd [[packadd! vim-rmarkdown]]
+
 vim.cmd [[
 
 augroup pandoc_syntax

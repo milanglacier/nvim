@@ -1,3 +1,5 @@
+vim.cmd [[packadd! nvim-terminal]]
+
 require('nvim-terminal').setup({
     window = {
         -- Do `:h :botright` for more information

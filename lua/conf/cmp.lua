@@ -1,3 +1,15 @@
+vim.cmd [[packadd! nvim-cmp]]
+vim.cmd [[packadd! cmp-nvim-lsp]]
+vim.cmd [[packadd! cmp-buffer]]
+vim.cmd [[packadd! cmp-path]]
+vim.cmd [[packadd! cmp-cmdline]]
+vim.cmd [[packadd! cmp-nvim-lua]]
+vim.cmd [[packadd! cmp-omni]]
+vim.cmd [[packadd! cmp-latex-symbols]]
+vim.cmd [[packadd! cmp_luasnip]]
+
+vim.cmd [[packadd! lspkind-nvim]]
+
 local cmp = require'cmp'
 local lspkind = require'lspkind'
 

@@ -1,3 +1,5 @@
+vim.cmd [[packadd! iron.nvim]]
+
 local iron = require 'iron'
 local mypath = require 'bin_path'
 
@@ -48,14 +50,14 @@ iron.core.set_config {
     buflisted = true,
 }
 
-local map = vim.api.nvim_set_keymap
+local keymap = vim.api.nvim_set_keymap
 
-map('n', '<localleader>rs', '<cmd>IronRepl<CR>', {})
-map('n', '<localleader>rr', '<cmd>IronRestart<CR>', {})
-map('n', '<localleader>ri', '<Plug>(iron-interupt)', {})
-map('n', '<localleader>rc', '<Plug>(iron-clear)', {})
-map('n', '<localleader>rq', '<Plug>(iron-exit)', {})
+keymap('n', '<localleader>rs', '<cmd>IronRepl<CR>', {})
+keymap('n', '<localleader>rr', '<cmd>IronRestart<CR>', {})
+keymap('n', '<localleader>ri', '<Plug>(iron-interupt)', {})
+keymap('n', '<localleader>rc', '<Plug>(iron-clear)', {})
+keymap('n', '<localleader>rq', '<Plug>(iron-exit)', {})
 
-map('n', '<localleader>ss', '<Plug>(iron-send-line)', {})
-map('n', '<localleader>s', '<Plug>(iron-send-motion)', {})
-map('v', '<localleader>ss', '<Plug>(iron-visual-send)', {})
+keymap('n', '<localleader>ss', '<Plug>(iron-send-line)', {})
+keymap('n', '<localleader>s', '<Plug>(iron-send-motion)', {})
+keymap('v', '<localleader>ss', '<Plug>(iron-visual-send)', {})

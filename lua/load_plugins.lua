@@ -1,171 +1,126 @@
-if not vim.g.vscode then
-    vim.cmd [[    
+require 'paq' {
 
-    call plug#begin()
+    'lewis6991/impatient.nvim',
+    'nathom/filetype.nvim',
 
-    Plug 'lewis6991/impatient.nvim'
-    Plug 'nathom/filetype.nvim'
+    { 'EdenEast/nightfox.nvim', opt = true },
+    { 'rose-pine/neovim', as = 'rose-pine', opt = true },
+    { 'folke/tokyonight.nvim', branch = 'main', opt = true },
+    { 'sainnhe/everforest', opt = true },
+    { 'mhdahmad/gruvbox.lua', opt = true },
+    { 'rebelot/kanagawa.nvim', opt = true },
 
-    Plug 'EdenEast/nightfox.nvim'
-    Plug 'rose-pine/neovim', {'as': 'rose-pine'}
-    Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
-    Plug 'sainnhe/everforest'
-    Plug 'mhdahmad/gruvbox.lua'
-    Plug 'rebelot/kanagawa.nvim'
+    -- Fix bugs and Utilities
+    { 'antoinemadec/FixCursorHold.nvim' },
+    { 'max397574/better-escape.nvim', opt = true },
 
-    " Fix bugs and Utilities
-    Plug 'antoinemadec/FixCursorHold.nvim'
-    Plug 'max397574/better-escape.nvim'
+    -- Set the theme for statusbar
+    { 'nvim-lualine/lualine.nvim', opt = true },
+    { 'alvarosevilla95/luatab.nvim', opt = true },
+    { 'rcarriga/nvim-notify', opt = true },
+    { 'echasnovski/mini.nvim', opt = true },
 
-    " Set the theme for statusbar
-    Plug 'nvim-lualine/lualine.nvim'
-    Plug 'alvarosevilla95/luatab.nvim'
-    Plug 'rcarriga/nvim-notify'
-    Plug 'echasnovski/mini.nvim'
+    -- automatically set the root;
+    { 'ygm2/rooter.nvim', opt = true },
+    { 'ahmedkhalf/project.nvim', opt = true },
 
-    "automatically set the root
-    Plug 'ygm2/rooter.nvim'
-    Plug 'ahmedkhalf/project.nvim'
+    -- Set the advanced text editing and jumping plug
+    { 'justinmk/vim-sneak' },
 
-    " Set the advanced text editing and jumping plug
-    Plug 'justinmk/vim-sneak'
+    { 'tpope/vim-surround' },
+    { 'numToStr/Comment.nvim' },
+    { 'tpope/vim-repeat' },
+    { 'michaeljsmith/vim-indent-object' },
+    { 'wellle/targets.vim' },
+    { 'AndrewRadev/dsf.vim' },
+    { 'gbprod/substitute.nvim' },
+    { 'andymass/vim-matchup' },
+    { 'tommcdo/vim-exchange' },
+    { 'kana/vim-textobj-user' },
+    { 'D4KU/vim-textobj-chainmember' },
+    { 'thinca/vim-textobj-between' },
 
-    Plug 'tpope/vim-surround'
-    Plug 'numToStr/Comment.nvim'
-    Plug 'tpope/vim-repeat'
-    Plug 'michaeljsmith/vim-indent-object'
-    Plug 'wellle/targets.vim'
-    Plug 'AndrewRadev/dsf.vim'
-    Plug 'windwp/nvim-autopairs'
-    Plug 'gbprod/substitute.nvim'
-    Plug 'andymass/vim-matchup'
-    Plug 'tommcdo/vim-exchange'
-    Plug 'kana/vim-textobj-user'
-    Plug 'D4KU/vim-textobj-chainmember'
-    Plug 'thinca/vim-textobj-between'
+    { 'norcalli/nvim-colorizer.lua', opt = true },
+    { 'windwp/nvim-autopairs', opt = true },
 
-    Plug 'norcalli/nvim-colorizer.lua'
+    -- Tree sitter for enhanced text obj and syntax capturality
+    { 'nvim-treesitter/nvim-treesitter' },
+    { 'nvim-treesitter/nvim-treesitter-textobjects' },
+    { 'p00f/nvim-ts-rainbow' },
+    { 'mfussenegger/nvim-treehopper', opt = true },
+    { 'mizlan/iswap.nvim', opt = true },
+    { 'romgrk/nvim-treesitter-context', opt = true },
 
-    " Tree sitter for enhanced text obj and syntax capturality
-    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-    Plug 'nvim-treesitter/nvim-treesitter-textobjects'
-    Plug 'p00f/nvim-ts-rainbow'
-    Plug 'mfussenegger/nvim-treehopper'
-    Plug 'mizlan/iswap.nvim'
-    Plug 'romgrk/nvim-treesitter-context'
+    -- Set markdown syntax highlighting
+    { 'vim-pandoc/vim-pandoc-syntax', opt = true },
+    { 'vim-pandoc/vim-rmarkdown', branch = 'official-filetype', opt = true },
+    { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', opt = true },
 
-    " Set markdown syntax highlighting
-    Plug 'vim-pandoc/vim-pandoc-syntax' , {'for': ['rmd', 'markdown.pandoc']}
-    Plug 'vim-pandoc/vim-rmarkdown' , {'branch': 'official-filetype', 'for': 'rmd' }
-    Plug 'iamcco/markdown-preview.nvim' , { 'do': 'cd app && yarn install' , 'for': ['markdown.pandoc', 'rmd'] }
+    -- Fuzzy finder for file search
+    { 'nvim-lua/plenary.nvim' },
+    { 'nvim-telescope/telescope.nvim', opt = true },
+    { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', opt = true },
 
-    " Fuzzy finder for file search
-    Plug 'nvim-lua/plenary.nvim'
-    Plug 'nvim-telescope/telescope.nvim'
-    Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+    -- very simple, naive completion without LSP
+    -- Plug 'skywind3000/vim-auto-popmenu'
+    -- Plug 'skywind3000/vim-dict'
 
-    " very simple, naive completion without LSP
-    " Plug 'skywind3000/vim-auto-popmenu'
-    " Plug 'skywind3000/vim-dict'
+    -- Deal with input method, automatically changed to English
+    -- input method when switch to normal mode
+    { 'milanglacier/smartim' },
+    -- support browser
+    -- Plug 'glacambre/firenvim'
 
-    " Deal with input method, automatically changed to English
-    " input method when switch to normal mode
-    Plug 'milanglacier/smartim'
-    " support browser
-    " Plug 'glacambre/firenvim'
+    -- file explorer
+    { 'kyazdani42/nvim-tree.lua', opt = true },
 
-    " file explorer
-    Plug 'kyazdani42/nvim-tree.lua', {'on': 'NvimTreeToggle'}
+    -- LSP config
+    { 'neovim/nvim-lspconfig', opt = true },
 
-    " LSP config
-    Plug 'neovim/nvim-lspconfig'
+    -- Completion
+    { 'hrsh7th/cmp-nvim-lsp', opt = true },
+    { 'hrsh7th/cmp-buffer', opt = true },
+    { 'hrsh7th/cmp-path', opt = true },
+    { 'hrsh7th/cmp-cmdline', opt = true },
+    { 'hrsh7th/nvim-cmp', opt = true },
+    { 'hrsh7th/cmp-nvim-lua', opt = true },
+    { 'hrsh7th/cmp-omni', opt = true },
+    { 'kdheepak/cmp-latex-symbols', opt = true },
+    { 'L3MON4D3/LuaSnip', opt = true },
+    { 'saadparwaiz1/cmp_luasnip', opt = true },
+    { 'rafamadriz/friendly-snippets', opt = true },
 
-    " Completion
-    Plug 'hrsh7th/cmp-nvim-lsp'
-    Plug 'hrsh7th/cmp-buffer'
-    Plug 'hrsh7th/cmp-path'
-    Plug 'hrsh7th/cmp-cmdline'
-    Plug 'hrsh7th/nvim-cmp'
-    Plug 'hrsh7th/cmp-nvim-lua'
-    Plug 'hrsh7th/cmp-omni'
-    Plug 'kdheepak/cmp-latex-symbols'
-    Plug 'L3MON4D3/LuaSnip'
-    Plug 'saadparwaiz1/cmp_luasnip'
-    Plug 'rafamadriz/friendly-snippets'
+    -- Symbol Outline and signature help
+    { 'tami5/lspsaga.nvim', opt = true },
+    { 'stevearc/aerial.nvim', opt = true },
+    { 'onsails/lspkind-nvim', opt = true },
+    { 'ray-x/lsp_signature.nvim', opt = true },
+    { 'jose-elias-alvarez/null-ls.nvim', opt = true },
+    { 'ThePrimeagen/refactoring.nvim', opt = true },
 
-    " Symbol Outline and signature help
-    Plug 'tami5/lspsaga.nvim'
-    Plug 'stevearc/aerial.nvim', {'on': 'AerialToggle'}
-    Plug 'onsails/lspkind-nvim'
-    Plug 'ray-x/lsp_signature.nvim'
-    Plug 'jose-elias-alvarez/null-ls.nvim'
-    Plug 'ThePrimeagen/refactoring.nvim'
+    -- lua development
+    { 'folke/lua-dev.nvim', opt = true },
 
-    " lua development
-    Plug 'folke/lua-dev.nvim'
+    -- REPL
+    -- 'jalvesaq/Nvim-R',
+    -- 'jalvesaq/vimcmdline',
+    { 's1n7ax/nvim-terminal', opt = true },
+    { 'hkupty/iron.nvim', opt = true },
 
-    " REPL
-    " Plug 'jalvesaq/Nvim-R', {'for': ['r', 'rmd']}
-    " Plug 'jalvesaq/vimcmdline'
-    Plug 's1n7ax/nvim-terminal'
-    Plug 'hkupty/iron.nvim'
+    -- Git
+    { 'lewis6991/gitsigns.nvim', opt = true },
+    { 'TimUntersberger/neogit', opt = true },
+    { 'sindrets/diffview.nvim', opt = true },
 
+    -- Debugger
+    { 'mfussenegger/nvim-dap', opt = true },
+    { 'mfussenegger/nvim-dap-python', opt = true },
+    { 'rcarriga/nvim-dap-ui', opt = true },
+    { 'nvim-telescope/telescope-dap.nvim', opt = true },
+    { 'theHamsta/nvim-dap-virtual-text', opt = true },
 
-    " Git
-    Plug 'lewis6991/gitsigns.nvim'
-    Plug 'TimUntersberger/neogit', {'on': 'Neogit'}
-    Plug 'sindrets/diffview.nvim', {'on': ['DiffviewOpen', 'DiffviewFileHistory']}
+    -- search and replace file
+    { 'windwp/nvim-spectre', opt = true },
 
-    " Debugger
-    Plug 'mfussenegger/nvim-dap', {'for': ['python']}
-    Plug 'mfussenegger/nvim-dap-python', {'for': ['python']}
-    Plug 'rcarriga/nvim-dap-ui', {'for': ['python']}
-    Plug 'nvim-telescope/telescope-dap.nvim', {'for': ['python']}
-    Plug 'theHamsta/nvim-dap-virtual-text', {'for': ['python']}
-
-    " search and replace file
-    Plug 'windwp/nvim-spectre'
-
-    Plug 'kyazdani42/nvim-web-devicons'
-
-    call plug#end()
-
-    ]]
-else
-    vim.cmd [[
-
-    call plug#begin()
-
-    Plug 'lewis6991/impatient.nvim'
-    Plug 'nathom/filetype.nvim'
-
-    " Fix bugs
-    Plug 'antoinemadec/FixCursorHold.nvim'
-
-    Plug 'justinmk/vim-sneak'
-
-    Plug 'tpope/vim-surround'
-    Plug 'numToStr/Comment.nvim'
-    Plug 'tpope/vim-repeat'
-    Plug 'wellle/targets.vim'
-    Plug 'AndrewRadev/dsf.vim'
-    Plug 'michaeljsmith/vim-indent-object'
-    Plug 'gbprod/substitute.nvim'
-    Plug 'andymass/vim-matchup'
-    Plug 'tommcdo/vim-exchange'
-    Plug 'kana/vim-textobj-user'
-    Plug 'D4KU/vim-textobj-chainmember'
-    Plug 'thinca/vim-textobj-between'
-
-    " Tree sitter for enhanced text obj and syntax capturality
-    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-    Plug 'nvim-treesitter/nvim-treesitter-textobjects'
-
-    " Deal with input method, automatically changed to English
-    " input method when switch to normal mode
-    Plug 'milanglacier/smartim'
-
-    call plug#end()
-
-    ]]
-end
+    { 'kyazdani42/nvim-web-devicons', opt = true },
+}

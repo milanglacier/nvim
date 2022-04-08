@@ -1,3 +1,9 @@
+vim.cmd [[packadd! nvim-dap]]
+vim.cmd [[packadd! nvim-dap-python]]
+vim.cmd [[packadd! nvim-dap-ui]]
+vim.cmd [[packadd! telescope-dap.nvim]]
+vim.cmd [[packadd! nvim-dap-virtual-text]]
+
 local mypath = require 'bin_path'
 
 require('dap-python').setup(mypath.python)

@@ -1,3 +1,6 @@
+vim.cmd [[packadd! null-ls.nvim]]
+vim.cmd [[packadd! refactoring.nvim]]
+
 local null_ls = require 'null-ls'
 local mypath = require('bin_path')
 

@@ -1,3 +1,5 @@
+vim.cmd [[packadd! nvim-notify]]
+
 vim.notify = require("notify")
 
 require('notify').setup({
@@ -5,6 +7,5 @@ require('notify').setup({
     max_height = 20
 })
 
-require("telescope").load_extension("notify")
 local opts = {noremap = true, silent=true}
 vim.api.nvim_set_keymap('n', '<leader>fn', '<cmd>Telescope notify<cr>', opts)

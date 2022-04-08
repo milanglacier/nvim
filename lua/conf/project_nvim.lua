@@ -1,6 +1,7 @@
-require("project_nvim").setup{}
+vim.cmd [[packadd! rooter.nvim]]
+vim.cmd [[packadd! project.nvim]]
 
-require('telescope').load_extension('projects')
+require("project_nvim").setup{}
 
 vim.api.nvim_set_keymap('n', '<Leader>pj',
     '<cmd>Telescope projects<CR>', {noremap = true})

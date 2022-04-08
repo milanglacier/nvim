@@ -125,15 +125,14 @@ require('nvim-treesitter.configs').setup {
 }
 
 if not vim.g.vscode then
-    vim.api.nvim_set_keymap('o', '<leader>T', ":<C-U>lua require('tsht').nodes()<CR>", { silent = true })
-    vim.api.nvim_set_keymap(
-        'v',
-        '<leader>T',
-        ":<C-U>lua require('tsht').nodes()<CR>",
-        { noremap = true, silent = true }
-    )
-    vim.api.nvim_set_keymap('n', '<leader>sw', '<cmd>ISwap<cr>', { noremap = true, silent = true })
-    vim.api.nvim_set_keymap('n', '<leader>sW', '<cmd>ISwapWith<cr>', { noremap = true, silent = true })
+    vim.cmd [[packadd! nvim-treehopper]]
+    vim.cmd [[packadd! nvim-treesitter-context]]
+    vim.cmd [[packadd! iswap.nvim]]
+    local keymap = vim.api.nvim_set_keymap
+    keymap('o', '<leader>T', ":<C-U>lua require('tsht').nodes()<CR>", { silent = true })
+    keymap('v', '<leader>T', ":<C-U>lua require('tsht').nodes()<CR>", { noremap = true, silent = true })
+    keymap('n', '<leader>sw', '<cmd>ISwap<cr>', { noremap = true, silent = true })
+    keymap('n', '<leader>sW', '<cmd>ISwapWith<cr>', { noremap = true, silent = true })
 
     require('treesitter-context').setup {
         enable = false,
