@@ -1,0 +1,10 @@
+proseWrap: "always"
+tabWidth: 4 
+embeddedLanguageFormatting: "off"
+overrides:
+    - files: "*.rmd"
+      options:
+        parser: "markdown"
+    - files: "*.Rmd"
+      options:
+        parser: "markdown"
