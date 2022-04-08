@@ -7,19 +7,19 @@ vim.cmd [[packadd! lsp_signature.nvim]]
 vim.cmd [[packadd! lua-dev.nvim]]
 
 local opts = { noremap = true, silent = true }
-local keymap = vim.api.nvim_buf_set_keymap
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
     -- Enable completion triggered by <c-x><c-o>
     -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+    local bufmap = vim.api.nvim_buf_set_keymap
 
     -- Mappings.
     -- See `:help vim.lsp.*` for documentation on any of the below functions
     -- vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
     --  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-    keymap(bufnr, 'n', '<Leader>td', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+    bufmap(bufnr, 'n', '<Leader>td', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
     --
     --  vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
     -- vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
@@ -32,62 +32,56 @@ local on_attach = function(client, bufnr)
     -- open a separate window to show reference
 
     -- reference
-    keymap(
-        bufnr,
-        'n',
-        'gr',
+    bufmap(
+        bufnr, 'n', 'gr',
         "<cmd>lua require 'telescope.builtin'.lsp_references({layout_strategy = 'vertical', jump_type = 'tab'})<CR>",
         opts
     )
 
     -- code action
-    keymap(bufnr, 'n', '<Leader>ca', "<cmd>lua require('lspsaga.codeaction').code_action()<CR>", opts)
-    keymap(bufnr, 'v', '<Leader>ca', ":lua require('lspsaga.codeaction').range_code_action()<CR>", opts)
+    bufmap(bufnr, 'n', '<Leader>ca', "<cmd>lua require('lspsaga.codeaction').code_action()<CR>", opts)
+    bufmap(bufnr, 'v', '<Leader>ca', ":lua require('lspsaga.codeaction').range_code_action()<CR>", opts)
 
     -- hover
-    keymap(bufnr, 'n', 'gh', "<cmd>lua require('lspsaga.hover').render_hover_doc()<CR>", opts)
-    keymap(bufnr, 'n', '<C-f>', "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>", opts)
-    keymap(bufnr, 'n', '<C-b>', "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>", opts)
+    bufmap(bufnr, 'n', 'gh', "<cmd>lua require('lspsaga.hover').render_hover_doc()<CR>", opts)
+    bufmap(bufnr, 'n', '<C-f>', "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>", opts)
+    bufmap(bufnr, 'n', '<C-b>', "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>", opts)
 
     -- signaturehelp
-    keymap(bufnr, 'n', '<Leader>sh', "<cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>", opts)
+    bufmap(bufnr, 'n', '<Leader>sh', "<cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>", opts)
     -- "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
 
     -- rename
-    keymap(bufnr, 'n', '<Leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    bufmap(bufnr, 'n', '<Leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
 
     -- go to definition, implementation
-    keymap(
-        bufnr,
-        'n',
-        'gd',
+    bufmap(
+        bufnr, 'n', 'gd',
         "<cmd>lua require 'telescope.builtin'.lsp_definitions({layout_strategy = 'vertical', jump_type = 'tab'})<CR>",
         opts
     )
-    keymap(
-        bufnr,
-        'n',
-        '<Leader>gi',
+    bufmap(
+        bufnr, 'n', '<Leader>gi',
         "<cmd>lua require'telescope.builtin'.lsp_implementations({layout_strategy = 'vertical', jump_type = 'tab'})<CR>",
         opts
     )
     -- vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', "<cmd>lua require'lspsaga.provider'.preview_definition()<CR>", opts)
 
     -- workspace
-    keymap(bufnr, 'n', '<Leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-    keymap(bufnr, 'n', '<Leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-    keymap(bufnr, 'n', '<Leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+    bufmap(bufnr, 'n', '<Leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+    bufmap(bufnr, 'n', '<Leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+    bufmap(bufnr, 'n', '<Leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
 
     -- format
-    keymap(bufnr, 'n', '<Leader>fm', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-    keymap(bufnr, 'v', '<Leader>fl', ':<C-U>lua vim.lsp.buf.range_formatting()<CR>', opts)
+    bufmap(bufnr, 'n', '<Leader>fm', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+    bufmap(bufnr, 'v', '<Leader>fl', ':<C-U>lua vim.lsp.buf.range_formatting()<CR>', opts)
 
     -- diagnostic
-    keymap(bufnr, 'n', '<Leader>ds', "<cmd>lua require'telescope.builtin'.diagnostics()<CR>", opts)
-    keymap(bufnr, 'n', '[d', ':Lspsaga diagnostic_jump_prev<CR>', opts)
-    keymap(bufnr, 'n', ']d', ':Lspsaga diagnostic_jump_next<CR>', opts)
+    bufmap(bufnr, 'n', '<Leader>ds', "<cmd>lua require'telescope.builtin'.diagnostics()<CR>", opts)
+    bufmap(bufnr, 'n', '[d', ':Lspsaga diagnostic_jump_prev<CR>', opts)
+    bufmap(bufnr, 'n', ']d', ':Lspsaga diagnostic_jump_next<CR>', opts)
     -- diagnostic show in line or in cursor
-    keymap(bufnr, 'n', '<Leader>dl', "<cmd>lua require'lspsaga.diagnostic'.show_line_diagnostics()<CR>", opts)
+    bufmap(bufnr, 'n', '<Leader>dl', "<cmd>lua require'lspsaga.diagnostic'.show_line_diagnostics()<CR>", opts)
     -- vim.api.nvim_buf_set_keymap(bufnr, 'n',
     --     '<Leader>dc', "<cmd>lua require'lspsaga.diagnostic'.show_cursor_diagnostics()<CR>", opts)
 
@@ -121,9 +115,6 @@ require('lspconfig').r_language_server.setup {
         debounce_text_changes = 150,
     },
     capabilities = capabilities,
-    --root_dir = function()
-    --return root_pattern(".git") or vim.fn.getcwd()
-    --end
 }
 require('lspconfig').texlab.setup {
     on_attach = on_attach,
@@ -145,25 +136,33 @@ require('lspconfig').clangd.setup {
     capabilities = capabilities,
 }
 
-local luadev = require('lua-dev').setup {
-    runtime_path = true,
-    lspconfig = {
-        on_attach = on_attach,
-        capabilities = capabilities,
-        settings = {
-            Lua = {
-                diagnostics = {
-                    globals = { 'vim' },
-                },
-                telemetry = {
-                    enable = false,
-                },
+local lua_runtime_path = {}
+table.insert(lua_runtime_path, 'lua/?.lua')
+table.insert(lua_runtime_path, 'lua/?/init.lua')
+
+require('lua-dev').setup {}
+
+require('lspconfig').sumneko_lua.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+        Lua = {
+            runtime = {
+                version = 'LuaJIT',
+                path = lua_runtime_path,
+            },
+            diagnostics = {
+                globals = { 'vim' },
+            },
+            workspace = {
+                library = vim.api.nvim_get_runtime_file('', true),
+            },
+            telemetry = {
+                enable = false,
             },
         },
     },
 }
-
-require('lspconfig').sumneko_lua.setup(luadev)
 
 require('lspconfig').vimls.setup {
     on_attach = on_attach,

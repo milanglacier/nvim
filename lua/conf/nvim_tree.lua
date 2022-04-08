@@ -32,7 +32,8 @@ require('nvim-tree').setup {
     },
 }
 
-local map = vim.api.nvim_set_keymap
-map('n', '<leader>tt', '<cmd>NvimTreeToggle<CR>', { noremap = true, silent = true })
-map('n', '<leader>tf', '<cmd>NvimTreeFindFileToggle<CR>', { noremap = true, silent = true })
-map('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>', { noremap = true, silent = true })
+local keymap = vim.api.nvim_set_keymap
+
+keymap('n', '<leader>tt', '<cmd>NvimTreeToggle<CR>', { noremap = true, silent = true })
+keymap('n', '<leader>tf', '<cmd>NvimTreeFindFileToggle<CR>', { noremap = true, silent = true })
+keymap('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>', { noremap = true, silent = true })

@@ -1,5 +1,4 @@
 if not vim.g.vscode then
-
     require 'conf.impatient'
 
     require 'conf.builtin_extend'
@@ -37,29 +36,26 @@ if not vim.g.vscode then
     require 'conf.project_nvim'
 
     require 'conf.cmp'
+    require 'conf.snippets'
 
     require 'conf.lspconfig'
+    require 'conf.saga'
     require 'conf.lspkind'
     require 'conf.aerial'
-    require 'conf.saga'
     require 'conf.signature'
 
     require 'conf.nullls'
     require 'conf.refactor'
 
     require 'conf.iron'
+    require 'conf.terminal'
 
     require 'conf.mkdp'
-
-    require 'conf.terminal'
-    require 'conf.snippets'
 
     require 'conf.dap'
     require 'conf.spectre'
     require 'conf.git_tools'
-
 else
-
     require 'conf.impatient'
 
     require 'conf.builtin_extend'
