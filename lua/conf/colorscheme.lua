@@ -53,8 +53,20 @@ local night_scheme_options = {
             vim.cmd [[packadd! kanagawa.nvim]]
         end,
     },
+    {
+        name = 'melange',
+        cmd = function()
+            vim.cmd [[packadd! melange]]
+        end,
+    },
+    {
+        name = 'catppuccin',
+        cmd = function()
+            vim.cmd [[packadd! catppuccin]]
+        end,
+    },
 
-    length = 7,
+    length = 9,
 }
 
 local day_scheme_options = {
@@ -91,8 +103,14 @@ local day_scheme_options = {
             vim.cmd [[packadd! gruvbox.lua]]
         end,
     },
+    {
+        name = 'melange',
+        cmd = function()
+            vim.cmd [[packadd! melange]]
+        end,
+    },
 
-    length = 5,
+    length = 6,
 }
 
 local pick_colorscheme = function(bg, theme)

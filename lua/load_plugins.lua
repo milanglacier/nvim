@@ -9,6 +9,8 @@ require 'paq' {
     { 'sainnhe/everforest', opt = true },
     { 'mhdahmad/gruvbox.lua', opt = true },
     { 'rebelot/kanagawa.nvim', opt = true },
+    { 'savq/melange', opt = true },
+    { 'catppuccin/nvim', as = 'catppuccin', opt = true },
 
     -- Fix bugs and Utilities
     { 'antoinemadec/FixCursorHold.nvim' },
