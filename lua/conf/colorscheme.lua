@@ -95,12 +95,12 @@ end
 ColorschemePicker.pick_randomly()
 
 local function concat_all_theme_names(schemeOptions)
-    local allNames = ''
+    local all_names = ''
     for i, theme in ipairs(schemeOptions) do
-        allNames = allNames .. i .. ':' .. theme.name .. ' '
+        all_names = all_names .. i .. ':' .. theme.name .. ' '
     end
 
-    return allNames
+    return all_names
 end
 
 ColorschemePicker.pick_quickly = function()
