@@ -14,7 +14,6 @@ require('lualine').setup {
         lualine_x = {
             'encoding',
             {'fileformat',
-                max_length = vim.o.columns / 5,
                 symbols = {
                     unix = '', -- e712
                     dos = '',  -- e70f
@@ -36,4 +35,3 @@ require('lualine').setup {
     tabline = {},
     extensions = {"aerial", "nvim-tree"},
 }
-

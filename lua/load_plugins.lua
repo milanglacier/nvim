@@ -12,6 +12,8 @@ if not vim.g.vscode then
     Plug 'sainnhe/everforest'
     Plug 'mhdahmad/gruvbox.lua'
     Plug 'rebelot/kanagawa.nvim'
+    Plug 'savq/melange'
+    Plug 'catppuccin/nvim', {'as': 'catppuccin'} 
 
     " Fix bugs and Utilities
     Plug 'antoinemadec/FixCursorHold.nvim'

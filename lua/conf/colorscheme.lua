@@ -30,8 +30,10 @@ local night_scheme_options = {
     { name = 'gruvbox' },
     { name = 'minischeme' },
     { name = 'kanagawa' },
+    { name = 'melange' },
+    { name = 'catppuccin' },
 
-    length = 7,
+    length = 9,
 }
 
 local day_scheme_options = {
@@ -51,8 +53,9 @@ local day_scheme_options = {
         end,
     },
     { name = 'gruvbox' },
+    { name = 'melange' },
 
-    length = 5,
+    length = 6,
 }
 
 local pick_colorscheme = function(bg, theme)
@@ -111,7 +114,8 @@ ColorschemePicker.pick_quickly = function()
         bg = tonumber(x)
     end)
 
-    local prompt = bg == 1 and concat_all_theme_names(night_scheme_options) or concat_all_theme_names(day_scheme_options)
+    local prompt = bg == 1 and concat_all_theme_names(night_scheme_options)
+        or concat_all_theme_names(day_scheme_options)
 
     vim.ui.input({ prompt = prompt }, function(x)
         theme = tonumber(x)
