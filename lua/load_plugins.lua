@@ -123,6 +123,7 @@ require 'paq' {
 
     -- search and replace file
     { 'windwp/nvim-spectre', opt = true },
+    { 'JASONews/glow-hover', opt = true },
 
     { 'kyazdani42/nvim-web-devicons', opt = true },
 }
