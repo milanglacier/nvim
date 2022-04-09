@@ -146,9 +146,10 @@ end
 
 ColorschemePicker.pick_randomly()
 
-local function concat_all_theme_names(schemeOptions)
+local function concat_all_theme_names(scheme_options)
+
     local all_names = ''
-    for i, theme in ipairs(schemeOptions) do
+    for i, theme in ipairs(scheme_options) do
         all_names = all_names .. i .. ':' .. theme.name .. ' '
     end
 

@@ -2,7 +2,7 @@ vim.cmd [[packadd! null-ls.nvim]]
 vim.cmd [[packadd! refactoring.nvim]]
 
 local null_ls = require 'null-ls'
-local mypath = require('bin_path')
+local mypath = require 'bin_path'
 
 null_ls.setup {
     sources = {
@@ -27,5 +27,8 @@ null_ls.setup {
             disabled_filetypes = { 'NeogitCommitMessage' },
         },
         null_ls.builtins.diagnostics.chktex,
+        null_ls.builtins.formatting.prettierd.with {
+            filetypes = { 'markdown.pandoc', 'json', 'markdown', 'rmd', 'yaml' },
+        },
     },
 }
