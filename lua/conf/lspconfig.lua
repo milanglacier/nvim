@@ -41,6 +41,9 @@ local on_attach = function(client, bufnr)
     bufmap(bufnr, 'n', '<C-f>', "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>", opts)
     bufmap(bufnr, 'n', '<C-b>', "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>", opts)
 
+    -- use glow-hover
+    bufmap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
+
     -- signaturehelp
     bufmap(bufnr, 'n', '<Leader>sh', "<cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>", opts)
     -- "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)

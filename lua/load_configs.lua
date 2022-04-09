@@ -54,6 +54,7 @@ if not vim.g.vscode then
     require 'conf.dap'
     require 'conf.spectre'
     require 'conf.git_tools'
+    require 'conf.glow-hover'
 else
     require 'conf.impatient'
 

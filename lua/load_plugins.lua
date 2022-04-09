@@ -125,6 +125,7 @@ if not vim.g.vscode then
 
     " search and replace file
     Plug 'windwp/nvim-spectre'
+    Plug 'JASONews/glow-hover'
 
     Plug 'kyazdani42/nvim-web-devicons'
 
