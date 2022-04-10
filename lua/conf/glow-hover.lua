@@ -1,4 +1,4 @@
-vim.cmd [[packadd! glow-hover.nvim]]
+vim.cmd [[packadd! glow-hover]]
 
 require('glow-hover').setup {
     max_width = 90,
