@@ -75,12 +75,15 @@ the initials are often conflicted.
 
     1. `]l`, `]L`, `[l`, `[L` are used to jump-to previous/next start/end of a loop.
     2. `]c`, `]C`, `[c`, `[C` are used to jump-to previous/next start/end of a if-else condition.
-    3. `]<Leader>c`, `]<Leader>C`, `[<Leader>c`, `[<Leader>C` are used to jump-to previous/next start/end of a if-else condition.
+    3. `]<Leader>c`, `]<Leader>C`, `[<Leader>c`, `[<Leader>C` are used to jump-to previous/next start/end of a class.
     4. `fF[]` is used to jump-between functions.
     5. `aA[]` is used to jump-between arguments.
     6. `eE[]` is used to jump-between function calls.
 
 # Other Notes
+
+8. You need to define your leader key before defining any keymaps.
+    Otherwise, keymap will not be correctly mapped with your leader key.
 
 8. Note that `tree-sitter` will turn `syntax off`, and `pandoc-syntax` and `pandoc-rmarkdown`
 relies on the builtin `syntax`, so we need to load `config.pandoc` before we load `config.treesitter`

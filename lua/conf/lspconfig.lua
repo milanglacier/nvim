@@ -89,7 +89,7 @@ local on_attach = function(client, bufnr)
     --     '<Leader>dc', "<cmd>lua require'lspsaga.diagnostic'.show_cursor_diagnostics()<CR>", opts)
 
     require('aerial').on_attach(client, bufnr)
-    require('conf.signature').on_attach(bufnr)
+    require('conf.lsp_tools').signature(bufnr)
 end
 
 -- Setup lspconfig.
