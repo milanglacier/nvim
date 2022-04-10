@@ -6,120 +6,86 @@ local function colorscheme_cmd(bg, theme)
 end
 
 local night_scheme_options = {
-
-    {
-        name = 'nightfox',
-        cmd = function()
+    name = {
+        'nightfox',
+        'rose-pine',
+        'tokyonight',
+        'everforest',
+        'gruvbox',
+        'minischeme',
+        'kanagawa',
+        'melange',
+        'catppuccin',
+    },
+    cmd = {
+        function()
             vim.cmd [[packadd! nightfox.nvim]]
         end,
-    },
-    {
-        name = 'rose-pine',
-        cmd = function()
+        function()
             vim.cmd [[packadd! rose-pine]]
             require('rose-pine').setup { dark_variant = 'moon' }
         end,
-    },
-
-    {
-        name = 'tokyonight',
-        cmd = function()
+        function()
             vim.cmd [[packadd! tokyonight.nvim]]
             vim.g.tokyonight_style = 'night'
         end,
-    },
-    {
-        name = 'everforest',
-        cmd = function()
+        function()
             vim.cmd [[packadd! everforest]]
             vim.g.everforest_background = 'soft'
         end,
-    },
-    {
-        name = 'gruvbox',
-        cmd = function()
+        function()
             vim.cmd [[packadd! gruvbox.lua]]
         end,
-    },
-    {
-        name = 'minischeme',
-        cmd = function()
+        function()
             vim.cmd [[packadd! mini.nvim]]
         end,
-    },
-    {
-        name = 'kanagawa',
-        cmd = function()
+        function()
             vim.cmd [[packadd! kanagawa.nvim]]
         end,
-    },
-    {
-        name = 'melange',
-        cmd = function()
+        function()
             vim.cmd [[packadd! melange]]
         end,
-    },
-    {
-        name = 'catppuccin',
-        cmd = function()
+        function()
             vim.cmd [[packadd! catppuccin]]
         end,
     },
-
     length = 9,
 }
 
 local day_scheme_options = {
-
-    {
-        name = 'dawnfox',
-        cmd = function()
+    name = { 'dawnfox', 'rose-pine', 'tokyonight', 'everforest', 'gruvbox', 'melange' },
+    cmd = {
+        function()
             vim.cmd [[packadd! nightfox.nvim]]
         end,
-    },
-    {
-        name = 'rose-pine',
-        cmd = function()
+        function()
             vim.cmd [[packadd! rose-pine]]
         end,
-    },
-    {
-        name = 'tokyonight',
-        cmd = function()
+        function()
             vim.cmd [[packadd! tokyonight.nvim]]
             vim.g.tokyonight_style = 'day'
         end,
-    },
-    {
-        name = 'everforest',
-        cmd = function()
+        function()
             vim.cmd [[packadd! everforest]]
             vim.g.everforest_background = 'soft'
         end,
-    },
-    {
-        name = 'gruvbox',
-        cmd = function()
+        function()
             vim.cmd [[packadd! gruvbox.lua]]
         end,
-    },
-    {
-        name = 'melange',
-        cmd = function()
+        function()
             vim.cmd [[packadd! melange]]
         end,
     },
-
     length = 6,
 }
 
-local pick_colorscheme = function(bg, theme)
+local pick_colorscheme = function(bg, theme_id)
     if bg == 1 then -- background = dark
-        night_scheme_options[theme].cmd()
-        colorscheme_cmd('dark', night_scheme_options[theme].name)
+        night_scheme_options.cmd[theme_id]()
+        colorscheme_cmd('dark', night_scheme_options.name[theme_id])
     else -- background = light
-        day_scheme_options[theme].cmd()
-        colorscheme_cmd('light', day_scheme_options[theme].name)
+        day_scheme_options.cmd[theme_id]()
+        colorscheme_cmd('light', day_scheme_options.name[theme_id])
     end
 end
 
@@ -147,10 +113,9 @@ end
 ColorschemePicker.pick_randomly()
 
 local function concat_all_theme_names(scheme_options)
-
     local all_names = ''
-    for i, theme in ipairs(scheme_options) do
-        all_names = all_names .. i .. ':' .. theme.name .. ' '
+    for i, theme in ipairs(scheme_options.name) do
+        all_names = all_names .. i .. ':' .. theme .. ' '
     end
 
     return all_names
