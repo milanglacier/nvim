@@ -20,7 +20,7 @@ require 'paq' {
     { 'nvim-lualine/lualine.nvim', opt = true },
     { 'alvarosevilla95/luatab.nvim', opt = true },
     { 'rcarriga/nvim-notify', opt = true },
-    { 'echasnovski/mini.nvim', opt = true },
+    { 'echasnovski/mini.nvim', opt = true, branch = 'stable' },
 
     -- automatically set the root;
     { 'ygm2/rooter.nvim', opt = true },
@@ -69,7 +69,7 @@ require 'paq' {
 
     -- Deal with input method, automatically changed to English
     -- input method when switch to normal mode
-    { 'milanglacier/smartim' },
+    { 'milanglacier/smartim', opt = true },
     -- support browser
     -- Plug 'glacambre/firenvim'
 
