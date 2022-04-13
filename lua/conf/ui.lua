@@ -71,9 +71,19 @@ M.load.devicons = function()
     require('nvim-web-devicons').setup()
 end
 
+M.load.transparent = function()
+    local keymap = vim.api.nvim_set_keymap
+    keymap(
+        'n', '<LocalLeader>bt',
+        [[<cmd>packadd nvim-transparent | set background=dark | TransparentToggle<CR>]],
+        { noremap = true, silent = true }
+    )
+end
+
 M.load.devicons()
 M.load.lualine()
 M.load.luatab()
 M.load.notify()
+M.load.transparent()
 
 return M
