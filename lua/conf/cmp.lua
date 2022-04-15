@@ -62,7 +62,8 @@ cmp.setup.filetype('gitcommit', {
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline('/', {
     mapping = cmp.mapping.preset.cmdline {
-        ['<A-Space>'] = cmp.mapping.complete(),
+        ['<Tab>'] = { c = cmp.mapping.confirm { select = true } },
+        ['<A-Space>'] = { c = cmp.mapping.complete() },
     },
     sources = {
         { name = 'buffer' },
@@ -72,7 +73,8 @@ cmp.setup.cmdline('/', {
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline(':', {
     mapping = cmp.mapping.preset.cmdline {
-        ['<A-Space>'] = cmp.mapping.complete(),
+        ['<Tab>'] = { c = cmp.mapping.confirm { select = true } },
+        ['<A-Space>'] = { c = cmp.mapping.complete() },
     },
     sources = cmp.config.sources({
         { name = 'path' },
