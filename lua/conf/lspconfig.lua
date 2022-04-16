@@ -33,7 +33,9 @@ local on_attach = function(client, bufnr)
 
     -- reference
     bufmap(
-        bufnr, 'n', 'gr',
+        bufnr,
+        'n',
+        'gr',
         "<cmd>lua require 'telescope.builtin'.lsp_references({layout_strategy = 'vertical', jump_type = 'tab'})<CR>",
         opts
     )
@@ -59,12 +61,16 @@ local on_attach = function(client, bufnr)
 
     -- go to definition, implementation
     bufmap(
-        bufnr, 'n', 'gd',
+        bufnr,
+        'n',
+        'gd',
         "<cmd>lua require 'telescope.builtin'.lsp_definitions({layout_strategy = 'vertical', jump_type = 'tab'})<CR>",
         opts
     )
     bufmap(
-        bufnr, 'n', '<Leader>gi',
+        bufnr,
+        'n',
+        '<Leader>gi',
         "<cmd>lua require'telescope.builtin'.lsp_implementations({layout_strategy = 'vertical', jump_type = 'tab'})<CR>",
         opts
     )
@@ -170,6 +176,28 @@ require('lspconfig').sumneko_lua.setup {
 require('lspconfig').vimls.setup {
     on_attach = on_attach,
     capabilities = capabilities,
+}
+
+require('lspconfig').sqls.setup {
+    cmd = { require('bin_path').sqls },
+    on_attach = function(client, bufnr)
+        vim.cmd [[packadd! sqls.nvim]]
+
+        on_attach(client, bufnr)
+        require('sqls').on_attach(client, bufnr)
+        local bufmap = vim.api.nvim_buf_set_keymap
+        bufmap(bufnr, 'n', '<LocalLeader>ss', '<cmd>SqlsExecuteQuery<CR>', { silent = true })
+        bufmap(bufnr, 'v', '<LocalLeader>ss', '<cmd>SqlsExecuteQuery<CR>', { silent = true })
+    end,
+    capabilities = capabilities,
+    single_file_support = false,
+    on_new_config = function(new_config, new_rootdir)
+        new_config.cmd = {
+            require('bin_path').sqls,
+            '-config',
+            new_rootdir .. '/config.yml',
+        }
+    end,
 }
 
 vim.fn.sign_define('DiagnosticSignError', { text = '✗', texthl = 'DiagnosticSignError' })

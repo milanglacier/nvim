@@ -120,6 +120,14 @@ M.load.nullls = function()
             null_ls.builtins.formatting.prettierd.with {
                 filetypes = { 'markdown.pandoc', 'json', 'markdown', 'rmd', 'yaml' },
             },
+            null_ls.builtins.formatting.sqlfluff.with {
+                command = mypath.sqlfluff,
+                args = { 'fix', '--dialect', 'mysql', '--disable_progress_bar', '-f', '-n', '-' },
+            },
+            null_ls.builtins.diagnostics.sqlfluff.with {
+                command = mypath.sqlfluff,
+                args = { 'lint', '--dialect', 'mysql', '-f', 'github-annotation', '-n', '--disable_progress_bar', '-' },
+            },
         },
     }
 end

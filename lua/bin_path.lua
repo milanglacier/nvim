@@ -11,6 +11,9 @@ local selene = cargo .. '/bin/selene'
 local proselint = conda .. '/bin/proselint'
 local codespell = conda .. '/bin/codespell'
 
+local sqls = os.getenv 'HOME' .. '/go/bin/sqls'
+local sqlfluff = conda .. '/bin/sqlfluff'
+
 return {
     conda = conda,
     python = python,
@@ -22,4 +25,6 @@ return {
     selene = selene,
     proselint = proselint,
     codespell = codespell,
+    sqls = sqls,
+    sqlfluff = sqlfluff,
 }

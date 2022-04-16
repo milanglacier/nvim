@@ -96,8 +96,9 @@ require 'paq' {
     { 'saadparwaiz1/cmp_luasnip', opt = true },
     { 'rafamadriz/friendly-snippets', opt = true },
 
-    -- lua development
+    -- language development
     { 'folke/lua-dev.nvim', opt = true },
+    { 'nanotee/sqls.nvim', opt = true },
 
     -- CLI tools
 
