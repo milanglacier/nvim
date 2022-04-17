@@ -124,10 +124,10 @@ M.load.nullls = function()
                 command = mypath.sqlfluff,
                 args = { 'fix', '--dialect', 'mysql', '--disable_progress_bar', '-f', '-n', '-' },
             },
-            null_ls.builtins.diagnostics.sqlfluff.with {
-                command = mypath.sqlfluff,
-                args = { 'lint', '--dialect', 'mysql', '-f', 'github-annotation', '-n', '--disable_progress_bar', '-' },
-            },
+            -- null_ls.builtins.diagnostics.sqlfluff.with {
+            --     command = mypath.sqlfluff,
+            --     args = { 'lint', '--dialect', 'mysql', '-f', 'github-annotation', '-n', '--disable_progress_bar', '-' },
+            -- },
         },
     }
 end
