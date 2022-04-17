@@ -74,10 +74,18 @@ M.load.nvim_tree = function()
     keymap('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>', { noremap = true, silent = true })
 end
 
+M.load.winshift = function()
+    vim.cmd [[packadd! winshift.nvim]]
+    require('winshift').setup {}
+    local keymap = vim.api.nvim_set_keymap
+    keymap('n', '<Leader>wm', '<cmd>WinShift<CR>', { noremap = true, silent = true })
+end
+
 M.load.better_escape()
 M.load.rooter()
 M.load.project_nvim()
 M.load.better_escape()
 M.load.nvim_tree()
+M.load.winshift()
 
 return M

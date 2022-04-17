@@ -137,10 +137,59 @@ M.load.transparent = function()
     )
 end
 
+M.load.trouble = function()
+    vim.cmd [[packadd! trouble.nvim]]
+    require('trouble').setup {
+        mode = 'quickfix',
+        action_keys = {
+            close = 'q', -- close the list
+            cancel = { '<esc>', '<c-e>' }, -- cancel the preview and get back to your last window / buffer / cursor
+            refresh = 'r', -- manually refresh
+            jump = { '<cr>', '<tab>' }, -- jump to the diagnostic or open / close folds
+            open_split = { '<c-x>', '<c-s>' }, -- open buffer in new split
+            open_vsplit = { '<c-v>' }, -- open buffer in new vsplit
+            open_tab = { '<c-t>' }, -- open buffer in new tab
+            jump_close = { 'o' }, -- jump to the diagnostic and close the list
+            toggle_mode = 'm', -- toggle between "workspace" and "document" diagnostics mode
+            toggle_preview = 'P', -- toggle auto_preview
+            hover = { 'K', 'gh' }, -- opens a small popup with the full multiline message
+            preview = 'p', -- preview the diagnostic location
+            close_folds = { 'zM', 'zm' }, -- close all folds
+            open_folds = { 'zR', 'zr' }, -- open all folds
+            toggle_fold = { 'zA', 'za' }, -- toggle fold of current file
+            previous = 'k', -- preview item
+            next = 'j', -- next item
+        },
+    }
+
+    local keymap = vim.api.nvim_set_keymap
+    local opts = { noremap = true, silent = true }
+
+    keymap('n', '<leader>xw', '<cmd>TroubleToggle workspace_diagnostics<cr>', opts)
+    keymap('n', '<leader>xd', '<cmd>TroubleToggle document_diagnostics<cr>', opts)
+    keymap('n', '<leader>xl', '<cmd>TroubleToggle loclist<cr>', opts)
+    keymap('n', '<leader>xq', [[<cmd>lua require 'conf.ui'.reopen_qflist_by_trouble()<cr>]], opts)
+    keymap('n', '<leader>xr', '<cmd>TroubleToggle lsp_references<cr>', opts)
+end
+
 M.load.devicons()
 M.load.lualine()
 M.load.luatab()
 M.load.notify()
 M.load.transparent()
+M.load.trouble()
+
+M.reopen_qflist_by_trouble = function()
+    local windows = vim.api.nvim_list_wins()
+
+    for _, winid in ipairs(windows) do
+        local bufid = vim.api.nvim_win_get_buf(winid)
+        local buf_filetype = vim.api.nvim_buf_get_option(bufid, 'filetype')
+        if buf_filetype == 'qf' then
+            vim.api.nvim_win_close(winid, true)
+        end
+    end
+    require('trouble').toggle 'quickfix'
+end
 
 return M

@@ -20,11 +20,11 @@ require 'paq' {
     { 'ygm2/rooter.nvim', opt = true },
     { 'ahmedkhalf/project.nvim', opt = true },
     { 'kyazdani42/nvim-tree.lua', opt = true }, -- file explorer
+    { 'milanglacier/smartim', opt = true }, -- automatically switch input method when switch mode
+    { 'sindrets/winshift.nvim', opt = true },
     -- very simple, naive completion without LSP
     -- Plug 'skywind3000/vim-auto-popmenu'
     -- Plug 'skywind3000/vim-dict'
-    -- automatically switch input method when switch mode
-    { 'milanglacier/smartim', opt = true },
     -- support browser
     -- Plug 'glacambre/firenvim'
 
@@ -33,6 +33,7 @@ require 'paq' {
     { 'alvarosevilla95/luatab.nvim', opt = true },
     { 'rcarriga/nvim-notify', opt = true },
     { 'echasnovski/mini.nvim', opt = true },
+    { 'folke/trouble.nvim', opt = true },
     { 'xiyaowong/nvim-transparent', opt = true },
     { 'kyazdani42/nvim-web-devicons', opt = true },
 
