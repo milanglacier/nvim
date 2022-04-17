@@ -59,6 +59,7 @@ cmp.setup.filetype('gitcommit', {
     }),
 })
 
+-- omni completion for SQL is buggy, disable it as a source of cmp
 cmp.setup.filetype('sql', {
     sources = cmp.config.sources({
         { name = 'nvim_lsp' },

@@ -25,7 +25,7 @@ require('dapui').setup {
     tray = { elements = { nil }, size = 0 },
 }
 
-require'dap'.defaults.fallback.terminal_win_cmd = 'belowright 15 new'
+require('dap').defaults.fallback.terminal_win_cmd = 'belowright 15 new'
 
 local opts = { noremap = true }
 
@@ -62,4 +62,3 @@ keymap('n', '<Leader>df', '<cmd>lua require"telescope".extensions.dap.frames{}<C
 
 vim.fn.sign_define('DapBreakpoint', { text = '', texhl = 'TodoFgFIX' })
 vim.fn.sign_define('DapBreakpointCondition', { text = '', texhl = 'TodoFgFIX' })
-

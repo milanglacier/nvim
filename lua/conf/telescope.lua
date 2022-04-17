@@ -4,14 +4,14 @@ vim.cmd [[packadd! project.nvim]]
 vim.cmd [[packadd! nvim-notify]]
 
 local telescope = require 'telescope'
+local trouble = require 'trouble.providers.telescope'
+
 telescope.setup {
     pickers = {
         find_files = {
             find_command = { 'rg', '--files', '--iglob', '!.git', '--hidden' },
         },
-
         keymaps = {
-
             modes = { 'n', 'i', 'c', 'x', 'v', 'o', '', '!' },
         },
     },
@@ -65,7 +65,10 @@ keymap('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', opts)
 keymap('n', '<leader>fb', '<cmd>Telescope buffers<cr>', opts)
 keymap('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', opts)
 keymap('n', '<leader>fk', '<cmd>Telescope keymaps<cr>', opts)
+
 keymap('n', '<leader>fc', '<cmd>Telescope commands<cr>', opts)
+keymap('n', '<leader>fC', '<cmd>Telescope command_history<cr>', opts)
+
 keymap('n', '<leader>ft', '<cmd>Telescope treesitter<cr>', opts)
 keymap('n', '<leader>fs', '<cmd>Telescope lsp_document_symbols<cr>', opts)
 keymap('n', '<leader>fr', '<cmd>Telescope registers<cr>', opts)
@@ -73,4 +76,3 @@ keymap('n', '<leader>fj', '<cmd>Telescope jumplist<cr>', opts)
 keymap('n', '<leader>fo', '<cmd>Telescope oldfiles<cr>', opts)
 
 keymap('n', '<leader>F', '<cmd>Telescope builtin include_extensions=true<cr>', opts)
-keymap('n', '<leader>C', '<cmd>Telescope command_history<cr>', opts)
