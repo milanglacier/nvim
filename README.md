@@ -1,3 +1,9 @@
+# Language with rich features support
+
+`R`, `Python`, `latex`, `cpp`, `julia`, `SQL`, `lua` is supported.
+Including language server, auto-completion, formatter, linter.
+Some linters/formatters use `null-ls` as an auxiliary media for CLI tools.
+
 # Dependencies
 
 * To use `markdown.preview.nvim`, you need to have `npm` and `yarn` installed.
@@ -6,10 +12,10 @@
     * `R` support requires `R` package `R-language-server` installed.
     * `python` support requires `python` package `pylsp` installed.
     * `lua` support requires `lua-language-server` installed.
-    * `latex` support requires `texlab` installed.
-`chktex` (latex linter) requires `texlive` distro installed.
+    * `latex` support requires `texlab` installed. `chktex` (latex linter) requires `texlive` distro installed.
     * `vim script` support requires `vim-language-server` installed, which requires `npm` installed.
     * `c/cpp` support requires `clangd` installed.
+    * `SQL` requires `go` installed.
 
 * I use `homebrew` as package manager, so prebuild binaries provided by `homebrew`
     are automatically included in my `PATH`,
@@ -17,15 +23,18 @@
     * `npm` and `npm` installed packages.
     * `texlab`, `lua-language-server`.
 
-* In general, `R`, `c/cpp` (if installed by `xcode-select install`), `texlive` are automatically included in the `PATH`.
+* Usually, `R`, `c/cpp` (if installed by `xcode-select install`), `texlive` are automatically included in the `PATH`.
 
 * Some of the binaries provided by other package managers
 are not automatically included in the `PATH`,
-including `cargo`, `conda`.
+including `cargo`, `conda`, `go`.
     Then I create `lua/bin_path.lua` to manually specify
     the `PATHs` of them.
 
 * Binaries' paths need to be manually specified:
+    * if need to use `lspconfig`
+        * `pylsp`
+        * `sqls`
     * if need to use debugger: `DAP.nvim`:
         * `python` (I use `conda`'s python)
     * if need to use REPL: `iron.nvim`:
@@ -36,6 +45,7 @@ including `cargo`, `conda`.
         * `selene` (Lua linter)
         * `codespell` (spell checker)
         * `proselint` (English writing checker)
+        * `sqlfluff` (SQL linter and formatter)
 
 * Nerd font need to be installed. One of the font is provided in the repository.
 
@@ -82,9 +92,15 @@ the initials are often conflicted.
 
 # Other Notes
 
+8. `vim-sneak` defines relatively inconsistent behavior: in normal mode,
+use `s/S`, in operator pending mode, use `z/Z`, in visual mode,
+use $s/Z$. In normal mode, default mapping $s$ is replaced.
+In op mode, use `z/Z` is to be compatible with `vim-surround` (mappings: `ys/ds/cs`),
+in visual mode, use `s/Z` is to be compatible with
+folding (mapping: `zf`) and `vim-surround` (mapping: `S`)
+
 8. You need to define your leader key before defining any keymaps.
     Otherwise, keymap will not be correctly mapped with your leader key.
 
 8. Note that `tree-sitter` will turn `syntax off`, and `pandoc-syntax` and `pandoc-rmarkdown`
 relies on the builtin `syntax`, so we need to load `config.pandoc` before we load `config.treesitter`
-
