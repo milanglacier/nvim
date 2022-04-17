@@ -27,8 +27,10 @@ keymap('t', '<C-k>', '<ESC>d$i', { noremap = true })
 keymap('n', '<Leader>cd', [[:cd %:h<cr>]], { noremap = true })
 keymap('n', '<Leader>cu', [[:cd ..<cr>]], { noremap = true })
 
-keymap('n', ']b', [[:bn<cr>]], { noremap = true })
-keymap('n', '[b', [[:bp<cr>]], { noremap = true })
+keymap('n', ']b', [[:bnext<cr>]], { noremap = true })
+keymap('n', '[b', [[:bprevious<cr>]], { noremap = true })
+keymap('n', ']q', [[:cnext<cr>]], { noremap = true })
+keymap('n', '[q', [[:cprevious<cr>]], { noremap = true })
 
 keymap('n', '<Leader>to', [[:tabonly<cr>]], { noremap = true })
 keymap('n', '<Leader>tn', [[:tabnew<cr>]], { noremap = true })
@@ -37,7 +39,7 @@ keymap('n', '<Leader>tc', [[:tabclose<cr>]], { noremap = true })
 vim.cmd [[
 augroup highlight_yank
     autocmd!
-    au TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=400}
+    au TextYankPost * silent! lua vim.highlight.on_yank { higroup = "IncSearch", timeout = 400 }
 augroup END
 ]]
 

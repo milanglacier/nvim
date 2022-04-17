@@ -59,7 +59,6 @@ M.load.sneak = function()
     keymap('', 'F', '<Plug>Sneak_F', {})
     keymap('', 't', '<Plug>Sneak_t', {})
     keymap('', 'T', '<Plug>Sneak_T', {})
-    keymap('x', 'z', '<Plug>Sneak_s', {})
 end
 
 M.load.targets = function()
