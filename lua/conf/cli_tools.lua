@@ -141,13 +141,18 @@ M.load.pandoc = function()
     vim.cmd [[packadd! vim-pandoc-syntax]]
     vim.cmd [[packadd! vim-rmarkdown]]
 
-    vim.cmd [[
+    local augroup = vim.api.nvim_create_augroup
+    local autocmd = vim.api.nvim_create_autocmd
 
-augroup pandoc_syntax
-    au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
-augroup END
-
-]]
+    local pandoc_syntax = augroup('PandocSyntax', {})
+    autocmd({ 'BufNewFile', 'BufFilePre', 'BufRead' }, {
+        group = pandoc_syntax,
+        desc = 'set filetype *.md as markdown.pandoc',
+        pattern = '*.md',
+        callback = function()
+            vim.bo.filetype = 'markdown.pandoc'
+        end,
+    })
 
     vim.g.r_indent_align_args = 0
     vim.g.r_indent_ess_comments = 0

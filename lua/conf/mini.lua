@@ -64,7 +64,7 @@ Are overtaken.
     length = 6,
 }
 
-if vim.fn.has 'nvim-0.7' == 1 then
+if vim.fn.has 'gui_running' == 0 then
     local starter = require 'mini.starter'
 
     math.randomseed(os.time()) -- random initialize
@@ -124,12 +124,26 @@ require('mini.indentscope').setup {
     },
 }
 
-vim.cmd [[
-    hi MiniCursorword None
-    hi MiniCursorwordCurrent None
-    hi! link MiniCursorword CursorLine
-    hi! link MiniCursorwordCurrent CursorLine
-]]
+local augroup = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
+local get_hl = vim.api.nvim_get_hl_by_name
+local set_hl = vim.api.nvim_set_hl
+
+-- The colorscheme is loaded at conf.colorscheme
+-- autocmd defined in the next will not execute at that time
+-- now need to manually reset the HL at the first time.
+set_hl(0, 'MiniCursorword', get_hl('CursorLine', true))
+set_hl(0, 'MiniCursorwordCurrent', get_hl('CursorLine', true))
+
+local reset_mini_cursorword_highlight = augroup('ResetMiniCursorwordHL', {})
+autocmd('ColorScheme', {
+    group = reset_mini_cursorword_highlight,
+    desc = [[Link MiniCursorword's highlight to CursorLine]],
+    callback = function()
+        set_hl(0, 'MiniCursorword', get_hl('CursorLine', true))
+        set_hl(0, 'MiniCursorwordCurrent', get_hl('CursorLine', true))
+    end,
+})
 
 local keymap = vim.api.nvim_set_keymap
 

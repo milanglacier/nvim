@@ -36,12 +36,21 @@ keymap('n', '<Leader>to', [[:tabonly<cr>]], { noremap = true })
 keymap('n', '<Leader>tn', [[:tabnew<cr>]], { noremap = true })
 keymap('n', '<Leader>tc', [[:tabclose<cr>]], { noremap = true })
 
-vim.cmd [[
-augroup highlight_yank
-    autocmd!
-    au TextYankPost * silent! lua vim.highlight.on_yank { higroup = "IncSearch", timeout = 400 }
-augroup END
-]]
+local function dog() end
+vim.keymap.set('n', '<Leader>dog', dog)
+
+local augroup = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
+
+local highlight_yanked_text = augroup('YankedTextHighlight', {})
+
+autocmd('TextYankPost', {
+    group = highlight_yanked_text,
+    callback = function()
+        vim.highlight.on_yank { higroup = 'IncSearch', timeout = 400 }
+    end,
+    desc = 'highlight yanked text',
+})
 
 local M = {}
 

@@ -17,15 +17,23 @@ M.load.comment = function()
 end
 
 M.load.dsf = function()
-    vim.cmd [[
-augroup dsfForRmd
-    au!
-    autocmd FileType rmd omap <silent><buffer> ae <Plug>DsfTextObjectA
-    autocmd FileType rmd xmap <silent><buffer> ae <Plug>DsfTextObjectA
-    autocmd FileType rmd omap <silent><buffer> ie <Plug>DsfTextObjectI
-    autocmd FileType rmd xmap <silent><buffer> ie <Plug>DsfTextObjectI
-augroup end
-]]
+
+    local augroup = vim.api.nvim_create_augroup
+    local autocmd = vim.api.nvim_create_autocmd
+
+    local dsf_for_rmd = augroup('DsfForRmd', {})
+    autocmd('FileType', {
+        group = dsf_for_rmd,
+        pattern = 'rmd',
+        callback = function()
+            local bufmap = vim.api.nvim_buf_set_keymap
+            bufmap(0, 'o', 'ae', '<Plug>DsfTextObjectA', { silent = true })
+            bufmap(0, 'o', 'ie', '<Plug>DsfTextObjectI', { silent = true })
+            bufmap(0, 'x', 'ae', '<Plug>DsfTextObjectA', { silent = true })
+            bufmap(0, 'x', 'ie', '<Plug>DsfTextObjectI', { silent = true })
+        end,
+        desc = 'set ae/ie keymaps (textobj of a function call) for rmd.'
+    })
 
     vim.g.dsf_no_mappings = 1
     local keymap = vim.api.nvim_set_keymap
