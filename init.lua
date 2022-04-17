@@ -1,6 +1,4 @@
-if vim.fn.has 'gui_running' == 0 then
-    require('impatient').enable_profile()
-end
+require('impatient').enable_profile()
 
 require 'basic_settings'
 require 'load_plugins'
