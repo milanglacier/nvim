@@ -65,7 +65,7 @@ end
 
 keymap('n', '<Leader>pc', '<cmd>lua require("conf.builtin_extend").ping_cursor()<CR>', { noremap = true })
 
-function M.keymap_add_description(mode, lhs, desc)
+function M._keymap_add_description(mode, lhs, desc)
     -- allow both leader and Leader to be recognized and translates to the mapped leader key.
     local lhs_, _ = lhs:gsub([[<[Ll]eader>]], vim.g.mapleader)
     lhs_, _ = lhs_:gsub([[<[lL]ocal[lL]eader>]], vim.g.maplocalleader)
@@ -77,6 +77,7 @@ function M.keymap_add_description(mode, lhs, desc)
     for _, map in ipairs(keymaps) do
         if map.lhs == lhs_ then
             opts_queried = map
+            break
         end
     end
 
@@ -100,7 +101,7 @@ function M.keymap_add_description(mode, lhs, desc)
     keymap(mode, lhs, rhs or '', opts_queried)
 end
 
-function M.bufmap_add_description(bufid, mode, lhs, desc)
+function M._bufmap_add_description(bufid, mode, lhs, desc)
     -- allow both leader and Leader to be recognized and translates to the mapped leader key.
     local lhs_, _ = lhs:gsub([[<[Ll]eader>]], vim.g.mapleader)
     lhs_, _ = lhs_:gsub([[<[lL]ocal[lL]eader>]], vim.g.maplocalleader)
@@ -111,11 +112,12 @@ function M.bufmap_add_description(bufid, mode, lhs, desc)
     for _, map in ipairs(keymaps) do
         if map.lhs == lhs_ then
             opts_queried = map
+            break
         end
     end
 
     if opts_queried == nil then
-        vim.notify('buffer ' .. bufid ' keymap ' .. lhs .. ' does not exists!', vim.log.levels.WARN)
+        vim.notify('buffer ' .. bufid .. ' keymap ' .. lhs .. ' does not exists!', vim.log.levels.WARN)
         return
     end
 
@@ -134,6 +136,94 @@ function M.bufmap_add_description(bufid, mode, lhs, desc)
 
     bufmap(bufid, mode, lhs, rhs or '', opts_queried)
 end
+
+local augroup_add_desc = augroup('AddKeymapDescription', {})
+
+-- example tbl as argument:
+-- local tbl = {
+--     n = {
+--         { '<Leaderff>', 'Telescope find files' },
+--         { 'gcc', 'Comment current lines' },
+--     },
+--     v = { { 'gc', 'Comment selected range' } },
+-- }
+-- opts: table
+-- opts.call_immediately: by default false,
+-- set it be true when you want to call this function
+-- after nvim is already started.
+function M.keymaps_add_descriptions(tbl, opts)
+    local function _add_descriptions()
+        for mode, keymaps in pairs(tbl) do
+            for _, key in pairs(keymaps) do
+                M._keymap_add_description(mode, key[1], key[2])
+            end
+        end
+    end
+
+    if opts ~= nil and opts.call_immediately then
+        _add_descriptions()
+        return
+    end
+
+    autocmd('VimEnter', {
+        group = augroup_add_desc,
+        desc = 'global keymaps add descriptions.',
+        callback = function()
+            vim.defer_fn(_add_descriptions, 1000)
+        end,
+    })
+end
+
+-- add filetype (buffer local) keymaps' descriptions
+-- example tbl
+-- local tbl = {
+--     ft = { 'lua', 'python' },
+--     o = {
+--         { 'af', 'treesitter textobj @function.outer' },
+--         { 'if', 'treesitter textobj @function.inner' },
+--     },
+--     n = {
+--         { ']f', 'treesitter go the the start of next function' },
+--     },
+-- }
+function M.ft_keymaps_add_descriptions(tbl)
+    local ft_pattern = tbl.ft
+    tbl.ft = nil
+
+    local function _add_descriptions()
+        for mode, keymaps in pairs(tbl) do
+            for _, key in pairs(keymaps) do
+                M._bufmap_add_description(0, mode, key[1], key[2])
+            end
+        end
+    end
+
+    autocmd('FileType', {
+        group = augroup_add_desc,
+        pattern = ft_pattern,
+        desc = 'filetype ' .. table.concat(ft_pattern, ',') .. ' keymaps add descriptions.',
+        callback = function()
+            vim.defer_fn(_add_descriptions, 1000)
+        end,
+    })
+end
+
+M.keymaps_add_descriptions {
+    n = {
+        { '<Leader>ff', 'Telescope find files' },
+    },
+}
+M.ft_keymaps_add_descriptions {
+    ft = { 'lua', 'python' },
+    o = {
+        { 'af', 'treesitter textobj @function.outer' },
+        { 'if', 'treesitter textobj @function.inner' },
+    },
+    n = {
+        { ']f', 'treesitter go the the start of next function' },
+        { '<Leader>kff', 'treesitter go the the start of next function' },
+    },
+}
 
 -- local function convert_lhs_to_vim_form(lhs)
 --     -- make pattern translation such that lhs code follows the standard
@@ -185,13 +275,17 @@ end
 --
 -- keymap('n', 'j', '', {
 --     callback = function()
---         if vim.api.nvim_get_vvar 'count' > 5 then
---             return [[m']] .. vim.api.nvim_get_vvar 'count' .. 'j'
+--         local vcount1 = vim.api.nvim_get_vvar 'count1'
+--         local cursor_pos = vim.api.nvim_win_get_cursor(0)
+--         local maxline = vim.api.nvim_buf_line_count(0)
+--
+--         if vcount1 > 5 then
+--             vim.api.nvim_buf_set_mark(0, [[']], cursor_pos[1], cursor_pos[2], {})
+--             vim.api.nvim_win_set_cursor(0, { math.min(cursor_pos[1] + vcount1, maxline), cursor_pos[2] })
 --         else
---             return 'j'
+--             vim.api.nvim_win_set_cursor(0, { math.min(cursor_pos[1] + vcount1, maxline), cursor_pos[2] })
 --         end
 --     end,
---     expr = true,
 --     noremap = true,
 -- })
 

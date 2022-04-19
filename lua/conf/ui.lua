@@ -55,7 +55,7 @@ M.load.lualine = function()
     end
 
     local function treesitter_statusline()
-        local size = 80
+        local size = 70
 
         local ts_status = vim.fn['nvim_treesitter#statusline'] {
             indicator_size = size,
