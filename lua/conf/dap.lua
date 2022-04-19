@@ -30,6 +30,7 @@ require('dap').defaults.fallback.terminal_win_cmd = 'belowright 15 new'
 local opts = { noremap = true }
 
 require('nvim-dap-virtual-text').setup()
+require('telescope').load_extension('dap')
 
 local keymap = vim.api.nvim_set_keymap
 

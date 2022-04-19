@@ -32,7 +32,7 @@ M.load.dsf = function()
             bufmap(0, 'x', 'ae', '<Plug>DsfTextObjectA', { silent = true })
             bufmap(0, 'x', 'ie', '<Plug>DsfTextObjectI', { silent = true })
         end,
-        desc = 'set ae/ie keymaps (textobj of a function call) for rmd.'
+        desc = 'set ae/ie keymaps from dsf.vim for rmd.'
     })
 
     vim.g.dsf_no_mappings = 1
