@@ -1,6 +1,21 @@
+local keymap = vim.api.nvim_set_keymap
+
 require('nvim-treesitter.configs').setup {
     -- One of "all", "maintained" (parsers with maintainers), or a list of languages
-    ensure_installed = { 'r', 'python', 'cpp', 'lua', 'vim', 'julia', 'yaml', 'toml', 'json', 'html', 'css', 'javascript' },
+    ensure_installed = {
+        'r',
+        'python',
+        'cpp',
+        'lua',
+        'vim',
+        'julia',
+        'yaml',
+        'toml',
+        'json',
+        'html',
+        'css',
+        'javascript',
+    },
 
     -- Install languages synchronously (only applied to `ensure_installed`)
     sync_install = false,
@@ -58,6 +73,8 @@ require('nvim-treesitter.configs').setup {
                 ['iC'] = '@class.inner',
                 ['a<leader>c'] = '@class.outer',
                 ['i<leader>c'] = '@class.inner',
+                ['ak'] = '@class.outer',
+                ['ik'] = '@class.inner',
 
                 ['al'] = '@loop.outer',
                 ['il'] = '@loop.inner',
@@ -81,6 +98,7 @@ require('nvim-treesitter.configs').setup {
             goto_next_start = {
                 [']f'] = '@function.outer',
                 [']<Leader>c'] = '@class.outer',
+                [']k'] = '@class.outer',
                 [']l'] = '@loop.outer',
                 [']c'] = '@conditional.outer',
                 [']e'] = '@call.outer',
@@ -90,6 +108,7 @@ require('nvim-treesitter.configs').setup {
             goto_next_end = {
                 [']F'] = '@function.outer',
                 [']<Leader>C'] = '@class.outer',
+                [']K'] = '@class.outer',
                 [']L'] = '@loop.outer',
                 [']C'] = '@conditional.outer',
                 [']E'] = '@call.outer',
@@ -99,6 +118,7 @@ require('nvim-treesitter.configs').setup {
             goto_previous_start = {
                 ['[f'] = '@function.outer',
                 ['[<Leader>c'] = '@class.outer',
+                ['[k'] = '@class.outer',
                 ['[l'] = '@loop.outer',
                 ['[c'] = '@conditional.outer',
                 ['[e'] = '@call.outer',
@@ -109,6 +129,7 @@ require('nvim-treesitter.configs').setup {
 
                 ['[F'] = '@function.outer',
                 ['[<Leader>C'] = '@class.outer',
+                ['[K'] = '@class.outer',
                 ['[L'] = '@loop.outer',
                 ['[C'] = '@conditional.outer',
                 ['[E'] = '@call.outer',
@@ -118,7 +139,7 @@ require('nvim-treesitter.configs').setup {
     },
 
     matchup = {
-        enable = true, -- mandatory, false will disable the whole extension
+        enable = not vim.g.vscode, -- mandatory, false will disable the whole extension
         disable_virtual_text = true,
         -- disable = { "c", "ruby" },  -- optional, list of language that will be disabled
     },
@@ -128,7 +149,7 @@ if not vim.g.vscode then
     vim.cmd [[packadd! nvim-treehopper]]
     vim.cmd [[packadd! nvim-treesitter-context]]
     vim.cmd [[packadd! iswap.nvim]]
-    local keymap = vim.api.nvim_set_keymap
+
     keymap('o', '<leader>T', ":<C-U>lua require('tsht').nodes()<CR>", { silent = true })
     keymap('v', '<leader>T', ":<C-U>lua require('tsht').nodes()<CR>", { noremap = true, silent = true })
     keymap('n', '<leader>sw', '<cmd>ISwap<cr>', { noremap = true, silent = true })
@@ -139,3 +160,19 @@ if not vim.g.vscode then
         throttle = true,
     }
 end
+
+keymap('o', '<Plug>(ts-select-node-with-label)', '<Leader>T', { silent = true })
+keymap('x', '<Plug>(ts-select-node-with-label)', '<Leader>T', { silent = true })
+keymap('n', '<Plug>(ts-swap-arguments)', '<Leader>sw', { silent = true })
+keymap('n', '<Plug>(ts-swap-current-arguments-with)', '<Leader>sW', { silent = true })
+
+keymap('o', '<Plug>(ts-textobj-tex-frame-outer)', '<LocalLeader>f', { silent = true })
+keymap('x', '<Plug>(ts-textobj-tex-frame-outer)', '<LocalLeader>f', { silent = true })
+keymap('o', '<Plug>(ts-textobj-tex-block-outer)', '<LocalLeader>b', { silent = true })
+keymap('x', '<Plug>(ts-textobj-tex-block-outer)', '<LocalLeader>b', { silent = true })
+keymap('o', '<Plug>(ts-textobj-tex-statement-outer)', '<LocalLeader>s', { silent = true })
+keymap('x', '<Plug>(ts-textobj-tex-statement-outer)', '<LocalLeader>s', { silent = true })
+keymap('o', '<Plug>(ts-textobj-tex-class-outer)', '<LocalLeader>c', { silent = true })
+keymap('x', '<Plug>(ts-textobj-tex-class-outer)', '<LocalLeader>c', { silent = true })
+
+
