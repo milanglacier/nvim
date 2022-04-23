@@ -44,7 +44,7 @@ M.load.lualine = function()
 
     local function min_window_width(width)
         return function()
-            return vim.fn.winwidth(0) > width
+            return vim.api.nvim_win_get_width(0) > width
         end
     end
 
@@ -55,16 +55,24 @@ M.load.lualine = function()
     end
 
     local function treesitter_statusline()
-        local size = 70
+        local winwidth = vim.api.nvim_win_get_width(0)
+        local entire_width = vim.o.columns
+        local size
 
-        local ts_status = vim.fn['nvim_treesitter#statusline'] {
+        if winwidth >= entire_width * 0.75 then
+            size = math.floor(winwidth * 0.6)
+        elseif winwidth >= entire_width * 0.45 then
+            size = math.floor(winwidth * 0.25)
+        else
+            size = math.floor(winwidth * 0.3)
+        end
+
+        local ts_status = require('nvim-treesitter').statusline {
             indicator_size = size,
             separator = '  ',
         }
 
-        if ts_status == vim.NIL then
-            ts_status = ''
-        end
+        ts_status = ts_status:gsub('%s+', ' ')
         return ts_status
     end
 
@@ -84,7 +92,7 @@ M.load.lualine = function()
                 comp_of_max_width('diff', 80),
                 'diagnostics',
             },
-            lualine_c = { 'filename', comp_of_max_width(treesitter_statusline, 120) },
+            lualine_c = { 'filename', treesitter_statusline },
             lualine_x = { encoding, fileformat, 'filetype' },
             lualine_y = { comp_of_max_width('progress', 40) },
             lualine_z = { comp_of_max_width('location', 60) },
@@ -133,7 +141,7 @@ M.load.transparent = function()
         'n',
         '<LocalLeader>bt',
         [[<cmd>packadd nvim-transparent | set background=dark | TransparentToggle<CR>]],
-        { noremap = true, silent = true }
+        { noremap = true, silent = true, desc = 'toggle background transparent' }
     )
 end
 
