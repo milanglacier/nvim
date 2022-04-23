@@ -124,10 +124,23 @@ M.load.nullls = function()
                 command = mypath.sqlfluff,
                 args = { 'fix', '--dialect', 'mysql', '--disable_progress_bar', '-f', '-n', '-' },
             },
-            -- null_ls.builtins.diagnostics.sqlfluff.with {
-            --     command = mypath.sqlfluff,
-            --     args = { 'lint', '--dialect', 'mysql', '-f', 'github-annotation', '-n', '--disable_progress_bar', '-' },
-            -- },
+            null_ls.builtins.formatting.yapf.with {
+                command = mypath.yapf,
+            },
+            null_ls.builtins.diagnostics.flake8.with {
+                command = mypath.flake8,
+                extra_args = { '--ignore', 'E501,W504,E126,E121' },
+                -- ignore max line width, line break at binary operator
+                -- ignore long line over-indented
+            },
+            null_ls.builtins.diagnostics.pylint.with {
+                command = mypath.pylint,
+                extra_args = {'--generated-members=torch.*,pt.*', '--disable=W0621,W0612,C0103,C0301,C0114,C0116' },
+                -- ignore member checking for torch (and pt as an alias)
+                -- ignore sneak_case naming style, line too long
+                -- ignore redefine variable from outer scope
+                -- ignore model doc string, ignore function doc string
+            },
         },
     }
 end

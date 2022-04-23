@@ -107,14 +107,28 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
     properties = { 'documentation', 'detail', 'additionalTextEdits' },
 }
 
-require('lspconfig').pylsp.setup {
-    cmd = { require('bin_path').pylsp },
+-- Copied from lspconfig/server_configurations/pylsp.lua
+local function python_root_dir(fname)
+    local util = require 'lspconfig.util'
+    local root_files = {
+        'pyproject.toml',
+        'setup.py',
+        'setup.cfg',
+        'requirements.txt',
+        'Pipfile',
+    }
+    return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)
+end
+
+require('lspconfig').pyright.setup {
     on_attach = on_attach,
-    flags = {
-        -- This will be the default in neovim 0.7+
-        debounce_text_changes = 150,
-    },
     capabilities = capabilities,
+    root_dir = python_root_dir,
+    settings = {
+        python = {
+            pythonPath = require('bin_path').python,
+        },
+    },
 }
 
 require('lspconfig').r_language_server.setup {

@@ -10,7 +10,7 @@ Some linters/formatters use `null-ls` as an auxiliary media for CLI tools.
 
 * To use `lspconfig`, you need to have the corresponding lsp installed:
     * `R` support requires `R` package `R-language-server` installed.
-    * `python` support requires `python` package `pylsp` installed.
+    * `python` requires `pyright` installed, which requires `npm` installed.
     * `lua` support requires `lua-language-server` installed.
     * `latex` support requires `texlab` installed. `chktex` (latex linter) requires `texlive` distro installed.
     * `vim script` support requires `vim-language-server` installed, which requires `npm` installed.
@@ -33,8 +33,8 @@ including `cargo`, `conda`, `go`.
 
 * Binaries' paths need to be manually specified:
     * if need to use `lspconfig`
-        * `pylsp`
         * `sqls`
+        * `python`: need to specify `python path` for `pyright`
     * if need to use debugger: `DAP.nvim`:
         * `python` (I use `conda`'s python)
     * if need to use REPL: `iron.nvim`:
@@ -46,6 +46,9 @@ including `cargo`, `conda`, `go`.
         * `codespell` (spell checker)
         * `proselint` (English writing checker)
         * `sqlfluff` (SQL linter and formatter)
+        * `pylint` (python linter)
+        * `flake8` (python linter)
+        * `yapf` (python formatter)
 
 * Nerd font need to be installed. One of the font is provided in the repository.
 
@@ -67,7 +70,7 @@ the initials are often conflicted.
         otherwise it is provided by treesitter,
         the twos behave a bit differently.)
     5. `ac`, `ic`, the (entire/inner) body of a if-else condition.
-    6. `aC`,`iC`, `a<leader>c`, `i<leader>c` the (entire/inner) body of a class.
+    6. `aC`,`iC`, `a<leader>c`, `i<leader>c`, `ak`, `ik` the (entire/inner) body of a class.
     7. `aa`, `ia` as the (inner/entire) body of an argument.
         (this is defined by `targets.vim`),
         `ina`, `iNa` refers to the inner part of the next/last argument.
@@ -85,7 +88,7 @@ the initials are often conflicted.
 
     1. `]l`, `]L`, `[l`, `[L` are used to jump-to previous/next start/end of a loop.
     2. `]c`, `]C`, `[c`, `[C` are used to jump-to previous/next start/end of a if-else condition.
-    3. `]<Leader>c`, `]<Leader>C`, `[<Leader>c`, `[<Leader>C` are used to jump-to previous/next start/end of a class.
+    3. `]<Leader>c`, `]<Leader>C`, `[<Leader>c`, `[<Leader>C`, `[]kK` are used to jump-to previous/next start/end of a class.
     4. `fF[]` is used to jump-between functions.
     5. `aA[]` is used to jump-between arguments.
     6. `eE[]` is used to jump-between function calls.
@@ -104,3 +107,6 @@ folding (mapping: `zf`) and `vim-surround` (mapping: `S`)
 
 8. Note that `tree-sitter` will turn `syntax off`, and `pandoc-syntax` and `pandoc-rmarkdown`
 relies on the builtin `syntax`, so we need to load `config.pandoc` before we load `config.treesitter`
+
+8. `vim-matchup` will (intentionally) hide the status-line if the matched pair are spanned
+over entire screen to show the other side of the pair.

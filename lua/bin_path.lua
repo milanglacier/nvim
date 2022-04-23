@@ -1,8 +1,10 @@
 local conda = '/opt/homebrew/Caskroom/miniforge/base'
 local radian = conda .. '/bin/radian'
 local ipython = conda .. '/bin/ipython'
-local pylsp = conda .. '/bin/pylsp'
 local python = conda .. '/bin/python'
+local yapf = conda .. '/bin/yapf'
+local flake8 = conda .. '/bin/flake8'
+local pylint = conda .. '/bin/pylint'
 
 local cargo = os.getenv 'HOME' .. '/.cargo'
 local stylua = cargo .. '/bin/stylua'
@@ -19,7 +21,9 @@ return {
     python = python,
     radian = radian,
     ipython = ipython,
-    pylsp = pylsp,
+    yapf = yapf,
+    flake8 = flake8,
+    pylint = pylint,
     cargo = cargo,
     stylua = stylua,
     selene = selene,
