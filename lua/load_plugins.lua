@@ -13,6 +13,7 @@ require 'paq' {
     { 'rebelot/kanagawa.nvim', opt = true },
     { 'savq/melange', opt = true },
     { 'catppuccin/nvim', as = 'catppuccin', opt = true },
+    { 'marko-cerovac/material.nvim', opt = true },
 
     -- Fix bugs and Utilities
     { 'antoinemadec/FixCursorHold.nvim' },

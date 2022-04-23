@@ -16,6 +16,7 @@ local night_scheme_options = {
         'kanagawa',
         'melange',
         'catppuccin',
+        'material',
     },
     cmd = {
         function()
@@ -48,12 +49,16 @@ local night_scheme_options = {
         function()
             vim.cmd [[packadd! catppuccin]]
         end,
+        function()
+            vim.cmd [[packadd! material.nvim]]
+            vim.g.material_style = 'palenight'
+        end,
     },
     length = 9,
 }
 
 local day_scheme_options = {
-    name = { 'dawnfox', 'rose-pine', 'tokyonight', 'everforest', 'gruvbox', 'melange' },
+    name = { 'dawnfox', 'rose-pine', 'tokyonight', 'everforest', 'gruvbox', 'melange', 'material' },
     cmd = {
         function()
             vim.cmd [[packadd! nightfox.nvim]]
@@ -74,6 +79,10 @@ local day_scheme_options = {
         end,
         function()
             vim.cmd [[packadd! melange]]
+        end,
+        function()
+            vim.cmd [[packadd! material.nvim]]
+            vim.g.material_style = 'lighter'
         end,
     },
     length = 6,
