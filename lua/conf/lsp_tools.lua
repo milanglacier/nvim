@@ -135,11 +135,17 @@ M.load.nullls = function()
             },
             null_ls.builtins.diagnostics.pylint.with {
                 command = mypath.pylint,
-                extra_args = {'--generated-members=torch.*,pt.*', '--disable=W0621,W0612,C0103,C0301,C0114,C0116' },
+                extra_args = {
+                    '--generated-members=torch.*,pt.*',
+                    '--disable=W0621,W0612,C0103,C0301,C0114,C0116,R0914,R0913,C0411,R0902',
+                },
                 -- ignore member checking for torch (and pt as an alias)
                 -- ignore sneak_case naming style, line too long
                 -- ignore redefine variable from outer scope
                 -- ignore model doc string, ignore function doc string
+                -- ignore too many local variables
+                -- ignore too many arguments, too many instances attributes
+                -- ignore standard import should be put before other import
             },
         },
     }

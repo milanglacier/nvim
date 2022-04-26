@@ -129,12 +129,14 @@ require('lspconfig').pyright.setup {
             pythonPath = require('bin_path').python,
         },
     },
+    flags = {
+        debounce_text_changes = 150,
+    },
 }
 
 require('lspconfig').r_language_server.setup {
     on_attach = on_attach,
     flags = {
-        -- This will be the default in neovim 0.7+
         debounce_text_changes = 150,
     },
     capabilities = capabilities,
@@ -148,7 +150,6 @@ require('lspconfig').texlab.setup {
 require('lspconfig').julials.setup {
     on_attach = on_attach,
     flags = {
-        -- This will be the default in neovim 0.7+
         debounce_text_changes = 150,
     },
     capabilities = capabilities,
@@ -202,6 +203,8 @@ require('lspconfig').sqls.setup {
         local bufmap = vim.api.nvim_buf_set_keymap
         bufmap(bufnr, 'n', '<LocalLeader>ss', '<cmd>SqlsExecuteQuery<CR>', { silent = true })
         bufmap(bufnr, 'v', '<LocalLeader>ss', '<cmd>SqlsExecuteQuery<CR>', { silent = true })
+        bufmap(bufnr, 'n', '<LocalLeader>sv', '<cmd>SqlsExecuteQueryVertical<CR>', { silent = true })
+        bufmap(bufnr, 'v', '<LocalLeader>sv', '<cmd>SqlsExecuteQueryVertical<CR>', { silent = true })
     end,
     capabilities = capabilities,
     single_file_support = false,
