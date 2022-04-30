@@ -202,4 +202,17 @@ autocmd('FileType', {
     end,
 })
 
+if vim.g.vscode then
+    local vscode = augroup('VSCode', {})
+    autocmd({ 'BufNewFile', 'BufFilePre', 'BufRead' }, {
+        group = vscode,
+        desc = 'set the filetype of jupyter notebook cell to python',
+        pattern = { '*.ipynb*' },
+        -- jupyter notebook cell will end with *Use
+        callback = function()
+            vim.bo.filetype = 'python'
+        end,
+    })
+end
+
 return M
