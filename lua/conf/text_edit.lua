@@ -9,15 +9,14 @@ end
 
 M.load.colorizer = function()
     vim.cmd [[packadd! nvim-colorizer.lua]]
-    require('colorizer').setup()
+    require('colorizer').setup {}
 end
 
 M.load.comment = function()
-    require('Comment').setup()
+    require('Comment').setup {}
 end
 
 M.load.dsf = function()
-
     local augroup = vim.api.nvim_create_augroup
     local autocmd = vim.api.nvim_create_autocmd
 
@@ -32,7 +31,7 @@ M.load.dsf = function()
             bufmap(0, 'x', 'ae', '<Plug>DsfTextObjectA', { silent = true })
             bufmap(0, 'x', 'ie', '<Plug>DsfTextObjectI', { silent = true })
         end,
-        desc = 'set ae/ie keymaps from dsf.vim for rmd.'
+        desc = 'set ae/ie keymaps from dsf.vim for rmd.',
     })
 
     vim.g.dsf_no_mappings = 1
@@ -74,7 +73,7 @@ M.load.targets = function()
 end
 
 M.load.substitute = function()
-    require('substitute').setup()
+    require('substitute').setup {}
 
     local keymap = vim.api.nvim_set_keymap
 
@@ -103,7 +102,7 @@ end
 
 M.load.colorizer = function()
     vim.cmd [[packadd! nvim-colorizer.lua]]
-    require('colorizer').setup()
+    require('colorizer').setup {}
 end
 
 if not vim.g.vscode then
