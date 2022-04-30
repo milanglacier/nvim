@@ -104,6 +104,10 @@ M.load.iron = function()
     keymap('n', '<localleader>ss', '<Plug>(iron-send-line)', {})
     keymap('n', '<localleader>s', '<Plug>(iron-send-motion)', {})
     keymap('v', '<localleader>ss', '<Plug>(iron-visual-send)', {})
+
+    keymap('n', '<localleader>sc', [[S%%lVs%%l\ss]], {
+        desc = 'iron send a code chunk (requires vim-sneak)',
+    })
 end
 
 M.load.terminal = function()

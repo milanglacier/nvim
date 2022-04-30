@@ -54,7 +54,7 @@ require('nvim-treesitter.configs').setup {
     incremental_selection = {
         enable = true,
         keymaps = {
-            init_selection = '<CR>',
+            init_selection = '<CR><CR>',
             scope_incremental = '<CR>',
             node_incremental = '<TAB>',
             node_decremental = '<S-TAB>',
@@ -71,8 +71,6 @@ require('nvim-treesitter.configs').setup {
 
                 ['aC'] = '@class.outer',
                 ['iC'] = '@class.inner',
-                ['a<leader>c'] = '@class.outer',
-                ['i<leader>c'] = '@class.inner',
                 ['ak'] = '@class.outer',
                 ['ik'] = '@class.inner',
 
