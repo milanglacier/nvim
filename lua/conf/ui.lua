@@ -60,7 +60,7 @@ M.load.lualine = function()
         local size
 
         if winwidth >= entire_width * 0.75 then
-            size = math.floor(winwidth * 0.6)
+            size = math.floor(winwidth * 0.5)
         elseif winwidth >= entire_width * 0.45 then
             size = math.floor(winwidth * 0.25)
         else
