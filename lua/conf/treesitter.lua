@@ -79,8 +79,10 @@ require('nvim-treesitter.configs').setup {
 
                 ['ac'] = '@conditional.outer',
                 ['ic'] = '@conditional.inner',
+
                 ['ie'] = '@call.inner',
                 ['ae'] = '@call.outer',
+
                 ['a<Leader>a'] = '@parameter.outer',
                 ['i<Leader>a'] = '@parameter.inner',
                 -- latex textobjects
@@ -101,6 +103,11 @@ require('nvim-treesitter.configs').setup {
                 [']c'] = '@conditional.outer',
                 [']e'] = '@call.outer',
                 [']a'] = '@parameter.outer',
+                -- latex motions
+                [']<LocalLeader>f'] = '@frame.outer',
+                [']<LocalLeader>s'] = '@statement.outer',
+                [']<LocalLeader>b'] = '@block.outer',
+                [']<localLeader>c'] = '@class.outer',
             },
 
             goto_next_end = {
@@ -111,6 +118,11 @@ require('nvim-treesitter.configs').setup {
                 [']C'] = '@conditional.outer',
                 [']E'] = '@call.outer',
                 [']A'] = '@parameter.outer',
+                -- latex motions
+                [']<LocalLeader>F'] = '@frame.outer',
+                [']<LocalLeader>S'] = '@statement.outer',
+                [']<LocalLeader>B'] = '@block.outer',
+                [']<localLeader>C'] = '@class.outer',
             },
 
             goto_previous_start = {
@@ -121,6 +133,11 @@ require('nvim-treesitter.configs').setup {
                 ['[c'] = '@conditional.outer',
                 ['[e'] = '@call.outer',
                 ['[a'] = '@parameter.outer',
+                -- latex motions
+                ['[<LocalLeader>f'] = '@frame.outer',
+                ['[<LocalLeader>s'] = '@statement.outer',
+                ['[<LocalLeader>b'] = '@block.outer',
+                ['[<localLeader>c'] = '@class.outer',
             },
 
             goto_previous_end = {
@@ -132,6 +149,11 @@ require('nvim-treesitter.configs').setup {
                 ['[C'] = '@conditional.outer',
                 ['[E'] = '@call.outer',
                 ['[A'] = '@parameter.outer',
+                -- latex motions
+                ['[<LocalLeader>F'] = '@frame.outer',
+                ['[<LocalLeader>S'] = '@statement.outer',
+                ['[<LocalLeader>B'] = '@block.outer',
+                ['[<localLeader>C'] = '@class.outer',
             },
         },
     },
@@ -159,18 +181,46 @@ if not vim.g.vscode then
     }
 end
 
-keymap('o', '<Plug>(ts-select-node-with-label)', '<Leader>T', { silent = true })
+keymap('n', '<Plug>(ts-incre-selection-init)', '<CR><CR>', { silent = true })
+keymap('n', '<Plug>(ts-incre-selection-scope-incre)', '<CR>', { silent = true })
+keymap('n', '<Plug>(ts-incre-selection-node-incre)', '<Tab>', { silent = true })
+keymap('n', '<Plug>(ts-incre-selection-node-decre)', '<S-Tab>', { silent = true })
+
+keymap('x', '<Plug>(ts-textobj-function-outer)', 'af', { silent = true })
+keymap('x', '<Plug>(ts-textobj-class-outer)', 'ak', { silent = true })
+keymap('x', '<Plug>(ts-textobj-class-outer-alias)', 'aC', { silent = true })
+keymap('x', '<Plug>(ts-textobj-conditional-outer)', 'ac', { silent = true })
+keymap('x', '<Plug>(ts-textobj-loop-outer)', 'al', { silent = true })
+keymap('x', '<Plug>(ts-textobj-argument-outer)', 'a<Leader>a', { silent = true })
+keymap('x', '<Plug>(ts-textobj-call-outer)', 'ae', { silent = true })
+keymap('x', '<Plug>(ts-textobj-expression-outer)', 'ae', { silent = true })
+
+keymap('x', '<Plug>(ts-textobj-tex-frame-outer)', '<LocalLeader>f', { silent = true })
+keymap('x', '<Plug>(ts-textobj-tex-block-outer)', '<LocalLeader>b', { silent = true })
+keymap('x', '<Plug>(ts-textobj-tex-statement-outer)', '<LocalLeader>s', { silent = true })
+keymap('x', '<Plug>(ts-textobj-tex-class-outer)', '<LocalLeader>c', { silent = true })
+
+keymap('n', '<Plug>(ts-motion-class-prev-start)', '[k', { silent = true })
+keymap('n', '<Plug>(ts-motion-class-prev-end)', '[K', { silent = true })
+
+keymap('n', '<Plug>(ts-motion-class-prev-start-alias)', '[<Leader>c', { silent = true })
+keymap('n', '<Plug>(ts-motion-class-prev-end-alias)', '[<Leader>C', { silent = true })
+
+keymap('n', '<Plug>(ts-motion-conditional-prev-start)', '[c', { silent = true })
+keymap('n', '<Plug>(ts-motion-conditional-prev-end)', '[C', { silent = true })
+
+keymap('n', '<Plug>(ts-motion-argument-prev-start)', '[a', { silent = true })
+keymap('n', '<Plug>(ts-motion-argument-prev-end)', '[A', { silent = true })
+
+keymap('n', '<Plug>(ts-motion-tex-block-prev-start)', '[<LocalLeader>b', { silent = true })
+keymap('n', '<Plug>(ts-motion-tex-block-prev-end)', '[<LocalLeader>B', { silent = true })
+keymap('n', '<Plug>(ts-motion-tex-class-prev-start)', '[<LocalLeader>c', { silent = true })
+keymap('n', '<Plug>(ts-motion-tex-class-prev-end)', '[<LocalLeader>C', { silent = true })
+keymap('n', '<Plug>(ts-motion-tex-statement-prev-start)', '[<LocalLeader>s', { silent = true })
+keymap('n', '<Plug>(ts-motion-tex-statement-prev-end)', '[<LocalLeader>S', { silent = true })
+keymap('n', '<Plug>(ts-motion-tex-frame-prev-start)', '[<LocalLeader>f', { silent = true })
+keymap('n', '<Plug>(ts-motion-tex-frame-prev-end)', '[<LocalLeader>F', { silent = true })
+
 keymap('x', '<Plug>(ts-select-node-with-label)', '<Leader>T', { silent = true })
 keymap('n', '<Plug>(ts-swap-arguments)', '<Leader>sw', { silent = true })
 keymap('n', '<Plug>(ts-swap-current-arguments-with)', '<Leader>sW', { silent = true })
-
-keymap('o', '<Plug>(ts-textobj-tex-frame-outer)', '<LocalLeader>f', { silent = true })
-keymap('x', '<Plug>(ts-textobj-tex-frame-outer)', '<LocalLeader>f', { silent = true })
-keymap('o', '<Plug>(ts-textobj-tex-block-outer)', '<LocalLeader>b', { silent = true })
-keymap('x', '<Plug>(ts-textobj-tex-block-outer)', '<LocalLeader>b', { silent = true })
-keymap('o', '<Plug>(ts-textobj-tex-statement-outer)', '<LocalLeader>s', { silent = true })
-keymap('x', '<Plug>(ts-textobj-tex-statement-outer)', '<LocalLeader>s', { silent = true })
-keymap('o', '<Plug>(ts-textobj-tex-class-outer)', '<LocalLeader>c', { silent = true })
-keymap('x', '<Plug>(ts-textobj-tex-class-outer)', '<LocalLeader>c', { silent = true })
-
-
