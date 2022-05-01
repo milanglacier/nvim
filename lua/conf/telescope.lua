@@ -1,10 +1,10 @@
 vim.cmd [[packadd! telescope.nvim]]
 vim.cmd [[packadd! telescope-fzf-native.nvim]]
+vim.cmd [[packadd! telescope-ui-select.nvim]]
 vim.cmd [[packadd! project.nvim]]
 vim.cmd [[packadd! nvim-notify]]
 
 local telescope = require 'telescope'
-local trouble = require 'trouble.providers.telescope'
 
 telescope.setup {
     pickers = {
@@ -49,12 +49,17 @@ telescope.setup {
         cache_picker = { num_pickers = 2, limit_entries = 100 },
         -- wrap_results = true,
     },
-    extensions = {},
+    extensions = {
+        ['ui-select'] = {
+            require('telescope.themes').get_dropdown {},
+        },
+    },
 }
 
 require('telescope').load_extension 'fzf'
 require('telescope').load_extension 'notify'
 require('telescope').load_extension 'projects'
+require('telescope').load_extension 'ui-select'
 
 local opts = { noremap = true }
 

@@ -74,6 +74,7 @@ require 'paq' {
     { 'nvim-lua/plenary.nvim' },
     { 'nvim-telescope/telescope.nvim', opt = true },
     { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', opt = true },
+    { 'nvim-telescope/telescope-ui-select.nvim', opt = true },
 
     -- LSP config
     { 'neovim/nvim-lspconfig', opt = true },
