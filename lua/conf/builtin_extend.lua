@@ -3,9 +3,7 @@ local keymap = vim.api.nvim_set_keymap
 keymap('i', 'jk', '<ESC>', { noremap = true })
 keymap('t', 'jk', [[<C-\><C-n>]], { noremap = true })
 
-vim.g.mapleader = ' '
-vim.g.maplocalleader = [[\]]
-keymap('', [[<Space><Space>]], [[<LocalLeader>]], {})
+keymap('', [[\]], [[<localleader>]], {})
 
 keymap('i', '<C-b>', '<Left>', { noremap = true })
 keymap('i', '<C-p>', '<Up>', { noremap = true })
