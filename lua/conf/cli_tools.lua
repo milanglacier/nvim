@@ -130,10 +130,11 @@ M.load.toggleterm = function()
         direction = 'horizontal',
         close_on_exit = true,
     }
-    keymap('n', '<Leader>ta', '<cmd>1ToggleTerm<CR>', { silent = true })
-    keymap('n', '<Leader>t1', '<cmd>2ToggleTerm<CR>', { silent = true })
-    keymap('n', '<Leader>t2', '<cmd>3ToggleTerm<CR>', { silent = true })
-    keymap('n', '<Leader>t3', '<cmd>4ToggleTerm<CR>', { silent = true })
+    keymap('n', '<Leader>ta', '<cmd>ToggleTermToggleAll<CR>', { silent = true })
+    keymap('n', '<Leader>t2', '<cmd>2ToggleTerm<CR>', { silent = true })
+    keymap('n', '<Leader>t3', '<cmd>3ToggleTerm<CR>', { silent = true })
+    keymap('n', '<Leader>t4', '<cmd>4ToggleTerm<CR>', { silent = true })
+    keymap('n', '<Leader>te', [[<cmd>execute v:count . "TermExec cmd='exit;'"<CR>]], { silent = true })
 
     local autocmd = vim.api.nvim_create_autocmd
     local my_augroup = require('conf.builtin_extend').my_augroup
@@ -146,18 +147,21 @@ M.load.toggleterm = function()
             local bufid = vim.api.nvim_get_current_buf()
             local bufcmd = vim.api.nvim_buf_create_user_command
 
-            bufcmd(0, 'RenderRmd', function()
+            bufcmd(0, 'RenderRmd', function(options)
                 ---@diagnostic disable-next-line: missing-parameter
-                local current_file = vim.fn.expand '%:.'
+                local current_file = vim.fn.expand '%:.' -- relative path to current wd
                 current_file = vim.fn.shellescape(current_file)
 
                 local cmd = string.format([[R --quiet -e "rmarkdown::render(%s)"]], current_file)
+                local term_id = options.args ~= '' and tonumber(options.args) or nil
 
                 ---@diagnostic disable-next-line: missing-parameter
-                require('toggleterm').exec(cmd)
-            end, {})
+                require('toggleterm').exec(cmd, term_id)
 
-            vim.api.nvim_set_current_buf(bufid)
+                vim.api.nvim_set_current_buf(bufid)
+            end, {
+                nargs = '?', -- 0 or 1 arg
+            })
         end,
     })
 end
