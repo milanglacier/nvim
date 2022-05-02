@@ -1,6 +1,8 @@
 local M = {}
 M.load = {}
 
+local keymap = vim.api.nvim_set_keymap
+
 M.load.gitsigns = function()
     vim.cmd [[packadd! gitsigns.nvim]]
 
@@ -8,6 +10,9 @@ M.load.gitsigns = function()
         current_line_blame = true,
         current_line_blame_formatter = '<author>, <author_time:%R> - <summary>',
     }
+
+    keymap('n', '<Leader>gp', '<cmd>Gitsigns preview_hunk<CR>', { noremap = true })
+    keymap('n', '<Leader>gq', '<cmd>Gitsigns setqflist<CR>', { noremap = true })
 end
 
 M.load.neogit = function()
@@ -23,8 +28,6 @@ M.load.spectre = function()
 
     require('spectre').setup()
 
-    local keymap = vim.api.nvim_set_keymap
-
     keymap('n', '<Leader>rg', "<cmd>lua require('spectre').open()<CR>", { noremap = true })
     keymap('v', '<Leader>rg', "<cmd>lua require('spectre').open_visual()<CR>", { noremap = true })
 end
@@ -33,8 +36,6 @@ M.load.mkdp = function()
     vim.cmd [[packadd! markdown-preview.nvim]]
 
     vim.g.mkdp_filetypes = { 'markdown.pandoc', 'markdown', 'rmd' }
-
-    local keymap = vim.api.nvim_set_keymap
 
     keymap('n', '<LocalLeader>mp', ':MarkdownPreview<cr>', { noremap = true, silent = true })
     keymap('n', '<LocalLeader>mq', ':MarkdownPreviewStop<cr>', { noremap = true, silent = true })
@@ -92,8 +93,6 @@ M.load.iron = function()
         repl_open_cmd = require('iron.view').openwin 'belowright 15 split',
         buflisted = true,
     }
-
-    local keymap = vim.api.nvim_set_keymap
 
     keymap('n', '<localleader>rs', '<cmd>IronRepl<CR>', {})
     keymap('n', '<localleader>rr', '<cmd>IronRestart<CR>', {})
