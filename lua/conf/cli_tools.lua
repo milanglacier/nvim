@@ -109,35 +109,57 @@ M.load.iron = function()
     })
 end
 
-M.load.terminal = function()
-    vim.cmd [[packadd! nvim-terminal]]
+M.load.toggleterm = function()
+    vim.cmd [[packadd! toggleterm.nvim]]
 
-    require('nvim-terminal').setup {
-        window = {
-            position = 'botright',
-            split = 'sp',
-            width = 50,
-            height = 15,
-        },
-
-        -- keymap to disable all the default keymaps
-        disable_default_keymaps = false,
-
-        toggle_keymap = '<leader>tw',
-        window_height_change_amount = 2,
-        window_width_change_amount = 2,
-        increase_width_keymap = '',
-        decrease_width_keymap = '',
-        increase_height_keymap = '',
-        decrease_height_keymap = '',
-        terminals = {
-            { keymap = '<leader>t1' },
-            { keymap = '<leader>t2' },
-            { keymap = '<leader>t3' },
-            { keymap = '<leader>t4' },
-            { keymap = '<leader>t5' },
-        },
+    require('toggleterm').setup {
+        -- size can be a number or function which is passed the current terminal
+        size = function(term)
+            if term.direction == 'horizontal' then
+                return 15
+            elseif term.direction == 'vertical' then
+                return vim.o.columns * 0.30
+            end
+        end,
+        open_mapping = [[<Leader>tw]],
+        shade_terminals = false,
+        start_in_insert = false,
+        insert_mappings = false,
+        terminal_mappings = false,
+        persist_size = true,
+        direction = 'horizontal',
+        close_on_exit = true,
     }
+    keymap('n', '<Leader>ta', '<cmd>1ToggleTerm<CR>', { silent = true })
+    keymap('n', '<Leader>t1', '<cmd>2ToggleTerm<CR>', { silent = true })
+    keymap('n', '<Leader>t2', '<cmd>3ToggleTerm<CR>', { silent = true })
+    keymap('n', '<Leader>t3', '<cmd>4ToggleTerm<CR>', { silent = true })
+
+    local autocmd = vim.api.nvim_create_autocmd
+    local my_augroup = require('conf.builtin_extend').my_augroup
+
+    autocmd('FileType', {
+        desc = 'set command for rendering rmarkdown',
+        pattern = 'rmd',
+        group = my_augroup,
+        callback = function()
+            local bufid = vim.api.nvim_get_current_buf()
+            local bufcmd = vim.api.nvim_buf_create_user_command
+
+            bufcmd(0, 'RenderRmd', function()
+                ---@diagnostic disable-next-line: missing-parameter
+                local current_file = vim.fn.expand '%:.'
+                current_file = vim.fn.shellescape(current_file)
+
+                local cmd = string.format([[R --quiet -e "rmarkdown::render(%s)"]], current_file)
+
+                ---@diagnostic disable-next-line: missing-parameter
+                require('toggleterm').exec(cmd)
+            end, {})
+
+            vim.api.nvim_set_current_buf(bufid)
+        end,
+    })
 end
 
 M.load.pandoc = function()
@@ -170,7 +192,7 @@ M.load.iron()
 M.load.mkdp()
 M.load.neogit()
 M.load.spectre()
-M.load.terminal()
+M.load.toggleterm()
 M.load.pandoc()
 
 return M

@@ -16,6 +16,7 @@ vim.o.showcmd = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
 vim.o.linebreak = true
+vim.o.hidden = true
 
 vim.o.clipboard = 'unnamedplus'
 vim.o.completeopt = 'menu,menuone,noselect'

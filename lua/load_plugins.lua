@@ -59,7 +59,7 @@ require 'paq' {
     { 'windwp/nvim-autopairs', opt = true },
 
     -- Tree sitter for enhanced text obj and syntax capturality
-    { 'nvim-treesitter/nvim-treesitter' },
+    { 'nvim-treesitter/nvim-treesitter', pin = true },
     { 'nvim-treesitter/nvim-treesitter-textobjects' },
     { 'p00f/nvim-ts-rainbow' },
     { 'mfussenegger/nvim-treehopper', opt = true },
@@ -109,8 +109,8 @@ require 'paq' {
     -- REPL
     -- 'jalvesaq/Nvim-R',
     -- 'jalvesaq/vimcmdline',
-    { 's1n7ax/nvim-terminal', opt = true },
     { 'hkupty/iron.nvim', opt = true },
+    { 'akinsho/toggleterm.nvim', opt = true },
 
     -- Git
     { 'lewis6991/gitsigns.nvim', opt = true },

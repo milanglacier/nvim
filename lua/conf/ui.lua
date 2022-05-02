@@ -106,7 +106,7 @@ M.load.lualine = function()
             lualine_z = {},
         },
         tabline = {},
-        extensions = { 'aerial', 'nvim-tree', 'quickfix' },
+        extensions = { 'aerial', 'nvim-tree', 'quickfix', 'toggleterm' },
     }
 end
 
