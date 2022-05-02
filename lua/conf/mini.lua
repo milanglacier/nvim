@@ -124,7 +124,7 @@ require('mini.indentscope').setup {
     },
 }
 
-local augroup = vim.api.nvim_create_augroup
+local my_augroup = require('conf.builtin_extend').my_augroup
 local autocmd = vim.api.nvim_create_autocmd
 local get_hl = vim.api.nvim_get_hl_by_name
 local set_hl = vim.api.nvim_set_hl
@@ -135,9 +135,8 @@ local set_hl = vim.api.nvim_set_hl
 set_hl(0, 'MiniCursorword', get_hl('CursorLine', true))
 set_hl(0, 'MiniCursorwordCurrent', get_hl('CursorLine', true))
 
-local reset_mini_cursorword_highlight = augroup('ResetMiniCursorwordHL', {})
 autocmd('ColorScheme', {
-    group = reset_mini_cursorword_highlight,
+    group = my_augroup,
     desc = [[Link MiniCursorword's highlight to CursorLine]],
     callback = function()
         set_hl(0, 'MiniCursorword', get_hl('CursorLine', true))

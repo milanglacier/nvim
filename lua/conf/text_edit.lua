@@ -17,12 +17,11 @@ M.load.comment = function()
 end
 
 M.load.dsf = function()
-    local augroup = vim.api.nvim_create_augroup
+    local my_augroup = require('conf.builtin_extend').my_augroup
     local autocmd = vim.api.nvim_create_autocmd
 
-    local dsf_for_rmd = augroup('DsfForRmd', {})
     autocmd('FileType', {
-        group = dsf_for_rmd,
+        group = my_augroup,
         pattern = 'rmd',
         callback = function()
             local bufmap = vim.api.nvim_buf_set_keymap

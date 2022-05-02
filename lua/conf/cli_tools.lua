@@ -144,12 +144,11 @@ M.load.pandoc = function()
     vim.cmd [[packadd! vim-pandoc-syntax]]
     vim.cmd [[packadd! vim-rmarkdown]]
 
-    local augroup = vim.api.nvim_create_augroup
     local autocmd = vim.api.nvim_create_autocmd
 
-    local pandoc_syntax = augroup('PandocSyntax', {})
+    local my_augroup = require('conf.builtin_extend').my_augroup
     autocmd({ 'BufNewFile', 'BufFilePre', 'BufRead' }, {
-        group = pandoc_syntax,
+        group = my_augroup,
         desc = 'set filetype *.md as markdown.pandoc',
         pattern = '*.md',
         callback = function()

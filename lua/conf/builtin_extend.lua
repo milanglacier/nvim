@@ -1,3 +1,5 @@
+local M = {}
+
 local keymap = vim.api.nvim_set_keymap
 
 keymap('i', 'jk', '<ESC>', { noremap = true })
@@ -38,17 +40,16 @@ keymap('n', '<Leader>tc', [[:tabclose<cr>]], { noremap = true })
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
-local highlight_yanked_text = augroup('YankedTextHighlight', {})
+M.my_augroup = augroup('MyAugroup', {})
 
 autocmd('TextYankPost', {
-    group = highlight_yanked_text,
+    group = M.my_augroup,
     callback = function()
         vim.highlight.on_yank { higroup = 'IncSearch', timeout = 400 }
     end,
     desc = 'highlight yanked text',
 })
 
-local M = {}
 
 function M.ping_cursor()
     vim.o.cursorline = true
@@ -123,11 +124,9 @@ function M.textobj_code_chunk(ai, start_pattern, end_pattern, has_same_start_end
     end
 end
 
-local code_chunk_textobj = augroup('CodeChunkTextobj', {})
-
 autocmd('FileType', {
     pattern = 'rmd',
-    group = code_chunk_textobj,
+    group = M.my_augroup,
     desc = 'set rmarkdown code chunk textobj',
     callback = function()
         local bufmap = vim.api.nvim_buf_set_keymap
@@ -164,7 +163,7 @@ autocmd('FileType', {
 
 autocmd('FileType', {
     pattern = { 'r', 'python' },
-    group = code_chunk_textobj,
+    group = M.my_augroup,
     desc = 'set r, python code chunk textobj',
     callback = function()
         local bufmap = vim.api.nvim_buf_set_keymap
@@ -201,12 +200,12 @@ autocmd('FileType', {
 })
 
 if vim.g.vscode then
-    local vscode = augroup('VSCode', {})
+    M.my_vscode = augroup('MyVSCode', {})
     autocmd({ 'BufNewFile', 'BufFilePre', 'BufRead' }, {
-        group = vscode,
+        group = M.my_vscode,
         desc = 'set the filetype of jupyter notebook cell to python',
         pattern = { '*.ipynb*' },
-        -- jupyter notebook cell will end with *Use
+        -- jupyter notebook cell will end with *.ipynb*
         callback = function()
             vim.bo.filetype = 'python'
         end,
