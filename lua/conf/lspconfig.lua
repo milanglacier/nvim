@@ -6,7 +6,14 @@ vim.cmd [[packadd! aerial.nvim]]
 vim.cmd [[packadd! lsp_signature.nvim]]
 vim.cmd [[packadd! lua-dev.nvim]]
 
-local opts = { noremap = true, silent = true }
+local opts = function(options)
+    return {
+        noremap = true,
+        silent = true,
+        desc = options[1] or options.desc,
+        callback = options[2] or options.callback,
+    }
+end
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -19,7 +26,7 @@ local on_attach = function(client, bufnr)
     -- See `:help vim.lsp.*` for documentation on any of the below functions
     -- vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
     --  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-    bufmap(bufnr, 'n', '<Leader>td', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+    bufmap(bufnr, 'n', '<Leader>td', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts { 'lsp type definition' })
     --
     --  vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
     -- vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
@@ -32,9 +39,8 @@ local on_attach = function(client, bufnr)
     -- open a separate window to show reference
 
     -- reference
-    bufmap(bufnr, 'n', 'gr', '', {
-        noremap = true,
-        silent = true,
+    -- stylua: ignore
+    bufmap( bufnr, 'n', 'gr', '', opts {
         desc = 'lsp references telescope',
         callback = function()
             require('telescope.builtin').lsp_references {
@@ -42,33 +48,50 @@ local on_attach = function(client, bufnr)
                 jump_type = 'tab',
             }
         end,
-    })
+    }
+    )
 
     -- code action
-    -- bufmap(bufnr, 'n', '<Leader>ca', "<cmd>lua require('lspsaga.codeaction').code_action()<CR>", opts)
-    -- bufmap(bufnr, 'v', '<Leader>ca', ":lua require('lspsaga.codeaction').range_code_action()<CR>", opts)
-    bufmap(bufnr, 'n', '<Leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-    bufmap(bufnr, 'x', '<Leader>ca', ':<C-U>lua vim.lsp.buf.range_code_action()<CR>', opts)
+    -- bufmap(bufnr, 'n', '<Leader>ca', "<cmd>lua require('lspsaga.codeaction').code_action()<CR>", opts {})
+    -- bufmap(bufnr, 'v', '<Leader>ca', ":lua require('lspsaga.codeaction').range_code_action()<CR>", opts {})
+    bufmap(bufnr, 'n', '<Leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts { 'lsp code action' })
+    bufmap(bufnr, 'x', '<Leader>ca', ':<C-U>lua vim.lsp.buf.range_code_action()<CR>', opts { 'lsp range code action' })
 
     -- hover
-    bufmap(bufnr, 'n', 'gh', '<cmd>Lspsaga hover_doc<CR>', opts)
-    bufmap(bufnr, 'n', '<C-f>', [[<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1, '<C-f>')<CR>]], opts)
-    bufmap(bufnr, 'n', '<C-b>', "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1, '<C-b>)<CR>", opts)
+    bufmap(bufnr, 'n', 'gh', '<cmd>Lspsaga hover_doc<CR>', opts { 'lspsaga hover doc' })
+    -- stylua: ignore
+    bufmap( bufnr, 'n', '<C-f>', '', opts {
+        desc = 'lspsaga smartscroll downward',
+        callback = function()
+            require('lspsaga.action').smart_scroll_with_saga(1, '<C-f>')
+        end,
+    }
+    )
+    -- stylua: ignore
+    bufmap( bufnr, 'n', '<C-b>', '', opts {
+        desc = 'lspsaga smartscroll upward',
+        callback = function()
+            require('lspsaga.action').smart_scroll_with_saga(-1, '<C-b>')
+        end,
+    }
+    )
 
     -- use glow-hover
-    bufmap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
+    bufmap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts { 'lsp hover by glow' })
 
     -- signaturehelp
-    bufmap(bufnr, 'n', '<Leader>sh', "<cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>", opts)
+    -- stylua: ignore
+    bufmap(bufnr, 'n', '<Leader>sh', '',
+        opts { 'lspsaga signature help', require('lspsaga.signaturehelp').signature_help }
+    )
     -- "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
 
     -- rename
-    bufmap(bufnr, 'n', '<Leader>rn', '<cmd>Lspsaga rename<CR>', opts)
+    bufmap(bufnr, 'n', '<Leader>rn', '<cmd>Lspsaga rename<CR>', opts { 'lspsaga rename' })
 
     -- go to definition, implementation
-    bufmap(bufnr, 'n', 'gd', '', {
-        noremap = true,
-        silent = true,
+    -- stylua: ignore
+    bufmap(bufnr, 'n', 'gd', '', opts {
         desc = 'lsp go to definition',
         callback = function()
             require('telescope.builtin').lsp_definitions {
@@ -76,10 +99,10 @@ local on_attach = function(client, bufnr)
                 jump_type = 'tab',
             }
         end,
-    })
-    bufmap(bufnr, 'n', '<Leader>gi', '', {
-        noremap = true,
-        silent = true,
+    }
+    )
+    -- stylua: ignore
+    bufmap(bufnr, 'n', '<Leader>gi', '', opts {
         desc = 'lsp go to implementation',
         callback = function()
             require('telescope.builtin').lsp_implementations {
@@ -88,23 +111,38 @@ local on_attach = function(client, bufnr)
             }
         end,
     })
-    -- vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', "<cmd>lua require'lspsaga.provider'.preview_definition()<CR>", opts)
+    -- keymap(bufnr, 'n', 'gd', "<cmd>lua require'lspsaga.provider'.preview_definition()<CR>", opts)
 
     -- workspace
-    bufmap(bufnr, 'n', '<Leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-    bufmap(bufnr, 'n', '<Leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-    bufmap(bufnr, 'n', '<Leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+    local bufcmd = vim.api.nvim_buf_create_user_command
+
+    bufcmd(bufnr, 'LspWorkspace', function(options)
+        if options.args == 'add' then
+            vim.lsp.buf.add_workspace_folder()
+        elseif options.args == 'remove' then
+            vim.lsp.buf.remove_workspace_folder()
+        elseif options.args == 'show' then
+            vim.pretty_print(vim.lsp.buf.list_workspace_folders())
+        end
+    end, {
+        nargs = 1,
+        complete = function(_, _, _)
+            return { 'add', 'remove', 'show' }
+        end,
+    })
 
     -- format
-    bufmap(bufnr, 'n', '<Leader>fm', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-    bufmap(bufnr, 'v', '<Leader>fm', ':<C-U>lua vim.lsp.buf.range_formatting()<CR>', opts)
+    bufmap(bufnr, 'n', '<Leader>fm', '', opts { 'lsp format', vim.lsp.buf.formatting })
+    bufmap(bufnr, 'v', '<Leader>fm', ':<C-U>lua vim.lsp.buf.range_formatting()<CR>', opts { 'lsp range format' })
 
     -- diagnostic
-    bufmap(bufnr, 'n', '<Leader>ds', "<cmd>lua require'telescope.builtin'.diagnostics()<CR>", opts)
-    bufmap(bufnr, 'n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', opts)
-    bufmap(bufnr, 'n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>', opts)
+    -- stylua: ignore
+    bufmap(bufnr, 'n', '<Leader>ds', '', opts { 'lsp diagnostics by telescope', require('telescope.builtin').diagnostics })
+    bufmap(bufnr, 'n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', opts { 'lspsaga prev diagnostic' })
+    bufmap(bufnr, 'n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>', opts { 'lspsaga next diagnostic' })
     -- diagnostic show in line or in cursor
-    bufmap(bufnr, 'n', '<Leader>dl', '<cmd>Lspsaga show_line_diagnostics<CR>', opts)
+    -- stylua: ignore
+    bufmap( bufnr, 'n', '<Leader>dl', '<cmd>Lspsaga show_line_diagnostics<CR>', opts { 'lspsaga current line diagnostic' })
     -- vim.api.nvim_buf_set_keymap(bufnr, 'n',
     --     '<Leader>dc', "<cmd>lua require'lspsaga.diagnostic'.show_cursor_diagnostics()<CR>", opts)
 
