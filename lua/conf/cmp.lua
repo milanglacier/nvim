@@ -37,6 +37,7 @@ cmp.setup {
         { name = 'nvim_lua' },
     }, {
         { name = 'buffer' },
+        { name = 'path' },
         { name = 'latex_symbols' },
     }),
     formatting = {
