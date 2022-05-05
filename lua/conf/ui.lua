@@ -59,12 +59,16 @@ M.load.lualine = function()
         local entire_width = vim.o.columns
         local size
 
-        if winwidth >= entire_width * 0.75 then
-            size = math.floor(winwidth * 0.5)
-        elseif winwidth >= entire_width * 0.45 then
-            size = math.floor(winwidth * 0.25)
-        else
-            size = math.floor(winwidth * 0.3)
+        if vim.o.laststatus ~= 3 then
+            if winwidth >= entire_width * 0.75 then
+                size = math.floor(winwidth * 0.5)
+            elseif winwidth >= entire_width * 0.45 then
+                size = math.floor(winwidth * 0.25)
+            else
+                size = math.floor(winwidth * 0.3)
+            end
+        elseif vim.o.laststatus == 3 then
+            size = vim.o.columns * 0.7
         end
 
         local ts_status = require('nvim-treesitter').statusline {
@@ -84,6 +88,7 @@ M.load.lualine = function()
             section_separators = { left = '', right = '' },
             disabled_filetypes = {},
             always_divide_middle = false,
+            -- globalstatus = true,
         },
         sections = {
             lualine_a = { shorten_mode_name },
@@ -180,12 +185,50 @@ M.load.trouble = function()
     keymap('n', '<leader>xr', '<cmd>TroubleToggle lsp_references<cr>', opts)
 end
 
+M.load.incline = function()
+    vim.cmd [[packadd! incline.nvim]]
+
+    if vim.o.laststatus ~= 3 then
+        return
+    end
+
+    require('incline').setup {
+        highlight = {
+            groups = {
+                InclineNormal = 'lualine_a_normal',
+                InclineNormalNC = 'lualine_a_normal',
+            },
+        },
+        hide = {
+            focused_win = true,
+        },
+        window = {
+            width = 'fill',
+            placement = {
+                vertical = 'bottom',
+                horizontal = 'center',
+            },
+            margin = {
+                horizontal = {
+                    left = 0,
+                    right = 0,
+                },
+            },
+            padding = {
+                left = 1,
+                right = 1,
+            },
+        },
+    }
+end
+
 M.load.devicons()
 M.load.lualine()
 M.load.luatab()
 M.load.notify()
 M.load.transparent()
 M.load.trouble()
+M.load.incline()
 
 M.reopen_qflist_by_trouble = function()
     local windows = vim.api.nvim_list_wins()
