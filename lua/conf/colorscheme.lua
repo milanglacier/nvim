@@ -24,15 +24,23 @@ local night_scheme_options = {
         end,
         function()
             vim.cmd [[packadd! rose-pine]]
-            require('rose-pine').setup { dark_variant = 'moon' }
+            require('rose-pine').setup {
+                dark_variant = 'moon',
+                disable_italics = true,
+            }
         end,
         function()
             vim.cmd [[packadd! tokyonight.nvim]]
             vim.g.tokyonight_style = 'night'
+            vim.g.tokyonight_italic_keywords = false
+            vim.g.tokyonight_italic_comments = false
         end,
         function()
             vim.cmd [[packadd! everforest]]
             vim.g.everforest_background = 'soft'
+            vim.g.everforest_diagnostic_text_highlight = 1
+            vim.g.everforest_diagnostic_virtual_text = 'colored'
+            vim.g.everforest_better_performance = 1
         end,
         function()
             vim.cmd [[packadd! gruvbox.lua]]
@@ -42,19 +50,48 @@ local night_scheme_options = {
         end,
         function()
             vim.cmd [[packadd! kanagawa.nvim]]
+            require('kanagawa').setup {
+                globalStatus = vim.o.laststatus == 3,
+                commentStyle = 'NONE',
+                keywordStyle = 'NONE',
+                variablebuiltinStyle = 'NONE',
+            }
         end,
         function()
             vim.cmd [[packadd! melange]]
         end,
         function()
             vim.cmd [[packadd! catppuccin]]
+            require('catppuccin').setup {
+                term_colors = true,
+                styles = {
+                    comments = 'NONE',
+                    functions = 'NONE',
+                    keywords = 'NONE',
+                    strings = 'NONE',
+                    variables = 'NONE',
+                },
+                integrations = {
+                    lsp_trouble = true,
+                    neogit = true,
+                    ts_rainbow = true,
+                },
+            }
         end,
         function()
             vim.cmd [[packadd! material.nvim]]
             vim.g.material_style = 'palenight'
+            require('material').setup {
+                contrast = {
+                    floating_windows = true,
+                    line_number = true,
+                    sign_column = true,
+                    sidebars = true,
+                },
+            }
         end,
     },
-    length = 9,
+    length = 10,
 }
 
 local day_scheme_options = {
@@ -65,14 +102,22 @@ local day_scheme_options = {
         end,
         function()
             vim.cmd [[packadd! rose-pine]]
+            require('rose-pine').setup {
+                disable_italics = true,
+            }
         end,
         function()
             vim.cmd [[packadd! tokyonight.nvim]]
             vim.g.tokyonight_style = 'day'
+            vim.g.tokyonight_italic_keywords = false
+            vim.g.tokyonight_italic_comments = false
         end,
         function()
             vim.cmd [[packadd! everforest]]
             vim.g.everforest_background = 'soft'
+            vim.g.everforest_diagnostic_text_highlight = 1
+            vim.g.everforest_diagnostic_virtual_text = 'colored'
+            vim.g.everforest_better_performance = 1
         end,
         function()
             vim.cmd [[packadd! gruvbox.lua]]
@@ -83,9 +128,17 @@ local day_scheme_options = {
         function()
             vim.cmd [[packadd! material.nvim]]
             vim.g.material_style = 'lighter'
+            require('material').setup {
+                contrast = {
+                    floating_windows = true,
+                    line_number = true,
+                    sign_column = true,
+                    sidebars = true,
+                },
+            }
         end,
     },
-    length = 6,
+    length = 7,
 }
 
 local pick_colorscheme = function(bg, theme_id)
