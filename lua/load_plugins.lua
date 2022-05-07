@@ -2,7 +2,6 @@ require 'paq' {
 
     -- optimize startup
     'lewis6991/impatient.nvim',
-    'nathom/filetype.nvim',
 
     -- colorschemes
     { 'EdenEast/nightfox.nvim', opt = true },
