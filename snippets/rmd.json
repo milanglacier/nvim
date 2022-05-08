@@ -4,8 +4,6 @@
         "body": [
             "```{r}",
             "$0",
-            "\n",
-            "\n",
             "```"
         ],
         "description": "create r code chunk"
@@ -17,8 +15,6 @@
         "body": [
             "```{r plot, fig.align = 'center', fig.height=3, fig.cap = '', out.width='100%'}",
             "$0",
-            "\n",
-            "\n",
             "```"
         ],
         "description": "create r plot code chunk"
@@ -62,5 +58,11 @@
         "body": ["\\overset{\\mathrm{iid}}{\\sim} $0"
         ],
         "description": "iid from"
+    },
+
+    "assignment symbol": {
+        "prefix": "eq",
+        "body": ["<- $0"],
+        "description": "assignment symbol"
     }
 }

@@ -4,8 +4,6 @@
 		"body": [
 			"# %%",
 			"$0",
-			"\n",
-			"\n",
 			"# %%"
 		],
 		"description": "create python code chunk"

@@ -4,8 +4,6 @@
 		"body": [
 			"# %%",
 			"$0",
-			"\n",
-			"\n",
 			"# %%"
 		],
 		"description": "create R code chunk"
@@ -15,6 +13,11 @@
             "prefix": "pip",
             "body": ["%>% $0"],
             "description": "pipe"
-        }
+        },
 
+        "assignment symbol": {
+            "prefix": "eq",
+            "body": ["<- $0"],
+            "description": "assignment symbol"
+        }
 }
