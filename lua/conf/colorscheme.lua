@@ -17,6 +17,7 @@ local night_scheme_options = {
         'melange',
         'catppuccin',
         'material',
+        'edge',
     },
     cmd = {
         function()
@@ -89,12 +90,27 @@ local night_scheme_options = {
                 },
             }
         end,
+        function()
+            vim.cmd [[packadd! edge]]
+            vim.g.edge_diagnostic_virtual_text = 'colored'
+            vim.g.edge_better_performance = 1
+        end,
     },
-    length = 10,
+    length = 11,
 }
 
 local day_scheme_options = {
-    name = { 'dawnfox', 'rose-pine', 'tokyonight', 'everforest', 'gruvbox', 'melange', 'material' },
+    name = {
+        'dawnfox',
+        'rose-pine',
+        'tokyonight',
+        'everforest',
+        'gruvbox',
+        'melange',
+        'material',
+        'edge',
+        'solarized',
+    },
     cmd = {
         function()
             vim.cmd [[packadd! nightfox.nvim]]
@@ -135,8 +151,17 @@ local day_scheme_options = {
                 },
             }
         end,
+        function()
+            vim.cmd [[packadd! edge]]
+            vim.g.edge_diagnostic_virtual_text = 'colored'
+            vim.g.edge_better_performance = 1
+        end,
+        function()
+            vim.cmd [[packadd! nvim-solarized-lua]]
+            vim.g.solarized_italics = 0
+        end,
     },
-    length = 7,
+    length = 9,
 }
 
 local pick_colorscheme = function(bg, theme_id)

@@ -8,11 +8,13 @@ require 'paq' {
     { 'rose-pine/neovim', as = 'rose-pine', opt = true },
     { 'folke/tokyonight.nvim', branch = 'main', opt = true },
     { 'sainnhe/everforest', opt = true },
+    { 'sainnhe/edge', opt = true },
     { 'mhdahmad/gruvbox.lua', opt = true },
     { 'rebelot/kanagawa.nvim', opt = true },
     { 'savq/melange', opt = true },
     { 'catppuccin/nvim', as = 'catppuccin', opt = true },
     { 'marko-cerovac/material.nvim', opt = true },
+    { 'ishan9299/nvim-solarized-lua', opt = true },
 
     -- Fix bugs and Utilities
     { 'antoinemadec/FixCursorHold.nvim' },
