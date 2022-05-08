@@ -38,7 +38,6 @@ local night_scheme_options = {
         function()
             vim.cmd [[packadd! everforest]]
             vim.g.everforest_background = 'soft'
-            vim.g.everforest_diagnostic_text_highlight = 1
             vim.g.everforest_diagnostic_virtual_text = 'colored'
             vim.g.everforest_better_performance = 1
         end,
@@ -115,7 +114,6 @@ local day_scheme_options = {
         function()
             vim.cmd [[packadd! everforest]]
             vim.g.everforest_background = 'soft'
-            vim.g.everforest_diagnostic_text_highlight = 1
             vim.g.everforest_diagnostic_virtual_text = 'colored'
             vim.g.everforest_better_performance = 1
         end,
