@@ -192,7 +192,7 @@ M.load.incline = function()
         return
     end
 
-    require('incline').setup {
+    local incline_setup_table = {
         highlight = {
             groups = {
                 InclineNormal = 'lualine_a_normal',
@@ -218,8 +218,20 @@ M.load.incline = function()
                 left = 1,
                 right = 1,
             },
+            zindex = 10,
         },
     }
+
+    require('incline').setup(incline_setup_table)
+
+    local autocmd = vim.api.nvim_create_autocmd
+    autocmd('ColorScheme', {
+        group = require('conf.builtin_extend').my_augroup,
+        desc = 'reset incline highlight after loading colorscheme',
+        callback = function()
+            require('incline').setup(incline_setup_table)
+        end,
+    })
 end
 
 M.load.devicons()
