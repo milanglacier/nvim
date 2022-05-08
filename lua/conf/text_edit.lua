@@ -7,13 +7,8 @@ M.load.autopairs = function()
     require('nvim-autopairs').setup {}
 end
 
-M.load.colorizer = function()
-    vim.cmd [[packadd! nvim-colorizer.lua]]
-    require('colorizer').setup {}
-end
-
 M.load.comment = function()
-    require('Comment').setup {}
+    require('Comment').setup()
 end
 
 M.load.dsf = function()
@@ -101,7 +96,7 @@ end
 
 M.load.colorizer = function()
     vim.cmd [[packadd! nvim-colorizer.lua]]
-    require('colorizer').setup {}
+    require('colorizer').setup()
 end
 
 if not vim.g.vscode then

@@ -120,7 +120,7 @@ require 'paq' {
     { 'sindrets/diffview.nvim', opt = true },
 
     -- Other cli tools, ripgrep, hover, markdown, etc
-    { 'windwp/nvim-spectre', opt = true },
+    { 'nvim-pack/nvim-spectre', opt = true },
     { 'JASONews/glow-hover', opt = true },
     { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', opt = true },
 
