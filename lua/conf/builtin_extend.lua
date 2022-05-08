@@ -23,7 +23,6 @@ keymap('t', '<C-n>', '<Down>', { noremap = true })
 keymap('t', '<C-a>', '<home>', { noremap = true })
 keymap('t', '<C-e>', '<end>', { noremap = true })
 keymap('t', '<C-h>', '<BS>', { noremap = true })
-keymap('t', '<C-k>', '<ESC>d$i', { noremap = true })
 
 keymap('n', '<Leader>cd', [[:cd %:h<cr>]], { noremap = true })
 keymap('n', '<Leader>cu', [[:cd ..<cr>]], { noremap = true })
