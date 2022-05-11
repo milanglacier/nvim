@@ -64,5 +64,16 @@
         "prefix": "eq",
         "body": ["<- $0"],
         "description": "assignment symbol"
+    },
+
+    "reference block": {
+        "prefix": "refchap",
+        "body": [
+            "# References",
+            "\n",
+            "<div id=\"refs\"></div>",
+            "$0"
+        ]
     }
+
 }
