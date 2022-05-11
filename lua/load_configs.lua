@@ -23,8 +23,14 @@ if not vim.g.vscode then
     require 'conf.lsp_tools'
 
     require 'conf.dap'
+
+    if vim.g.started_by_firenvim then
+        require 'conf.firenvim'
+    end
 else
     require 'conf.builtin_extend'
     require 'conf.text_edit'
     require 'conf.treesitter'
+
+    require 'conf.vscode'
 end

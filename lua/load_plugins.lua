@@ -24,6 +24,7 @@ require 'paq' {
     { 'kyazdani42/nvim-tree.lua', opt = true }, -- file explorer
     { 'milanglacier/smartim', opt = true }, -- automatically switch input method when switch mode
     { 'sindrets/winshift.nvim', opt = true },
+    { 'glacambre/firenvim' },
     -- very simple, naive completion without LSP
     -- Plug 'skywind3000/vim-auto-popmenu'
     -- Plug 'skywind3000/vim-dict'
