@@ -45,7 +45,7 @@ Behind two clouding lenses, sunrise, sunset,
 The quiet ravage of diabetes.
 - Derek Walcott]],
     [[
-What words   
+What words
 Can strangle this deaf moonlight? For we
 Are overtaken.
 - Hart Crane]],
