@@ -101,6 +101,8 @@ require 'paq' {
     { 'kdheepak/cmp-latex-symbols', opt = true },
     { 'L3MON4D3/LuaSnip', opt = true },
     { 'saadparwaiz1/cmp_luasnip', opt = true },
+    { 'quangnguyen30192/cmp-nvim-tags', opt = true },
+    { 'petertriho/cmp-git', opt = true },
     { 'rafamadriz/friendly-snippets', opt = true },
 
     -- language development

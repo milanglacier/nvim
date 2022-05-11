@@ -7,6 +7,8 @@ vim.cmd [[packadd! cmp-nvim-lua]]
 vim.cmd [[packadd! cmp-omni]]
 vim.cmd [[packadd! cmp-latex-symbols]]
 vim.cmd [[packadd! cmp_luasnip]]
+vim.cmd [[packadd! cmp-nvim-tags]]
+vim.cmd [[packadd! cmp-git]]
 
 vim.cmd [[packadd! lspkind-nvim]]
 
@@ -33,8 +35,8 @@ cmp.setup {
     sources = cmp.config.sources({
         { name = 'nvim_lsp' },
         { name = 'omni' },
-        { name = 'luasnip' }, -- For luasnip users.
-        { name = 'nvim_lua' },
+        { name = 'luasnip' },
+        { name = 'tags' },
     }, {
         { name = 'buffer' },
         { name = 'path' },
@@ -42,11 +44,19 @@ cmp.setup {
     }),
     formatting = {
         format = lspkind.cmp_format {
-            mode = 'symbol_text', -- show only symbol annotations
-            maxwidth = 60, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-
-            -- The function below will be called before any actual modifications from lspkind
-            -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+            mode = 'symbol_text',
+            maxwidth = 60,
+            menu = {
+                nvim_lsp = '',
+                buffer = '﬘',
+                luasnip = '',
+                path = '',
+                git = '',
+                tags = '',
+                omni = '',
+                cmdline = 'גּ',
+                latex_symbols = '',
+            },
         },
     },
 }
@@ -54,11 +64,12 @@ cmp.setup {
 -- Set configuration for specific filetype.
 cmp.setup.filetype('gitcommit', {
     sources = cmp.config.sources({
-        { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
+        { name = 'git' },
     }, {
         { name = 'buffer' },
     }),
 })
+require('cmp_git').setup()
 
 -- omni completion for SQL is buggy, disable it as a source of cmp
 cmp.setup.filetype('sql', {
