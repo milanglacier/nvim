@@ -46,9 +46,14 @@ nnoremap C c$
 
 nnoremap ]b :bnext<CR>
 nnoremap [b :bprevious<CR>
+nnoremap ]q :cnext<CR>
+nnoremap [q :cprevious<CR>
+nnoremap ]t :tnext<CR>
+nnoremap [t :tprevious<CR>
 nnoremap <Leader>to :tabonly<CR>
 nnoremap <Leader>tn :tabnew<CR>
 nnoremap <Leader>tc :tabclose<CR>
+nnoremap <Leader>tl :ltag <C-R><C-W> | lopen<cr>
 
 nnoremap <A-w> <C-W>w
 nnoremap <A-p> <C-W>p

@@ -31,6 +31,12 @@ keymap('n', ']b', [[:bnext<cr>]], { noremap = true })
 keymap('n', '[b', [[:bprevious<cr>]], { noremap = true })
 keymap('n', ']q', [[:cnext<cr>]], { noremap = true })
 keymap('n', '[q', [[:cprevious<cr>]], { noremap = true })
+keymap('n', ']t', [[:tnext<cr>]], { noremap = true })
+keymap('n', '[t', [[:tprevious<cr>]], { noremap = true })
+keymap('n', '<Leader>tl', [[:ltag <C-R><C-W> | lopen<cr>]], { noremap = true })
+-- open loclist to show the definition matches at current word
+-- <C-R> insert text in the register to the command line
+-- <C-W> alias for the word under cursor
 
 keymap('n', '<Leader>to', [[:tabonly<cr>]], { noremap = true })
 keymap('n', '<Leader>tn', [[:tabnew<cr>]], { noremap = true })
@@ -197,18 +203,5 @@ autocmd('FileType', {
         })
     end,
 })
-
-if vim.g.vscode then
-    M.my_vscode = augroup('MyVSCode', {})
-    autocmd({ 'BufNewFile', 'BufFilePre', 'BufRead' }, {
-        group = M.my_vscode,
-        desc = 'set the filetype of jupyter notebook cell to python',
-        pattern = { '*.ipynb*' },
-        -- jupyter notebook cell will end with *.ipynb*
-        callback = function()
-            vim.bo.filetype = 'python'
-        end,
-    })
-end
 
 return M
