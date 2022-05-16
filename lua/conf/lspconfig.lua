@@ -182,28 +182,61 @@ require('lspconfig').pyright.setup {
         },
     },
     flags = {
-        debounce_text_changes = 150,
+        debounce_text_changes = 250,
     },
 }
 
 require('lspconfig').r_language_server.setup {
+    cmd = {
+        'R',
+        '--slave',
+        '--no-save',
+        '--no-restore',
+        '-e',
+        'library(tidyverse); languageserver::run()',
+    },
     on_attach = on_attach,
     flags = {
-        debounce_text_changes = 150,
+        debounce_text_changes = 300,
     },
     capabilities = capabilities,
+    settings = {
+        r = {
+            lsp = {
+                -- debug = true,
+                log_file = '~/.cache/nvim/r_lsp_new.log',
+            },
+        },
+    },
+    on_init = function(_)
+        local timer = vim.loop.new_timer()
+        timer:start(
+            2000,
+            2000,
+            vim.schedule_wrap(function()
+                local active_clients = vim.lsp.get_active_clients()
+                local lsp_names = {}
+                for _, lsp in pairs(active_clients) do
+                    table.insert(lsp_names, lsp.name)
+                end
+
+                if not vim.tbl_contains(lsp_names, 'r_language_server') then
+                    vim.notify('r-lsp exits', vim.log.levels.WARN)
+                    timer:close()
+                    vim.cmd [[LspStart r_language_server]]
+                end
+            end)
+        )
+    end,
 }
+
 require('lspconfig').texlab.setup {
     on_attach = on_attach,
-    flags = { debounce_text_changes = 150 },
     capabilities = capabilities,
 }
 
 require('lspconfig').julials.setup {
     on_attach = on_attach,
-    flags = {
-        debounce_text_changes = 150,
-    },
     capabilities = capabilities,
 }
 
