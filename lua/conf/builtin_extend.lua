@@ -55,7 +55,6 @@ autocmd('TextYankPost', {
     desc = 'highlight yanked text',
 })
 
-
 function M.ping_cursor()
     vim.o.cursorline = true
     vim.o.cursorcolumn = true
@@ -201,6 +200,24 @@ autocmd('FileType', {
                 M.textobj_code_chunk('i', '^# ?%%%%.*', '^# ?%%%%$', true)
             end,
         })
+    end,
+})
+
+autocmd('BufEnter', {
+    pattern = { '*.pdf', '*.png', '*.jpg', '*.jpeg' },
+    group = M.my_augroup,
+    desc = 'open binary files with system default application',
+    callback = function()
+        local filename = vim.api.nvim_buf_get_name(0)
+        filename = vim.fn.shellescape(filename)
+
+        local open_bin = string.format([[!open %s]], filename)
+        vim.cmd(open_bin)
+        vim.cmd 'redraw'
+
+        vim.defer_fn(function()
+            vim.cmd [[bd!]]
+        end, 1000)
     end,
 })
 
