@@ -78,7 +78,7 @@ M.load.glow_hover = function()
     require('glow-hover').setup {
         max_width = 90,
         padding = 5,
-        border = 'shadow',
+        border = 'rounded',
         glow_path = 'glow',
     }
 end
@@ -126,6 +126,7 @@ M.load.nullls = function()
             },
             null_ls.builtins.formatting.yapf.with {
                 command = mypath.yapf,
+                extra_args = { '--style={ column_limit: 120 }' },
             },
             null_ls.builtins.diagnostics.flake8.with {
                 command = mypath.flake8,
@@ -133,20 +134,20 @@ M.load.nullls = function()
                 -- ignore max line width, line break at binary operator
                 -- ignore long line over-indented
             },
-            null_ls.builtins.diagnostics.pylint.with {
-                command = mypath.pylint,
-                extra_args = {
-                    '--generated-members=torch.*,pt.*',
-                    '--disable=W0621,W0612,C0103,C0301,C0114,C0116,R0914,R0913,C0411,R0902',
-                },
-                -- ignore member checking for torch (and pt as an alias)
-                -- ignore sneak_case naming style, line too long
-                -- ignore redefine variable from outer scope
-                -- ignore model doc string, ignore function doc string
-                -- ignore too many local variables
-                -- ignore too many arguments, too many instances attributes
-                -- ignore standard import should be put before other import
-            },
+            -- null_ls.builtins.diagnostics.pylint.with {
+            --     command = mypath.pylint,
+            --     extra_args = {
+            --         '--generated-members=torch.*,pt.*',
+            --         '--disable=W0621,W0612,C0103,C0301,C0114,C0116,R0914,R0913,C0411,R0902',
+            --     },
+            --     -- ignore member checking for torch (and pt as an alias)
+            --     -- ignore sneak_case naming style, line too long
+            --     -- ignore redefine variable from outer scope
+            --     -- ignore model doc string, ignore function doc string
+            --     -- ignore too many local variables
+            --     -- ignore too many arguments, too many instances attributes
+            --     -- ignore standard import should be put before other import
+            -- },
         },
     }
 end
