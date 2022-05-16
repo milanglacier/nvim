@@ -176,7 +176,7 @@ if not vim.g.vscode then
     keymap('n', '<leader>sW', '<cmd>ISwapWith<cr>', { noremap = true, silent = true })
 
     require('treesitter-context').setup {
-        enable = false,
+        enable = true,
         throttle = true,
     }
 end

@@ -240,7 +240,7 @@ M.load.luatab()
 M.load.notify()
 M.load.transparent()
 M.load.trouble()
--- M.load.incline()
+M.load.incline()
 
 M.reopen_qflist_by_trouble = function()
     local windows = vim.api.nvim_list_wins()
