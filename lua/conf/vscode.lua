@@ -2,6 +2,8 @@ local M = {}
 
 local augroup = vim.api.nvim_create_augroup
 local keymap = vim.api.nvim_set_keymap
+local autocmd = vim.api.nvim_create_autocmd
+local bufmap = vim.api.nvim_buf_set_keymap
 
 M.my_vscode = augroup('MyVSCode', {})
 
@@ -36,8 +38,32 @@ keymap('n', '<Leader>fc', notify 'workbench.action.showCommands', { silent = tru
 keymap('n', '<Leader>ff', notify 'workbench.action.quickOpen', { silent = true }) -- find files
 keymap('n', '<Leader>tw', notify 'workbench.action.terminal.toggleTerminal', { silent = true }) -- terminal window
 
+keymap('n', '<Leader>mp', notify 'markdown.showPreviewToSide', { silent = true }) -- markdown preview
+
 keymap('v', '<Leader>fm', v_notify 'editor.action.formatSelection', { silent = true })
 keymap('v', '<Leader>ca', v_notify 'editor.action.refactor', { silent = true })
 keymap('v', '<Leader>fc', v_notify 'workbench.action.showCommands', { silent = true })
+
+autocmd('FileType', {
+    group = M.my_vscode,
+    pattern = { 'r', 'rmd' },
+    desc = 'set REPL keymaps for r, rmd',
+    callback = function()
+        bufmap(0, 'n', '<LocalLeader>ss', notify 'r.runSelection', { silent = true })
+        bufmap(0, 'n', '<LocalLeader>sc', notify 'r.runCurrentChunk', { silent = true })
+        bufmap(0, 'n', '<LocalLeader>sgg', notify 'r.runAboveChunks', { silent = true })
+    end,
+})
+
+autocmd('FileType', {
+    group = M.my_vscode,
+    pattern = { 'python' },
+    desc = 'set REPL keymaps for pythono',
+    callback = function()
+        bufmap(0, 'n', '<LocalLeader>ss', notify 'jupyter.execSelectionInteractive', { silent = true })
+        bufmap(0, 'n', '<LocalLeader>sc', notify 'jupyter.runcurrentcell', { silent = true })
+        bufmap(0, 'n', '<LocalLeader>sgg', notify 'jupyter.runallcellsabove.palette', { silent = true })
+    end,
+})
 
 return M
