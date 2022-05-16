@@ -62,7 +62,7 @@ require 'paq' {
     { 'windwp/nvim-autopairs', opt = true },
 
     -- Tree sitter for enhanced text obj and syntax capturality
-    { 'nvim-treesitter/nvim-treesitter', pin = true },
+    { 'nvim-treesitter/nvim-treesitter' },
     { 'nvim-treesitter/nvim-treesitter-textobjects' },
     { 'p00f/nvim-ts-rainbow' },
     { 'mfussenegger/nvim-treehopper', opt = true },
