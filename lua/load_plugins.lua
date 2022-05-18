@@ -32,7 +32,6 @@ require 'paq' {
     -- Plug 'glacambre/firenvim'
 
     -- UI
-    { 'MunifTanjim/nui.nvim', opt = true },
     { 'nvim-lualine/lualine.nvim', opt = true },
     { 'b0o/incline.nvim', opt = true },
     { 'alvarosevilla95/luatab.nvim', opt = true },

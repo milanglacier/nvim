@@ -1,4 +1,4 @@
-local ColorschemePicker = {}
+local M = {}
 
 local function colorscheme_cmd(bg, theme)
     vim.o.background = bg
@@ -174,7 +174,7 @@ local pick_colorscheme = function(bg, theme_id)
     end
 end
 
-function ColorschemePicker.pick_randomly()
+function M.pick_randomly()
     math.randomseed(os.time()) -- random initialize
     local _ = math.random()
     _ = math.random()
@@ -195,127 +195,46 @@ function ColorschemePicker.pick_randomly()
     pick_colorscheme(bg, rd)
 end
 
-ColorschemePicker.pick_randomly()
+M.pick_randomly()
 
--- auxiliary function to auto generate the list of popup menu
--- which uses nui.menu.item
--- for selecting themes (after the background is decided)
-local function get_themes_table(bg_scheme_options, nui_item)
-    local themes_table = {}
-    for idx, theme in ipairs(bg_scheme_options.name) do
-        table.insert(themes_table, nui_item { id = idx, text = theme })
-    end
-    return themes_table
-end
-
----@param bg number
--- Given the background (day or night),
--- show the popup menu of the available theme
--- and make the selection
-local function set_theme_menu(bg)
-    local Menu = require 'nui.menu'
-    local Event = require('nui.utils.autocmd').event
-
-    local theme_lines
+local function select_colorscheme_based_on_bg(bg)
+    local theme_options
 
     if bg == 1 then
-        theme_lines = get_themes_table(night_scheme_options, Menu.item)
+        theme_options = night_scheme_options
     else
-        theme_lines = get_themes_table(day_scheme_options, Menu.item)
+        theme_options = day_scheme_options
     end
 
-    local popup_opts = {
-        relative = 'editor',
-        position = '50%',
-        size = {
-            width = 20,
-            height = #theme_lines,
-        },
-        win_options = {
-            winblend = 10,
-            winhighlight = 'NormalFloat:NormalFloat',
-        },
-        border = {
-            style = 'rounded',
-            text = {
-                top = [[Choose theme]],
-                top_align = 'center',
-            },
-        },
-    }
+    local items_to_be_selected = {}
 
-    local menu = Menu(popup_opts, {
-        lines = theme_lines,
-        keymap = {
-            focus_next = { 'j', '<Down>', '<Tab>' },
-            focus_prev = { 'k', '<Up>', '<S-Tab>' },
-            close = { '<Esc>', '<C-c>' },
-            submit = { '<CR>', '<Space>' },
-        },
-        max_width = 20,
-        on_close = function() end,
-        on_submit = function(theme)
-            pick_colorscheme(bg, theme.id)
+    for i = 1, theme_options.length do
+        table.insert(items_to_be_selected, i)
+    end
+
+    vim.ui.select(items_to_be_selected, {
+        prompt = 'select one colorscheme',
+        format_item = function(item)
+            return theme_options.name[item]
         end,
-    })
-
-    -- mount the component
-    menu:mount()
-    -- close menu when cursor leaves buffer
-    menu:on(Event.BufLeave, menu.menu_props.on_close, { once = true })
+    }, function(theme_id)
+        pick_colorscheme(bg, theme_id)
+    end)
 end
 
--- set the pop menu to choose the background is day or night,
--- after selecting that, show another popup menu that chooses the theme
-local function set_bg_menu()
-    local Menu = require 'nui.menu'
-    local Event = require('nui.utils.autocmd').event
-
-    local popup_opts = {
-        relative = 'editor',
-        position = '50%',
-        size = {
-            width = 20,
-            height = 2,
-        },
-        win_options = {
-            winblend = 10,
-            winhighlight = 'NormalFloat:NormalFloat',
-        },
-        border = {
-            style = 'rounded',
-            text = {
-                top = [[Choose background]],
-                top_align = 'center',
-            },
-        },
-    }
-
-    local menu = Menu(popup_opts, {
-        lines = {
-            Menu.item { id = 1, text = 'night' },
-            Menu.item { id = 2, text = 'day' },
-        },
-        keymap = {
-            focus_next = { 'j', '<Down>', '<Tab>' },
-            focus_prev = { 'k', '<Up>', '<S-Tab>' },
-            close = { '<Esc>', '<C-c>' },
-            submit = { '<CR>', '<Space>' },
-        },
-        max_width = 20,
-        on_close = function() end,
-        on_submit = function(bg)
-            set_theme_menu(bg.id)
+function M.pick_quickly()
+    vim.ui.select({ 1, 2 }, {
+        prompt = 'select the background of the colorscheme',
+        format_item = function(item)
+            if item == 1 then
+                return 'dark'
+            else
+                return 'light'
+            end
         end,
-    })
-
-    menu:mount()
-    menu:on(Event.BufLeave, menu.menu_props.on_close, { once = true })
-end
-
-ColorschemePicker.pick_quickly = function()
-    vim.cmd [[packadd! nui.nvim]]
-    set_bg_menu()
+    }, function(bg)
+        select_colorscheme_based_on_bg(bg)
+    end)
 end
 
 vim.api.nvim_set_keymap(
@@ -325,4 +244,4 @@ vim.api.nvim_set_keymap(
     { noremap = true, silent = true }
 )
 
-return ColorschemePicker
+return M
