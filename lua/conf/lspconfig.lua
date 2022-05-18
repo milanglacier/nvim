@@ -167,15 +167,7 @@ require('lspconfig').pyright.setup {
     },
 }
 
-require('lspconfig').r_language_server.setup {
-    cmd = {
-        'R',
-        '--slave',
-        '--no-save',
-        '--no-restore',
-        '-e',
-        'library(tidyverse); languageserver::run()',
-    },
+local r_config = {
     on_attach = on_attach,
     flags = {
         debounce_text_changes = 300,
@@ -185,7 +177,7 @@ require('lspconfig').r_language_server.setup {
         r = {
             lsp = {
                 -- debug = true,
-                log_file = '~/.cache/nvim/r_lsp_new.log',
+                log_file = '~/.cache/nvim/r_lsp_log.log',
             },
         },
     },
@@ -204,12 +196,27 @@ require('lspconfig').r_language_server.setup {
                 if not vim.tbl_contains(lsp_names, 'r_language_server') then
                     vim.notify('r-lsp exits', vim.log.levels.WARN)
                     timer:close()
+
+                    if vim.bo.filetype == 'rmd' then
+                        vim.ui.select({ 'Buffer', 'Lsp' }, {
+                            prompt = 'Select one source',
+                        }, function(choice)
+                            if choice == 'Buffer' then
+                                vim.cmd [[RmdCompletionSwitchTo Buffer]]
+                            else
+                                vim.cmd [[RmdCompletionSwitchTo Lsp]]
+                            end
+                        end)
+                    end
+
                     vim.cmd [[LspStart r_language_server]]
                 end
             end)
         )
     end,
 }
+
+require('lspconfig').r_language_server.setup(r_config)
 
 require('lspconfig').texlab.setup {
     on_attach = on_attach,
@@ -287,3 +294,98 @@ vim.fn.sign_define('DiagnosticSignError', { text = '✗', texthl = 'DiagnosticSi
 vim.fn.sign_define('DiagnosticSignWarn', { text = '!', texthl = 'DiagnosticSignWarn' })
 vim.fn.sign_define('DiagnosticSignInformation', { text = '', texthl = 'DiagnosticSignInfo' })
 vim.fn.sign_define('DiagnosticSignHint', { text = '', texthl = 'DiagnosticSignHint' })
+
+local command = vim.api.nvim_create_user_command
+local bufcmd = vim.api.nvim_buf_create_user_command
+local autocmd = vim.api.nvim_create_autocmd
+local my_augroup = require('conf.builtin_extend').my_augroup
+
+local has_virtual_text = true
+
+command('DiagnosticVirtualTextToggle', function()
+    has_virtual_text = not has_virtual_text
+    vim.diagnostic.config { virtual_text = has_virtual_text }
+end, {})
+
+local cmp_sources_no_buffer = {
+    {
+        { name = 'nvim_lsp' },
+        { name = 'luasnip' },
+        { name = 'tags' },
+    },
+    {
+        { name = 'path' },
+        { name = 'latex_symbols' },
+    },
+}
+
+local cmp_sources_with_buffer = {
+    {
+        { name = 'nvim_lsp' },
+        { name = 'luasnip' },
+        { name = 'tags' },
+    },
+    {
+        { name = 'buffer' },
+        { name = 'path' },
+        { name = 'latex_symbols' },
+    },
+}
+
+autocmd('FileType', {
+    desc = 'set command for switching between cmp-buffer and lsp completion',
+    pattern = 'rmd',
+    group = my_augroup,
+    callback = function()
+        bufcmd(0, 'RmdCompletionSwitchTo', function(options)
+            local cmp = require 'cmp'
+
+            if options.args == 'Lsp' then
+                cmp.setup.filetype('rmd', {
+                    sources = cmp.config.sources(unpack(cmp_sources_no_buffer)),
+                })
+
+                require('lspconfig').r_language_server.setup(r_config)
+            elseif options.args == 'Buffer' then
+                cmp.setup.filetype('rmd', {
+                    sources = cmp.config.sources(unpack(cmp_sources_with_buffer)),
+                })
+
+                local new_r_config = vim.deepcopy(r_config)
+                new_r_config.filetypes = { 'r' }
+
+                require('lspconfig').r_language_server.setup(new_r_config)
+            end
+        end, {
+            nargs = 1,
+            complete = function(_, _, _)
+                return { 'Lsp', 'Buffer' }
+            end,
+        })
+    end,
+})
+
+autocmd('FileType', {
+    desc = 'set command for toggle cmp-buffer source',
+    pattern = 'r',
+    group = my_augroup,
+    callback = function()
+        local cmp_buffer_enabled = true
+
+        bufcmd(0, 'RCompetionToggleBuffer', function()
+            local cmp = require 'cmp'
+
+            if cmp_buffer_enabled then
+                cmp.setup.filetype('r', {
+                    sources = cmp.config.sources(unpack(cmp_sources_no_buffer)),
+                })
+                cmp_buffer_enabled = false
+            else
+                cmp.setup.filetype('r', {
+                    sources = cmp.config.sources(unpack(cmp_sources_with_buffer)),
+                })
+                cmp_buffer_enabled = true
+            end
+        end, {})
+    end,
+})
