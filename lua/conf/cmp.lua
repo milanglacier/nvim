@@ -34,7 +34,6 @@ cmp.setup {
     mapping = cmp.mapping.preset.insert(my_mappings),
     sources = cmp.config.sources({
         { name = 'nvim_lsp' },
-        { name = 'omni' },
         { name = 'luasnip' },
         { name = 'tags' },
     }, {

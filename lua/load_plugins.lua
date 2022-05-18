@@ -97,7 +97,6 @@ require 'paq' {
     { 'hrsh7th/cmp-cmdline', opt = true },
     { 'hrsh7th/nvim-cmp', opt = true },
     { 'hrsh7th/cmp-nvim-lua', opt = true },
-    { 'hrsh7th/cmp-omni', opt = true },
     { 'kdheepak/cmp-latex-symbols', opt = true },
     { 'L3MON4D3/LuaSnip', opt = true },
     { 'saadparwaiz1/cmp_luasnip', opt = true },
