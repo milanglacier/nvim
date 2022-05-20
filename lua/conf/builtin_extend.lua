@@ -221,4 +221,76 @@ autocmd('BufEnter', {
     end,
 })
 
+function M.create_tags_for_yanked_columns(df)
+    local ft = vim.bo.filetype
+    if not (ft == 'r' or ft == 'python') then
+        return
+    end
+
+    local bufid = vim.api.nvim_get_current_buf()
+    local filename = vim.fn.expand '%:.'
+    local filename_without_extension = filename:match '(.+)%..+'
+    local newfile = filename_without_extension .. '_tags'
+
+    vim.cmd(string.format('e %s', newfile)) -- open a file whose name is xxx_tags.extension
+    local newtag_bufid = vim.api.nvim_get_current_buf()
+
+    vim.cmd [[normal! Go]] -- go to the end of the buffer and create a new line
+    vim.cmd [[normal! "0p]] -- paste the content just yanked into this buffer
+
+    -- flag ge means: replace every occurrences in every line, and
+    -- when there are no matched patterns in the document, do not issue an error
+    if ft == 'python' then
+        vim.cmd [[%s/,//ge]] -- remove every occurrence of ,
+    else
+        vim.cmd [[g/^r\$>.\+$/d]] -- remove line starts with r$> which usually is the REPL prompt
+        vim.cmd [[%s/\[\d\+\]//ge]] -- remove every occurrence of [xxx], where xxx is a number
+    end
+
+    vim.cmd [[%s/\s\+/\r/ge]] -- break multiple spaces into a new line
+    vim.cmd [[g/^$/d]] -- remove any blank lines
+
+    if ft == 'python' then
+        vim.cmd [[%s/'//ge]] -- remove '
+        vim.cmd([[g/^\w\+$/normal! A="]] .. df .. [["]]) -- show which dataframe this column belongs to
+        -- use " instead of ', for incremental tagging, since ' will be removed.
+    else
+        vim.cmd [[%s/"//ge]]
+        vim.cmd([[g/^\w\+$/normal! A=']] .. df .. [[']])
+        -- r use " to quote strings, in contrary to python
+    end
+
+    vim.cmd [[sort u]] -- remove duplicated entry
+    vim.cmd [[w]] -- save current buffer
+
+    local newfile_shell_escaped = vim.fn.shellescape(newfile)
+    -- replace . by \. such that it is recognizable by vim regex
+    -- replace / by \/
+    local newfile_vim_regexed = newfile_shell_escaped:gsub('%.', [[\.]])
+    newfile_vim_regexed = newfile_vim_regexed:gsub('/', [[\/]])
+    newfile_vim_regexed = newfile_vim_regexed:sub(2, -2) -- remove the first and last chars, i.e. ' and '
+
+    vim.cmd [[e tags]] -- open the file where ctags stores the tags
+    local tag_bufid = vim.api.nvim_get_current_buf()
+
+    vim.cmd([[g/^\w\+\s\+]] .. newfile_vim_regexed .. [[\s.\+/d]]) -- remove existed entries for the current newtag file
+    vim.cmd [[w]]
+
+    vim.cmd([[!ctags -a --language-force=]] .. ft .. ' ' .. newfile_shell_escaped) -- let ctags tag current newtag file
+
+    vim.api.nvim_win_set_buf(0, bufid)
+    vim.cmd([[bd!]] .. newtag_bufid) -- delete the buffer created for tagging
+    vim.cmd([[bd!]] .. tag_bufid) -- delete the ctags tag buffer
+    vim.cmd [[noh]] -- remove matched pattern's highlight
+end
+
+local command = vim.api.nvim_create_user_command
+
+command('TagYankedColumns', function(options)
+    local df = options.args
+    M.create_tags_for_yanked_columns(df)
+end, {
+    nargs = '?',
+})
+
 return M
