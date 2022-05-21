@@ -26,9 +26,8 @@ local my_mappings = {
 
 cmp.setup {
     snippet = {
-        -- REQUIRED - you must specify a snippet engine
         expand = function(args)
-            require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+            require('luasnip').lsp_expand(args.body)
         end,
     },
     mapping = cmp.mapping.preset.insert(my_mappings),
@@ -57,6 +56,9 @@ cmp.setup {
                 latex_symbols = '',
             },
         },
+    },
+    completion = {
+        keyword_length = 2,
     },
 }
 
