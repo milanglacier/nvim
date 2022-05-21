@@ -6,7 +6,7 @@ vim.cmd [[packadd! aerial.nvim]]
 vim.cmd [[packadd! lsp_signature.nvim]]
 vim.cmd [[packadd! lua-dev.nvim]]
 
-local opts = function(options)
+local key_opts = function(options)
     return {
         noremap = true,
         silent = true,
@@ -20,11 +20,11 @@ end
 local on_attach = function(client, bufnr)
     local bufmap = vim.api.nvim_buf_set_keymap
 
-    bufmap(bufnr, 'n', '<Leader>td', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts { 'lsp type definition' })
+    bufmap(bufnr, 'n', '<Leader>td', '<cmd>lua vim.lsp.buf.type_definition()<CR>', key_opts { 'lsp type definition' })
 
     -- reference
     -- stylua: ignore
-    bufmap( bufnr, 'n', 'gr', '', opts {
+    bufmap( bufnr, 'n', 'gr', '', key_opts {
         desc = 'lsp references telescope',
         callback = function()
             require('telescope.builtin').lsp_references {
@@ -38,13 +38,19 @@ local on_attach = function(client, bufnr)
     -- code action
     -- bufmap(bufnr, 'n', '<Leader>ca', "<cmd>lua require('lspsaga.codeaction').code_action()<CR>", opts {})
     -- bufmap(bufnr, 'v', '<Leader>ca', ":lua require('lspsaga.codeaction').range_code_action()<CR>", opts {})
-    bufmap(bufnr, 'n', '<Leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts { 'lsp code action' })
-    bufmap(bufnr, 'x', '<Leader>ca', ':<C-U>lua vim.lsp.buf.range_code_action()<CR>', opts { 'lsp range code action' })
+    bufmap(bufnr, 'n', '<Leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', key_opts { 'lsp code action' })
+    bufmap(
+        bufnr,
+        'x',
+        '<Leader>ca',
+        ':<C-U>lua vim.lsp.buf.range_code_action()<CR>',
+        key_opts { 'lsp range code action' }
+    )
 
     -- hover
-    bufmap(bufnr, 'n', 'gh', '<cmd>Lspsaga hover_doc<CR>', opts { 'lspsaga hover doc' })
+    bufmap(bufnr, 'n', 'gh', '<cmd>Lspsaga hover_doc<CR>', key_opts { 'lspsaga hover doc' })
     -- stylua: ignore
-    bufmap( bufnr, 'n', '<C-f>', '', opts {
+    bufmap( bufnr, 'n', '<C-f>', '', key_opts {
         desc = 'lspsaga smartscroll downward',
         callback = function()
             require('lspsaga.action').smart_scroll_with_saga(1, '<C-f>')
@@ -52,7 +58,7 @@ local on_attach = function(client, bufnr)
     }
     )
     -- stylua: ignore
-    bufmap( bufnr, 'n', '<C-b>', '', opts {
+    bufmap( bufnr, 'n', '<C-b>', '', key_opts {
         desc = 'lspsaga smartscroll upward',
         callback = function()
             require('lspsaga.action').smart_scroll_with_saga(-1, '<C-b>')
@@ -61,21 +67,21 @@ local on_attach = function(client, bufnr)
     )
 
     -- use glow-hover
-    bufmap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts { 'lsp hover by glow' })
+    bufmap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', key_opts { 'lsp hover by glow' })
 
     -- signaturehelp
     -- stylua: ignore
     bufmap(bufnr, 'n', '<Leader>sh', '',
-        opts { 'lspsaga signature help', require('lspsaga.signaturehelp').signature_help }
+        key_opts { 'lspsaga signature help', require('lspsaga.signaturehelp').signature_help }
     )
     -- "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
 
     -- rename
-    bufmap(bufnr, 'n', '<Leader>rn', '<cmd>Lspsaga rename<CR>', opts { 'lspsaga rename' })
+    bufmap(bufnr, 'n', '<Leader>rn', '<cmd>Lspsaga rename<CR>', key_opts { 'lspsaga rename' })
 
     -- go to definition, implementation
     -- stylua: ignore
-    bufmap(bufnr, 'n', 'gd', '', opts {
+    bufmap(bufnr, 'n', 'gd', '', key_opts {
         desc = 'lsp go to definition',
         callback = function()
             require('telescope.builtin').lsp_definitions {
@@ -86,7 +92,7 @@ local on_attach = function(client, bufnr)
     }
     )
     -- stylua: ignore
-    bufmap(bufnr, 'n', '<Leader>gi', '', opts {
+    bufmap(bufnr, 'n', '<Leader>gi', '', key_opts {
         desc = 'lsp go to implementation',
         callback = function()
             require('telescope.builtin').lsp_implementations {
@@ -116,17 +122,17 @@ local on_attach = function(client, bufnr)
     })
 
     -- format
-    bufmap(bufnr, 'n', '<Leader>fm', '', opts { 'lsp format', vim.lsp.buf.formatting })
-    bufmap(bufnr, 'v', '<Leader>fm', ':<C-U>lua vim.lsp.buf.range_formatting()<CR>', opts { 'lsp range format' })
+    bufmap(bufnr, 'n', '<Leader>fm', '', key_opts { 'lsp format', vim.lsp.buf.formatting })
+    bufmap(bufnr, 'v', '<Leader>fm', ':<C-U>lua vim.lsp.buf.range_formatting()<CR>', key_opts { 'lsp range format' })
 
     -- diagnostic
     -- stylua: ignore
-    bufmap(bufnr, 'n', '<Leader>ds', '', opts { 'lsp diagnostics by telescope', require('telescope.builtin').diagnostics })
-    bufmap(bufnr, 'n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', opts { 'lspsaga prev diagnostic' })
-    bufmap(bufnr, 'n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>', opts { 'lspsaga next diagnostic' })
+    bufmap(bufnr, 'n', '<Leader>ds', '', key_opts { 'lsp diagnostics by telescope', require('telescope.builtin').diagnostics })
+    bufmap(bufnr, 'n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', key_opts { 'lspsaga prev diagnostic' })
+    bufmap(bufnr, 'n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>', key_opts { 'lspsaga next diagnostic' })
     -- diagnostic show in line or in cursor
     -- stylua: ignore
-    bufmap( bufnr, 'n', '<Leader>dl', '<cmd>Lspsaga show_line_diagnostics<CR>', opts { 'lspsaga current line diagnostic' })
+    bufmap( bufnr, 'n', '<Leader>dl', '<cmd>Lspsaga show_line_diagnostics<CR>', key_opts { 'lspsaga current line diagnostic' })
 
     require('aerial').on_attach(client, bufnr)
     require('conf.lsp_tools').signature(bufnr)
@@ -178,6 +184,8 @@ local r_config = {
             lsp = {
                 -- debug = true,
                 log_file = '~/.cache/nvim/r_lsp_log.log',
+                lint_cache = true,
+                -- max_completions = 40,
             },
         },
     },
@@ -196,18 +204,6 @@ local r_config = {
                 if not vim.tbl_contains(lsp_names, 'r_language_server') then
                     vim.notify('r-lsp exits', vim.log.levels.WARN)
                     timer:close()
-
-                    if vim.bo.filetype == 'rmd' then
-                        vim.ui.select({ 'Buffer', 'Lsp' }, {
-                            prompt = 'Select one source',
-                        }, function(choice)
-                            if choice == 'Buffer' then
-                                vim.cmd [[RmdCompletionSwitchTo Buffer]]
-                            else
-                                vim.cmd [[RmdCompletionSwitchTo Lsp]]
-                            end
-                        end)
-                    end
 
                     vim.cmd [[LspStart r_language_server]]
                 end
@@ -301,25 +297,31 @@ local autocmd = vim.api.nvim_create_autocmd
 local my_augroup = require('conf.builtin_extend').my_augroup
 
 local has_virtual_text = true
+local has_underline = true
 
 command('DiagnosticVirtualTextToggle', function()
     has_virtual_text = not has_virtual_text
     vim.diagnostic.config { virtual_text = has_virtual_text }
 end, {})
 
-local cmp_sources_no_buffer = {
-    {
-        { name = 'nvim_lsp' },
-        { name = 'luasnip' },
-        { name = 'tags' },
-    },
-    {
-        { name = 'path' },
-        { name = 'latex_symbols' },
-    },
+command('DiagnosticUnderlineToggle', function()
+    has_underline = not has_underline
+    vim.diagnostic.config { underline = has_underline }
+end, {})
+
+local r_config_modifiable = vim.deepcopy(r_config)
+r_config_modifiable.filetypes = { 'r', 'rmd' }
+
+local is_lsp_enabled = {
+    r = true,
+    rmd = true,
+}
+local has_source = {
+    tags = true,
+    buffer = true,
 }
 
-local cmp_sources_with_buffer = {
+local cmp_sources = {
     {
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
@@ -332,60 +334,158 @@ local cmp_sources_with_buffer = {
     },
 }
 
+local function remove_lsp(ft)
+    local ft_table = r_config_modifiable.filetypes
+
+    if is_lsp_enabled[ft] == true then
+        for idx, val in pairs(ft_table) do
+            if val == ft then
+                table.remove(ft_table, idx)
+                is_lsp_enabled[ft] = false
+            end
+        end
+
+        require('lspconfig').r_language_server.setup(r_config_modifiable)
+    end
+end
+
+local function add_lsp(ft)
+    local ft_table = r_config_modifiable.filetypes
+
+    if is_lsp_enabled[ft] == false then
+        table.insert(ft_table, ft)
+        is_lsp_enabled[ft] = true
+        require('lspconfig').r_language_server.setup(r_config_modifiable)
+    end
+end
+
+local function toggle_lsp(ft)
+    if is_lsp_enabled[ft] == true then
+        remove_lsp(ft)
+    elseif is_lsp_enabled[ft] == false then
+        add_lsp(ft)
+    end
+end
+
+local function remove_source(source, ft)
+    local cmp = require 'cmp'
+
+    local sources_priority_1st = cmp_sources[1]
+    local sources_priority_2nd = cmp_sources[2]
+
+    if has_source[source] == true then
+        for idx, val in pairs(sources_priority_1st) do
+            if val.name == source then
+                table.remove(sources_priority_1st, idx)
+                has_source[source] = false
+            end
+        end
+
+        for idx, val in pairs(sources_priority_2nd) do
+            if val.name == source then
+                table.remove(sources_priority_2nd, idx)
+                has_source[source] = false
+            end
+        end
+
+        cmp.setup.filetype(ft, {
+            sources = cmp.config.sources(unpack(cmp_sources)),
+        })
+    end
+end
+
+local function add_source(source, ft)
+    local cmp = require 'cmp'
+
+    local sources_priority_1 = cmp_sources[1]
+    local sources_priority_2 = cmp_sources[2]
+
+    if has_source[source] == false then
+        if source == 'tags' then
+            table.insert(sources_priority_1, { name = 'tags' })
+            has_source[source] = true
+        end
+        if source == 'buffer' then
+            table.insert(sources_priority_2, 1, { name = 'buffer' })
+            has_source[source] = true
+        end
+        cmp.setup.filetype(ft, {
+            sources = cmp.config.sources(unpack(cmp_sources)),
+        })
+    end
+end
+
+local function toggle_source(source, ft)
+    if has_source[source] == true then
+        remove_source(source, ft)
+    elseif has_source[source] == false then
+        add_source(source, ft)
+    end
+end
+
 autocmd('FileType', {
-    desc = 'set command for switching between cmp-buffer and lsp completion',
-    pattern = 'rmd',
+    desc = 'set command for setting completion sources.',
+    pattern = { 'rmd', 'r' },
     group = my_augroup,
     callback = function()
-        bufcmd(0, 'RmdCompletionSwitchTo', function(options)
-            local cmp = require 'cmp'
-
-            if options.args == 'Lsp' then
-                cmp.setup.filetype('rmd', {
-                    sources = cmp.config.sources(unpack(cmp_sources_no_buffer)),
-                })
-
-                require('lspconfig').r_language_server.setup(r_config)
-            elseif options.args == 'Buffer' then
-                cmp.setup.filetype('rmd', {
-                    sources = cmp.config.sources(unpack(cmp_sources_with_buffer)),
-                })
-
-                local new_r_config = vim.deepcopy(r_config)
-                new_r_config.filetypes = { 'r' }
-
-                require('lspconfig').r_language_server.setup(new_r_config)
+        bufcmd(0, 'CompletionSwitchTo', function(options)
+            if options.args == 'lsp' then
+                add_lsp 'rmd'
+                remove_source('buffer', vim.bo.filetype)
+            elseif options.args == 'buffer' then
+                remove_lsp(vim.bo.filetype)
+                add_source('buffer', vim.bo.filetype)
             end
         end, {
             nargs = 1,
             complete = function(_, _, _)
-                return { 'Lsp', 'Buffer' }
+                return { 'lsp', 'buffer' }
             end,
         })
-    end,
-})
 
-autocmd('FileType', {
-    desc = 'set command for toggle cmp-buffer source',
-    pattern = 'r',
-    group = my_augroup,
-    callback = function()
-        local cmp_buffer_enabled = true
-
-        bufcmd(0, 'RCompetionToggleBuffer', function()
-            local cmp = require 'cmp'
-
-            if cmp_buffer_enabled then
-                cmp.setup.filetype('r', {
-                    sources = cmp.config.sources(unpack(cmp_sources_no_buffer)),
-                })
-                cmp_buffer_enabled = false
-            else
-                cmp.setup.filetype('r', {
-                    sources = cmp.config.sources(unpack(cmp_sources_with_buffer)),
-                })
-                cmp_buffer_enabled = true
+        bufcmd(0, 'CompletionEnable', function(options)
+            if options.args == 'lsp' then
+                add_lsp(vim.bo.filetype)
+            elseif options.args == 'buffer' then
+                add_source('buffer', vim.bo.filetype)
+            elseif options.args == 'tags' then
+                add_source('tags', vim.bo.filetype)
             end
-        end, {})
+        end, {
+            nargs = 1,
+            complete = function(_, _, _)
+                return { 'lsp', 'buffer', 'tags' }
+            end,
+        })
+
+        bufcmd(0, 'CompletionDisable', function(options)
+            if options.args == 'lsp' then
+                remove_lsp(vim.bo.filetype)
+            elseif options.args == 'buffer' then
+                remove_source('buffer', vim.bo.filetype)
+            elseif options.args == 'tags' then
+                remove_source('tags', vim.bo.filetype)
+            end
+        end, {
+            nargs = 1,
+            complete = function(_, _, _)
+                return { 'lsp', 'buffer', 'tags' }
+            end,
+        })
+
+        bufcmd(0, 'CompletionToggle', function(options)
+            if options.args == 'lsp' then
+                toggle_lsp(vim.bo.filetype)
+            elseif options.args == 'buffer' then
+                toggle_source('buffer', vim.bo.filetype)
+            elseif options.args == 'tags' then
+                toggle_source('tags', vim.bo.filetype)
+            end
+        end, {
+            nargs = 1,
+            complete = function(_, _, _)
+                return { 'lsp', 'buffer', 'tags' }
+            end,
+        })
     end,
 })
