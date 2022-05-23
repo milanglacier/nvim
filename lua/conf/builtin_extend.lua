@@ -148,19 +148,19 @@ autocmd('FileType', {
                 M.textobj_code_chunk('i', '```{.+}', '^```$')
             end,
         })
-        bufmap(0, 'x', 'ac', '', {
+
+        local visual_a = [[:<C-U>lua require('conf.builtin_extend').textobj_code_chunk('a', '```{.+}', '^```$')<CR>]]
+
+        bufmap(0, 'x', 'ac', visual_a, {
             silent = true,
             desc = 'rmd code chunk text object a',
-            callback = function()
-                M.textobj_code_chunk('a', '```{.+}', '^```$')
-            end,
         })
-        bufmap(0, 'x', 'ic', '', {
+
+        local visual_i = [[:<C-U>lua require('conf.builtin_extend').textobj_code_chunk('i', '```{.+}', '^```$')<CR>]]
+
+        bufmap(0, 'x', 'ic', visual_i, {
             silent = true,
             desc = 'rmd code chunk text object i',
-            callback = function()
-                M.textobj_code_chunk('i', '```{.+}', '^```$')
-            end,
         })
     end,
 })
@@ -186,19 +186,21 @@ autocmd('FileType', {
                 M.textobj_code_chunk('i', '^# ?%%%%.*', '^# ?%%%%$', true)
             end,
         })
-        bufmap(0, 'x', 'a<Leader>c', '', {
+
+        local visual_a =
+            [[:<C-U>lua require('conf.builtin_extend').textobj_code_chunk('a', '^# ?%%%%.*', '^# ?%%%%$', true)<CR>]]
+
+        bufmap(0, 'x', 'a<Leader>c', visual_a, {
             silent = true,
             desc = 'code chunk text object a',
-            callback = function()
-                M.textobj_code_chunk('a', '^# ?%%%%.*', '^# ?%%%%$', true)
-            end,
         })
-        bufmap(0, 'x', 'i<Leader>c', '', {
+
+        local visual_i =
+            [[:<C-U>lua require('conf.builtin_extend').textobj_code_chunk('i', '^# ?%%%%.*', '^# ?%%%%$', true)<CR>]]
+
+        bufmap(0, 'x', 'i<Leader>c', visual_i, {
             silent = true,
             desc = 'code chunk text object i',
-            callback = function()
-                M.textobj_code_chunk('i', '^# ?%%%%.*', '^# ?%%%%$', true)
-            end,
         })
     end,
 })
