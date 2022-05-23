@@ -213,6 +213,7 @@ M.load.incline = function()
                     left = 0,
                     right = 0,
                 },
+                vertical = 0,
             },
             padding = {
                 left = 1,
