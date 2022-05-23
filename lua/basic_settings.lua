@@ -21,6 +21,7 @@ vim.o.laststatus = 3
 
 vim.o.clipboard = 'unnamedplus'
 vim.o.completeopt = 'menu,menuone,noselect'
+vim.o.tags = vim.o.tags .. ',.tags_columns'
 
 vim.g.do_filetype_lua = 1
 vim.g.did_load_filetypes = 0

@@ -228,9 +228,12 @@ function M.create_tags_for_yanked_columns(df)
     end
 
     local bufid = vim.api.nvim_get_current_buf()
-    local filename = vim.fn.expand '%:.'
-    local filename_without_extension = filename:match '(.+)%..+'
-    local newfile = filename_without_extension .. '_tags'
+
+    local filepath_head = vim.fn.expand '%:h'
+    local filename_tail = vim.fn.expand '%:t'
+
+    local filename_without_extension = filename_tail:match '(.+)%..+'
+    local newfile = filepath_head .. '/.tags_' .. filename_without_extension
 
     vim.cmd(string.format('e %s', newfile)) -- open a file whose name is xxx_tags.extension
     local newtag_bufid = vim.api.nvim_get_current_buf()
@@ -270,13 +273,13 @@ function M.create_tags_for_yanked_columns(df)
     newfile_vim_regexed = newfile_vim_regexed:gsub('/', [[\/]])
     newfile_vim_regexed = newfile_vim_regexed:sub(2, -2) -- remove the first and last chars, i.e. ' and '
 
-    vim.cmd [[e tags]] -- open the file where ctags stores the tags
+    vim.cmd [[e .tags_columns]] -- open the file where ctags stores the tags
     local tag_bufid = vim.api.nvim_get_current_buf()
 
     vim.cmd([[g/^\w\+\s\+]] .. newfile_vim_regexed .. [[\s.\+/d]]) -- remove existed entries for the current newtag file
     vim.cmd [[w]]
 
-    vim.cmd([[!ctags -a --language-force=]] .. ft .. ' ' .. newfile_shell_escaped) -- let ctags tag current newtag file
+    vim.cmd([[!ctags -a -f .tags_columns --language-force=]] .. ft .. ' ' .. newfile_shell_escaped) -- let ctags tag current newtag file
 
     vim.api.nvim_win_set_buf(0, bufid)
     vim.cmd([[bd!]] .. newtag_bufid) -- delete the buffer created for tagging
