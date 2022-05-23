@@ -184,6 +184,21 @@ M.load.pandoc = function()
     vim.g['pandoc#syntax#codeblocks#embeds#langs'] = { 'python', 'R=r', 'r', 'bash=sh', 'json' }
 end
 
+M.load.gutentags = function()
+    vim.cmd [[packadd! vim-gutentags]]
+
+    vim.g.gutentags_add_ctrlp_root_markers = 0
+    vim.g.gutentags_ctags_exclude = { '.*', '**/.*' }
+    vim.g.gutentags_generate_on_new = 0
+    vim.g.gutentags_ctags_tagfile = '.tags'
+
+    vim.filetype.add {
+        pattern = {
+            ['%.tags'] = 'tags',
+        },
+    }
+end
+
 M.load.diffview()
 M.load.gitsigns()
 M.load.iron()
@@ -192,5 +207,6 @@ M.load.neogit()
 M.load.spectre()
 M.load.toggleterm()
 M.load.pandoc()
+M.load.gutentags()
 
 return M

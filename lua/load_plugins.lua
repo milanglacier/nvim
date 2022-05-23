@@ -124,6 +124,7 @@ require 'paq' {
     { 'nvim-pack/nvim-spectre', opt = true },
     { 'JASONews/glow-hover', opt = true },
     { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', opt = true },
+    { 'ludovicchabant/vim-gutentags', opt = true },
 
     -- Debugger
     { 'mfussenegger/nvim-dap', opt = true },
