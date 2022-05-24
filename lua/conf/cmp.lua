@@ -13,13 +13,31 @@ vim.cmd [[packadd! lspkind-nvim]]
 
 local cmp = require 'cmp'
 local lspkind = require 'lspkind'
+local luasnip = require 'luasnip'
 
 local my_mappings = {
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<A-Space>'] = cmp.mapping.complete(),
     ['<CR>'] = cmp.mapping.confirm { select = true },
-    ['<tab>'] = cmp.mapping.confirm { select = true },
+    ['<Tab>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+            cmp.confirm { select = true }
+        elseif luasnip.expand_or_jumpable() then
+            luasnip.expand_or_jump()
+        else
+            fallback()
+        end
+    end),
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+            cmp.select_prev_item()
+        elseif luasnip.jumpable(-1) then
+            luasnip.jump(-1)
+        else
+            fallback()
+        end
+    end),
     ['<ESC>'] = cmp.mapping.abort(),
 }
 
@@ -50,15 +68,12 @@ cmp.setup {
                 path = '',
                 git = '',
                 tags = '',
-                omni = '',
                 cmdline = 'גּ',
                 latex_symbols = '',
             },
         },
     },
-    completion = {
-        keyword_length = 2,
-    },
+    completion = { keyword_length = 2 },
 }
 
 -- Set configuration for specific filetype.
@@ -70,16 +85,6 @@ cmp.setup.filetype('gitcommit', {
     }),
 })
 require('cmp_git').setup()
-
--- omni completion for SQL is buggy, disable it as a source of cmp
-cmp.setup.filetype('sql', {
-    sources = cmp.config.sources({
-        { name = 'nvim_lsp' },
-        { name = 'luasnip' },
-    }, {
-        { name = 'buffer' },
-    }),
-})
 
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline('/', {
