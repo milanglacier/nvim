@@ -15,24 +15,26 @@ local key_opts = function(options)
     }
 end
 
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
     local bufmap = vim.api.nvim_buf_set_keymap
 
     bufmap(bufnr, 'n', '<Leader>td', '<cmd>lua vim.lsp.buf.type_definition()<CR>', key_opts { 'lsp type definition' })
 
     -- reference
-    -- stylua: ignore
-    bufmap( bufnr, 'n', 'gr', '', key_opts {
-        desc = 'lsp references telescope',
-        callback = function()
-            require('telescope.builtin').lsp_references {
-                layout_strategies = 'vertical',
-                jump_type = 'tab',
-            }
-        end,
-    }
+    bufmap(
+        bufnr,
+        'n',
+        'gr',
+        '',
+        key_opts {
+            desc = 'lsp references telescope',
+            callback = function()
+                require('telescope.builtin').lsp_references {
+                    layout_strategies = 'vertical',
+                    jump_type = 'tab',
+                }
+            end,
+        }
     )
 
     -- code action
@@ -44,34 +46,47 @@ local on_attach = function(client, bufnr)
         'x',
         '<Leader>ca',
         ':<C-U>lua vim.lsp.buf.range_code_action()<CR>',
-        key_opts { 'lsp range code action' }
+        key_opts {
+            'lsp range code action',
+        }
     )
 
     -- hover
     bufmap(bufnr, 'n', 'gh', '<cmd>Lspsaga hover_doc<CR>', key_opts { 'lspsaga hover doc' })
-    -- stylua: ignore
-    bufmap( bufnr, 'n', '<C-f>', '', key_opts {
-        desc = 'lspsaga smartscroll downward',
-        callback = function()
-            require('lspsaga.action').smart_scroll_with_saga(1, '<C-f>')
-        end,
-    }
+    bufmap(
+        bufnr,
+        'n',
+        '<C-f>',
+        '',
+        key_opts {
+            desc = 'lspsaga smartscroll downward',
+            callback = function()
+                require('lspsaga.action').smart_scroll_with_saga(1, '<C-f>')
+            end,
+        }
     )
-    -- stylua: ignore
-    bufmap( bufnr, 'n', '<C-b>', '', key_opts {
-        desc = 'lspsaga smartscroll upward',
-        callback = function()
-            require('lspsaga.action').smart_scroll_with_saga(-1, '<C-b>')
-        end,
-    }
+    bufmap(
+        bufnr,
+        'n',
+        '<C-b>',
+        '',
+        key_opts {
+            desc = 'lspsaga smartscroll upward',
+            callback = function()
+                require('lspsaga.action').smart_scroll_with_saga(-1, '<C-b>')
+            end,
+        }
     )
 
     -- use glow-hover
     bufmap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', key_opts { 'lsp hover by glow' })
 
     -- signaturehelp
-    -- stylua: ignore
-    bufmap(bufnr, 'n', '<Leader>sh', '',
+    bufmap(
+        bufnr,
+        'n',
+        '<Leader>sh',
+        '',
         key_opts { 'lspsaga signature help', require('lspsaga.signaturehelp').signature_help }
     )
     -- "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
@@ -80,16 +95,20 @@ local on_attach = function(client, bufnr)
     bufmap(bufnr, 'n', '<Leader>rn', '<cmd>Lspsaga rename<CR>', key_opts { 'lspsaga rename' })
 
     -- go to definition, implementation
-    -- stylua: ignore
-    bufmap(bufnr, 'n', 'gd', '', key_opts {
-        desc = 'lsp go to definition',
-        callback = function()
-            require('telescope.builtin').lsp_definitions {
-                layout_strategies = 'vertical',
-                jump_type = 'tab',
-            }
-        end,
-    }
+    bufmap(
+        bufnr,
+        'n',
+        'gd',
+        '',
+        key_opts {
+            desc = 'lsp go to definition',
+            callback = function()
+                require('telescope.builtin').lsp_definitions {
+                    layout_strategies = 'vertical',
+                    jump_type = 'tab',
+                }
+            end,
+        }
     )
     -- stylua: ignore
     bufmap(bufnr, 'n', '<Leader>gi', '', key_opts {
@@ -126,13 +145,23 @@ local on_attach = function(client, bufnr)
     bufmap(bufnr, 'v', '<Leader>fm', ':<C-U>lua vim.lsp.buf.range_formatting()<CR>', key_opts { 'lsp range format' })
 
     -- diagnostic
-    -- stylua: ignore
-    bufmap(bufnr, 'n', '<Leader>ds', '', key_opts { 'lsp diagnostics by telescope', require('telescope.builtin').diagnostics })
+    bufmap(
+        bufnr,
+        'n',
+        '<Leader>ds',
+        '',
+        key_opts { 'lsp diagnostics by telescope', require('telescope.builtin').diagnostics }
+    )
     bufmap(bufnr, 'n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', key_opts { 'lspsaga prev diagnostic' })
     bufmap(bufnr, 'n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>', key_opts { 'lspsaga next diagnostic' })
     -- diagnostic show in line or in cursor
-    -- stylua: ignore
-    bufmap( bufnr, 'n', '<Leader>dl', '<cmd>Lspsaga show_line_diagnostics<CR>', key_opts { 'lspsaga current line diagnostic' })
+    bufmap(
+        bufnr,
+        'n',
+        '<Leader>dl',
+        '<cmd>Lspsaga show_line_diagnostics<CR>',
+        key_opts { 'lspsaga current line diagnostic' }
+    )
 
     require('aerial').on_attach(client, bufnr)
     require('conf.lsp_tools').signature(bufnr)
