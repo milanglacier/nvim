@@ -224,9 +224,12 @@ require('lspconfig').julials.setup {
     capabilities = capabilities,
 }
 
+local clangd_capabilities = vim.deepcopy(capabilities)
+clangd_capabilities.offsetEncoding = { 'utf-16' }
+
 require('lspconfig').clangd.setup {
     on_attach = on_attach,
-    capabilities = capabilities,
+    capabilities = clangd_capabilities,
 }
 
 local lua_runtime_path = {}
