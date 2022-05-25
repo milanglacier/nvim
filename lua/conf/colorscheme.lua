@@ -96,7 +96,6 @@ local night_scheme_options = {
             vim.g.edge_better_performance = 1
         end,
     },
-    length = 11,
 }
 
 local day_scheme_options = {
@@ -161,7 +160,6 @@ local day_scheme_options = {
             vim.g.solarized_italics = 0
         end,
     },
-    length = 9,
 }
 
 local pick_colorscheme = function(bg, theme_id)
@@ -186,10 +184,10 @@ function M.pick_randomly()
 
     if (time.hour <= 7) or (time.hour >= 23) then
         bg = 1
-        rd = math.random(1, night_scheme_options.length)
+        rd = math.random(1, #night_scheme_options.name)
     else
         bg = 2
-        rd = math.random(1, day_scheme_options.length)
+        rd = math.random(1, #day_scheme_options.name)
     end
 
     pick_colorscheme(bg, rd)
@@ -208,7 +206,7 @@ local function select_colorscheme_based_on_bg(bg)
 
     local items_to_be_selected = {}
 
-    for i = 1, theme_options.length do
+    for i = 1, #theme_options.name do
         table.insert(items_to_be_selected, i)
     end
 
