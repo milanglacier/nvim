@@ -26,10 +26,8 @@ require 'paq' {
     { 'sindrets/winshift.nvim', opt = true },
     { 'glacambre/firenvim' },
     -- very simple, naive completion without LSP
-    -- Plug 'skywind3000/vim-auto-popmenu'
-    -- Plug 'skywind3000/vim-dict'
-    -- support browser
-    -- Plug 'glacambre/firenvim'
+    -- 'skywind3000/vim-auto-popmenu'
+    -- 'skywind3000/vim-dict'
 
     -- UI
     { 'nvim-lualine/lualine.nvim', opt = true },
