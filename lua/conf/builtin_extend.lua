@@ -298,4 +298,12 @@ end, {
     nargs = '?',
 })
 
+autocmd('FileType', {
+    group = M.my_augroup,
+    desc = "set r, rmd keyword pattern to include .",
+    callback = function ()
+        vim.bo.iskeyword = vim.bo.iskeyword .. ",."
+    end
+})
+
 return M
