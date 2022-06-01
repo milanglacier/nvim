@@ -20,10 +20,6 @@ M.load.better_escape = function()
     }
 end
 
-M.load.rooter = function()
-    vim.cmd [[packadd! rooter.nvim]]
-end
-
 M.load.project_nvim = function()
     vim.cmd [[packadd! project.nvim]]
     require('project_nvim').setup {
@@ -38,30 +34,6 @@ end
 
 M.load.nvim_tree = function()
     vim.cmd [[packadd! nvim-tree.lua]]
-
-    vim.g.nvim_tree_icons = {
-        default = '',
-        symlink = '',
-        git = {
-            unstaged = '✗',
-            staged = '✓',
-            unmerged = '',
-            renamed = '➜',
-            untracked = '★',
-            deleted = '',
-            ignored = '◌',
-        },
-        folder = {
-            arrow_open = '',
-            arrow_closed = '',
-            default = '',
-            open = '',
-            empty = '',
-            empty_open = '',
-            symlink = '',
-            symlink_open = '',
-        },
-    }
 
     require('nvim-tree').setup {
         view = {
@@ -94,7 +66,6 @@ M.load.winshift = function()
 end
 
 M.load.better_escape()
-M.load.rooter()
 M.load.project_nvim()
 M.load.better_escape()
 M.load.nvim_tree()

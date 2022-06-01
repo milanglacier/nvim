@@ -19,7 +19,6 @@ require 'paq' {
     -- Fix bugs and Utilities
     { 'antoinemadec/FixCursorHold.nvim' },
     { 'max397574/better-escape.nvim', opt = true },
-    { 'ygm2/rooter.nvim', opt = true },
     { 'ahmedkhalf/project.nvim', opt = true },
     { 'kyazdani42/nvim-tree.lua', opt = true }, -- file explorer
     { 'milanglacier/smartim', opt = true }, -- automatically switch input method when switch mode
