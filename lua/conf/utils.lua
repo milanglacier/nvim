@@ -65,6 +65,14 @@ M.load.nvim_tree = function()
                 list = { { key = '?', action = 'toggle_help' } },
             },
         },
+        -- this makes nvim-tree opens in project root when switching between projects,
+        -- see project.nvim's README
+        respect_buf_cwd = true,
+        update_cwd = true,
+        update_focused_file = {
+            enable = true,
+            update_cwd = true,
+        },
     }
 
     local keymap = vim.api.nvim_set_keymap
