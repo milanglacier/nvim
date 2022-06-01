@@ -26,7 +26,11 @@ end
 
 M.load.project_nvim = function()
     vim.cmd [[packadd! project.nvim]]
-    require('project_nvim').setup {}
+    require('project_nvim').setup {
+        detection_methods = { 'pattern' },
+        patterns = { '.git', '.svn', 'Makefile', 'package.json', 'NAMESPACE', 'setup.py' },
+        show_hidden = true,
+    }
 
     local keymap = vim.api.nvim_set_keymap
     keymap('n', '<Leader>pj', '<cmd>Telescope projects<CR>', { noremap = true })
