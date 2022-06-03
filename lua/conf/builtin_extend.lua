@@ -16,14 +16,6 @@ keymap('i', '<C-e>', '<end>', { noremap = true })
 keymap('i', '<C-h>', '<BS>', { noremap = true })
 keymap('i', '<C-k>', '<ESC>d$i', { noremap = true })
 
-keymap('t', '<C-b>', '<Left>', { noremap = true })
-keymap('t', '<C-p>', '<Up>', { noremap = true })
-keymap('t', '<C-f>', '<Right>', { noremap = true })
-keymap('t', '<C-n>', '<Down>', { noremap = true })
-keymap('t', '<C-a>', '<home>', { noremap = true })
-keymap('t', '<C-e>', '<end>', { noremap = true })
-keymap('t', '<C-h>', '<BS>', { noremap = true })
-
 keymap('n', '<Leader>cd', [[:cd %:h<cr>]], { noremap = true })
 keymap('n', '<Leader>cu', [[:cd ..<cr>]], { noremap = true })
 
