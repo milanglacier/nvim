@@ -76,8 +76,22 @@ M.load.iron = function()
     keymap('n', '<localleader>s', '<Plug>(iron-send-motion)', {})
     keymap('v', '<localleader>ss', '<Plug>(iron-visual-send)', {})
 
-    keymap('n', '<localleader>sc', [[<LocalLeader>si<Leader>c]], {
+    keymap('n', '<localleader>sc', '', {
         desc = 'iron send a code chunk',
+        callback = function()
+            local local_leader = vim.g.maplocalleader
+            local leader = vim.g.mapleader
+
+            if vim.bo.filetype == 'r' or vim.bo.filetype == 'python' then
+                return local_leader .. 'si' .. leader .. 'c'
+            elseif vim.bo.filetype == 'rmd' then
+                return local_leader .. 'sic'
+                -- Note: in an expression mapping, <LocalLeader>
+                -- and <Leader> cannot be automatically mapped
+                -- to the corresponding keys, you have to do the mapping manually
+            end
+        end,
+        expr = true,
     })
 end
 
