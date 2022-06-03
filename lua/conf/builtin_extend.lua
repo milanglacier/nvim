@@ -27,6 +27,9 @@ keymap('t', '<C-h>', '<BS>', { noremap = true })
 keymap('n', '<Leader>cd', [[:cd %:h<cr>]], { noremap = true })
 keymap('n', '<Leader>cu', [[:cd ..<cr>]], { noremap = true })
 
+keymap('n', '<C-g>', '<ESC>', { noremap = true })
+-- <C-g> by default echos the current file name, which is useless
+
 keymap('n', ']b', [[:bnext<cr>]], { noremap = true })
 keymap('n', '[b', [[:bprevious<cr>]], { noremap = true })
 keymap('n', ']q', [[:cnext<cr>]], { noremap = true })
