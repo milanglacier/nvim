@@ -110,16 +110,22 @@ local on_attach = function(client, bufnr)
             end,
         }
     )
-    -- stylua: ignore
-    bufmap(bufnr, 'n', '<Leader>gi', '', key_opts {
-        desc = 'lsp go to implementation',
-        callback = function()
-            require('telescope.builtin').lsp_implementations {
-                layout_strategies = 'vertical',
-                jump_type = 'tab',
-            }
-        end,
-    })
+
+    bufmap(
+        bufnr,
+        'n',
+        '<Leader>gi',
+        '',
+        key_opts {
+            desc = 'lsp go to implementation',
+            callback = function()
+                require('telescope.builtin').lsp_implementations {
+                    layout_strategies = 'vertical',
+                    jump_type = 'tab',
+                }
+            end,
+        }
+    )
     -- keymap(bufnr, 'n', 'gd', "<cmd>lua require'lspsaga.provider'.preview_definition()<CR>", opts)
 
     -- workspace
