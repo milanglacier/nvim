@@ -15,6 +15,7 @@ require('nvim-treesitter.configs').setup {
         'html',
         'css',
         'javascript',
+        'regex',
     },
 
     -- Install languages synchronously (only applied to `ensure_installed`)
