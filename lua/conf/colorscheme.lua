@@ -172,6 +172,9 @@ local pick_colorscheme = function(bg, theme_id)
     end
 end
 
+local day_to_night = 23
+local night_to_day = 7
+
 function M.pick_randomly()
     math.randomseed(os.time()) -- random initialize
     local _ = math.random()
@@ -182,7 +185,7 @@ function M.pick_randomly()
     local bg = 1
     local rd = 0
 
-    if (time.hour <= 7) or (time.hour >= 23) then
+    if (time.hour <= night_to_day) or (time.hour >= day_to_night) then
         bg = 1
         rd = math.random(1, #night_scheme_options.name)
     else
@@ -193,7 +196,28 @@ function M.pick_randomly()
     pick_colorscheme(bg, rd)
 end
 
-M.pick_randomly()
+function M.switch_colorscheme_with_day_night()
+    -- vim.notify('load colorscheme at ' .. os.date '%c', vim.log.levels.INFO)
+    M.pick_randomly()
+
+    local time = os.date '*t'
+    local hour_point_to_switch
+    if time.hour >= day_to_night then
+        hour_point_to_switch = 24 + night_to_day
+    elseif time.hour < night_to_day then
+        hour_point_to_switch = night_to_day
+    else
+        hour_point_to_switch = day_to_night
+    end
+
+    local mins_to_next_hour = 60 - time.min
+    local hours_to_switch = hour_point_to_switch - (time.hour + 1)
+    local total_ms_to_switch = (hours_to_switch * 60 + mins_to_next_hour) * 60 * 1000
+
+    vim.defer_fn(M.switch_colorscheme_with_day_night, total_ms_to_switch)
+end
+
+M.switch_colorscheme_with_day_night()
 
 local function select_colorscheme_based_on_bg(bg)
     local theme_options
