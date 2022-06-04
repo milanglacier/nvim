@@ -218,9 +218,21 @@ autocmd('BufEnter', {
     end,
 })
 
-function M.create_tags_for_yanked_columns(df)
+---for python, type `df.columns` to print names of columns
+---in REPL, and then type `yi]` to yank the inner part of the list,
+---then switch back to the python file buffer and then call this function
+---
+---for R, type `colnames(df)` to print names of columns
+---in REPL, and then type `yap` to yank the whole region
+---then switch back to the R file buffer and then call this function
+---
+---Currently, the names of columns cannot contain special characters and white characters
+---due to how the processing is handled
+---@param df string | nil @the data frame name for yanked columns
+---@param use_customized_parser boolean | nil @whether use customized parser (impl by myself)
+function M.create_tags_for_yanked_columns(df, use_customized_parser)
     local ft = vim.bo.filetype
-    if not (ft == 'r' or ft == 'python') then
+    if not (ft == 'r' or ft == 'python' or ft == 'rmd') then
         return
     end
 
@@ -246,18 +258,13 @@ function M.create_tags_for_yanked_columns(df)
         vim.cmd [[g/^r\$>.\+$/d]] -- remove line starts with r$> which usually is the REPL prompt
         vim.cmd [[%s/\[\d\+\]//ge]] -- remove every occurrence of [xxx], where xxx is a number
     end
-
     vim.cmd [[%s/\s\+/\r/ge]] -- break multiple spaces into a new line
     vim.cmd [[g/^$/d]] -- remove any blank lines
 
-    if ft == 'python' then
-        vim.cmd [[%s/'//ge]] -- remove '
-        vim.cmd([[g/^\w\+$/normal! A="]] .. df .. [["]]) -- show which dataframe this column belongs to
-        -- use " instead of ', for incremental tagging, since ' will be removed.
+    if use_customized_parser then
+        M.generate_code_for_tagging_with_customized_parser(ft, df)
     else
-        vim.cmd [[%s/"//ge]]
-        vim.cmd([[g/^\w\+$/normal! A=']] .. df .. [[']])
-        -- r use " to quote strings, in contrary to python
+        M.generate_code_for_tagging_without_customized_parser(ft, df)
     end
 
     vim.cmd [[sort u]] -- remove duplicated entry
@@ -276,7 +283,11 @@ function M.create_tags_for_yanked_columns(df)
     vim.cmd([[g/^\w\+\s\+]] .. newfile_vim_regexed .. [[\s.\+/d]]) -- remove existed entries for the current newtag file
     vim.cmd [[w]]
 
-    vim.cmd([[!ctags -a -f .tags_columns --language-force=]] .. ft .. ' ' .. newfile_shell_escaped) -- let ctags tag current newtag file
+    if ft == 'rmd' then
+        ft = 'r'
+    end
+
+    vim.cmd([[!ctags -a -f .tags_columns --fields='*' --language-force=]] .. ft .. ' ' .. newfile_shell_escaped) -- let ctags tag current newtag file
 
     vim.api.nvim_win_set_buf(0, bufid)
     vim.cmd([[bd!]] .. newtag_bufid) -- delete the buffer created for tagging
@@ -284,11 +295,37 @@ function M.create_tags_for_yanked_columns(df)
     vim.cmd [[noh]] -- remove matched pattern's highlight
 end
 
+function M.generate_code_for_tagging_without_customized_parser(ft, df)
+    if ft == 'python' then
+        vim.cmd [[%s/'//ge]] -- remove '
+        vim.cmd([[g/^\w\+$/normal! A="]] .. df .. [["]]) -- show which dataframe this column belongs to
+        -- use " instead of ', for incremental tagging, since ' will be removed.
+    else
+        vim.cmd [[%s/"//ge]]
+        vim.cmd([[g/^[[:alnum:]_.]\+$/normal! A=']] .. df .. [[']])
+        -- r use " to quote strings, in contrary to python
+    end
+end
+
+function M.generate_code_for_tagging_with_customized_parser(ft, df)
+    if df == nil then
+        df = 'df'
+    end
+
+    if ft == 'python' then
+        vim.cmd [[g/^'.\+'$/normal! A]="nameattr"]]
+        vim.cmd([[g/^'.\+"$/normal! I]] .. df .. '[')
+    else
+        vim.cmd [=[g/^".\+"$/normal! A]]<-'nameattr']=]
+        vim.cmd([[g/^".\+'$/normal! I]] .. df .. '[[')
+    end
+end
+
 local command = vim.api.nvim_create_user_command
 
 command('TagYankedColumns', function(options)
     local df = options.args
-    M.create_tags_for_yanked_columns(df)
+    M.create_tags_for_yanked_columns(df, true)
 end, {
     nargs = '?',
 })
