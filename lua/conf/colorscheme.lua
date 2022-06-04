@@ -1,8 +1,21 @@
 local M = {}
+local is_on_start = true
 
 local function colorscheme_cmd(bg, theme)
     vim.o.background = bg
     vim.cmd('colorscheme ' .. theme)
+end
+
+-- packadd! will source /plugin/* at startup
+-- packadd will source /plugin/* immediately
+-- so calling packadd! after nvim already started
+-- will not source those files
+local function packadd(theme_pkg)
+    if is_on_start then
+        vim.cmd('packadd! ' .. theme_pkg)
+    else
+        vim.cmd('packadd ' .. theme_pkg)
+    end
 end
 
 local night_scheme_options = {
@@ -21,35 +34,35 @@ local night_scheme_options = {
     },
     cmd = {
         function()
-            vim.cmd [[packadd! nightfox.nvim]]
+            packadd [[nightfox.nvim]]
         end,
         function()
-            vim.cmd [[packadd! rose-pine]]
+            packadd [[rose-pine]]
             require('rose-pine').setup {
                 dark_variant = 'moon',
                 disable_italics = true,
             }
         end,
         function()
-            vim.cmd [[packadd! tokyonight.nvim]]
+            packadd [[tokyonight.nvim]]
             vim.g.tokyonight_style = 'night'
             vim.g.tokyonight_italic_keywords = false
             vim.g.tokyonight_italic_comments = false
         end,
         function()
-            vim.cmd [[packadd! everforest]]
+            packadd [[everforest]]
             vim.g.everforest_background = 'soft'
             vim.g.everforest_diagnostic_virtual_text = 'colored'
             vim.g.everforest_better_performance = 1
         end,
         function()
-            vim.cmd [[packadd! gruvbox.lua]]
+            packadd [[gruvbox.lua]]
         end,
         function()
-            vim.cmd [[packadd! mini.nvim]]
+            packadd [[mini.nvim]]
         end,
         function()
-            vim.cmd [[packadd! kanagawa.nvim]]
+            packadd [[kanagawa.nvim]]
             require('kanagawa').setup {
                 globalStatus = vim.o.laststatus == 3,
                 commentStyle = 'NONE',
@@ -58,10 +71,10 @@ local night_scheme_options = {
             }
         end,
         function()
-            vim.cmd [[packadd! melange]]
+            packadd [[melange]]
         end,
         function()
-            vim.cmd [[packadd! catppuccin]]
+            packadd [[catppuccin]]
             require('catppuccin').setup {
                 term_colors = true,
                 styles = {
@@ -79,7 +92,7 @@ local night_scheme_options = {
             }
         end,
         function()
-            vim.cmd [[packadd! material.nvim]]
+            packadd [[material.nvim]]
             vim.g.material_style = 'palenight'
             require('material').setup {
                 contrast = {
@@ -91,7 +104,7 @@ local night_scheme_options = {
             }
         end,
         function()
-            vim.cmd [[packadd! edge]]
+            packadd [[edge]]
             vim.g.edge_diagnostic_virtual_text = 'colored'
             vim.g.edge_better_performance = 1
         end,
@@ -112,34 +125,34 @@ local day_scheme_options = {
     },
     cmd = {
         function()
-            vim.cmd [[packadd! nightfox.nvim]]
+            packadd [[nightfox.nvim]]
         end,
         function()
-            vim.cmd [[packadd! rose-pine]]
+            packadd [[rose-pine]]
             require('rose-pine').setup {
                 disable_italics = true,
             }
         end,
         function()
-            vim.cmd [[packadd! tokyonight.nvim]]
+            packadd [[tokyonight.nvim]]
             vim.g.tokyonight_style = 'day'
             vim.g.tokyonight_italic_keywords = false
             vim.g.tokyonight_italic_comments = false
         end,
         function()
-            vim.cmd [[packadd! everforest]]
+            packadd [[everforest]]
             vim.g.everforest_background = 'soft'
             vim.g.everforest_diagnostic_virtual_text = 'colored'
             vim.g.everforest_better_performance = 1
         end,
         function()
-            vim.cmd [[packadd! gruvbox.lua]]
+            packadd [[gruvbox.lua]]
         end,
         function()
-            vim.cmd [[packadd! melange]]
+            packadd [[melange]]
         end,
         function()
-            vim.cmd [[packadd! material.nvim]]
+            packadd [[material.nvim]]
             vim.g.material_style = 'lighter'
             require('material').setup {
                 contrast = {
@@ -151,12 +164,12 @@ local day_scheme_options = {
             }
         end,
         function()
-            vim.cmd [[packadd! edge]]
+            packadd [[edge]]
             vim.g.edge_diagnostic_virtual_text = 'colored'
             vim.g.edge_better_performance = 1
         end,
         function()
-            vim.cmd [[packadd! nvim-solarized-lua]]
+            packadd [[nvim-solarized-lua]]
             vim.g.solarized_italics = 0
         end,
     },
@@ -218,6 +231,11 @@ function M.switch_colorscheme_with_day_night()
 end
 
 M.switch_colorscheme_with_day_night()
+
+-- the color scheme at start up is loaded, next will
+-- change the state to indicate when loading a new theme
+-- at run time, /plugin/* should be sourced
+is_on_start = false
 
 local function select_colorscheme_based_on_bg(bg)
     local theme_options
