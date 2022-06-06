@@ -16,8 +16,8 @@ if not vim.g.vscode then
 
     require 'conf.telescope'
 
-    require 'conf.cmp'
     require 'conf.snippets'
+    require 'conf.cmp'
 
     require 'conf.lspconfig'
     require 'conf.lsp_tools'
