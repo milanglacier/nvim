@@ -365,6 +365,8 @@ function M.open_URI_under_cursor()
     end
 end
 
+command('OpenURIUnderCursor', M.open_URI_under_cursor, {})
+
 keymap('n', 'go', '', {
     callback = M.open_URI_under_cursor,
     noremap = true,
