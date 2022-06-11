@@ -54,7 +54,6 @@ M.load.iron = function()
 
     iron.setup {
         config = {
-            should_map_plug = true,
             scratch_repl = true,
             repl_definition = {
                 r = radian,
@@ -64,17 +63,21 @@ M.load.iron = function()
             repl_open_cmd = 'belowright 15 split',
             buflisted = true,
         },
+        keymaps = {
+            send_motion = '<LocalLeader>s',
+            visual_send = '<LocalLeader>ss',
+            send_file = '<LocalLeader>sf',
+            send_line = '<LocalLeader>ss',
+            send_mark = '<LocalLeader>sm',
+            cr = '<LocalLeader>s<cr>',
+            interrupt = '<LocalLeader>ri',
+            exit = '<LocalLeader>rq',
+            clear = '<LocalLeader>rc',
+        },
     }
 
     keymap('n', '<localleader>rs', '<cmd>IronRepl<CR>', {})
     keymap('n', '<localleader>rr', '<cmd>IronRestart<CR>', {})
-    keymap('n', '<localleader>ri', '<Plug>(iron-interupt)', {})
-    keymap('n', '<localleader>rc', '<Plug>(iron-clear)', {})
-    keymap('n', '<localleader>rq', '<Plug>(iron-exit)', {})
-
-    keymap('n', '<localleader>ss', '<Plug>(iron-send-line)', {})
-    keymap('n', '<localleader>s', '<Plug>(iron-send-motion)', {})
-    keymap('v', '<localleader>ss', '<Plug>(iron-visual-send)', {})
 
     keymap('n', '<localleader>sc', '', {
         desc = 'iron send a code chunk',
