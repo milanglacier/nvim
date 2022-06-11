@@ -254,7 +254,7 @@ require('lspconfig').texlab.setup {
     capabilities = capabilities,
 }
 
-require('lspconfig').julials.setup {
+require('lspconfig').bashls.setup {
     on_attach = on_attach,
     capabilities = capabilities,
 }
