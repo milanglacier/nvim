@@ -83,3 +83,4 @@ keymap('n', '<leader>fj', '<cmd>Telescope jumplist<cr>', opts)
 keymap('n', '<leader>fo', '<cmd>Telescope oldfiles<cr>', opts)
 
 keymap('n', '<leader>F', '<cmd>Telescope builtin include_extensions=true<cr>', opts)
+keymap('n', '<A-x>', '<cmd>Telescope commands<cr>', opts)
