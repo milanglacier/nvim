@@ -103,7 +103,11 @@ keymap('n', '<A-H>', [[<C-w>H]], { noremap = true })
 keymap('n', '<A-J>', [[<C-w>J]], { noremap = true })
 keymap('n', '<A-K>', [[<C-w>K]], { noremap = true })
 keymap('n', '<A-L>', [[<C-w>L]], { noremap = true })
-keymap('n', '<A-o>', [[<C-w>o]], { noremap = true })
+keymap('n', '<A-o>', [[<C-w>o]], { noremap = true }) -- keep only current window
+
+keymap('n', '<A-m>', [[<C-w>|]], { noremap = true }) -- maxmize width of current win
+keymap('n', '<A-n>', [[<C-w>_]], { noremap = true }) -- maxmize height of current win
+keymap('n', '<A-=>', [[<C-w>=]], { noremap = true }) -- balance width/height of wins
 
 keymap('n', '<A-]>', [[<cmd>lua require('conf.move_tabs').scroll_in_float_win(1)<CR>]], { noremap = true })
 keymap('n', '<A-[>', [[<cmd>lua require('conf.move_tabs').scroll_in_float_win(-1)<CR>]], { noremap = true })
