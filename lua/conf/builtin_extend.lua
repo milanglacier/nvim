@@ -345,8 +345,7 @@ function M.open_URI_under_cursor()
             uri = string.gsub(uri, '#', '\\#') --double escapes any # signs
             uri = '"' .. uri .. '"'
             vim.cmd('!open ' .. uri)
-            vim.cmd 'mode'
-            -- print(uri)
+            vim.cmd 'redraw'
             return true
         else
             return false
