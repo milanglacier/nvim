@@ -49,11 +49,18 @@ vim.g.did_load_netrwFileHandlers = 1
 vim.g.mapleader = ' '
 vim.g.maplocalleader = [[  ]]
 
+local gui_font = {
+    'Sauce_Code_Pro_Nerd_Font_Complete:h15',
+    'Monaco_Nerd_Font_Complete:h15',
+    'SF_Mono_Regular:h15',
+    'Space_Mono_Nerd_Font_Complete:h15',
+}
+
 if not vim.g.vscode then
     vim.o.mouse = 'a'
     vim.env.NVIM_TUI_ENABLE_TRUE_COLOR = 1
     vim.o.termguicolors = true
-    vim.o.guifont = 'Monaco_Nerd_Font_Complete:h15'
+    vim.o.guifont = gui_font[4]
     vim.o.guicursor =
         [[n-v-c:block,i-ci-ve:ver70,r-cr:hor20,o:hor50,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175]]
 end
