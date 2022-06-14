@@ -280,14 +280,16 @@ function M.create_tags_for_yanked_columns(df, use_customized_parser)
     vim.cmd [[e .tags_columns]] -- open the file where ctags stores the tags
     local tag_bufid = vim.api.nvim_get_current_buf()
 
-    vim.cmd([[g/^\w\+\s\+]] .. newfile_vim_regexed .. [[\s.\+/d]]) -- remove existed entries for the current newtag file
+    vim.cmd([[g/^\w\+\s\+]] .. newfile_vim_regexed .. [[\s.\+/d]])
+    -- remove existed entries for the current newtag file
     vim.cmd [[w]]
 
     if ft == 'rmd' then
         ft = 'r'
     end
 
-    vim.cmd([[!ctags -a -f .tags_columns --fields='*' --language-force=]] .. ft .. ' ' .. newfile_shell_escaped) -- let ctags tag current newtag file
+    vim.cmd([[!ctags -a -f .tags_columns --fields='*' --language-force=]] .. ft .. ' ' .. newfile_shell_escaped)
+    -- let ctags tag current newtag file
 
     vim.api.nvim_win_set_buf(0, bufid)
     vim.cmd([[bd!]] .. newtag_bufid) -- delete the buffer created for tagging
