@@ -65,9 +65,10 @@ local night_scheme_options = {
             packadd [[kanagawa.nvim]]
             require('kanagawa').setup {
                 globalStatus = vim.o.laststatus == 3,
-                commentStyle = 'NONE',
-                keywordStyle = 'NONE',
-                variablebuiltinStyle = 'NONE',
+                commentStyle = { italic = false },
+                keywordStyle = { italic = false },
+                variablebuiltinStyle = { italic = false },
+                statementStyle = { bold = false },
             }
         end,
         function()
