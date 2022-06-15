@@ -39,7 +39,7 @@ require('packer').startup(function(use)
     use { 'rcarriga/nvim-notify', opt = true }
     use { 'echasnovski/mini.nvim', opt = true }
     use { 'folke/trouble.nvim', opt = true }
-    use { 'xiyaowong/nvim-transparent', opt = true }
+    use { 'folke/which-key.nvim', opt = true }
     use { 'kyazdani42/nvim-web-devicons', opt = true }
 
     -- text-editing, motions, jumps tools
