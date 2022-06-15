@@ -6,7 +6,7 @@ vim.cmd [[packadd! aerial.nvim]]
 vim.cmd [[packadd! lsp_signature.nvim]]
 vim.cmd [[packadd! lua-dev.nvim]]
 
-local key_opts = function(options)
+local opts = function(options)
     return {
         noremap = true,
         silent = true,
@@ -18,7 +18,7 @@ end
 local on_attach = function(client, bufnr)
     local bufmap = vim.api.nvim_buf_set_keymap
 
-    bufmap(bufnr, 'n', '<Leader>td', '<cmd>lua vim.lsp.buf.type_definition()<CR>', key_opts { 'lsp type definition' })
+    bufmap(bufnr, 'n', '<Leader>td', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts { 'lsp type definition' })
 
     -- reference
     bufmap(
@@ -26,7 +26,7 @@ local on_attach = function(client, bufnr)
         'n',
         'gr',
         '',
-        key_opts {
+        opts {
             desc = 'lsp references telescope',
             callback = function()
                 require('telescope.builtin').lsp_references {
@@ -40,25 +40,25 @@ local on_attach = function(client, bufnr)
     -- code action
     -- bufmap(bufnr, 'n', '<Leader>ca', "<cmd>lua require('lspsaga.codeaction').code_action()<CR>", opts {})
     -- bufmap(bufnr, 'v', '<Leader>ca', ":lua require('lspsaga.codeaction').range_code_action()<CR>", opts {})
-    bufmap(bufnr, 'n', '<Leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', key_opts { 'lsp code action' })
+    bufmap(bufnr, 'n', '<Leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts { 'lsp code action' })
     bufmap(
         bufnr,
         'x',
         '<Leader>ca',
         ':<C-U>lua vim.lsp.buf.range_code_action()<CR>',
-        key_opts {
+        opts {
             'lsp range code action',
         }
     )
 
     -- hover
-    bufmap(bufnr, 'n', 'gh', '<cmd>Lspsaga hover_doc<CR>', key_opts { 'lspsaga hover doc' })
+    bufmap(bufnr, 'n', 'gh', '<cmd>Lspsaga hover_doc<CR>', opts { 'lspsaga hover doc' })
     bufmap(
         bufnr,
         'n',
         '<C-f>',
         '',
-        key_opts {
+        opts {
             desc = 'lspsaga smartscroll downward',
             callback = function()
                 require('lspsaga.action').smart_scroll_with_saga(1, '<C-f>')
@@ -70,7 +70,7 @@ local on_attach = function(client, bufnr)
         'n',
         '<C-b>',
         '',
-        key_opts {
+        opts {
             desc = 'lspsaga smartscroll upward',
             callback = function()
                 require('lspsaga.action').smart_scroll_with_saga(-1, '<C-b>')
@@ -79,7 +79,7 @@ local on_attach = function(client, bufnr)
     )
 
     -- use glow-hover
-    bufmap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', key_opts { 'lsp hover by glow' })
+    bufmap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts { 'lsp hover by glow' })
 
     -- signaturehelp
     bufmap(
@@ -87,12 +87,12 @@ local on_attach = function(client, bufnr)
         'n',
         '<Leader>sh',
         '',
-        key_opts { 'lspsaga signature help', require('lspsaga.signaturehelp').signature_help }
+        opts { 'lspsaga signature help', require('lspsaga.signaturehelp').signature_help }
     )
     -- "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
 
     -- rename
-    bufmap(bufnr, 'n', '<Leader>rn', '<cmd>Lspsaga rename<CR>', key_opts { 'lspsaga rename' })
+    bufmap(bufnr, 'n', '<Leader>rn', '<cmd>Lspsaga rename<CR>', opts { 'lspsaga rename' })
 
     -- go to definition, implementation
     bufmap(
@@ -100,7 +100,7 @@ local on_attach = function(client, bufnr)
         'n',
         'gd',
         '',
-        key_opts {
+        opts {
             desc = 'lsp go to definition',
             callback = function()
                 require('telescope.builtin').lsp_definitions {
@@ -116,7 +116,7 @@ local on_attach = function(client, bufnr)
         'n',
         '<Leader>gi',
         '',
-        key_opts {
+        opts {
             desc = 'lsp go to implementation',
             callback = function()
                 require('telescope.builtin').lsp_implementations {
@@ -147,8 +147,8 @@ local on_attach = function(client, bufnr)
     })
 
     -- format
-    bufmap(bufnr, 'n', '<Leader>fm', '', key_opts { 'lsp format', vim.lsp.buf.formatting })
-    bufmap(bufnr, 'v', '<Leader>fm', ':<C-U>lua vim.lsp.buf.range_formatting()<CR>', key_opts { 'lsp range format' })
+    bufmap(bufnr, 'n', '<Leader>fm', '', opts { 'lsp format', vim.lsp.buf.formatting })
+    bufmap(bufnr, 'v', '<Leader>fm', ':<C-U>lua vim.lsp.buf.range_formatting()<CR>', opts { 'lsp range format' })
 
     -- diagnostic
     bufmap(
@@ -156,17 +156,17 @@ local on_attach = function(client, bufnr)
         'n',
         '<Leader>ds',
         '',
-        key_opts { 'lsp diagnostics by telescope', require('telescope.builtin').diagnostics }
+        opts { 'lsp diagnostics by telescope', require('telescope.builtin').diagnostics }
     )
-    bufmap(bufnr, 'n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', key_opts { 'lspsaga prev diagnostic' })
-    bufmap(bufnr, 'n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>', key_opts { 'lspsaga next diagnostic' })
+    bufmap(bufnr, 'n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', opts { 'lspsaga prev diagnostic' })
+    bufmap(bufnr, 'n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>', opts { 'lspsaga next diagnostic' })
     -- diagnostic show in line or in cursor
     bufmap(
         bufnr,
         'n',
         '<Leader>dl',
         '<cmd>Lspsaga show_line_diagnostics<CR>',
-        key_opts { 'lspsaga current line diagnostic' }
+        opts { 'lspsaga current line diagnostic' }
     )
 
     require('aerial').on_attach(client, bufnr)
