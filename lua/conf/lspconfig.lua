@@ -343,3 +343,8 @@ command('DiagnosticUnderlineToggle', function()
     has_underline = not has_underline
     vim.diagnostic.config { underline = has_underline }
 end, {})
+
+command('DiagnosticInlineToggle', function ()
+    vim.cmd 'DiagnosticUnderlineToggle'
+    vim.cmd 'DiagnosticVirtualTextToggle'
+end, {})
