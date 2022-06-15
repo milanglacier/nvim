@@ -224,27 +224,6 @@ local r_config = {
             },
         },
     },
-    on_init = function(_)
-        local timer = vim.loop.new_timer()
-        timer:start(
-            2000,
-            2000,
-            vim.schedule_wrap(function()
-                local active_clients = vim.lsp.get_active_clients()
-                local lsp_names = {}
-                for _, lsp in pairs(active_clients) do
-                    table.insert(lsp_names, lsp.name)
-                end
-
-                if not vim.tbl_contains(lsp_names, 'r_language_server') then
-                    vim.notify('r-lsp exits', vim.log.levels.WARN)
-                    timer:close()
-
-                    vim.cmd [[LspStart r_language_server]]
-                end
-            end)
-        )
-    end,
 }
 
 require('lspconfig').r_language_server.setup(r_config)
