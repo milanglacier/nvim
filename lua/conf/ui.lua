@@ -225,12 +225,18 @@ M.load.incline = function()
     })
 end
 
+M.load.which_key = function()
+    vim.cmd [[packadd! which-key.nvim]]
+    require('which-key').setup {}
+end
+
 M.load.devicons()
 M.load.lualine()
 M.load.luatab()
 M.load.notify()
 M.load.trouble()
 M.load.incline()
+M.load.which_key()
 
 M.reopen_qflist_by_trouble = function()
     local windows = vim.api.nvim_list_wins()
