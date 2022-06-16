@@ -15,10 +15,10 @@ local opts = function(options)
     }
 end
 
-local on_attach = function(client, bufnr)
-    local bufmap = vim.api.nvim_buf_set_keymap
+local bufmap = vim.api.nvim_buf_set_keymap
 
-    bufmap(bufnr, 'n', '<Leader>td', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts { 'lsp type definition' })
+local on_attach = function(client, bufnr)
+    bufmap(bufnr, 'n', '<Leader>lt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts { 'lsp type definition' })
 
     -- reference
     bufmap(
@@ -40,11 +40,11 @@ local on_attach = function(client, bufnr)
     -- code action
     -- bufmap(bufnr, 'n', '<Leader>ca', "<cmd>lua require('lspsaga.codeaction').code_action()<CR>", opts {})
     -- bufmap(bufnr, 'v', '<Leader>ca', ":lua require('lspsaga.codeaction').range_code_action()<CR>", opts {})
-    bufmap(bufnr, 'n', '<Leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts { 'lsp code action' })
+    bufmap(bufnr, 'n', '<Leader>la', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts { 'lsp code action' })
     bufmap(
         bufnr,
         'x',
-        '<Leader>ca',
+        '<Leader>la',
         ':<C-U>lua vim.lsp.buf.range_code_action()<CR>',
         opts {
             'lsp range code action',
@@ -85,14 +85,14 @@ local on_attach = function(client, bufnr)
     bufmap(
         bufnr,
         'n',
-        '<Leader>sh',
+        '<Leader>ls',
         '',
         opts { 'lspsaga signature help', require('lspsaga.signaturehelp').signature_help }
     )
     -- "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
 
     -- rename
-    bufmap(bufnr, 'n', '<Leader>rn', '<cmd>Lspsaga rename<CR>', opts { 'lspsaga rename' })
+    bufmap(bufnr, 'n', '<Leader>ln', '<cmd>Lspsaga rename<CR>', opts { 'lspsaga rename' })
 
     -- go to definition, implementation
     bufmap(
@@ -114,7 +114,7 @@ local on_attach = function(client, bufnr)
     bufmap(
         bufnr,
         'n',
-        '<Leader>gi',
+        '<Leader>li',
         '',
         opts {
             desc = 'lsp go to implementation',
@@ -147,14 +147,14 @@ local on_attach = function(client, bufnr)
     })
 
     -- format
-    bufmap(bufnr, 'n', '<Leader>fm', '', opts { 'lsp format', vim.lsp.buf.formatting })
-    bufmap(bufnr, 'v', '<Leader>fm', ':<C-U>lua vim.lsp.buf.range_formatting()<CR>', opts { 'lsp range format' })
+    bufmap(bufnr, 'n', '<Leader>lf', '', opts { 'lsp format', vim.lsp.buf.formatting })
+    bufmap(bufnr, 'v', '<Leader>lf', ':<C-U>lua vim.lsp.buf.range_formatting()<CR>', opts { 'lsp range format' })
 
     -- diagnostic
     bufmap(
         bufnr,
         'n',
-        '<Leader>ds',
+        '<Leader>ld',
         '',
         opts { 'lsp diagnostics by telescope', require('telescope.builtin').diagnostics }
     )
@@ -164,9 +164,9 @@ local on_attach = function(client, bufnr)
     bufmap(
         bufnr,
         'n',
-        '<Leader>dl',
+        '<Leader>ll',
         '<cmd>Lspsaga show_line_diagnostics<CR>',
-        opts { 'lspsaga current line diagnostic' }
+        opts { 'lspsaga line diagnostic' }
     )
 
     require('aerial').on_attach(client, bufnr)
@@ -286,7 +286,6 @@ require('lspconfig').sqls.setup {
 
         on_attach(client, bufnr)
         require('sqls').on_attach(client, bufnr)
-        local bufmap = vim.api.nvim_buf_set_keymap
         bufmap(bufnr, 'n', '<LocalLeader>ss', '<cmd>SqlsExecuteQuery<CR>', { silent = true })
         bufmap(bufnr, 'v', '<LocalLeader>ss', '<cmd>SqlsExecuteQuery<CR>', { silent = true })
         bufmap(bufnr, 'n', '<LocalLeader>sv', '<cmd>SqlsExecuteQueryVertical<CR>', { silent = true })
@@ -323,7 +322,7 @@ command('DiagnosticUnderlineToggle', function()
     vim.diagnostic.config { underline = has_underline }
 end, {})
 
-command('DiagnosticInlineToggle', function ()
+command('DiagnosticInlineToggle', function()
     vim.cmd 'DiagnosticUnderlineToggle'
     vim.cmd 'DiagnosticVirtualTextToggle'
 end, {})

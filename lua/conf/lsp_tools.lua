@@ -1,5 +1,6 @@
 local M = {}
 M.load = {}
+local bufmap = vim.api.nvim_buf_set_keymap
 
 M.load.lspkind = function()
     require('lspkind').init {
@@ -42,7 +43,9 @@ M.load.aerial = function()
         default_bindings = true,
         filter_kind = false,
         on_attach = function(bufnr)
-            vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>so', '<cmd>AerialToggle!<CR>', {})
+            bufmap(bufnr, 'n', '<leader>lo', '<cmd>AerialToggle!<CR>', {
+                desc = 'lsp symbol outline',
+            })
         end,
     }
 end

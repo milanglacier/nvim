@@ -2,43 +2,55 @@ local M = {}
 
 local keymap = vim.api.nvim_set_keymap
 
-keymap('i', 'jk', '<ESC>', { noremap = true })
-keymap('t', 'jk', [[<C-\><C-n>]], { noremap = true })
+local opts = { noremap = true, silent = true }
+local opts_desc = function(desc)
+    return {
+        noremap = true,
+        silent = true,
+        desc = desc,
+    }
+end
+
+keymap('i', 'jk', '<ESC>', opts)
+keymap('t', 'jk', [[<C-\><C-n>]], opts)
 
 keymap('', [[\]], [[<localleader>]], {})
 
-keymap('i', '<C-b>', '<Left>', { noremap = true })
-keymap('i', '<C-p>', '<Up>', { noremap = true })
-keymap('i', '<C-f>', '<Right>', { noremap = true })
-keymap('i', '<C-n>', '<Down>', { noremap = true })
-keymap('i', '<C-a>', '<home>', { noremap = true })
-keymap('i', '<C-e>', '<end>', { noremap = true })
-keymap('i', '<C-h>', '<BS>', { noremap = true })
-keymap('i', '<C-k>', '<ESC>d$i', { noremap = true })
+keymap('i', '<C-b>', '<Left>', opts)
+keymap('i', '<C-p>', '<Up>', opts)
+keymap('i', '<C-f>', '<Right>', opts)
+keymap('i', '<C-n>', '<Down>', opts)
+keymap('i', '<C-a>', '<home>', opts)
+keymap('i', '<C-e>', '<end>', opts)
+keymap('i', '<C-h>', '<BS>', opts)
+keymap('i', '<C-k>', '<ESC>d$i', opts)
 
-keymap('n', '<Leader>cd', [[:cd %:h<cr>]], { noremap = true })
-keymap('n', '<Leader>cu', [[:cd ..<cr>]], { noremap = true })
+keymap('n', '<Leader>cd', [[:cd %:h<cr>]], opts)
+keymap('n', '<Leader>cu', [[:cd ..<cr>]], opts)
 
 keymap('n', '<C-g>', '<ESC>', {})
 -- <C-g> by default echos the current file name, which is useless
 
-keymap('n', ']b', [[:bnext<cr>]], { noremap = true })
-keymap('n', '[b', [[:bprevious<cr>]], { noremap = true })
-keymap('n', ']q', [[:cnext<cr>]], { noremap = true })
-keymap('n', '[q', [[:cprevious<cr>]], { noremap = true })
-keymap('n', ']t', [[:tnext<cr>]], { noremap = true })
-keymap('n', '[t', [[:tprevious<cr>]], { noremap = true })
-keymap('n', '<Leader>tl', [[:ltag <C-R><C-W> | lopen<cr>]], { noremap = true })
+keymap('n', ']b', [[:bnext<cr>]], opts)
+keymap('n', '[b', [[:bprevious<cr>]], opts)
+keymap('n', ']q', [[:cnext<cr>]], opts)
+keymap('n', '[q', [[:cprevious<cr>]], opts)
+keymap('n', ']Q', [[:cnewer<cr>]], opts)
+keymap('n', '[Q', [[:colder<cr>]], opts)
+keymap('n', ']t', [[:tnext<cr>]], opts)
+keymap('n', '[t', [[:tprevious<cr>]], opts)
+keymap('n', '<Leader>mt', [[:ltag <C-R><C-W> | lopen<cr>]], opts_desc 'misc: tag word to loclist')
 -- open loclist to show the definition matches at current word
 -- <C-R> insert text in the register to the command line
 -- <C-W> alias for the word under cursor
 
-keymap('n', '<Leader>to', [[:tabonly<cr>]], { noremap = true })
-keymap('n', '<Leader>tn', [[:tabnew<cr>]], { noremap = true })
-keymap('n', '<Leader>tc', [[:tabclose<cr>]], { noremap = true })
+keymap('n', '<Leader>to', [[:tabonly<cr>]], opts)
+keymap('n', '<Leader>tn', [[:tabnew<cr>]], opts)
+keymap('n', '<Leader>tc', [[:tabclose<cr>]], opts)
 
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
+local command = vim.api.nvim_create_user_command
 
 M.my_augroup = augroup('MyAugroup', {})
 
@@ -61,7 +73,7 @@ function M.ping_cursor()
     vim.o.cursorcolumn = false
 end
 
-keymap('n', '<Leader>pc', '<cmd>lua require("conf.builtin_extend").ping_cursor()<CR>', { noremap = true })
+command('PingCursor', 'lua require("conf.builtin_extend").ping_cursor()', {})
 
 function M.textobj_code_chunk(ai, start_pattern, end_pattern, has_same_start_end_pattern)
     local row = vim.api.nvim_win_get_cursor(0)[1]
@@ -322,8 +334,6 @@ function M.generate_code_for_tagging_with_customized_parser(ft, df)
         vim.cmd([[g/^".\+'$/normal! I]] .. df .. '[[')
     end
 end
-
-local command = vim.api.nvim_create_user_command
 
 command('TagYankedColumns', function(options)
     local df = options.args

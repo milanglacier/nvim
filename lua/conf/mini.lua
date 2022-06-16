@@ -145,8 +145,15 @@ autocmd('ColorScheme', {
 })
 
 local keymap = vim.api.nvim_set_keymap
+local opts = function(desc)
+    return {
+        noremap = true,
+        silent = true,
+        desc = desc
+    }
+end
 
-keymap('n', '<Leader>bd', "<cmd>lua require('mini.bufremove').delete()<CR>", { noremap = true, silent = true })
-keymap('n', '<Leader>bw', "<cmd>lua require('mini.bufremove').wipeout()<CR>", { noremap = true, silent = true })
+keymap('n', '<Leader>bd', "<cmd>lua require('mini.bufremove').delete()<CR>", opts 'buffer delete and keep layout')
+keymap('n', '<Leader>bw', "<cmd>lua require('mini.bufremove').wipeout()<CR>", opts 'buffer delete and keep layout')
 
 return M

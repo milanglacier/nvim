@@ -28,8 +28,13 @@ M.load.spectre = function()
 
     require('spectre').setup()
 
-    keymap('n', '<Leader>rg', "<cmd>lua require('spectre').open()<CR>", { noremap = true })
-    keymap('v', '<Leader>rg', "<cmd>lua require('spectre').open_visual()<CR>", { noremap = true })
+    keymap('n', '<Leader>fR', "<cmd>lua require('spectre').open()<CR>", { noremap = true, desc = 'rg at side panel' })
+    keymap(
+        'v',
+        '<Leader>fR',
+        ":<C-U>lua require('spectre').open_visual()<CR>",
+        { noremap = true, desc = 'rg at side panel' }
+    )
 end
 
 M.load.mkdp = function()

@@ -171,10 +171,18 @@ if not vim.g.vscode then
     vim.cmd [[packadd! nvim-treesitter-context]]
     vim.cmd [[packadd! iswap.nvim]]
 
-    keymap('o', '<leader>T', ":<C-U>lua require('tsht').nodes()<CR>", { silent = true })
-    keymap('v', '<leader>T', ":<C-U>lua require('tsht').nodes()<CR>", { noremap = true, silent = true })
-    keymap('n', '<leader>sw', '<cmd>ISwap<cr>', { noremap = true, silent = true })
-    keymap('n', '<leader>sW', '<cmd>ISwapWith<cr>', { noremap = true, silent = true })
+    local opts = function(desc)
+        return {
+            silent = true,
+            noremap = true,
+            desc = desc
+        }
+    end
+
+    keymap('o', '<leader>T', ":<C-U>lua require('tsht').nodes()<CR>", opts 'treesitter nodes')
+    keymap('v', '<leader>T', ":<C-U>lua require('tsht').nodes()<CR>", opts 'treesitter nodes')
+    keymap('n', '<leader>ms', '<cmd>ISwap<cr>', opts 'misc: treesitter swap')
+    keymap('n', '<leader>mS', '<cmd>ISwapWith<cr>', opts 'misc: treesitter swapwith')
 
     require('treesitter-context').setup {
         enable = true,

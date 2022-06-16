@@ -29,7 +29,7 @@ M.load.project_nvim = function()
     }
 
     local keymap = vim.api.nvim_set_keymap
-    keymap('n', '<Leader>pj', '<cmd>Telescope projects<CR>', { noremap = true })
+    keymap('n', '<Leader>fp', '<cmd>Telescope projects<CR>', { noremap = true })
 end
 
 M.load.nvim_tree = function()
@@ -53,9 +53,9 @@ M.load.nvim_tree = function()
 
     local keymap = vim.api.nvim_set_keymap
 
-    keymap('n', '<leader>tt', '<cmd>NvimTreeToggle<CR>', { noremap = true, silent = true })
-    keymap('n', '<leader>tf', '<cmd>NvimTreeFindFileToggle<CR>', { noremap = true, silent = true })
-    keymap('n', '<leader>tr', '<cmd>NvimTreeRefresh<CR>', { noremap = true, silent = true })
+    keymap('n', '<leader>et', '<cmd>NvimTreeToggle<CR>', { noremap = true, silent = true })
+    keymap('n', '<leader>ef', '<cmd>NvimTreeFindFileToggle<CR>', { noremap = true, silent = true })
+    keymap('n', '<leader>er', '<cmd>NvimTreeRefresh<CR>', { noremap = true, silent = true })
 end
 
 M.load.winshift = function()

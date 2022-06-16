@@ -26,11 +26,11 @@ end
 keymap('n', '<Leader>xr', notify 'references-view.findReferences', { silent = true }) -- language references
 keymap('n', '<Leader>xd', notify 'workbench.actions.view.problems', { silent = true }) -- language diagnostics
 keymap('n', 'gr', notify 'editor.action.goToReferences', { silent = true })
-keymap('n', '<Leader>rn', notify 'editor.action.rename', { silent = true })
-keymap('n', '<Leader>fm', notify 'editor.action.formatDocument', { silent = true })
-keymap('n', '<Leader>ca', notify 'editor.action.refactor', { silent = true }) -- language code actions
+keymap('n', '<Leader>ln', notify 'editor.action.rename', { silent = true })
+keymap('n', '<Leader>lf', notify 'editor.action.formatDocument', { silent = true })
+keymap('n', '<Leader>la', notify 'editor.action.refactor', { silent = true }) -- language code actions
 
-keymap('n', '<Leader>rg', notify 'workbench.action.findInFiles', { silent = true }) -- use ripgrep to search files
+keymap('n', '<Leader>fR', notify 'workbench.action.findInFiles', { silent = true }) -- use ripgrep to search files
 keymap('n', '<Leader>ts', notify 'workbench.action.toggleSidebarVisibility', { silent = true })
 keymap('n', '<Leader>th', notify 'workbench.action.toggleAuxiliaryBar', { silent = true }) -- toggle docview (help page)
 keymap('n', '<Leader>tp', notify 'workbench.action.togglePanel', { silent = true })
@@ -41,7 +41,7 @@ keymap('n', '<Leader>tw', notify 'workbench.action.terminal.toggleTerminal', { s
 keymap('n', '<Leader>mp', notify 'markdown.showPreviewToSide', { silent = true }) -- markdown preview
 
 keymap('v', '<Leader>fm', v_notify 'editor.action.formatSelection', { silent = true })
-keymap('v', '<Leader>ca', v_notify 'editor.action.refactor', { silent = true })
+keymap('v', '<Leader>la', v_notify 'editor.action.refactor', { silent = true })
 keymap('v', '<Leader>fc', v_notify 'workbench.action.showCommands', { silent = true })
 
 autocmd('FileType', {
