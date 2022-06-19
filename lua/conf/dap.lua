@@ -102,3 +102,10 @@ keymap('n', '<Leader>df', '<cmd>lua require"telescope".extensions.dap.frames{}<C
 
 vim.fn.sign_define('DapBreakpoint', { text = '', texhl = 'TodoFgFIX' })
 vim.fn.sign_define('DapBreakpointCondition', { text = '', texhl = 'TodoFgFIX' })
+
+keymap('n', '<Plug>(dapui-expand)', '<CR>', {})
+keymap('n', '<Plug>(dapui-open)', 'o', {})
+keymap('n', '<Plug>(dapui-remove)', 'd', {})
+keymap('n', '<Plug>(dapui-edit)', 'e', {})
+keymap('n', '<Plug>(dapui-repl)', 'r', {})
+keymap('n', '<Plug>(dapui-toggle)', 't', {})
