@@ -51,6 +51,16 @@ keymap('n', '<F10>', '<cmd>lua require"dap".step_over()<CR>', opts 'dap step ove
 keymap('n', '<F11>', '<cmd>lua require"dap".step_into()<CR>', opts 'dap step into')
 keymap('n', '<S-F11>', '<cmd>lua require"dap".step_out()<CR>', opts 'dap step out')
 
+-- iterminal special keysequence
+keymap('n', '<F17>', '<cmd>lua require"dap".close()<CR>', opts ' dap close')
+keymap('n', '<F23>', '<cmd>lua require"dap".step_out()<CR>', opts 'dap step out')
+keymap(
+    'n',
+    '<F21>',
+    "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>",
+    opts 'dap conditional breakpoint'
+)
+
 -- builtin dap ui
 
 keymap('n', '<Leader>dh', '<cmd>lua require("dap.ui.widgets").hover()<CR>', opts 'dap hover')
