@@ -64,6 +64,12 @@ require('telescope').load_extension 'projects'
 require('telescope').load_extension 'ui-select'
 
 local opts = { noremap = true }
+local opts_desc = function(desc)
+    return {
+        noremap = true,
+        desc = desc,
+    }
+end
 
 local keymap = vim.api.nvim_set_keymap
 
@@ -76,11 +82,13 @@ keymap('n', '<leader>fk', '<cmd>Telescope keymaps<cr>', opts)
 keymap('n', '<leader>fc', '<cmd>Telescope commands<cr>', opts)
 keymap('n', '<leader>fC', '<cmd>Telescope command_history<cr>', opts)
 
-keymap('n', '<leader>ft', '<cmd>Telescope treesitter<cr>', opts)
 keymap('n', '<leader>fs', '<cmd>Telescope lsp_document_symbols<cr>', opts)
 keymap('n', '<leader>fr', '<cmd>Telescope registers<cr>', opts)
 keymap('n', '<leader>fj', '<cmd>Telescope jumplist<cr>', opts)
 keymap('n', '<leader>fo', '<cmd>Telescope oldfiles<cr>', opts)
+keymap('n', '<leader>fT', '<cmd>Telescope treesitter<cr>', opts)
+keymap('n', '<leader>ft', '<cmd>Telescope tags<cr>', opts)
 
-keymap('n', '<leader>F', '<cmd>Telescope builtin include_extensions=true<cr>', opts)
-keymap('n', '<A-x>', '<cmd>Telescope commands<cr>', opts)
+keymap('n', '<leader>F', '<cmd>Telescope builtin include_extensions=true<cr>', opts_desc 'Telescope extensions')
+keymap('n', '<leader>fe', '<cmd>Telescope builtin include_extensions=true<cr>', opts_desc 'Telescope extensions')
+keymap('n', '<A-x>', '<cmd>Telescope commands<cr>', opts_desc 'Telescope extensions')
