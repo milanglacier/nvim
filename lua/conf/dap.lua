@@ -8,24 +8,41 @@ local mypath = require 'bin_path'
 
 require('dap-python').setup(mypath.python)
 
-require('dapui').setup {
+local dap = require 'dap'
+local dapui = require 'dapui'
 
-    sidebar = {
-
-        elements = {
-            { id = 'breakpoints', size = 0.15 },
-            { id = 'stacks', size = 0.3 },
-            { id = 'watches', size = 0.25 },
-            { id = 'scopes', size = 0.3 },
+dapui.setup {
+    layouts = {
+        {
+            elements = {
+                { id = 'breakpoints', size = 0.15 },
+                { id = 'stacks', size = 0.3 },
+                { id = 'watches', size = 0.25 },
+                { id = 'scopes', size = 0.3 },
+            },
+            position = 'right',
+            size = math.floor(vim.o.columns / 3),
         },
-
-        position = 'right',
+        {
+            elements = {
+                'repl',
+                'console',
+            },
+            size = math.floor(vim.o.lines / 5),
+            position = 'bottom',
+        },
     },
-
-    tray = { elements = { nil }, size = 0 },
 }
 
-require('dap').defaults.fallback.terminal_win_cmd = 'belowright 15 new'
+dap.listeners.after.event_initialized['dapui_config'] = function()
+    dapui.open()
+end
+dap.listeners.before.event_terminated['dapui_config'] = function()
+    dapui.close()
+end
+dap.listeners.before.event_exited['dapui_config'] = function()
+    dapui.close()
+end
 
 local opts = function(desc)
     return { noremap = true, desc = desc }
