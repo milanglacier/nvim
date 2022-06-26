@@ -17,18 +17,14 @@ telescope.setup {
     },
     defaults = {
         mappings = {
-
             i = {
-
                 ['<C-s>'] = 'select_horizontal',
                 ['<C-b>'] = 'preview_scrolling_up',
                 ['<C-f>'] = 'preview_scrolling_down',
                 ['<C-/>'] = 'which_key',
                 ['<C-h>'] = 'which_key',
             },
-
             n = {
-
                 ['t'] = 'select_tab',
                 ['s'] = 'select_horizontal',
                 ['v'] = 'select_vertical',
@@ -42,9 +38,7 @@ telescope.setup {
         },
         layout_strategy = 'vertical',
         layout_config = {
-
             vertical = {
-
                 preview_cutoff = 30,
             },
         },
@@ -88,6 +82,7 @@ keymap('n', '<leader>fj', '<cmd>Telescope jumplist<cr>', opts)
 keymap('n', '<leader>fo', '<cmd>Telescope oldfiles<cr>', opts)
 keymap('n', '<leader>fT', '<cmd>Telescope treesitter<cr>', opts)
 keymap('n', '<leader>ft', '<cmd>Telescope tags<cr>', opts)
+keymap('n', '<leader>fm', '<cmd>Telescope marks<cr>', opts)
 
 keymap('n', '<leader>F', '<cmd>Telescope builtin include_extensions=true<cr>', opts_desc 'Telescope extensions')
 keymap('n', '<leader>fe', '<cmd>Telescope builtin include_extensions=true<cr>', opts_desc 'Telescope extensions')
