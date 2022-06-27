@@ -83,7 +83,7 @@ require('packer').startup(function(use)
     use { 'neovim/nvim-lspconfig', opt = true }
 
     -- lsp related tools, including lsp symbols, symbol outline, etc.
-    use { 'tami5/lspsaga.nvim', opt = true }
+    use { 'glepnir/lspsaga.nvim', opt = true }
     use { 'stevearc/aerial.nvim', opt = true }
     use { 'onsails/lspkind-nvim', opt = true }
     use { 'ray-x/lsp_signature.nvim', opt = true }

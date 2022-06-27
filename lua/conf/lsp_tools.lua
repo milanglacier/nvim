@@ -52,7 +52,7 @@ end
 
 M.load.lspsaga = function()
     local saga = require 'lspsaga'
-    saga.setup {
+    saga.init_lsp_saga {
         finder_action_keys = {
             open = { 'o', '<cr>' },
             vsplit = 'v',
@@ -66,11 +66,7 @@ M.load.lspsaga = function()
             quit = { 'q', '<ESC>' },
             exec = '<CR>',
         },
-        rename_action_keys = {
-            quit = { '<C-c>', '<ESC>' },
-            exec = '<CR>', -- quit can be a table
-        },
-        code_action_prompt = { enable = false },
+        rename_action_quit = '<ESC>',
         max_preview_lines = 100,
     }
 end

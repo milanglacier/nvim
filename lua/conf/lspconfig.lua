@@ -37,6 +37,8 @@ local on_attach = function(client, bufnr)
         }
     )
 
+    bufmap(bufnr, 'n', '<Leader>lF', '<cmd>Lspsaga lsp_finder<CR>', opts { 'lspsaga finder' })
+
     -- code action
     -- bufmap(bufnr, 'n', '<Leader>ca', "<cmd>lua require('lspsaga.codeaction').code_action()<CR>", opts {})
     -- bufmap(bufnr, 'v', '<Leader>ca', ":lua require('lspsaga.codeaction').range_code_action()<CR>", opts {})
@@ -61,7 +63,7 @@ local on_attach = function(client, bufnr)
         opts {
             desc = 'lspsaga smartscroll downward',
             callback = function()
-                require('lspsaga.action').smart_scroll_with_saga(1, '<C-f>')
+                require('lspsaga.action').smart_scroll_with_saga(1)
             end,
         }
     )
@@ -73,7 +75,7 @@ local on_attach = function(client, bufnr)
         opts {
             desc = 'lspsaga smartscroll upward',
             callback = function()
-                require('lspsaga.action').smart_scroll_with_saga(-1, '<C-b>')
+                require('lspsaga.action').smart_scroll_with_saga(-1)
             end,
         }
     )
@@ -126,7 +128,7 @@ local on_attach = function(client, bufnr)
             end,
         }
     )
-    -- keymap(bufnr, 'n', 'gd', "<cmd>lua require'lspsaga.provider'.preview_definition()<CR>", opts)
+    bufmap(bufnr, 'n', '<Leader>lD', '<cmd>Lspsaga preview_definition<CR>', opts { 'lspsaga preview definition' })
 
     -- workspace
     local bufcmd = vim.api.nvim_buf_create_user_command
@@ -161,13 +163,7 @@ local on_attach = function(client, bufnr)
     bufmap(bufnr, 'n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', opts { 'lspsaga prev diagnostic' })
     bufmap(bufnr, 'n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>', opts { 'lspsaga next diagnostic' })
     -- diagnostic show in line or in cursor
-    bufmap(
-        bufnr,
-        'n',
-        '<Leader>ll',
-        '<cmd>Lspsaga show_line_diagnostics<CR>',
-        opts { 'lspsaga line diagnostic' }
-    )
+    bufmap(bufnr, 'n', '<Leader>ll', '<cmd>Lspsaga show_line_diagnostics<CR>', opts { 'lspsaga line diagnostic' })
 
     require('aerial').on_attach(client, bufnr)
     require('conf.lsp_tools').signature(bufnr)
