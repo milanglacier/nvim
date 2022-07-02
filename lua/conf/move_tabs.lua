@@ -86,30 +86,56 @@ end
 
 local keymap = vim.api.nvim_set_keymap
 
-keymap('n', '<A-f>', [[<cmd>lua require("conf.move_tabs").move_to_prev_tab()<CR>]], { noremap = true })
-keymap('n', '<A-b>', [[<cmd>lua require("conf.move_tabs").move_to_next_tab()<CR>]], { noremap = true })
+local function opts_desc(desc)
+    return {
+        noremap = true,
+        desc = desc,
+    }
+end
 
-keymap('n', '<A-w>', [[<C-w>w]], { noremap = true })
-keymap('n', '<A-p>', [[<C-w>p]], { noremap = true })
-keymap('n', '<A-t>', [[<C-w>T]], { noremap = true })
-keymap('n', '<A-q>', [[<C-w>q]], { noremap = true })
-keymap('n', '<A-v>', [[<C-w>v]], { noremap = true })
-keymap('n', '<A-s>', [[<C-w>s]], { noremap = true })
-keymap('n', '<A-h>', [[<C-w>h]], { noremap = true })
-keymap('n', '<A-j>', [[<C-w>j]], { noremap = true })
-keymap('n', '<A-k>', [[<C-w>k]], { noremap = true })
-keymap('n', '<A-l>', [[<C-w>l]], { noremap = true })
-keymap('n', '<A-H>', [[<C-w>H]], { noremap = true })
-keymap('n', '<A-J>', [[<C-w>J]], { noremap = true })
-keymap('n', '<A-K>', [[<C-w>K]], { noremap = true })
-keymap('n', '<A-L>', [[<C-w>L]], { noremap = true })
-keymap('n', '<A-o>', [[<C-w>o]], { noremap = true }) -- keep only current window
+keymap('n', '<A-f>', [[<cmd>lua require("conf.move_tabs").move_to_prev_tab()<CR>]], opts_desc 'win: move to prev tab')
+keymap('n', '<A-b>', [[<cmd>lua require("conf.move_tabs").move_to_next_tab()<CR>]], opts_desc 'win: move to next tab')
 
-keymap('n', '<A-m>', [[<C-w>|]], { noremap = true }) -- maxmize width of current win
-keymap('n', '<A-n>', [[<C-w>_]], { noremap = true }) -- maxmize height of current win
-keymap('n', '<A-=>', [[<C-w>=]], { noremap = true }) -- balance width/height of wins
+keymap('n', '<A-w>', [[<C-w>w]], opts_desc 'win: switch win')
+keymap('n', '<A-p>', [[<C-w>p]], opts_desc 'win: prev win')
+keymap('n', '<A-t>', [[<C-w>T]], opts_desc 'win: move to new tab')
+keymap('n', '<A-q>', [[<C-w>q]], opts_desc 'win: quit win')
+keymap('n', '<A-v>', [[<C-w>v]], opts_desc 'win: vsplit')
+keymap('n', '<A-s>', [[<C-w>s]], opts_desc 'win: hsplit')
+keymap('n', '<A-h>', [[<C-w>h]], opts_desc 'win: go to left')
+keymap('n', '<A-j>', [[<C-w>j]], opts_desc 'win: go to below')
+keymap('n', '<A-k>', [[<C-w>k]], opts_desc 'win: go to above')
+keymap('n', '<A-l>', [[<C-w>l]], opts_desc 'win: go to right')
+keymap('n', '<A-H>', [[<C-w>H]], opts_desc 'win: move to left')
+keymap('n', '<A-J>', [[<C-w>J]], opts_desc 'win: move to below')
+keymap('n', '<A-K>', [[<C-w>K]], opts_desc 'win: move to above')
+keymap('n', '<A-L>', [[<C-w>L]], opts_desc 'win: move to right')
+keymap('n', '<A-o>', [[<C-w>o]], opts_desc 'win: keep this only') -- keep only current window
+keymap('n', '<A-=>', [[<C-w>=]], opts_desc 'win: balance win w/h') -- balance width/height of wins
 
 keymap('n', '<A-]>', [[<cmd>lua require('conf.move_tabs').scroll_in_float_win(1)<CR>]], { noremap = true })
 keymap('n', '<A-[>', [[<cmd>lua require('conf.move_tabs').scroll_in_float_win(-1)<CR>]], { noremap = true })
+
+keymap('n', '<Leader>wb', [[<cmd>lua require("conf.move_tabs").move_to_prev_tab()<CR>]], opts_desc 'win: move to prev tab')
+keymap('n', '<Leader>wf', [[<cmd>lua require("conf.move_tabs").move_to_next_tab()<CR>]], opts_desc 'win: move to next tab')
+
+keymap('n', '<Leader>ww', [[<C-w>w]], opts_desc 'win: switch win')
+keymap('n', '<Leader>wp', [[<C-w>p]], opts_desc 'win: go to prev win')
+keymap('n', '<Leader>wT', [[<C-w>T]], opts_desc 'win: move to new tab')
+keymap('n', '<Leader>wq', [[<C-w>q]], opts_desc 'win: quit win')
+keymap('n', '<Leader>wv', [[<C-w>v]], opts_desc 'win: vsplit')
+keymap('n', '<Leader>ws', [[<C-w>s]], opts_desc 'win: hsplit')
+keymap('n', '<Leader>wh', [[<C-w>h]], opts_desc 'win: go to left')
+keymap('n', '<Leader>wj', [[<C-w>j]], opts_desc 'win: go to below')
+keymap('n', '<Leader>wk', [[<C-w>k]], opts_desc 'win: go to above')
+keymap('n', '<Leader>wl', [[<C-w>l]], opts_desc 'win: go to right')
+keymap('n', '<Leader>wH', [[<C-w>H]], opts_desc 'win: move to left')
+keymap('n', '<Leader>wJ', [[<C-w>J]], opts_desc 'win: move to below')
+keymap('n', '<Leader>wK', [[<C-w>K]], opts_desc 'win: move to above')
+keymap('n', '<Leader>wL', [[<C-w>L]], opts_desc 'win: move to right')
+keymap('n', '<Leader>wo', [[<C-w>o]], opts_desc 'win: keep this only') -- keep only current window
+keymap('n', '<Leader>w|', [[<C-w>|]], opts_desc 'win: maximize win width') -- maxmize width of current win
+keymap('n', '<Leader>w_', [[<C-w>_]], opts_desc 'win: maxmize win height') -- maxmize height of current win
+keymap('n', '<Leader>w=', [[<C-w>=]], opts_desc 'win: balance win w/h') -- balance width/height of wins
 
 return M
