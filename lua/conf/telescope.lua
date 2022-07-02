@@ -22,7 +22,6 @@ telescope.setup {
                 ['<C-b>'] = 'preview_scrolling_up',
                 ['<C-f>'] = 'preview_scrolling_down',
                 ['<C-/>'] = 'which_key',
-                ['<C-h>'] = 'which_key',
             },
             n = {
                 ['t'] = 'select_tab',
