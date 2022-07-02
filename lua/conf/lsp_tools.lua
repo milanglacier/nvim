@@ -53,6 +53,10 @@ end
 M.load.lspsaga = function()
     local saga = require 'lspsaga'
     saga.init_lsp_saga {
+        code_action_lightbulb = {
+            virtual_text = false,
+        },
+        move_in_saga = { prev = 'k', next = 'j' },
         finder_action_keys = {
             open = { 'o', '<cr>' },
             vsplit = 'v',
