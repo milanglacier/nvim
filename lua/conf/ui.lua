@@ -78,7 +78,7 @@ M.load.lualine = function()
             separator = '  ',
         }
 
-        ts_status = ts_status ~= nil and ts_status:gsub('%s+', ' ')
+        ts_status = ts_status:gsub('%s+', ' ')
         return ts_status
     end
 
