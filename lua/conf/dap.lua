@@ -55,7 +55,7 @@ local keymap = vim.api.nvim_set_keymap
 
 keymap('n', '<F5>', '<cmd>lua require"dap".continue()<CR>', opts 'dap continue')
 keymap('n', '<F6>', '<cmd>lua require"dap".pause()<CR>', opts 'dap pause')
-keymap('n', '<S-F5>', '<cmd>lua require"dap".close()<CR>', opts ' dap close')
+keymap('n', '<S-F5>', '<cmd>lua require"dap".close()<CR>', opts 'dap close')
 keymap('n', '<F8>', '<cmd>lua require"dap".run_to_cursor()<CR>', opts 'dap run to cursor')
 keymap('n', '<F9>', '<cmd>lua require"dap".toggle_breakpoint()<CR>', opts 'dap breakpoint')
 keymap(
@@ -69,7 +69,7 @@ keymap('n', '<F11>', '<cmd>lua require"dap".step_into()<CR>', opts 'dap step int
 keymap('n', '<S-F11>', '<cmd>lua require"dap".step_out()<CR>', opts 'dap step out')
 
 -- iterminal special keysequence
-keymap('n', '<F17>', '<cmd>lua require"dap".close()<CR>', opts ' dap close')
+keymap('n', '<F17>', '<cmd>lua require"dap".close()<CR>', opts 'dap close')
 keymap('n', '<F23>', '<cmd>lua require"dap".step_out()<CR>', opts 'dap step out')
 keymap(
     'n',
