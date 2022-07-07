@@ -260,7 +260,7 @@ M.winbar = function()
         '',
     }
 
-    local special_icon = "ﰨ "
+    local special_icon = 'ﰨ '
 
     for _, filetype in pairs(ft_blacklist) do
         if ft == filetype then
@@ -270,10 +270,14 @@ M.winbar = function()
 
     local winwidth = vim.api.nvim_win_get_width(0)
     local filename = vim.fn.expand '%:.'
-    local icon, _ = require('nvim-web-devicons').get_icon_color(filename, ft)
+    local extension = vim.fn.expand '%:e'
+    local icon = require('nvim-web-devicons').get_icon_by_filetype(ft)
 
     if not icon then
-        return special_icon .. ft
+        icon = require('nvim-web-devicons').get_icon(filename, extension)
+        if not icon then
+            return special_icon .. ft
+        end
     end
 
     local winbar = icon .. ' ' .. filename
@@ -289,9 +293,10 @@ M.winbar = function()
             separator = '  ',
         }
 
-        ts_status = ts_status:gsub('%s+', ' ')
-
-        winbar = winbar .. '  ' .. ts_status
+        if ts_status ~= nil and ts_status ~= '' then
+            ts_status = ts_status:gsub('%s+', ' ')
+            winbar = winbar .. '  ' .. ts_status
+        end
     end
 
     return winbar
