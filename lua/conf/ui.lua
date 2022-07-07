@@ -1,6 +1,8 @@
 local M = {}
 M.load = {}
 
+local has_winbar = vim.fn.has 'nvim-0.8' == 1
+
 M.load.lualine = function()
     vim.cmd [[packadd! lualine.nvim]]
     -- Override 'encoding': Don't display if encoding is UTF-8.
@@ -80,6 +82,11 @@ M.load.lualine = function()
         return ts_status
     end
 
+    local use_ts = nil
+    if not has_winbar then
+        use_ts = treesitter_statusline
+    end
+
     require('lualine').setup {
         options = {
             icons_enabled = true,
@@ -97,7 +104,7 @@ M.load.lualine = function()
                 comp_of_max_width('diff', 80),
                 'diagnostics',
             },
-            lualine_c = { 'filename', treesitter_statusline },
+            lualine_c = { 'filename', use_ts },
             lualine_x = { encoding, fileformat, 'filetype' },
             lualine_y = { comp_of_max_width('progress', 40) },
             lualine_z = { comp_of_max_width('location', 60) },
@@ -227,7 +234,67 @@ end
 
 M.load.which_key = function()
     vim.cmd [[packadd! which-key.nvim]]
-    require('which-key').setup {}
+    require('which-key').setup {
+        marks = false,
+        registers = false,
+        preset = {
+            operators = false,
+        },
+    }
+end
+
+local set_hl = vim.api.nvim_set_hl
+local get_hl = vim.api.nvim_get_hl_by_name
+local autocmd = vim.api.nvim_create_autocmd
+local my_augroup = require('conf.builtin_extend').my_augroup
+
+M.winbar = function()
+    local ft = vim.bo.filetype
+    local ft_blacklist = {
+        'toggleterm',
+        'aerial',
+        'NvimTree',
+        'Trouble',
+        'qf',
+        'starter',
+        '',
+    }
+
+    local special_icon = "ﰨ "
+
+    for _, filetype in pairs(ft_blacklist) do
+        if ft == filetype then
+            return special_icon .. ft
+        end
+    end
+
+    local winwidth = vim.api.nvim_win_get_width(0)
+    local filename = vim.fn.expand '%:.'
+    local icon, _ = require('nvim-web-devicons').get_icon_color(filename, ft)
+
+    if not icon then
+        return special_icon .. ft
+    end
+
+    local winbar = icon .. ' ' .. filename
+
+    local rest_length = winwidth - #winbar
+    local is_focused = vim.api.nvim_get_current_win() == vim.api.nvim_tabpage_get_win(0)
+
+    if rest_length > 5 and is_focused then
+        local size = math.floor(rest_length * 0.8)
+
+        local ts_status = require('nvim-treesitter').statusline {
+            indicator_size = size,
+            separator = '  ',
+        }
+
+        ts_status = ts_status:gsub('%s+', ' ')
+
+        winbar = winbar .. '  ' .. ts_status
+    end
+
+    return winbar
 end
 
 M.load.devicons()
@@ -235,8 +302,23 @@ M.load.lualine()
 M.load.luatab()
 M.load.notify()
 M.load.trouble()
-M.load.incline()
 M.load.which_key()
+
+if has_winbar then
+    set_hl(0, 'WinBar', get_hl('lualine_b_normal', true))
+    set_hl(0, 'WinBarNC', get_hl('lualine_a_normal', true))
+    vim.o.winbar = "%{%v:lua.require'conf.ui'.winbar()%}"
+    autocmd('ColorScheme', {
+        group = my_augroup,
+        callback = function()
+            set_hl(0, 'WinBar', get_hl('lualine_b_normal', true))
+            set_hl(0, 'WinBarNC', get_hl('lualine_a_normal', true))
+        end,
+        desc = 'set hl group for winbar',
+    })
+else
+    M.load.incline()
+end
 
 M.reopen_qflist_by_trouble = function()
     local windows = vim.api.nvim_list_wins()
