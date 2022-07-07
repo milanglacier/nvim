@@ -91,7 +91,7 @@ function M.textobj_code_chunk(ai, start_pattern, end_pattern, has_same_start_end
     local chunk_start = nil
 
     for row_idx = row, 1, -1 do
-        local line_content = vim.api.nvim_buf_get_lines(0, row_idx - 1, row_idx, {})[1]
+        local line_content = vim.api.nvim_buf_get_lines(0, row_idx - 1, row_idx, false)[1]
 
         -- upward searching if find the end_pattern first which means
         -- the cursor pos is not in a chunk, then early return
@@ -115,7 +115,7 @@ function M.textobj_code_chunk(ai, start_pattern, end_pattern, has_same_start_end
         end
 
         for row_idx = chunk_start + 1, max_row, 1 do
-            local line_content = vim.api.nvim_buf_get_lines(0, row_idx - 1, row_idx, {})[1]
+            local line_content = vim.api.nvim_buf_get_lines(0, row_idx - 1, row_idx, false)[1]
 
             if line_content:match(end_pattern) then
                 chunk_end = row_idx
