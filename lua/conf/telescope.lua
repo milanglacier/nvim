@@ -70,7 +70,7 @@ keymap('n', '<leader>ff', '<cmd>Telescope find_files<cr>', opts)
 keymap('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', opts)
 keymap('n', '<leader>fb', '<cmd>Telescope buffers<cr>', opts)
 keymap('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', opts)
-keymap('n', '<leader>fk', '<cmd>Telescope keymaps<cr>', opts)
+keymap('n', '<leader>fk', '<cmd>Telescope keymaps show_plug=false<cr>', opts)
 
 keymap('n', '<leader>fc', '<cmd>Telescope commands<cr>', opts)
 keymap('n', '<leader>fC', '<cmd>Telescope command_history<cr>', opts)

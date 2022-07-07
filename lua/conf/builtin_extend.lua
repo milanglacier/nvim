@@ -11,6 +11,14 @@ local opts_desc = function(desc)
     }
 end
 
+M.magic_prefix = ''
+M.emmykeymap = function(mode, lhs, rhs)
+    lhs = M.magic_prefix .. lhs
+    keymap(mode, lhs, rhs, {
+        silent = true,
+    })
+end
+
 keymap('i', 'jk', '<ESC>', opts)
 keymap('t', 'jk', [[<C-\><C-n>]], opts)
 
