@@ -78,7 +78,7 @@ M.load.lualine = function()
             separator = '  ',
         }
 
-        ts_status = ts_status:gsub('%s+', ' ')
+        ts_status = ts_status ~= nil and ts_status:gsub('%s+', ' ')
         return ts_status
     end
 
@@ -253,7 +253,13 @@ M.winbar = function()
         'Trouble',
         'qf',
         'starter',
-        '',
+    }
+
+    local ft_match_blacklist = {
+        'spectre',
+        'Neogit',
+        'Diffview',
+        'dap',
     }
 
     local special_icon = 'ﰨ '
@@ -264,15 +270,33 @@ M.winbar = function()
         end
     end
 
+    for _, filetype in pairs(ft_match_blacklist) do
+        if ft:match(filetype) then
+            return special_icon .. ft
+        end
+    end
+
     local winwidth = vim.api.nvim_win_get_width(0)
     local filename = vim.fn.expand '%:.'
     local extension = vim.fn.expand '%:e'
+
+    local filename_blacklist = {
+        'term://',
+        'diffview://',
+    }
+
+    for _, fname in pairs(filename_blacklist) do
+        if filename == nil or filename:match(fname) then
+            return special_icon .. ft
+        end
+    end
+
     local icon = require('nvim-web-devicons').get_icon_by_filetype(ft)
 
     if not icon then
         icon = require('nvim-web-devicons').get_icon(filename, extension)
         if not icon then
-            return special_icon .. ft
+            return special_icon .. filename
         end
     end
 
@@ -309,6 +333,7 @@ if has_winbar then
     set_hl(0, 'WinBar', get_hl('lualine_b_normal', true))
     set_hl(0, 'WinBarNC', get_hl('lualine_a_normal', true))
     vim.o.winbar = "%{%v:lua.require'conf.ui'.winbar()%}"
+
     autocmd('ColorScheme', {
         group = my_augroup,
         callback = function()
