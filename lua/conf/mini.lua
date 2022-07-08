@@ -126,21 +126,31 @@ require('mini.indentscope').setup {
 
 local my_augroup = require('conf.builtin_extend').my_augroup
 local autocmd = vim.api.nvim_create_autocmd
-local get_hl = vim.api.nvim_get_hl_by_name
-local set_hl = vim.api.nvim_set_hl
+local highlight_link = function(opts)
+    if vim.fn.has 'nvim-0.8' == 1 then
+        vim.api.nvim_cmd({
+            cmd = 'highlight',
+            args = { 'link', opts.linked, opts.linking },
+            bang = true,
+        }, {})
+    else
+        local highlight = string.format('highlight! link %s %s', opts.linked, opts.linking)
+        vim.cmd(highlight)
+    end
+end
 
 -- The colorscheme is loaded at conf.colorscheme
 -- autocmd defined in the next will not execute at that time
 -- now need to manually reset the HL at the first time.
-set_hl(0, 'MiniCursorword', get_hl('CursorLine', true))
-set_hl(0, 'MiniCursorwordCurrent', get_hl('CursorLine', true))
+highlight_link { linked = 'MiniCursorword', linking = 'CursorLine' }
+highlight_link { linked = 'MiniCursorwordCurrent', linking = 'CursorLine' }
 
 autocmd('ColorScheme', {
     group = my_augroup,
     desc = [[Link MiniCursorword's highlight to CursorLine]],
     callback = function()
-        set_hl(0, 'MiniCursorword', get_hl('CursorLine', true))
-        set_hl(0, 'MiniCursorwordCurrent', get_hl('CursorLine', true))
+        highlight_link { linked = 'MiniCursorword', linking = 'CursorLine' }
+        highlight_link { linked = 'MiniCursorwordCurrent', linking = 'CursorLine' }
     end,
 })
 
@@ -149,7 +159,7 @@ local opts = function(desc)
     return {
         noremap = true,
         silent = true,
-        desc = desc
+        desc = desc,
     }
 end
 
