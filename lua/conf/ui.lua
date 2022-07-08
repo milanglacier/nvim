@@ -239,10 +239,15 @@ M.load.which_key = function()
     }
 end
 
-local set_hl = vim.api.nvim_set_hl
-local get_hl = vim.api.nvim_get_hl_by_name
 local autocmd = vim.api.nvim_create_autocmd
 local my_augroup = require('conf.builtin_extend').my_augroup
+local highlight_link = function(opts)
+    vim.api.nvim_cmd({
+        cmd = 'highlight',
+        args = { 'link', opts.linked, opts.linking },
+        bang = true,
+    }, {})
+end
 
 M.winbar = function()
     local ft = vim.bo.filetype
@@ -330,15 +335,16 @@ M.load.trouble()
 M.load.which_key()
 
 if has_winbar then
-    set_hl(0, 'WinBar', get_hl('lualine_b_normal', true))
-    set_hl(0, 'WinBarNC', get_hl('lualine_a_normal', true))
+    highlight_link { linked = 'WinBar', linking = 'lualine_b_normal' }
+    highlight_link { linked = 'WinBarNC', linking = 'lualine_a_normal' }
+
     vim.o.winbar = "%{%v:lua.require'conf.ui'.winbar()%}"
 
     autocmd('ColorScheme', {
         group = my_augroup,
         callback = function()
-            set_hl(0, 'WinBar', get_hl('lualine_b_normal', true))
-            set_hl(0, 'WinBarNC', get_hl('lualine_a_normal', true))
+            highlight_link { linked = 'WinBar', linking = 'lualine_b_normal' }
+            highlight_link { linked = 'WinBarNC', linking = 'lualine_a_normal' }
         end,
         desc = 'set hl group for winbar',
     })
