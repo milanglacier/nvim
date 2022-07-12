@@ -27,7 +27,6 @@ local night_scheme_options = {
         'gruvbox',
         'minischeme',
         'kanagawa',
-        'melange',
         'catppuccin',
         'material',
         'edge',
@@ -72,10 +71,8 @@ local night_scheme_options = {
             }
         end,
         function()
-            packadd [[melange]]
-        end,
-        function()
             packadd [[catppuccin]]
+            vim.g.catppuccin_flavour = 'mocha'
             require('catppuccin').setup {
                 term_colors = true,
                 styles = {
@@ -119,10 +116,10 @@ local day_scheme_options = {
         'tokyonight',
         'everforest',
         'gruvbox',
-        'melange',
         'material',
         'edge',
         'solarized',
+        'catppuccin',
     },
     cmd = {
         function()
@@ -150,9 +147,6 @@ local day_scheme_options = {
             packadd [[gruvbox.lua]]
         end,
         function()
-            packadd [[melange]]
-        end,
-        function()
             packadd [[material.nvim]]
             vim.g.material_style = 'lighter'
             require('material').setup {
@@ -172,6 +166,25 @@ local day_scheme_options = {
         function()
             packadd [[nvim-solarized-lua]]
             vim.g.solarized_italics = 0
+        end,
+        function()
+            packadd [[catppuccin]]
+            vim.g.catppuccin_flavour = 'latte'
+            require('catppuccin').setup {
+                term_colors = true,
+                styles = {
+                    comments = 'NONE',
+                    functions = 'NONE',
+                    keywords = 'NONE',
+                    strings = 'NONE',
+                    variables = 'NONE',
+                },
+                integrations = {
+                    lsp_trouble = true,
+                    neogit = true,
+                    ts_rainbow = true,
+                },
+            }
         end,
     },
 }
