@@ -241,12 +241,9 @@ end
 
 local autocmd = vim.api.nvim_create_autocmd
 local my_augroup = require('conf.builtin_extend').my_augroup
+local set_hl = vim.api.nvim_set_hl
 local highlight_link = function(opts)
-    vim.api.nvim_cmd({
-        cmd = 'highlight',
-        args = { 'link', opts.linked, opts.linking },
-        bang = true,
-    }, {})
+    set_hl(0, opts.linked, { link = opts.linking })
 end
 
 M.winbar = function()
