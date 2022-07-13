@@ -244,13 +244,6 @@ function M.switch_colorscheme_with_day_night()
     vim.defer_fn(M.switch_colorscheme_with_day_night, total_ms_to_switch)
 end
 
-M.switch_colorscheme_with_day_night()
-
--- the color scheme at start up is loaded, next will
--- change the state to indicate when loading a new theme
--- at run time, /plugin/* should be sourced
-is_on_start = false
-
 local function select_colorscheme_based_on_bg(bg)
     local theme_options
 
@@ -297,5 +290,24 @@ vim.api.nvim_set_keymap(
     ":lua require('conf.colorscheme').pick_quickly()<CR>",
     { noremap = true, silent = true }
 )
+
+local set_hl = vim.api.nvim_set_hl
+local autocmd = vim.api.nvim_create_autocmd
+local my_augroup = require('conf.builtin_extend').my_augroup
+
+autocmd('ColorScheme', {
+    group = my_augroup,
+    callback = function()
+        set_hl(0, 'Cursor', { reverse = true })
+    end,
+    desc = 'set cursor highlight to reverse',
+})
+
+M.switch_colorscheme_with_day_night()
+
+-- the color scheme at start up is loaded, next will
+-- change the state to indicate when loading a new theme
+-- at run time, /plugin/* should be sourced
+is_on_start = false
 
 return M
