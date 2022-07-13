@@ -235,7 +235,7 @@ end
 M.load.which_key = function()
     vim.cmd [[packadd! which-key.nvim]]
     require('which-key').setup {
-        triggers = { '<leader>', '<localleader>', 'g', 'z', ']', '[', '`', '"', [[']] },
+        triggers = { '<leader>', '<localleader>', 'g', 'z', ']', '[', '`', '"', [[']], '@' },
     }
 end
 
