@@ -7,8 +7,6 @@ local flake8 = conda .. '/bin/flake8'
 local pylint = conda .. '/bin/pylint'
 
 local cargo = os.getenv 'HOME' .. '/.cargo'
-local stylua = cargo .. '/bin/stylua'
-local selene = cargo .. '/bin/selene'
 
 local proselint = conda .. '/bin/proselint'
 local codespell = conda .. '/bin/codespell'
@@ -25,8 +23,6 @@ return {
     flake8 = flake8,
     pylint = pylint,
     cargo = cargo,
-    stylua = stylua,
-    selene = selene,
     proselint = proselint,
     codespell = codespell,
     sqls = sqls,
