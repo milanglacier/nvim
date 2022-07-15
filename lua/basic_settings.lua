@@ -23,8 +23,6 @@ vim.o.clipboard = 'unnamedplus'
 vim.o.completeopt = 'menu,menuone,noselect'
 vim.o.tags = vim.o.tags .. ',.tags_columns'
 
-vim.g.do_filetype_lua = 1
-vim.g.did_load_filetypes = 0
 vim.g.did_load_fzf = 1
 vim.g.did_load_gtags = 1
 vim.g.did_load_gzip = 1
@@ -49,8 +47,13 @@ vim.g.did_load_netrwFileHandlers = 1
 vim.g.mapleader = ' '
 vim.g.maplocalleader = [[  ]]
 
-if vim.fn.has('nvim-0.8') == 1 then
-    vim.o.cmdheight = 0
+-- if vim.fn.has('nvim-0.8') == 1 then
+--     vim.o.cmdheight = 0
+-- end
+
+if vim.fn.has 'nvim-0.8' == 0 then
+    vim.g.do_filetype_lua = 1
+    vim.g.did_load_filetypes = 0
 end
 
 if not vim.g.vscode then
@@ -74,6 +77,6 @@ if not vim.g.vscode then
         'sm:block-blinkwait175-blinkoff150-blinkon175',
     }
 
-    vim.o.guifont = gui_font[2]
+    vim.o.guifont = gui_font[3]
     vim.o.guicursor = table.concat(gui_cursor, ',')
 end
