@@ -76,16 +76,25 @@ local night_scheme_options = {
             require('catppuccin').setup {
                 term_colors = true,
                 styles = {
-                    comments = 'NONE',
-                    functions = 'NONE',
-                    keywords = 'NONE',
-                    strings = 'NONE',
-                    variables = 'NONE',
+                    comments = {},
+                    functions = {},
+                    keywords = {},
+                    strings = {},
+                    variables = {},
                 },
                 integrations = {
                     lsp_trouble = true,
                     neogit = true,
                     ts_rainbow = true,
+                    which_key = true,
+                    lsp_saga = true,
+                    notify = true,
+                    mini = true,
+                    vim_sneak = true,
+                    dap = {
+                        enabled = true,
+                        enable_ui = true,
+                    },
                 },
             }
         end,
@@ -173,16 +182,25 @@ local day_scheme_options = {
             require('catppuccin').setup {
                 term_colors = true,
                 styles = {
-                    comments = 'NONE',
-                    functions = 'NONE',
-                    keywords = 'NONE',
-                    strings = 'NONE',
-                    variables = 'NONE',
+                    comments = {},
+                    functions = {},
+                    keywords = {},
+                    strings = {},
+                    variables = {},
                 },
                 integrations = {
                     lsp_trouble = true,
                     neogit = true,
                     ts_rainbow = true,
+                    which_key = true,
+                    lsp_saga = true,
+                    notify = true,
+                    mini = true,
+                    vim_sneak = true,
+                    dap = {
+                        enabled = true,
+                        enable_ui = true,
+                    },
                 },
             }
         end,
