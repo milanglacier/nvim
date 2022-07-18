@@ -103,16 +103,13 @@ M.load.nullls = function()
             null_ls.builtins.diagnostics.selene,
             null_ls.builtins.code_actions.gitsigns,
             null_ls.builtins.code_actions.proselint.with {
-                command = mypath.proselint,
                 filetypes = { 'markdown', 'markdown.pandoc', 'tex', 'rmd' },
             },
             null_ls.builtins.diagnostics.proselint.with {
-                command = mypath.proselint,
                 filetypes = { 'markdown', 'markdown.pandoc', 'tex', 'rmd' },
             },
             null_ls.builtins.code_actions.refactoring,
             null_ls.builtins.diagnostics.codespell.with {
-                command = mypath.codespell,
                 disabled_filetypes = { 'NeogitCommitMessage' },
             },
             null_ls.builtins.diagnostics.chktex,
@@ -120,7 +117,6 @@ M.load.nullls = function()
                 filetypes = { 'markdown.pandoc', 'json', 'markdown', 'rmd', 'yaml' },
             },
             null_ls.builtins.formatting.sqlfluff.with {
-                command = mypath.sqlfluff,
                 args = { 'fix', '--dialect', 'mysql', '--disable_progress_bar', '-f', '-n', '-' },
             },
             null_ls.builtins.formatting.yapf.with {

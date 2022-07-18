@@ -1,18 +1,27 @@
 local conda = '/opt/homebrew/Caskroom/miniforge/base'
-local radian = conda .. '/bin/radian'
+
+local conda_env = function(env, bin)
+    return conda .. '/envs/' .. env .. '/bin/' .. bin
+end
+
+local radian = conda_env('radian', 'radian')
 local ipython = conda .. '/bin/ipython'
 local python = conda .. '/bin/python'
 local yapf = conda .. '/bin/yapf'
 local flake8 = conda .. '/bin/flake8'
 local pylint = conda .. '/bin/pylint'
 
+local node = os.getenv 'HOME' .. '/.local/share/node/'
+local node_env = function(path, bin)
+    return node .. path .. '/node_modules/.bin/' .. bin
+end
+
+local vimls = node_env('vimls', 'vim-language-server')
+local prettierd = node_env('prettierd', 'prettierd')
+
 local cargo = os.getenv 'HOME' .. '/.cargo'
 
-local proselint = conda .. '/bin/proselint'
-local codespell = conda .. '/bin/codespell'
-
 local sqls = os.getenv 'HOME' .. '/go/bin/sqls'
-local sqlfluff = conda .. '/bin/sqlfluff'
 
 return {
     conda = conda,
@@ -23,8 +32,8 @@ return {
     flake8 = flake8,
     pylint = pylint,
     cargo = cargo,
-    proselint = proselint,
-    codespell = codespell,
     sqls = sqls,
-    sqlfluff = sqlfluff,
+    node = node,
+    vimls = vimls,
+    prettierd = prettierd,
 }
