@@ -1,5 +1,6 @@
 require('packer').init {
     compile_on_sync = false,
+    max_jobs = 10,
 }
 
 require('packer').startup(function(use)
