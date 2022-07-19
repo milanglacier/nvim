@@ -114,6 +114,7 @@ M.load.nullls = function()
             },
             null_ls.builtins.diagnostics.chktex,
             null_ls.builtins.formatting.prettierd.with {
+                command = mypath.prettierd,
                 filetypes = { 'markdown.pandoc', 'json', 'markdown', 'rmd', 'yaml' },
             },
             null_ls.builtins.formatting.sqlfluff.with {
