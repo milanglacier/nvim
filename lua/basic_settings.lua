@@ -66,6 +66,7 @@ if not vim.g.vscode then
         'Monaco_Nerd_Font_Complete:h15',
         'SF_Mono_Regular:h15',
         'Space_Mono_Nerd_Font_Complete:h15',
+        'Monego_Nerd_Font_Fix:h15',
     }
 
     local gui_cursor = {
@@ -77,6 +78,6 @@ if not vim.g.vscode then
         'sm:block-blinkwait175-blinkoff150-blinkon175',
     }
 
-    vim.o.guifont = gui_font[3]
+    vim.o.guifont = gui_font[5]
     vim.o.guicursor = table.concat(gui_cursor, ',')
 end
