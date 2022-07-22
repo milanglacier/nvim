@@ -27,6 +27,7 @@ all dependencies (`*` means its path need to be manually specified):
 4. `yapf*`
 5. `flake8*`
 6. `pylint*`
+7. `pyright`
 
 ## `r`
 
@@ -78,7 +79,7 @@ all dependencies (`*` means its path need to be manually specified):
 
 # Text Obj mappings
 
-6.  One of the most annoying things in vim is how to define mnemonic key bindings
+6. One of the most annoying things in vim is how to define mnemonic key bindings
     yet not leading to conflict/confusing. Especially for text objects,
     the initials are often conflicted.
 
@@ -106,7 +107,7 @@ all dependencies (`*` means its path need to be manually specified):
         10. `<Leader>T` provides a way to select textobjs
         based on labels (like easy-motion or sneak).
 
-7.  The jump-to defined via `treesitter` is a bit more
+7. The jump-to defined via `treesitter` is a bit more
     confusing/non-coherent with text objects.
 
     1. `]l`, `]L`, `[l`, `[L` are used to jump-to previous/next start/end of a loop.
