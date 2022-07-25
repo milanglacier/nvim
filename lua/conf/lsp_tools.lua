@@ -118,7 +118,7 @@ M.load.nullls = function()
                 filetypes = { 'markdown.pandoc', 'json', 'markdown', 'rmd', 'yaml' },
             },
             null_ls.builtins.formatting.sqlfluff.with {
-                args = { 'fix', '--dialect', 'mysql', '--disable_progress_bar', '-f', '-n', '-' },
+                extra_args = { '--dialect', 'mysql' },
             },
             null_ls.builtins.formatting.yapf.with {
                 command = mypath.yapf,
