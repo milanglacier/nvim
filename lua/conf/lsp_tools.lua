@@ -122,13 +122,9 @@ M.load.nullls = function()
             },
             null_ls.builtins.formatting.yapf.with {
                 command = mypath.yapf,
-                extra_args = { '--style={ column_limit: 120 }' },
             },
             null_ls.builtins.diagnostics.flake8.with {
                 command = mypath.flake8,
-                extra_args = { '--ignore', 'E501,W504,E126,E121' },
-                -- ignore max line width, line break at binary operator
-                -- ignore long line over-indented
             },
             -- null_ls.builtins.diagnostics.pylint.with {
             --     command = mypath.pylint,
