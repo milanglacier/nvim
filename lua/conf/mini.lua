@@ -126,17 +126,9 @@ require('mini.indentscope').setup {
 
 local my_augroup = require('conf.builtin_extend').my_augroup
 local autocmd = vim.api.nvim_create_autocmd
+local set_hl = vim.api.nvim_set_hl
 local highlight_link = function(opts)
-    if vim.fn.has 'nvim-0.8' == 1 then
-        vim.api.nvim_cmd({
-            cmd = 'highlight',
-            args = { 'link', opts.linked, opts.linking },
-            bang = true,
-        }, {})
-    else
-        local highlight = string.format('highlight! link %s %s', opts.linked, opts.linking)
-        vim.cmd(highlight)
-    end
+    set_hl(0, opts.linked, { link = opts.linking })
 end
 
 -- The colorscheme is loaded at conf.colorscheme
