@@ -103,9 +103,11 @@ M.load.nullls = function()
             null_ls.builtins.diagnostics.selene,
             null_ls.builtins.code_actions.gitsigns,
             null_ls.builtins.code_actions.proselint.with {
+                command = mypath.proselint,
                 filetypes = { 'markdown', 'markdown.pandoc', 'tex', 'rmd' },
             },
             null_ls.builtins.diagnostics.proselint.with {
+                command = mypath.proselint,
                 filetypes = { 'markdown', 'markdown.pandoc', 'tex', 'rmd' },
             },
             null_ls.builtins.code_actions.refactoring,

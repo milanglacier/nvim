@@ -5,6 +5,7 @@ local conda_env = function(env, bin)
 end
 
 local radian = conda_env('radian', 'radian')
+local proselint = conda_env('proselint', 'proselint')
 local ipython = conda .. '/bin/ipython'
 local python = conda .. '/bin/python'
 local yapf = conda .. '/bin/yapf'
@@ -36,4 +37,5 @@ return {
     node = node,
     vimls = vimls,
     prettierd = prettierd,
+    proselint = proselint,
 }
