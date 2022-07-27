@@ -264,7 +264,7 @@ function M.create_tags_for_yanked_columns(df, use_customized_parser)
     local filename_without_extension = filename_tail:match '(.+)%..+'
     local newfile = filepath_head .. '/.tags_' .. filename_without_extension
 
-    vim.cmd(string.format('e %s', newfile)) -- open a file whose name is xxx_tags.extension
+    vim.cmd(string.format('e %s', newfile)) -- open a file whose name is .tags_$current_file
     local newtag_bufid = vim.api.nvim_get_current_buf()
 
     vim.cmd [[normal! Go]] -- go to the end of the buffer and create a new line
@@ -300,7 +300,7 @@ function M.create_tags_for_yanked_columns(df, use_customized_parser)
     vim.cmd [[e .tags_columns]] -- open the file where ctags stores the tags
     local tag_bufid = vim.api.nvim_get_current_buf()
 
-    vim.cmd([[g/^\w\+\s\+]] .. newfile_vim_regexed .. [[\s.\+/d]])
+    vim.cmd([[g/^[[:alnum:]_.]\+\s\+]] .. newfile_vim_regexed .. [[\s.\+/d]])
     -- remove existed entries for the current newtag file
     vim.cmd [[w]]
 
