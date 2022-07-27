@@ -9,17 +9,17 @@ function M.move_to_prev_tab()
     local cur_buf = vim.fn.bufnr '%'
 
     if vim.fn.tabpagenr() ~= 1 then
-        vim.cmd 'close!'
+        vim.cmd.close()
         if tab_nr == vim.fn.tabpagenr '$' then
-            vim.cmd 'tabprev'
+            vim.cmd.tabprevious()
         end
-        vim.cmd 'sp'
+        vim.cmd.split()
     else
-        vim.cmd 'close!'
-        vim.cmd '0tabnew'
+        vim.cmd.close()
+        vim.cmd.tabnew { range = { 0 } }
     end
 
-    vim.cmd('b' .. cur_buf)
+    vim.cmd.buffer { count = cur_buf }
 end
 
 function M.move_to_next_tab()
@@ -31,17 +31,17 @@ function M.move_to_next_tab()
     local cur_buf = vim.fn.bufnr '%'
 
     if vim.fn.tabpagenr() < tab_nr then
-        vim.cmd 'close!'
+        vim.cmd.close()
         if tab_nr == vim.fn.tabpagenr '$' then
-            vim.cmd 'tabnext'
+            vim.cmd.tabnext()
         end
-        vim.cmd 'sp'
+        vim.cmd.split()
     else
-        vim.cmd 'close!'
-        vim.cmd 'tabnew'
+        vim.cmd.close()
+        vim.cmd.tabnew()
     end
 
-    vim.cmd('b' .. cur_buf)
+    vim.cmd.buffer { count = cur_buf }
 end
 
 function M.scroll_in_float_win(move_step)
@@ -116,8 +116,18 @@ keymap('n', '<A-=>', [[<C-w>=]], opts_desc 'win: balance win w/h') -- balance wi
 keymap('n', '<A-]>', [[<cmd>lua require('conf.move_tabs').scroll_in_float_win(1)<CR>]], { noremap = true })
 keymap('n', '<A-[>', [[<cmd>lua require('conf.move_tabs').scroll_in_float_win(-1)<CR>]], { noremap = true })
 
-keymap('n', '<Leader>wb', [[<cmd>lua require("conf.move_tabs").move_to_prev_tab()<CR>]], opts_desc 'win: move to prev tab')
-keymap('n', '<Leader>wf', [[<cmd>lua require("conf.move_tabs").move_to_next_tab()<CR>]], opts_desc 'win: move to next tab')
+keymap(
+    'n',
+    '<Leader>wb',
+    [[<cmd>lua require("conf.move_tabs").move_to_prev_tab()<CR>]],
+    opts_desc 'win: move to prev tab'
+)
+keymap(
+    'n',
+    '<Leader>wf',
+    [[<cmd>lua require("conf.move_tabs").move_to_next_tab()<CR>]],
+    opts_desc 'win: move to next tab'
+)
 
 keymap('n', '<Leader>ww', [[<C-w>w]], opts_desc 'win: switch win')
 keymap('n', '<Leader>wp', [[<C-w>p]], opts_desc 'win: go to prev win')

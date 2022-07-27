@@ -74,8 +74,8 @@ function M.ping_cursor()
     vim.o.cursorline = true
     vim.o.cursorcolumn = true
 
-    vim.cmd 'redraw'
-    vim.cmd 'sleep 1000m'
+    vim.cmd.redraw()
+    vim.cmd.sleep { 'm', count = 1000 }
 
     vim.o.cursorline = false
     vim.o.cursorcolumn = false
@@ -228,12 +228,11 @@ autocmd('BufEnter', {
         local filename = vim.api.nvim_buf_get_name(0)
         filename = vim.fn.shellescape(filename)
 
-        local open_bin = string.format([[!open %s]], filename)
-        vim.cmd(open_bin)
-        vim.cmd 'redraw'
+        vim.cmd['!'] { 'open', filename }
+        vim.cmd.redraw()
 
         vim.defer_fn(function()
-            vim.cmd [[bd!]]
+            vim.cmd.bdelete { bang = true }
         end, 1000)
     end,
 })
@@ -364,8 +363,8 @@ function M.open_URI_under_cursor()
         if type(uri) ~= 'nil' then
             uri = string.gsub(uri, '#', '\\#') --double escapes any # signs
             uri = '"' .. uri .. '"'
-            vim.cmd('!open ' .. uri)
-            vim.cmd 'redraw'
+            vim.cmd['!'] { 'open', uri }
+            vim.cmd.redraw()
             return true
         else
             return false
