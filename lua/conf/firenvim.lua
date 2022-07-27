@@ -13,13 +13,13 @@ vim.o.number = false
 vim.o.guifont = 'Monaco_Nerd_Font_Complete:h21'
 vim.o.guicursor = 'n-v-c-sm:block,i-ci-ve:ver100,r-cr-o:hor20'
 
-vim.cmd [[packadd rose-pine]]
+vim.cmd.packadd 'rose-pine'
 require('rose-pine').setup {
     disable_italics = true,
 }
 local hour = os.date('*t').hour
 vim.o.background = (hour <= 7 or hour >= 23) and 'dark' or 'light'
-vim.cmd [[colorscheme rose-pine]]
+vim.cmd.colorscheme 'rose-pine'
 
 vim.diagnostic.config {
     virtual_text = false,

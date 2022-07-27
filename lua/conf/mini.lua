@@ -1,4 +1,4 @@
-vim.cmd [[packadd! mini.nvim]]
+vim.cmd.packadd { 'mini.nvim', bang = true }
 
 local M = {}
 

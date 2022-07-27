@@ -4,7 +4,7 @@ M.load = {}
 local has_winbar = vim.fn.has 'nvim-0.8' == 1
 
 M.load.lualine = function()
-    vim.cmd [[packadd! lualine.nvim]]
+    vim.cmd.packadd { 'lualine.nvim', bang = true }
     -- Override 'encoding': Don't display if encoding is UTF-8.
     local encoding = function()
         local ret, _ = (vim.bo.fenc or vim.go.enc):gsub('^utf%-8$', '')
@@ -123,12 +123,12 @@ M.load.lualine = function()
 end
 
 M.load.luatab = function()
-    vim.cmd [[packadd! luatab.nvim]]
+    vim.cmd.packadd { 'luatab.nvim', bang = true }
     require('luatab').setup {}
 end
 
 M.load.notify = function()
-    vim.cmd [[packadd! nvim-notify]]
+    vim.cmd.packadd { 'nvim-notify', bang = true }
 
     vim.notify = require 'notify'
 
@@ -143,12 +143,12 @@ M.load.notify = function()
 end
 
 M.load.devicons = function()
-    vim.cmd [[packadd! nvim-web-devicons]]
+    vim.cmd.packadd { 'nvim-web-devicons', bang = true }
     require('nvim-web-devicons').setup()
 end
 
 M.load.trouble = function()
-    vim.cmd [[packadd! trouble.nvim]]
+    vim.cmd.packadd { 'trouble.nvim', bang = true }
     require('trouble').setup {
         mode = 'quickfix',
         action_keys = {
@@ -233,7 +233,7 @@ M.load.incline = function()
 end
 
 M.load.which_key = function()
-    vim.cmd [[packadd! which-key.nvim]]
+    vim.cmd.packadd { 'which-key.nvim', bang = true }
     require('which-key').setup {
         triggers = { '<leader>', '<localleader>', 'g', 'z', ']', '[', '`', '"', [[']], '@' },
     }

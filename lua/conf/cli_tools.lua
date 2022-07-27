@@ -4,7 +4,7 @@ M.load = {}
 local keymap = vim.api.nvim_set_keymap
 
 M.load.gitsigns = function()
-    vim.cmd [[packadd! gitsigns.nvim]]
+    vim.cmd.packadd { 'gitsigns.nvim', bang = true }
 
     require('gitsigns').setup {
         current_line_blame = true,
@@ -16,15 +16,15 @@ M.load.gitsigns = function()
 end
 
 M.load.neogit = function()
-    vim.cmd [[packadd! neogit]]
+    vim.cmd.packadd { 'neogit', bang = true }
 end
 
 M.load.diffview = function()
-    vim.cmd [[packadd! diffview.nvim]]
+    vim.cmd.packadd { 'diffview.nvim', bang = true }
 end
 
 M.load.spectre = function()
-    vim.cmd [[packadd! nvim-spectre]]
+    vim.cmd.packadd { 'nvim-spectre', bang = true }
 
     require('spectre').setup()
 
@@ -38,7 +38,7 @@ M.load.spectre = function()
 end
 
 M.load.mkdp = function()
-    vim.cmd [[packadd! markdown-preview.nvim]]
+    vim.cmd.packadd { 'markdown-preview.nvim', bang = true }
 
     vim.g.mkdp_filetypes = { 'markdown.pandoc', 'markdown', 'rmd' }
 
@@ -47,7 +47,7 @@ M.load.mkdp = function()
 end
 
 M.load.iron = function()
-    vim.cmd [[packadd! iron.nvim]]
+    vim.cmd.packadd { 'iron.nvim', bang = true }
 
     local iron = require 'iron.core'
     local mypath = require 'bin_path'
@@ -104,7 +104,7 @@ M.load.iron = function()
 end
 
 M.load.toggleterm = function()
-    vim.cmd [[packadd! toggleterm.nvim]]
+    vim.cmd.packadd { 'toggleterm.nvim', bang = true }
 
     require('toggleterm').setup {
         -- size can be a number or function which is passed the current terminal
@@ -161,8 +161,8 @@ M.load.toggleterm = function()
 end
 
 M.load.pandoc = function()
-    vim.cmd [[packadd! vim-pandoc-syntax]]
-    vim.cmd [[packadd! vim-rmarkdown]]
+    vim.cmd.packadd { 'vim-pandoc-syntax', bang = true }
+    vim.cmd.packadd { 'vim-rmarkdown', bang = true }
 
     vim.filetype.add {
         extension = {
@@ -179,7 +179,7 @@ M.load.pandoc = function()
 end
 
 M.load.gutentags = function()
-    vim.cmd [[packadd! vim-gutentags]]
+    vim.cmd.packadd { 'vim-gutentags', bang = true }
 
     vim.g.gutentags_add_ctrlp_root_markers = 0
     vim.g.gutentags_ctags_exclude = { '.*', '**/.*' }

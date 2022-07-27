@@ -1,8 +1,8 @@
-vim.cmd [[packadd! nvim-dap]]
-vim.cmd [[packadd! nvim-dap-python]]
-vim.cmd [[packadd! nvim-dap-ui]]
-vim.cmd [[packadd! telescope-dap.nvim]]
-vim.cmd [[packadd! nvim-dap-virtual-text]]
+vim.cmd.packadd { 'nvim-dap', bang = true }
+vim.cmd.packadd { 'nvim-dap-python', bang = true }
+vim.cmd.packadd { 'nvim-dap-ui', bang = true }
+vim.cmd.packadd { 'telescope-dap.nvim', bang = true }
+vim.cmd.packadd { 'nvim-dap-virtual-text', bang = true }
 
 local mypath = require 'bin_path'
 
