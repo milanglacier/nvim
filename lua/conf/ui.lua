@@ -1,8 +1,6 @@
 local M = {}
 M.load = {}
 
-local has_winbar = vim.fn.has 'nvim-0.8' == 1
-
 M.load.lualine = function()
     vim.cmd.packadd { 'lualine.nvim', bang = true }
     -- Override 'encoding': Don't display if encoding is UTF-8.
@@ -44,49 +42,6 @@ M.load.lualine = function()
         return mode_remap[mode] or mode
     end
 
-    local function min_window_width(width)
-        return function()
-            return vim.api.nvim_win_get_width(0) > width
-        end
-    end
-
-    local function comp_of_max_width(name, width)
-        -- if the column of the current window is less than
-        -- the given width, this component will not be displayed
-        return { name, cond = min_window_width(width) }
-    end
-
-    local function treesitter_statusline()
-        local winwidth = vim.api.nvim_win_get_width(0)
-        local entire_width = vim.o.columns
-        local size
-
-        if vim.o.laststatus ~= 3 then
-            if winwidth >= entire_width * 0.75 then
-                size = math.floor(winwidth * 0.5)
-            elseif winwidth >= entire_width * 0.45 then
-                size = math.floor(winwidth * 0.25)
-            else
-                size = math.floor(winwidth * 0.3)
-            end
-        elseif vim.o.laststatus == 3 then
-            size = vim.o.columns * 0.7
-        end
-
-        local ts_status = require('nvim-treesitter').statusline {
-            indicator_size = size,
-            separator = '  ',
-        }
-
-        ts_status = ts_status:gsub('%s+', ' ')
-        return ts_status
-    end
-
-    local use_ts = nil
-    if not has_winbar then
-        use_ts = treesitter_statusline
-    end
-
     require('lualine').setup {
         options = {
             icons_enabled = true,
@@ -95,19 +50,18 @@ M.load.lualine = function()
             section_separators = { left = '', right = '' },
             disabled_filetypes = {},
             always_divide_middle = false,
-            -- globalstatus = true,
         },
         sections = {
             lualine_a = { shorten_mode_name },
             lualine_b = {
-                comp_of_max_width('branch', 60),
-                comp_of_max_width('diff', 80),
+                'branch',
+                'diff',
                 'diagnostics',
             },
-            lualine_c = { 'filename', use_ts },
+            lualine_c = { 'filename' },
             lualine_x = { encoding, fileformat, 'filetype' },
-            lualine_y = { comp_of_max_width('progress', 40) },
-            lualine_z = { comp_of_max_width('location', 60) },
+            lualine_y = { 'progress' },
+            lualine_z = { 'location' },
         },
         inactive_sections = {
             lualine_a = {},
@@ -180,56 +134,6 @@ M.load.trouble = function()
     keymap('n', '<leader>xl', '<cmd>TroubleToggle loclist<cr>', opts)
     keymap('n', '<leader>xq', [[<cmd>lua require 'conf.ui'.reopen_qflist_by_trouble()<cr>]], opts)
     keymap('n', '<leader>xr', '<cmd>TroubleToggle lsp_references<cr>', opts)
-end
-
-M.load.incline = function()
-    vim.cmd [[packadd! incline.nvim]]
-
-    if vim.o.laststatus ~= 3 then
-        return
-    end
-
-    local incline_setup_table = {
-        highlight = {
-            groups = {
-                InclineNormal = 'lualine_a_normal',
-                InclineNormalNC = 'lualine_a_normal',
-            },
-        },
-        hide = {
-            focused_win = true,
-        },
-        window = {
-            width = 'fill',
-            placement = {
-                vertical = 'bottom',
-                horizontal = 'center',
-            },
-            margin = {
-                horizontal = {
-                    left = 0,
-                    right = 0,
-                },
-                vertical = 0,
-            },
-            padding = {
-                left = 1,
-                right = 1,
-            },
-            zindex = 10,
-        },
-    }
-
-    require('incline').setup(incline_setup_table)
-
-    local autocmd = vim.api.nvim_create_autocmd
-    autocmd('ColorScheme', {
-        group = require('conf.builtin_extend').my_augroup,
-        desc = 'reset incline highlight after loading colorscheme',
-        callback = function()
-            require('incline').setup(incline_setup_table)
-        end,
-    })
 end
 
 M.load.which_key = function()
@@ -331,23 +235,19 @@ M.load.notify()
 M.load.trouble()
 M.load.which_key()
 
-if has_winbar then
-    highlight_link { linked = 'WinBar', linking = 'lualine_b_normal' }
-    highlight_link { linked = 'WinBarNC', linking = 'lualine_a_normal' }
+highlight_link { linked = 'WinBar', linking = 'lualine_b_normal' }
+highlight_link { linked = 'WinBarNC', linking = 'lualine_a_normal' }
 
-    vim.o.winbar = "%{%v:lua.require'conf.ui'.winbar()%}"
+vim.o.winbar = "%{%v:lua.require'conf.ui'.winbar()%}"
 
-    autocmd('ColorScheme', {
-        group = my_augroup,
-        callback = function()
-            highlight_link { linked = 'WinBar', linking = 'lualine_b_normal' }
-            highlight_link { linked = 'WinBarNC', linking = 'lualine_a_normal' }
-        end,
-        desc = 'set hl group for winbar',
-    })
-else
-    M.load.incline()
-end
+autocmd('ColorScheme', {
+    group = my_augroup,
+    callback = function()
+        highlight_link { linked = 'WinBar', linking = 'lualine_b_normal' }
+        highlight_link { linked = 'WinBarNC', linking = 'lualine_a_normal' }
+    end,
+    desc = 'set hl group for winbar',
+})
 
 M.reopen_qflist_by_trouble = function()
     local windows = vim.api.nvim_list_wins()
