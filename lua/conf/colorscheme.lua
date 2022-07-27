@@ -302,13 +302,6 @@ function M.pick_quickly()
     end)
 end
 
-vim.api.nvim_set_keymap(
-    'n',
-    '<Localleader>cs',
-    ":lua require('conf.colorscheme').pick_quickly()<CR>",
-    { noremap = true, silent = true }
-)
-
 local set_hl = vim.api.nvim_set_hl
 local autocmd = vim.api.nvim_create_autocmd
 local my_augroup = require('conf.builtin_extend').my_augroup
@@ -327,5 +320,14 @@ M.switch_colorscheme_with_day_night()
 -- change the state to indicate when loading a new theme
 -- at run time, /plugin/* should be sourced
 is_on_start = false
+
+local keymap = vim.api.nvim_set_keymap
+
+keymap(
+    'n',
+    '<Localleader>cs',
+    ":lua require('conf.colorscheme').pick_quickly()<CR>",
+    { noremap = true, silent = true }
+)
 
 return M
