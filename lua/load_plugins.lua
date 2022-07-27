@@ -40,7 +40,6 @@ require('packer').startup(function(use)
 
     -- UI
     use { 'nvim-lualine/lualine.nvim', opt = true }
-    use { 'b0o/incline.nvim', opt = true }
     use { 'alvarosevilla95/luatab.nvim', opt = true }
     use { 'rcarriga/nvim-notify', opt = true }
     use { 'echasnovski/mini.nvim', opt = true }
