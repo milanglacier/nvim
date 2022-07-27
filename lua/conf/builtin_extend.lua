@@ -129,16 +129,16 @@ function M.textobj_code_chunk(ai, start_pattern, end_pattern, has_same_start_end
             vim.api.nvim_win_set_cursor(0, { chunk_start + 1, 0 })
             local internal_length = chunk_end - chunk_start - 2
             if internal_length == 0 then
-                vim.cmd [[normal! V]]
+                vim.cmd.normal { 'V', bang = true }
             elseif internal_length > 0 then
-                vim.cmd([[normal! V]] .. internal_length .. 'j')
+                vim.cmd.normal { 'V' .. internal_length .. 'j', bang = true }
             end
         end
 
         if ai == 'a' then
             vim.api.nvim_win_set_cursor(0, { chunk_start, 0 })
             local chunk_length = chunk_end - chunk_start
-            vim.cmd([[normal! V]] .. chunk_length .. 'j')
+            vim.cmd.normal { 'V' .. chunk_length .. 'j', bang = true }
         end
     end
 end
@@ -263,7 +263,7 @@ function M.create_tags_for_yanked_columns(df, use_customized_parser)
     local filename_without_extension = filename_tail:match '(.+)%..+'
     local newfile = filepath_head .. '/.tags_' .. filename_without_extension
 
-    vim.cmd(string.format('e %s', newfile)) -- open a file whose name is .tags_$current_file
+    vim.cmd.edit(newfile) -- open a file whose name is .tags_$current_file
     local newtag_bufid = vim.api.nvim_get_current_buf()
 
     vim.cmd [[normal! Go]] -- go to the end of the buffer and create a new line
@@ -286,8 +286,8 @@ function M.create_tags_for_yanked_columns(df, use_customized_parser)
         M.generate_code_for_tagging_without_customized_parser(ft, df)
     end
 
-    vim.cmd [[sort u]] -- remove duplicated entry
-    vim.cmd [[w]] -- save current buffer
+    vim.cmd.sort 'u' -- remove duplicated entry
+    vim.cmd.write() -- save current buffer
 
     local newfile_shell_escaped = vim.fn.shellescape(newfile)
     -- replace . by \. such that it is recognizable by vim regex
@@ -296,34 +296,43 @@ function M.create_tags_for_yanked_columns(df, use_customized_parser)
     newfile_vim_regexed = newfile_vim_regexed:gsub('/', [[\/]])
     newfile_vim_regexed = newfile_vim_regexed:sub(2, -2) -- remove the first and last chars, i.e. ' and '
 
-    vim.cmd [[e .tags_columns]] -- open the file where ctags stores the tags
+    vim.cmd.edit '.tags_columns' -- open the file where ctags stores the tags
     local tag_bufid = vim.api.nvim_get_current_buf()
 
     vim.cmd([[g/^[[:alnum:]_.]\+\s\+]] .. newfile_vim_regexed .. [[\s.\+/d]])
+    vim.cmd.global { [[/^[[:alnum:]_.]\+\s\+]] .. newfile_vim_regexed .. [[\s.\+/d]] }
     -- remove existed entries for the current newtag file
-    vim.cmd [[w]]
+    vim.cmd.write()
 
     if ft == 'rmd' then
         ft = 'r'
     end
 
-    vim.cmd([[!ctags -a -f .tags_columns --fields='*' --language-force=]] .. ft .. ' ' .. newfile_shell_escaped)
+    vim.cmd['!'] {
+        'ctags',
+        '-a',
+        '-f',
+        '.tags_columns',
+        [[--fields='*']],
+        '--language-force=' .. ft,
+        newfile_shell_escaped,
+    }
     -- let ctags tag current newtag file
 
     vim.api.nvim_win_set_buf(0, bufid)
-    vim.cmd([[bd!]] .. newtag_bufid) -- delete the buffer created for tagging
-    vim.cmd([[bd!]] .. tag_bufid) -- delete the ctags tag buffer
-    vim.cmd [[noh]] -- remove matched pattern's highlight
+    vim.cmd.bdelete { count = newtag_bufid, bang = true } -- delete the buffer created for tagging
+    vim.cmd.bdelete { count = tag_bufid, bang = true } -- delete the ctags tag buffer
+    vim.cmd.nohlsearch() -- remove matched pattern's highlight
 end
 
 function M.generate_code_for_tagging_without_customized_parser(ft, df)
     if ft == 'python' then
         vim.cmd [[%s/'//ge]] -- remove '
-        vim.cmd([[g/^\w\+$/normal! A="]] .. df .. [["]]) -- show which dataframe this column belongs to
+        vim.cmd.global { [[/^\w\+$/normal!]], [[A="]] .. df .. [["]] } -- show which dataframe this column belongs to
         -- use " instead of ', for incremental tagging, since ' will be removed.
     else
         vim.cmd [[%s/"//ge]]
-        vim.cmd([[g/^[[:alnum:]_.]\+$/normal! A=']] .. df .. [[']])
+        vim.cmd.global { [[/^[[:alnum:]_.]\+$/normal!]], [[A=']] .. df .. [[']] }
         -- r use " to quote strings, in contrary to python
     end
 end
@@ -335,16 +344,23 @@ function M.generate_code_for_tagging_with_customized_parser(ft, df)
 
     if ft == 'python' then
         vim.cmd [[g/^'.\+'$/normal! A]="nameattr"]]
-        vim.cmd([[g/^'.\+"$/normal! I]] .. df .. '[')
+        vim.cmd.global { [[/^'.\+"$/normal!]], 'I' .. df .. '[' }
     else
         vim.cmd [=[g/^".\+"$/normal! A]]<-'nameattr']=]
-        vim.cmd([[g/^".\+'$/normal! I]] .. df .. '[[')
+        vim.cmd.global { [[/^".\+'$/normal!]], 'I' .. df .. '[[' }
     end
 end
 
 command('TagYankedColumns', function(options)
     local df = options.args
     M.create_tags_for_yanked_columns(df, true)
+end, {
+    nargs = '?',
+})
+
+command('TagYankedColumnsVanilla', function(options)
+    local df = options.args
+    M.create_tags_for_yanked_columns(df, false)
 end, {
     nargs = '?',
 })
