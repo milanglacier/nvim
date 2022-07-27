@@ -299,7 +299,6 @@ function M.create_tags_for_yanked_columns(df, use_customized_parser)
     vim.cmd.edit '.tags_columns' -- open the file where ctags stores the tags
     local tag_bufid = vim.api.nvim_get_current_buf()
 
-    vim.cmd([[g/^[[:alnum:]_.]\+\s\+]] .. newfile_vim_regexed .. [[\s.\+/d]])
     vim.cmd.global { [[/^[[:alnum:]_.]\+\s\+]] .. newfile_vim_regexed .. [[\s.\+/d]] }
     -- remove existed entries for the current newtag file
     vim.cmd.write()
