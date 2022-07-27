@@ -3,7 +3,7 @@ local M = {}
 M.load = {}
 
 M.load.autopairs = function()
-    vim.cmd [[packadd! nvim-autopairs]]
+    vim.cmd.packadd { 'nvim-autopairs', bang = true }
     require('nvim-autopairs').setup {}
 end
 
@@ -95,7 +95,7 @@ M.load.textobj = function()
 end
 
 M.load.colorizer = function()
-    vim.cmd [[packadd! nvim-colorizer.lua]]
+    vim.cmd.packadd { 'nvim-colorizer.lua', bang = true }
     require('colorizer').setup()
 end
 

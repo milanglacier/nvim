@@ -3,7 +3,7 @@ local is_on_start = true
 
 local function colorscheme_cmd(bg, theme)
     vim.o.background = bg
-    vim.cmd('colorscheme ' .. theme)
+    vim.cmd.colorscheme(theme)
 end
 
 -- packadd! will source /plugin/* at startup
@@ -12,9 +12,9 @@ end
 -- will not source those files
 local function packadd(theme_pkg)
     if is_on_start then
-        vim.cmd('packadd! ' .. theme_pkg)
+        vim.cmd.packadd {theme_pkg, bang = true}
     else
-        vim.cmd('packadd ' .. theme_pkg)
+        vim.cmd.packadd(theme_pkg)
     end
 end
 

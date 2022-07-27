@@ -9,7 +9,7 @@ M.load.impatient = function()
 end
 
 M.load.better_escape = function()
-    vim.cmd [[packadd! better-escape.nvim]]
+    vim.cmd.packadd { 'better-escape.nvim', bang = true }
 
     require('better_escape').setup {
         mapping = { 'jk' }, -- a table with mappings to use
@@ -21,7 +21,7 @@ M.load.better_escape = function()
 end
 
 M.load.project_nvim = function()
-    vim.cmd [[packadd! project.nvim]]
+    vim.cmd.packadd { 'project.nvim', bang = true }
     require('project_nvim').setup {
         detection_methods = { 'pattern' },
         patterns = { '.git', '.svn', 'Makefile', 'package.json', 'NAMESPACE', 'setup.py' },
@@ -33,7 +33,7 @@ M.load.project_nvim = function()
 end
 
 M.load.nvim_tree = function()
-    vim.cmd [[packadd! nvim-tree.lua]]
+    vim.cmd.packadd { 'nvim-tree.lua', bang = true }
 
     require('nvim-tree').setup {
         view = {
@@ -59,7 +59,7 @@ M.load.nvim_tree = function()
 end
 
 M.load.winshift = function()
-    vim.cmd [[packadd! winshift.nvim]]
+    vim.cmd.packadd { 'winshift.nvim', bang = true }
     require('winshift').setup {}
     local keymap = vim.api.nvim_set_keymap
     keymap('n', '<Leader>wm', '<cmd>WinShift<CR>', { noremap = true, silent = true })

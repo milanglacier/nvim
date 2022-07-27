@@ -1,4 +1,4 @@
-vim.cmd [[packadd! mini.nvim]]
+vim.cmd.packadd { 'mini.nvim', bang = true }
 
 require('mini.cursorword').setup {}
 require('mini.misc').setup {}

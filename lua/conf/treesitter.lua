@@ -167,15 +167,15 @@ require('nvim-treesitter.configs').setup {
 }
 
 if not vim.g.vscode then
-    vim.cmd [[packadd! nvim-treehopper]]
-    vim.cmd [[packadd! nvim-treesitter-context]]
-    vim.cmd [[packadd! iswap.nvim]]
+    vim.cmd.packadd { 'nvim-treehopper', bang = true }
+    vim.cmd.packadd { 'nvim-treesitter-context', bang = true }
+    vim.cmd.packadd { 'iswap.nvim', bang = true }
 
     local opts = function(desc)
         return {
             silent = true,
             noremap = true,
-            desc = desc
+            desc = desc,
         }
     end
 

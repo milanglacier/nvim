@@ -1,10 +1,10 @@
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-vim.cmd [[packadd! nvim-lspconfig]]
-vim.cmd [[packadd! lspsaga.nvim]]
-vim.cmd [[packadd! aerial.nvim]]
-vim.cmd [[packadd! lsp_signature.nvim]]
-vim.cmd [[packadd! lua-dev.nvim]]
+vim.cmd.packadd { 'nvim-lspconfig', bang = true }
+vim.cmd.packadd { 'lspsaga.nvim', bang = true }
+vim.cmd.packadd { 'aerial.nvim', bang = true }
+vim.cmd.packadd { 'lsp_signature.nvim', bang = true }
+vim.cmd.packadd { 'lua-dev.nvim', bang = true }
 
 local opts = function(options)
     return {
@@ -279,7 +279,7 @@ require('lspconfig').vimls.setup {
 require('lspconfig').sqls.setup {
     cmd = { require('bin_path').sqls },
     on_attach = function(client, bufnr)
-        vim.cmd [[packadd! sqls.nvim]]
+        vim.cmd.packadd { 'sqls.nvim', bang = true }
 
         on_attach(client, bufnr)
         require('sqls').on_attach(client, bufnr)
@@ -320,6 +320,6 @@ command('DiagnosticUnderlineToggle', function()
 end, {})
 
 command('DiagnosticInlineToggle', function()
-    vim.cmd 'DiagnosticUnderlineToggle'
-    vim.cmd 'DiagnosticVirtualTextToggle'
+    vim.cmd.DiagnosticUnderlineToggle()
+    vim.cmd.DiagnosticVirtualTextToggle()
 end, {})

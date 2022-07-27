@@ -76,7 +76,7 @@ M.load.lspsaga = function()
 end
 
 M.load.glow_hover = function()
-    vim.cmd [[packadd! glow-hover]]
+    vim.cmd.packadd { 'glow-hover', bang = true }
 
     require('glow-hover').setup {
         max_width = 90,
@@ -87,12 +87,12 @@ M.load.glow_hover = function()
 end
 
 M.load.refactor = function()
-    vim.cmd [[packadd! refactoring.nvim]]
+    vim.cmd.packadd { 'refactoring.nvim', bang = true }
     require('refactoring').setup {}
 end
 
 M.load.nullls = function()
-    vim.cmd [[packadd! null-ls.nvim]]
+    vim.cmd.packadd { 'null-ls.nvim', bang = true }
 
     local null_ls = require 'null-ls'
     local mypath = require 'bin_path'
