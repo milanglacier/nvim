@@ -47,14 +47,7 @@ vim.g.did_load_netrwFileHandlers = 1
 vim.g.mapleader = ' '
 vim.g.maplocalleader = [[  ]]
 
--- if vim.fn.has('nvim-0.8') == 1 then
---     vim.o.cmdheight = 0
--- end
-
-if vim.fn.has 'nvim-0.8' == 0 then
-    vim.g.do_filetype_lua = 1
-    vim.g.did_load_filetypes = 0
-end
+vim.o.cmdheight = 0
 
 if not vim.g.vscode then
     vim.o.mouse = 'a'
