@@ -47,8 +47,6 @@ vim.g.did_load_netrwFileHandlers = 1
 vim.g.mapleader = ' '
 vim.g.maplocalleader = [[  ]]
 
-vim.o.cmdheight = 0
-
 if not vim.g.vscode then
     vim.o.mouse = 'a'
     vim.env.NVIM_TUI_ENABLE_TRUE_COLOR = 1
