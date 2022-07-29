@@ -124,6 +124,10 @@ require('mini.indentscope').setup {
     },
 }
 
+require('mini.ai').setup {
+    search_method = 'cover_or_nearest',
+}
+
 local my_augroup = require('conf.builtin_extend').my_augroup
 local autocmd = vim.api.nvim_create_autocmd
 local set_hl = vim.api.nvim_set_hl
