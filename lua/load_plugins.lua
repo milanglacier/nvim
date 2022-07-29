@@ -27,7 +27,12 @@ require('packer').startup(function(use)
     use { 'kyazdani42/nvim-tree.lua', opt = true } -- file explorer
     use { 'milanglacier/smartim', opt = true } -- automatically switch input method when switch mode
     use { 'sindrets/winshift.nvim', opt = true }
-    use { 'glacambre/firenvim' }
+    use {
+        'glacambre/firenvim',
+        run = function()
+            vim.fn['firenvim#install'](0)
+        end,
+    }
     -- very simple, naive completion without LSP
     -- 'skywind3000/vim-auto-popmenu'
     -- 'skywind3000/vim-dict'
