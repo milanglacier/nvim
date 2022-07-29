@@ -29,6 +29,7 @@ if not vim.g.vscode then
     end
 else
     require 'conf.builtin_extend'
+    require 'conf.mini'
     require 'conf.text_edit'
     require 'conf.treesitter'
 
