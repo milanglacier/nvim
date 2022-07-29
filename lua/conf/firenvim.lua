@@ -1,4 +1,4 @@
-vim.cmd [[packadd! firenvim]]
+vim.cmd.packadd { 'firenvim', bang = true }
 
 vim.g.firenvim_config = {
     localSettings = {
