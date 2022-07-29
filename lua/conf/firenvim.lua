@@ -1,3 +1,5 @@
+vim.cmd [[packadd! firenvim]]
+
 vim.g.firenvim_config = {
     localSettings = {
         ['.*'] = {
