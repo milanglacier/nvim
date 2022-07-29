@@ -105,7 +105,6 @@ M.load.dsf()
 M.load.matchup()
 M.load.sneak()
 M.load.substitute()
-M.load.targets()
 M.load.textobj()
 
 return M
