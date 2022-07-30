@@ -54,6 +54,7 @@ require('packer').startup(function(use)
     use { 'numToStr/Comment.nvim' }
     use { 'tpope/vim-repeat' }
     use { 'michaeljsmith/vim-indent-object' }
+    use { 'wellle/targets.vim' }
     use { 'AndrewRadev/dsf.vim' }
     use { 'gbprod/substitute.nvim' }
     use { 'andymass/vim-matchup' }

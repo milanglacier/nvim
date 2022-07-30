@@ -62,6 +62,10 @@ M.load.sneak = function()
     keymap('', 'T', '<Plug>Sneak_T', {})
 end
 
+M.load.targets = function()
+    vim.g.targets_nl = { 'n', 'N' }
+end
+
 M.load.substitute = function()
     require('substitute').setup {}
 
@@ -105,6 +109,7 @@ M.load.dsf()
 M.load.matchup()
 M.load.sneak()
 M.load.substitute()
+M.load.targets()
 M.load.textobj()
 
 return M
