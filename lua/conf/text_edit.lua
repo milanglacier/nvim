@@ -2,6 +2,10 @@ local M = {}
 
 M.load = {}
 
+local my_augroup = require('conf.builtin_extend').my_augroup
+local autocmd = vim.api.nvim_create_autocmd
+local keymap = vim.api.nvim_set_keymap
+
 M.load.autopairs = function()
     vim.cmd.packadd { 'nvim-autopairs', bang = true }
     require('nvim-autopairs').setup {}
@@ -23,9 +27,6 @@ M.load.mini_comment = function()
 end
 
 M.load.dsf = function()
-    local my_augroup = require('conf.builtin_extend').my_augroup
-    local autocmd = vim.api.nvim_create_autocmd
-
     autocmd('FileType', {
         group = my_augroup,
         pattern = 'rmd',
@@ -40,7 +41,6 @@ M.load.dsf = function()
     })
 
     vim.g.dsf_no_mappings = 1
-    local keymap = vim.api.nvim_set_keymap
 
     keymap('n', 'dsf', '<Plug>DsfDelete', { silent = true })
     keymap('n', 'csf', '<Plug>DsfChange', { silent = true })
@@ -49,8 +49,6 @@ M.load.dsf = function()
 end
 
 M.load.matchup = function()
-    local keymap = vim.api.nvim_set_keymap
-
     keymap('n', '<localleader>%', '<plug>(matchup-z%)', {})
     keymap('o', '<localleader>%', '<plug>(matchup-z%)', {})
     keymap('x', '<localleader>%', '<plug>(matchup-z%)', {})
@@ -64,8 +62,6 @@ M.load.sneak = function()
     end
 
     vim.g['sneak#use_ic_scs'] = 1
-
-    local keymap = vim.api.nvim_set_keymap
 
     keymap('', 'f', '<Plug>Sneak_f', {})
     keymap('', 'F', '<Plug>Sneak_F', {})
@@ -112,7 +108,6 @@ M.load.mini_surround = function()
         },
     }
 
-    local keymap = vim.api.nvim_set_keymap
     keymap('n', 'ys', '<Plug>(mini-surround-add)', {})
     keymap('n', 'yss', '^ys$', {})
     keymap('n', 'yS', 'ys$', {})
@@ -121,11 +116,8 @@ M.load.mini_surround = function()
     keymap('n', 'ds', '<Plug>(mini-surround-delete)', {})
 end
 
-
 M.load.substitute = function()
     require('substitute').setup {}
-
-    local keymap = vim.api.nvim_set_keymap
 
     keymap('n', 'gs', "<cmd>lua require('substitute').operator()<cr>", { noremap = true })
     keymap('n', 'gss', "<cmd>lua require('substitute').line()<cr>", { noremap = true })
@@ -136,8 +128,6 @@ end
 M.load.textobj = function()
     vim.g.textobj_between_no_default_key_mappings = 1
     vim.g.textobj_chainmember_no_default_key_mappings = 1
-
-    local keymap = vim.api.nvim_set_keymap
 
     keymap('x', 'ab', '<Plug>(textobj-between-a)', { noremap = true, silent = true })
     keymap('o', 'ab', '<Plug>(textobj-between-a)', { noremap = true, silent = true })
