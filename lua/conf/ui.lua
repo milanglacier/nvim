@@ -228,26 +228,21 @@ M.winbar = function()
     return winbar
 end
 
-M.load.devicons()
-M.load.lualine()
-M.load.luatab()
-M.load.notify()
-M.load.trouble()
-M.load.which_key()
+M.load.winbar = function()
+    highlight_link { linked = 'WinBar', linking = 'lualine_b_normal' }
+    highlight_link { linked = 'WinBarNC', linking = 'lualine_a_normal' }
 
-highlight_link { linked = 'WinBar', linking = 'lualine_b_normal' }
-highlight_link { linked = 'WinBarNC', linking = 'lualine_a_normal' }
+    vim.o.winbar = "%{%v:lua.require'conf.ui'.winbar()%}"
 
-vim.o.winbar = "%{%v:lua.require'conf.ui'.winbar()%}"
-
-autocmd('ColorScheme', {
-    group = my_augroup,
-    callback = function()
-        highlight_link { linked = 'WinBar', linking = 'lualine_b_normal' }
-        highlight_link { linked = 'WinBarNC', linking = 'lualine_a_normal' }
-    end,
-    desc = 'set hl group for winbar',
-})
+    autocmd('ColorScheme', {
+        group = my_augroup,
+        callback = function()
+            highlight_link { linked = 'WinBar', linking = 'lualine_b_normal' }
+            highlight_link { linked = 'WinBarNC', linking = 'lualine_a_normal' }
+        end,
+        desc = 'set hl group for winbar',
+    })
+end
 
 M.reopen_qflist_by_trouble = function()
     local windows = vim.api.nvim_list_wins()
@@ -261,5 +256,13 @@ M.reopen_qflist_by_trouble = function()
     end
     require('trouble').toggle 'quickfix'
 end
+
+M.load.devicons()
+M.load.lualine()
+M.load.luatab()
+M.load.notify()
+M.load.trouble()
+M.load.which_key()
+M.load.winbar()
 
 return M
