@@ -89,12 +89,13 @@ keymap('n', '<A-x>', '<cmd>Telescope commands<cr>', opts_desc 'Telescope extensi
 
 local my_augroup = require('conf.builtin_extend').my_augroup
 local autocmd = vim.api.nvim_create_autocmd
+local bufmap = vim.api.nvim_buf_set_keymap
 
 autocmd('FileType', {
     pattern = 'TelescopePrompt',
     group = my_augroup,
     callback = function()
-        keymap('i', '<C-k>', '<ESC>ld$i', opts)
+        bufmap(0, 'i', '<C-k>', '<ESC>ld$i', opts)
     end,
     desc = 'Set C-k works correctly in Telescope Prompt',
 })
