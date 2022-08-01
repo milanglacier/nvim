@@ -86,3 +86,15 @@ keymap('n', '<leader>fm', '<cmd>Telescope marks<cr>', opts)
 keymap('n', '<leader>F', '<cmd>Telescope builtin include_extensions=true<cr>', opts_desc 'Telescope extensions')
 keymap('n', '<leader>fe', '<cmd>Telescope builtin include_extensions=true<cr>', opts_desc 'Telescope extensions')
 keymap('n', '<A-x>', '<cmd>Telescope commands<cr>', opts_desc 'Telescope extensions')
+
+local my_augroup = require('conf.builtin_extend').my_augroup
+local autocmd = vim.api.nvim_create_autocmd
+
+autocmd('FileType', {
+    pattern = 'TelescopePrompt',
+    group = my_augroup,
+    callback = function()
+        keymap('i', '<C-k>', '<ESC>ld$i', opts)
+    end,
+    desc = 'Set C-k works correctly in Telescope Prompt',
+})
