@@ -7,8 +7,19 @@ M.load.autopairs = function()
     require('nvim-autopairs').setup {}
 end
 
+M.load.mini_pairs = function()
+    vim.cmd.packadd { 'mini.nvim', bang = true }
+    require('mini.pairs').setup {}
+end
+
 M.load.comment = function()
+    vim.cmd.packadd { 'Comment.nvim', bang = true }
     require('Comment').setup()
+end
+
+M.load.mini_comment = function()
+    vim.cmd.packadd { 'mini.nvim', bang = true }
+    require('mini.comment').setup {}
 end
 
 M.load.dsf = function()
@@ -63,8 +74,53 @@ M.load.sneak = function()
 end
 
 M.load.targets = function()
+    vim.cmd.packadd { 'targets.vim', bang = true }
     vim.g.targets_nl = { 'n', 'N' }
 end
+
+M.load.mini_ai = function()
+    vim.cmd.packadd { 'mini.nvim', bang = true }
+    require('mini.ai').setup {
+        mappings = {
+            -- Next/last variants
+            around_next = 'an',
+            inside_next = 'in',
+            around_last = 'aN',
+            inside_last = 'iN',
+            -- Move cursor to corresponding edge of `a` textobject
+            goto_left = 'g[',
+            goto_right = 'g]',
+        },
+    }
+end
+
+M.load.surround = function()
+    vim.cmd.packadd { 'vim-surround', bang = true }
+end
+
+M.load.mini_surround = function()
+    vim.cmd.packadd { 'mini.nvim', bang = true }
+    require('mini.surround').setup {
+        mappings = {
+            add = '<Plug>(mini-surround-add)',
+            delete = '<Plug>(mini-surround-delete)',
+            find = '<Plug>(mini-surround-find)',
+            find_left = '<Plug>(mini-surround-find_left)',
+            highlight = '<Plug>(mini-surround-highlight)',
+            replace = '<Plug>(mini-surround-replace)',
+            update_n_lines = '<Plug>(mini-surround-update_n_lines)',
+        },
+    }
+
+    local keymap = vim.api.nvim_set_keymap
+    keymap('n', 'ys', '<Plug>(mini-surround-add)', {})
+    keymap('n', 'yss', '^ys$', {})
+    keymap('n', 'yS', 'ys$', {})
+    keymap('x', 'S', '<Plug>(mini-surround-add)', {})
+    keymap('n', 'cs', '<Plug>(mini-surround-replace)', {})
+    keymap('n', 'ds', '<Plug>(mini-surround-delete)', {})
+end
+
 
 M.load.substitute = function()
     require('substitute').setup {}
@@ -101,15 +157,16 @@ end
 
 if not vim.g.vscode then
     M.load.colorizer()
-    M.load.autopairs()
+    M.load.mini_pairs()
 end
 
-M.load.comment()
+M.load.mini_comment()
 M.load.dsf()
 M.load.matchup()
 M.load.sneak()
 M.load.substitute()
-M.load.targets()
+M.load.mini_ai()
 M.load.textobj()
+M.load.mini_surround()
 
 return M

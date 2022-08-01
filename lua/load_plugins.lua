@@ -49,11 +49,11 @@ require('packer').startup(function(use)
 
     -- text-editing, motions, jumps tools
     use { 'justinmk/vim-sneak' }
-    use { 'tpope/vim-surround' }
-    use { 'numToStr/Comment.nvim' }
+    use { 'tpope/vim-surround', opt = true }
+    use { 'numToStr/Comment.nvim', opt = true }
     use { 'tpope/vim-repeat' }
     use { 'michaeljsmith/vim-indent-object' }
-    use { 'wellle/targets.vim' }
+    use { 'wellle/targets.vim', opt = true }
     use { 'AndrewRadev/dsf.vim' }
     use { 'gbprod/substitute.nvim' }
     use { 'andymass/vim-matchup' }
