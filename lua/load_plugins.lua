@@ -73,6 +73,7 @@ require('packer').startup(function(use)
     use { 'mfussenegger/nvim-treehopper', opt = true }
     use { 'mizlan/iswap.nvim', opt = true }
     use { 'romgrk/nvim-treesitter-context', opt = true }
+    use { 'JoosepAlviste/nvim-ts-context-commentstring' }
 
     -- Set markdown/rmd syntax highlighting
     use { 'vim-pandoc/vim-pandoc-syntax', opt = true }

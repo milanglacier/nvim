@@ -164,6 +164,10 @@ require('nvim-treesitter.configs').setup {
         disable_virtual_text = true,
         -- disable = { "c", "ruby" },  -- optional, list of language that will be disabled
     },
+    context_commentstring = {
+        enable = true,
+        enable_autocmd = false,
+    },
 }
 
 if not vim.g.vscode then

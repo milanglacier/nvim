@@ -23,7 +23,13 @@ end
 
 M.load.mini_comment = function()
     vim.cmd.packadd { 'mini.nvim', bang = true }
-    require('mini.comment').setup {}
+    require('mini.comment').setup {
+        hooks = {
+            pre = function()
+                require('ts_context_commentstring.internal').update_commentstring()
+            end,
+        },
+    }
 end
 
 M.load.dsf = function()
