@@ -4,13 +4,15 @@ local conda_env = function(env, bin)
     return conda .. '/envs/' .. env .. '/bin/' .. bin
 end
 
-local radian = conda_env('radian', 'radian')
 local proselint = conda_env('proselint', 'proselint')
 local ipython = conda .. '/bin/ipython'
 local python = conda .. '/bin/python'
 local yapf = conda .. '/bin/yapf'
 local flake8 = conda .. '/bin/flake8'
 local pylint = conda .. '/bin/pylint'
+
+local local_bin = os.getenv 'HOME' .. '/.local'
+local radian = local_bin .. '/bin/radian'
 
 local node = os.getenv 'HOME' .. '/.local/share/node/'
 local node_env = function(path, bin)
