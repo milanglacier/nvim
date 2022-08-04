@@ -67,7 +67,12 @@ require('packer').startup(function(use)
     use { 'windwp/nvim-autopairs', opt = true }
 
     -- Tree sitter for enhanced text obj and syntax capturality
-    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        run = function()
+            require('nvim-treesitter.install').update { sync = true }
+        end,
+    }
     use { 'nvim-treesitter/nvim-treesitter-textobjects' }
     use { 'p00f/nvim-ts-rainbow' }
     use { 'mfussenegger/nvim-treehopper', opt = true }
