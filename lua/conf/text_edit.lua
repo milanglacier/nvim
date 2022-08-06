@@ -132,6 +132,9 @@ M.load.substitute = function()
 end
 
 M.load.textobj = function()
+    vim.cmd.packadd { 'vim-textobj-chainmember', bang = true }
+    vim.cmd.packadd { 'vim-textobj-between', bang = true }
+
     vim.g.textobj_between_no_default_key_mappings = 1
     vim.g.textobj_chainmember_no_default_key_mappings = 1
 

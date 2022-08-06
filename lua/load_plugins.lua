@@ -59,8 +59,8 @@ require('packer').startup(function(use)
     use { 'andymass/vim-matchup' }
     use { 'tommcdo/vim-exchange' }
     use { 'kana/vim-textobj-user' }
-    use { 'D4KU/vim-textobj-chainmember' }
-    use { 'thinca/vim-textobj-between' }
+    use { 'D4KU/vim-textobj-chainmember', opt = true }
+    use { 'thinca/vim-textobj-between', opt = true }
 
     -- text editing tools only for nvim
     use { 'norcalli/nvim-colorizer.lua', opt = true }
@@ -73,12 +73,12 @@ require('packer').startup(function(use)
             require('nvim-treesitter.install').update { sync = true }
         end,
     }
-    use { 'nvim-treesitter/nvim-treesitter-textobjects' }
-    use { 'p00f/nvim-ts-rainbow' }
+    use { 'nvim-treesitter/nvim-treesitter-textobjects', opt = true }
+    use { 'p00f/nvim-ts-rainbow', opt = true }
     use { 'mfussenegger/nvim-treehopper', opt = true }
     use { 'mizlan/iswap.nvim', opt = true }
     use { 'romgrk/nvim-treesitter-context', opt = true }
-    use { 'JoosepAlviste/nvim-ts-context-commentstring' }
+    use { 'JoosepAlviste/nvim-ts-context-commentstring', opt = true }
 
     -- Set markdown/rmd syntax highlighting
     use { 'vim-pandoc/vim-pandoc-syntax', opt = true }

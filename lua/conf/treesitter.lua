@@ -1,3 +1,7 @@
+vim.cmd.packadd { 'nvim-treesitter-textobjects', bang = true}
+vim.cmd.packadd { 'nvim-ts-rainbow', bang = true}
+vim.cmd.packadd { 'nvim-ts-context-commentstring', bang = true}
+
 local keymap = vim.api.nvim_set_keymap
 
 require('nvim-treesitter.configs').setup {
