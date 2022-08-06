@@ -19,14 +19,14 @@ local node_env = function(path, bin)
     return node .. path .. '/node_modules/.bin/' .. bin
 end
 
-local vimls = node_env('vimls', 'vim-language-server')
+local vim_language_server = node_env('vimls', 'vim-language-server')
 local prettierd = node_env('prettierd', 'prettierd')
 
 local cargo = os.getenv 'HOME' .. '/.cargo'
 
 local sqls = os.getenv 'HOME' .. '/go/bin/sqls'
 
-return {
+local M = {
     conda = conda,
     python = python,
     radian = radian,
@@ -37,7 +37,15 @@ return {
     cargo = cargo,
     sqls = sqls,
     node = node,
-    vimls = vimls,
+    ['vim-language-server'] = vim_language_server,
     prettierd = prettierd,
     proselint = proselint,
 }
+
+return setmetatable(M, {
+    __index = function(_, key)
+        local which = vim.fn.system('which ' .. key)
+        local path = string.sub(which, 1, -2) -- the last character is \n, remove it
+        return path
+    end,
+})

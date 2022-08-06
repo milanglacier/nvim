@@ -271,7 +271,7 @@ require('lspconfig').sumneko_lua.setup {
 }
 
 require('lspconfig').vimls.setup {
-    cmd = { require('bin_path').vimls, '--stdio' },
+    cmd = { require('bin_path')['vim-language-server'], '--stdio' },
     on_attach = on_attach,
     capabilities = capabilities,
 }
