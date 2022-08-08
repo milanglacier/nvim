@@ -1,6 +1,15 @@
+local max_jobs = nil
+-- if #list_uis() == 0, then nvim runs in headless mode,
+-- there's a packer bug:
+-- in headless mode, max_jobs must be nil,
+-- in TUI mode, max_jobs shouldn't be too large
+if #vim.api.nvim_list_uis() > 0 then
+    max_jobs = 10
+end
+
 require('packer').init {
     compile_on_sync = false,
-    max_jobs = 10,
+    max_jobs = max_jobs,
 }
 
 require('packer').startup(function(use)
@@ -144,4 +153,8 @@ require('packer').startup(function(use)
     use { 'rcarriga/nvim-dap-ui', opt = true }
     use { 'nvim-telescope/telescope-dap.nvim', opt = true }
     use { 'theHamsta/nvim-dap-virtual-text', opt = true }
+
+    if PACKER_BOOTSTRAP_SUCCESS then
+        require('packer').sync()
+    end
 end)
