@@ -228,12 +228,14 @@ autocmd('BufEnter', {
         local filename = vim.api.nvim_buf_get_name(0)
         filename = vim.fn.shellescape(filename)
 
-        vim.cmd['!'] { 'open', filename }
-        vim.cmd.redraw()
+        if vim.fn.has 'mac' == 1 then
+            vim.cmd['!'] { 'open', filename }
+            vim.cmd.redraw()
 
-        vim.defer_fn(function()
-            vim.cmd.bdelete { bang = true }
-        end, 1000)
+            vim.defer_fn(function()
+                vim.cmd.bdelete { bang = true }
+            end, 1000)
+        end
     end,
 })
 
@@ -385,6 +387,7 @@ function M.open_URI_under_cursor()
             return false
         end
     end
+
     local word_under_cursor = vim.fn.expand '<cWORD>'
     -- any uri with a protocol segment
     local regex_protocol_uri = '%a*:%/%/[%a%d%#%[%]%-%%+:;!$@/?&=_.,~*()]*[^%)]'
