@@ -89,9 +89,8 @@ local on_attach = function(client, bufnr)
         'n',
         '<Leader>ls',
         '',
-        opts { 'lspsaga signature help', require('lspsaga.signaturehelp').signature_help }
+        opts { 'signature help', vim.lsp.buf.signature_help }
     )
-    -- "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
 
     -- rename
     bufmap(bufnr, 'n', '<Leader>ln', '<cmd>Lspsaga rename<CR>', opts { 'lspsaga rename' })
