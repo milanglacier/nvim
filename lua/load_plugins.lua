@@ -133,7 +133,7 @@ require('packer').startup(function(use)
     -- REPL
     -- 'jalvesaq/Nvim-R'
     -- 'jalvesaq/vimcmdline'
-    use { 'hkupty/iron.nvim', opt = true }
+    use { 'milanglacier/iron.nvim', opt = true }
     use { 'akinsho/toggleterm.nvim', opt = true }
 
     -- Git
