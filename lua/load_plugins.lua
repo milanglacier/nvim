@@ -23,7 +23,7 @@ require('packer').startup(function(use)
     use { 'folke/tokyonight.nvim', branch = 'main', opt = true }
     use { 'sainnhe/everforest', opt = true }
     use { 'sainnhe/edge', opt = true }
-    use { 'mhdahmad/gruvbox.lua', opt = true }
+    use { 'ellisonleao/gruvbox.nvim', opt = true }
     use { 'rebelot/kanagawa.nvim', opt = true }
     use { 'catppuccin/nvim', as = 'catppuccin', opt = true }
     use { 'marko-cerovac/material.nvim', opt = true }

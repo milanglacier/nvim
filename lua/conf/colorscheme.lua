@@ -55,7 +55,7 @@ local night_scheme_options = {
             vim.g.everforest_better_performance = 1
         end,
         function()
-            packadd [[gruvbox.lua]]
+            packadd [[gruvbox.nvim]]
         end,
         function()
             packadd [[mini.nvim]]
@@ -153,7 +153,7 @@ local day_scheme_options = {
             vim.g.everforest_better_performance = 1
         end,
         function()
-            packadd [[gruvbox.lua]]
+            packadd [[gruvbox.nvim]]
         end,
         function()
             packadd [[material.nvim]]
