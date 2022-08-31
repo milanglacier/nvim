@@ -138,7 +138,7 @@ M.load.toggleterm = function()
         pattern = 'rmd',
         group = my_augroup,
         callback = function()
-            local bufid = vim.api.nvim_get_current_buf()
+            local winid = vim.api.nvim_get_current_win()
             local bufcmd = vim.api.nvim_buf_create_user_command
 
             bufcmd(0, 'RenderRmd', function(options)
@@ -151,8 +151,8 @@ M.load.toggleterm = function()
 
                 ---@diagnostic disable-next-line: missing-parameter
                 require('toggleterm').exec(cmd, term_id)
-
-                vim.api.nvim_set_current_buf(bufid)
+                vim.cmd.normal { 'G', bang = true }
+                vim.api.nvim_set_current_win(winid)
             end, {
                 nargs = '?', -- 0 or 1 arg
             })
