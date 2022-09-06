@@ -55,30 +55,6 @@ local on_attach = function(client, bufnr)
 
     -- hover
     bufmap(bufnr, 'n', 'gh', '<cmd>Lspsaga hover_doc<CR>', opts { 'lspsaga hover doc' })
-    bufmap(
-        bufnr,
-        'n',
-        '<C-f>',
-        '',
-        opts {
-            desc = 'lspsaga smartscroll downward',
-            callback = function()
-                require('lspsaga.action').smart_scroll_with_saga(1)
-            end,
-        }
-    )
-    bufmap(
-        bufnr,
-        'n',
-        '<C-b>',
-        '',
-        opts {
-            desc = 'lspsaga smartscroll upward',
-            callback = function()
-                require('lspsaga.action').smart_scroll_with_saga(-1)
-            end,
-        }
-    )
 
     -- use glow-hover
     bufmap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts { 'lsp hover by glow' })
