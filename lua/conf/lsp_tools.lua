@@ -39,7 +39,7 @@ end
 M.load.aerial = function()
     require('aerial').setup {
         backends = { 'lsp', 'treesitter', 'markdown' },
-        close_behavior = 'close',
+        close_automatic_events = { 'unsupported' },
         default_bindings = true,
         filter_kind = false,
         on_attach = function(bufnr)
