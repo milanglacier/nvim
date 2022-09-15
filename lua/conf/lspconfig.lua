@@ -60,13 +60,7 @@ local on_attach = function(client, bufnr)
     bufmap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts { 'lsp hover by glow' })
 
     -- signaturehelp
-    bufmap(
-        bufnr,
-        'n',
-        '<Leader>ls',
-        '',
-        opts { 'signature help', vim.lsp.buf.signature_help }
-    )
+    bufmap(bufnr, 'n', '<Leader>ls', '', opts { 'signature help', vim.lsp.buf.signature_help })
 
     -- rename
     bufmap(bufnr, 'n', '<Leader>ln', '<cmd>Lspsaga rename<CR>', opts { 'lspsaga rename' })
@@ -217,10 +211,6 @@ require('lspconfig').clangd.setup {
     capabilities = clangd_capabilities,
 }
 
-local lua_runtime_path = {}
-table.insert(lua_runtime_path, 'lua/?.lua')
-table.insert(lua_runtime_path, 'lua/?/init.lua')
-
 require('lua-dev').setup {}
 
 require('lspconfig').sumneko_lua.setup {
@@ -228,15 +218,8 @@ require('lspconfig').sumneko_lua.setup {
     capabilities = capabilities,
     settings = {
         Lua = {
-            runtime = {
-                version = 'LuaJIT',
-                path = lua_runtime_path,
-            },
             diagnostics = {
                 globals = { 'vim' },
-            },
-            workspace = {
-                library = vim.api.nvim_get_runtime_file('', true),
             },
             telemetry = {
                 enable = false,
