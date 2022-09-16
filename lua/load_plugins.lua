@@ -120,7 +120,7 @@ require('packer').startup(function(use)
     use { 'kdheepak/cmp-latex-symbols', opt = true }
     use { 'L3MON4D3/LuaSnip', opt = true }
     use { 'saadparwaiz1/cmp_luasnip', opt = true }
-    use { 'milanglacier/cmp-nvim-tags', opt = true }
+    use { 'quangnguyen30192/cmp-nvim-tags', opt = true }
     use { 'petertriho/cmp-git', opt = true }
     use { 'rafamadriz/friendly-snippets', opt = true }
 
