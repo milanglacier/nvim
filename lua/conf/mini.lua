@@ -155,7 +155,4 @@ local opts = function(desc)
     }
 end
 
-keymap('n', '<Leader>bd', "<cmd>lua require('mini.bufremove').delete()<CR>", opts 'buffer delete and keep layout')
-keymap('n', '<Leader>bw', "<cmd>lua require('mini.bufremove').wipeout()<CR>", opts 'buffer delete and keep layout')
-
 return M

@@ -39,22 +39,33 @@ keymap('n', '<Leader>cu', [[:cd ..|pwd<cr>]], opts)
 keymap('n', '<C-g>', '<ESC>', {})
 -- <C-g> by default echos the current file name, which is useless
 
-keymap('n', ']b', [[:bnext<cr>]], opts)
-keymap('n', '[b', [[:bprevious<cr>]], opts)
-keymap('n', ']q', [[:cnext<cr>]], opts)
-keymap('n', '[q', [[:cprevious<cr>]], opts)
-keymap('n', ']Q', [[:cnewer<cr>]], opts)
-keymap('n', '[Q', [[:colder<cr>]], opts)
-keymap('n', ']t', [[:tnext<cr>]], opts)
-keymap('n', '[t', [[:tprevious<cr>]], opts)
+keymap('n', ']b', [[:bnext<cr>]], opts_desc 'next buffer')
+keymap('n', '[b', [[:bprevious<cr>]], opts_desc 'previous buffer')
+keymap('n', ']q', [[:cnext<cr>]], opts_desc 'next quicklist entry')
+keymap('n', '[q', [[:cprevious<cr>]], opts_desc 'previous quicklist entry')
+keymap('n', ']Q', [[:cnewer<cr>]], opts_desc 'newer quicklist')
+keymap('n', '[Q', [[:colder<cr>]], opts_desc 'older quicklist')
+keymap('n', ']t', [[:tnext<cr>]], opts_desc 'next tag')
+keymap('n', '[t', [[:tprevious<cr>]], opts_desc 'previous tag')
 keymap('n', '<Leader>mt', [[:ltag <C-R><C-W> | lopen<cr>]], opts_desc 'misc: tag word to loclist')
 -- open loclist to show the definition matches at current word
 -- <C-R> insert text in the register to the command line
 -- <C-W> alias for the word under cursor
 
-keymap('n', '<Leader>to', [[:tabonly<cr>]], opts)
-keymap('n', '<Leader>tn', [[:tabnew<cr>]], opts)
-keymap('n', '<Leader>tc', [[:tabclose<cr>]], opts)
+keymap('n', '<Leader><Tab>o', [[:tabonly<cr>]], opts)
+keymap('n', '<Leader><Tab>n', [[:tabnew<cr>]], opts)
+keymap('n', '<Leader><Tab>c', [[:tabclose<cr>]], opts)
+keymap('n', '<Leader><Tab>f', [[:tabfirst<cr>]], opts)
+keymap('n', '<Leader><Tab>l', [[:tablast<cr>]], opts)
+keymap('n', '<Leader><Tab>1', [[1gt]], opts)
+keymap('n', '<Leader><Tab>2', [[2gt]], opts)
+keymap('n', '<Leader><Tab>3', [[3gt]], opts)
+keymap('n', '<Leader><Tab>4', [[4gt]], opts)
+
+keymap('n', '<Leader>bd', [[:bd!<CR>]], opts_desc 'buffer delete current one')
+keymap('n', '<Leader>bw', [[:bw!<CR>]], opts_desc 'buffer wipeout current one')
+keymap('n', '<Leader>bp', [[:bprevious<CR>]], opts_desc 'buffer next')
+keymap('n', '<Leader>bn', [[:bnext<CR>]], opts_desc 'buffer previous')
 
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
