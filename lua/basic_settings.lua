@@ -69,6 +69,6 @@ if not vim.g.vscode then
         'sm:block-blinkwait175-blinkoff150-blinkon175',
     }
 
-    vim.o.guifont = gui_font[5]
+    vim.o.guifont = gui_font[4]
     vim.o.guicursor = table.concat(gui_cursor, ',')
 end
