@@ -45,7 +45,9 @@ M.load.lualine = function()
         return mode_remap[mode] or mode
     end
 
-    require('lualine').setup {
+    local lualine = require 'lualine'
+
+    lualine.setup {
         options = {
             icons_enabled = true,
             theme = 'auto',
@@ -107,6 +109,34 @@ M.load.lualine = function()
         },
         extensions = { 'aerial', 'nvim-tree', 'quickfix', 'toggleterm' },
     }
+
+    lualine.hide {
+        place = { 'tabline' },
+        unhide = false,
+    } -- disable tabline when init nvim
+
+    autocmd('TabNew', {
+        group = my_augroup,
+        desc = 'init lualine tabline',
+        callback = function()
+            lualine.hide {
+                place = { 'tabline' },
+                unhide = true,
+            }
+        end,
+    })
+    autocmd('TabClosed', {
+        group = my_augroup,
+        desc = 'toggle lualine tabline',
+        callback = function()
+            if #vim.api.nvim_list_tabpages() < 2 then
+                lualine.hide {
+                    place = { 'tabline' },
+                    unhide = false,
+                }
+            end
+        end,
+    })
 end
 
 M.git_workspace_diff = {}
