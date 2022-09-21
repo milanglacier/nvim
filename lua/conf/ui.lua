@@ -58,7 +58,12 @@ M.load.lualine = function()
             lualine_a = { shorten_mode_name },
             lualine_b = {
                 'branch',
-                M.get_workspace_diff,
+                {
+                    M.get_workspace_diff,
+                    cond = function()
+                        return M.get_workspace_diff() ~= nil
+                    end,
+                }, -- "" will be nil in lualine
             },
             lualine_c = { { 'filename', path = 1 } }, -- relative path
             lualine_x = {
