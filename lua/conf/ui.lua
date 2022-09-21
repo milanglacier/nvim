@@ -109,10 +109,6 @@ M.load.lualine = function()
     }
 end
 
-M.has_more_tabs = function()
-    return #vim.api.nvim_list_tabpages() > 1
-end
-
 M.git_workspace_diff = {}
 
 M.set_git_workspace_diff = function()
