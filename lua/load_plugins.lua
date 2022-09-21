@@ -49,7 +49,6 @@ require('packer').startup(function(use)
 
     -- UI
     use { 'nvim-lualine/lualine.nvim', opt = true }
-    use { 'alvarosevilla95/luatab.nvim', opt = true }
     use { 'rcarriga/nvim-notify', opt = true }
     use { 'echasnovski/mini.nvim', opt = true }
     use { 'folke/trouble.nvim', opt = true }
@@ -109,6 +108,7 @@ require('packer').startup(function(use)
     use { 'ray-x/lsp_signature.nvim', opt = true }
     use { 'jose-elias-alvarez/null-ls.nvim', opt = true }
     use { 'ThePrimeagen/refactoring.nvim', opt = true }
+    use { 'SmiteshP/nvim-navic', opt = true }
 
     -- Completion
     use { 'hrsh7th/cmp-nvim-lsp', opt = true }

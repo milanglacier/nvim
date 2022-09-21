@@ -1,6 +1,9 @@
 local M = {}
 M.load = {}
 
+local autocmd = vim.api.nvim_create_autocmd
+local my_augroup = require('conf.builtin_extend').my_augroup
+
 M.load.lualine = function()
     vim.cmd.packadd { 'lualine.nvim', bang = true }
     -- Override 'encoding': Don't display if encoding is UTF-8.
@@ -55,30 +58,145 @@ M.load.lualine = function()
             lualine_a = { shorten_mode_name },
             lualine_b = {
                 'branch',
-                'diff',
-                'diagnostics',
+                M.get_workspace_diff,
             },
-            lualine_c = { 'filename' },
-            lualine_x = { encoding, fileformat, 'filetype' },
+            lualine_c = { { 'filename', path = 1 } }, -- relative path
+            lualine_x = {
+                { 'diagnostics', sources = { 'nvim_workspace_diagnostic' } },
+                encoding,
+                fileformat,
+                'filetype',
+            },
             lualine_y = { 'progress' },
             lualine_z = { 'location' },
         },
-        inactive_sections = {
-            lualine_a = {},
-            lualine_b = {},
-            lualine_c = { { 'filename', path = 1, shorting_target = 20 } }, -- relative path
-            lualine_x = { 'progress', 'location' },
-            lualine_y = {},
-            lualine_z = {},
+        tabline = {
+            lualine_a = {
+                { 'filetype', icon_only = true },
+            },
+            lualine_b = { { 'tabs', mode = 2, max_length = vim.o.columns } },
         },
-        tabline = {},
+        winbar = {
+            lualine_b = {
+                { 'filetype', icon_only = true },
+                { 'filename', path = 0 },
+            },
+            lualine_c = { M.winbar_symbol },
+            lualine_x = {
+                function()
+                    return ' '
+                end, -- this is to avoid annoying highlight (high contrast color)
+                { 'diagnostics', sources = { 'nvim_diagnostic' } },
+                'diff',
+            },
+        },
+        inactive_winbar = {
+            lualine_a = {
+                { 'filetype', icon_only = true },
+                { 'filename', path = 0 },
+            },
+            lualine_x = {
+                { 'diagnostics', sources = { 'nvim_diagnostic' } },
+                'diff',
+            },
+        },
         extensions = { 'aerial', 'nvim-tree', 'quickfix', 'toggleterm' },
     }
 end
 
-M.load.luatab = function()
-    vim.cmd.packadd { 'luatab.nvim', bang = true }
-    require('luatab').setup {}
+M.has_more_tabs = function()
+    return #vim.api.nvim_list_tabpages() > 1
+end
+
+M.git_workspace_diff = {}
+
+M.set_git_workspace_diff = function()
+    local function is_a_git_dir()
+        local is_git = vim.fn.system 'git rev-parse --is-inside-work-tree' == 'true\n'
+        return is_git
+    end
+
+    local function compute_workspace_diff()
+        local changes = vim.fn.system [[git diff --stat | tail -n 1]]
+        changes = string.sub(changes, 1, -2) -- the last character is \n, remove it
+        changes = vim.split(changes, ',')
+
+        local change_add_del = {}
+        for _, i in pairs(changes) do
+            if i:find 'change' then
+                change_add_del.file_changed = i:match '(%d+)'
+            elseif i:find 'insertion' then
+                change_add_del.added = i:match '(%d+)'
+            elseif i:find 'deletion' then
+                change_add_del.removed = i:match '(%d+)'
+            end
+        end
+
+        return change_add_del
+    end
+
+    local function init_workspace_diff()
+        local cwd = vim.fn.getcwd()
+
+        if M.git_workspace_diff[cwd] == nil then
+            if is_a_git_dir() then
+                M.git_workspace_diff[cwd] = compute_workspace_diff()
+            end
+        end
+    end
+
+    local function update_workspace_diff()
+        local cwd = vim.fn.getcwd()
+        if M.git_workspace_diff[cwd] ~= nil then
+            M.git_workspace_diff[cwd] = compute_workspace_diff()
+        end
+    end
+
+    autocmd('BufEnter', {
+        group = my_augroup,
+        desc = 'Init the git diff',
+        callback = function()
+            vim.defer_fn(function()
+                init_workspace_diff()
+                -- defer this function because project root need to be updated.
+            end, 500)
+        end,
+    })
+    autocmd('BufWritePost', {
+        group = my_augroup,
+        desc = 'Update the git diff',
+        callback = function()
+            vim.defer_fn(function()
+                update_workspace_diff()
+            end, 100)
+        end,
+    })
+end
+
+M.get_workspace_diff = function()
+    if vim.fn.expand('%:p'):find(vim.fn.getcwd()) then
+        -- if the absolute path of current file is a sub directory of pwd
+        local current_diff = M.git_workspace_diff[vim.fn.getcwd()]
+        if current_diff == nil then
+            return ''
+        end
+
+        if current_diff ~= nil and vim.tbl_count(current_diff) > 0 then
+            local diff_string = ' '
+            if current_diff.file_changed ~= nil then
+                diff_string = diff_string .. ' ' .. current_diff.file_changed
+            end
+            if current_diff.added ~= nil then
+                diff_string = diff_string .. ' +' .. current_diff.added
+            end
+            if current_diff.removed ~= nil then
+                diff_string = diff_string .. ' -' .. current_diff.removed
+            end
+            return diff_string
+        end
+    else
+        return ''
+    end
 end
 
 M.load.notify = function()
@@ -143,105 +261,36 @@ M.load.which_key = function()
     }
 end
 
-local autocmd = vim.api.nvim_create_autocmd
-local my_augroup = require('conf.builtin_extend').my_augroup
-local set_hl = vim.api.nvim_set_hl
-local highlight_link = function(opts)
-    set_hl(0, opts.linked, { link = opts.linking })
-end
+M.winbar_symbol = function()
+    vim.cmd.packadd { 'nvim-navic', bang = true }
+    local navic = require 'nvim-navic'
 
-M.winbar = function()
-    local ft = vim.bo.filetype
-    local ft_blacklist = {
-        'toggleterm',
-        'aerial',
-        'NvimTree',
-        'Trouble',
-        'qf',
-        'starter',
-    }
-
-    local ft_match_blacklist = {
-        'spectre',
-        'Neogit',
-        'Diffview',
-        'dap',
-    }
-
-    local special_icon = 'ﰨ '
-
-    for _, filetype in pairs(ft_blacklist) do
-        if ft == filetype then
-            return special_icon .. ft
-        end
-    end
-
-    for _, filetype in pairs(ft_match_blacklist) do
-        if ft:match(filetype) then
-            return special_icon .. ft
-        end
+    if navic.is_available() then
+        return navic.get_location()
     end
 
     local winwidth = vim.api.nvim_win_get_width(0)
     local filename = vim.fn.expand '%:.'
-    local extension = vim.fn.expand '%:e'
 
-    local filename_blacklist = {
-        'term://',
-        'diffview://',
-    }
+    local winbar = filename
 
-    for _, fname in pairs(filename_blacklist) do
-        if filename == nil or filename:match(fname) then
-            return special_icon .. ft
-        end
-    end
+    local rest_length = winwidth - #winbar - 3
+    local ts_status = ''
 
-    local icon = require('nvim-web-devicons').get_icon_by_filetype(ft)
-
-    if not icon then
-        icon = require('nvim-web-devicons').get_icon(filename, extension)
-        if not icon then
-            return special_icon .. filename
-        end
-    end
-
-    local winbar = icon .. ' ' .. filename
-
-    local rest_length = winwidth - #winbar
-    local is_focused = vim.api.nvim_get_current_win() == vim.api.nvim_tabpage_get_win(0)
-
-    if rest_length > 5 and is_focused then
+    if rest_length > 5 then
         local size = math.floor(rest_length * 0.8)
 
-        local ts_status = require('nvim-treesitter').statusline {
+        ts_status = require('nvim-treesitter').statusline {
             indicator_size = size,
             separator = '  ',
-        }
+        } or ''
 
         if ts_status ~= nil and ts_status ~= '' then
             ts_status = ts_status:gsub('%s+', ' ')
-            winbar = winbar .. '  ' .. ts_status
         end
     end
 
-    return winbar
-end
-
-M.load.winbar = function()
-    highlight_link { linked = 'WinBar', linking = 'lualine_b_normal' }
-    highlight_link { linked = 'WinBarNC', linking = 'lualine_a_normal' }
-
-    vim.o.winbar = "%{%v:lua.require'conf.ui'.winbar()%}"
-
-    autocmd('ColorScheme', {
-        group = my_augroup,
-        callback = function()
-            highlight_link { linked = 'WinBar', linking = 'lualine_b_normal' }
-            highlight_link { linked = 'WinBarNC', linking = 'lualine_a_normal' }
-        end,
-        desc = 'set hl group for winbar',
-    })
+    return ts_status
 end
 
 M.reopen_qflist_by_trouble = function()
@@ -259,10 +308,9 @@ end
 
 M.load.devicons()
 M.load.lualine()
-M.load.luatab()
 M.load.notify()
 M.load.trouble()
 M.load.which_key()
-M.load.winbar()
+M.set_git_workspace_diff()
 
 return M

@@ -5,6 +5,7 @@ vim.cmd.packadd { 'lspsaga.nvim', bang = true }
 vim.cmd.packadd { 'aerial.nvim', bang = true }
 vim.cmd.packadd { 'lsp_signature.nvim', bang = true }
 vim.cmd.packadd { 'lua-dev.nvim', bang = true }
+vim.cmd.packadd { 'nvim-navic', bang = true }
 
 local opts = function(options)
     return {
@@ -136,6 +137,7 @@ local on_attach = function(client, bufnr)
 
     require('aerial').on_attach(client, bufnr)
     require('conf.lsp_tools').signature(bufnr)
+    require("nvim-navic").attach(client, bufnr)
 end
 
 -- Setup lspconfig.
