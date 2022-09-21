@@ -146,13 +146,4 @@ autocmd('ColorScheme', {
     end,
 })
 
-local keymap = vim.api.nvim_set_keymap
-local opts = function(desc)
-    return {
-        noremap = true,
-        silent = true,
-        desc = desc,
-    }
-end
-
 return M
