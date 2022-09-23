@@ -49,6 +49,9 @@ M.load.nvim_tree = function()
             enable = true,
             update_cwd = true,
         },
+        git = {
+            ignore = false,
+        },
     }
 
     local keymap = vim.api.nvim_set_keymap
