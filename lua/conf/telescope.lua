@@ -9,7 +9,7 @@ local telescope = require 'telescope'
 telescope.setup {
     pickers = {
         find_files = {
-            find_command = { 'rg', '--files', '--iglob', '!.git', '--hidden' },
+            find_command = { 'rg', '--files', '--iglob', '!.git', '--hidden', '--no-ignore-vcs' },
         },
         keymaps = {
             modes = { 'n', 'i', 'c', 'x', 'v', 'o', '', '!' },
