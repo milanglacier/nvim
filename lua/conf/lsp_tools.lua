@@ -95,53 +95,56 @@ M.load.nullls = function()
     vim.cmd.packadd { 'null-ls.nvim', bang = true }
 
     local null_ls = require 'null-ls'
+    local util = require 'null-ls.utils'
     local mypath = require 'bin_path'
 
+    local function root_pattern_wrapper(patterns)
+        return function()
+            return util.root_pattern('.git', unpack(patterns or {}))(vim.fn.expand '%:h')
+        end
+    end
+
+    local function source_wrapper(args)
+        local source = args[1]
+        local patterns = args[2]
+        args[1] = nil
+        args[2] = nil
+        args.cwd = args.cwd or root_pattern_wrapper(patterns)
+        return source.with(args)
+    end
+
     null_ls.setup {
+        fallback_severity = vim.diagnostic.severity.INFO,
         sources = {
-            null_ls.builtins.formatting.stylua,
-            null_ls.builtins.diagnostics.selene,
-            null_ls.builtins.code_actions.gitsigns,
-            null_ls.builtins.code_actions.proselint.with {
+            source_wrapper { null_ls.builtins.formatting.stylua },
+            source_wrapper { null_ls.builtins.diagnostics.selene },
+            source_wrapper { null_ls.builtins.code_actions.gitsigns },
+            source_wrapper {
+                null_ls.builtins.diagnostics.proselint,
                 command = mypath.proselint,
                 filetypes = { 'markdown', 'markdown.pandoc', 'tex', 'rmd' },
             },
-            null_ls.builtins.diagnostics.proselint.with {
-                command = mypath.proselint,
-                filetypes = { 'markdown', 'markdown.pandoc', 'tex', 'rmd' },
-            },
-            null_ls.builtins.code_actions.refactoring,
-            null_ls.builtins.diagnostics.codespell.with {
-                disabled_filetypes = { 'NeogitCommitMessage' },
-            },
-            null_ls.builtins.diagnostics.chktex,
-            null_ls.builtins.formatting.prettierd.with {
+            source_wrapper { null_ls.builtins.code_actions.refactoring },
+            source_wrapper { null_ls.builtins.diagnostics.chktex },
+            source_wrapper {
+                null_ls.builtins.formatting.prettierd,
                 command = mypath.prettierd,
                 filetypes = { 'markdown.pandoc', 'json', 'markdown', 'rmd', 'yaml' },
             },
-            null_ls.builtins.formatting.sqlfluff.with {
+            source_wrapper {
+                null_ls.builtins.formatting.sqlfluff,
                 extra_args = { '--dialect', 'mysql' },
             },
-            null_ls.builtins.formatting.yapf.with {
+            source_wrapper {
+                null_ls.builtins.formatting.yapf,
+                { 'pyproject.toml' },
                 command = mypath.yapf,
             },
-            null_ls.builtins.diagnostics.flake8.with {
+            source_wrapper {
+                null_ls.builtins.diagnostics.flake8,
+                { 'pyproject.toml' },
                 command = mypath.flake8,
             },
-            -- null_ls.builtins.diagnostics.pylint.with {
-            --     command = mypath.pylint,
-            --     extra_args = {
-            --         '--generated-members=torch.*,pt.*',
-            --         '--disable=W0621,W0612,C0103,C0301,C0114,C0116,R0914,R0913,C0411,R0902',
-            --     },
-            --     -- ignore member checking for torch (and pt as an alias)
-            --     -- ignore sneak_case naming style, line too long
-            --     -- ignore redefine variable from outer scope
-            --     -- ignore model doc string, ignore function doc string
-            --     -- ignore too many local variables
-            --     -- ignore too many arguments, too many instances attributes
-            --     -- ignore standard import should be put before other import
-            -- },
         },
     }
 end
