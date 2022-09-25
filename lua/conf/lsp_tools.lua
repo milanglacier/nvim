@@ -100,7 +100,6 @@ M.load.nullls = function()
 
     local function root_pattern_wrapper(patterns)
         return function()
-            DOG = util.root_pattern('.git', unpack(patterns or {}))(vim.fn.expand '%:p')
             return util.root_pattern('.git', unpack(patterns or {}))(vim.fn.expand '%:p')
         end
     end
