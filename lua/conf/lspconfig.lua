@@ -167,7 +167,6 @@ require('lspconfig').pyright.setup {
     root_dir = python_root_dir,
     settings = {
         python = {
-            pythonPath = require('bin_path').python,
         },
     },
     flags = {
@@ -231,13 +230,11 @@ require('lspconfig').sumneko_lua.setup {
 }
 
 require('lspconfig').vimls.setup {
-    cmd = { require('bin_path')['vim-language-server'], '--stdio' },
     on_attach = on_attach,
     capabilities = capabilities,
 }
 
 require('lspconfig').sqls.setup {
-    cmd = { require('bin_path').sqls },
     on_attach = function(client, bufnr)
         vim.cmd.packadd { 'sqls.nvim', bang = true }
 
@@ -252,7 +249,7 @@ require('lspconfig').sqls.setup {
     single_file_support = false,
     on_new_config = function(new_config, new_rootdir)
         new_config.cmd = {
-            require('bin_path').sqls,
+            'sqls',
             '-config',
             new_rootdir .. '/config.yml',
         }

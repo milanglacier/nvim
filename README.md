@@ -11,14 +11,6 @@ I think the task of installing a third party CLI tools should
 be handled by your system package manager, not by a CLI application itself,
 so just install the denpendencies by yourself.
 
-Some packages' paths are required to be manually specified by
-`lua/bin_path.lua`, because I use GUI nvim: `vimr` which doesn't
-load my `zshrc` by default (and since I use `conda`, which has
-a low startup speed, I also don't want `vimr` to load it),
-so they are not included in my `PATH`.
-
-all dependencies (`*` means its path need to be manually specified):
-
 ## `python`
 
 1. `python*`.

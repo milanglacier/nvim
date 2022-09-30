@@ -50,12 +50,9 @@ M.load.iron = function()
     vim.cmd.packadd { 'iron.nvim', bang = true }
 
     local iron = require 'iron.core'
-    local mypath = require 'bin_path'
 
     local radian = require('iron.fts.r').radian
     local ipython = require('iron.fts.python').ipython
-    radian.command = { mypath.radian }
-    ipython.command = { mypath.ipython }
 
     iron.setup {
         config = {
