@@ -421,4 +421,23 @@ keymap('n', 'go', '', {
 })
 -- the default of `go` is go to nth bytes, which is useless
 
+command('CondaEnv', function(options)
+    vim.env.PATH = options.args .. ':' .. vim.env.PATH
+end, {
+    nargs = 1,
+    complete = function(_, _, _)
+        local conda_base = vim.env.CONDA_PREFIX
+        local conda_env_dir = conda_base .. '/envs'
+        local conda_envs = vim.fn.glob(conda_env_dir .. '/*')
+
+        conda_envs = vim.split(conda_envs, '\n')
+        table.insert(conda_envs, conda_base)
+
+        conda_envs = vim.tbl_map(function(x)
+            return x .. '/bin'
+        end, conda_envs)
+        return conda_envs
+    end,
+})
+
 return M
