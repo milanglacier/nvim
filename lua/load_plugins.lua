@@ -31,7 +31,6 @@ require('packer').startup(function(use)
 
     -- Fix bugs and Utilities
     use { 'antoinemadec/FixCursorHold.nvim' }
-    use { 'max397574/better-escape.nvim', opt = true }
     use { 'ahmedkhalf/project.nvim', opt = true }
     use { 'kyazdani42/nvim-tree.lua', opt = true } -- file explorer
     use { 'milanglacier/smartim', opt = true } -- automatically switch input method when switch mode

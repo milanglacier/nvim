@@ -8,18 +8,6 @@ M.load.impatient = function()
     end
 end
 
-M.load.better_escape = function()
-    vim.cmd.packadd { 'better-escape.nvim', bang = true }
-
-    require('better_escape').setup {
-        mapping = { 'jk' }, -- a table with mappings to use
-        timeout = vim.o.timeoutlen, -- the time in which the keys must be hit in ms. Use option timeoutlen by default
-        clear_empty_lines = false, -- clear line after escaping if there is only whitespace
-        keys = '<Esc>', -- keys used for escaping, if it is a function will use the result every time
-        -- example() keys = function() return vim.api.nvim_win_get_cursor(0)[2] > 1 and '<esc>l' or '<esc>' end,
-    }
-end
-
 M.load.project_nvim = function()
     vim.cmd.packadd { 'project.nvim', bang = true }
     require('project_nvim').setup {
@@ -68,9 +56,7 @@ M.load.winshift = function()
     keymap('n', '<Leader>wm', '<cmd>WinShift<CR>', { noremap = true, silent = true })
 end
 
-M.load.better_escape()
 M.load.project_nvim()
-M.load.better_escape()
 M.load.nvim_tree()
 M.load.winshift()
 

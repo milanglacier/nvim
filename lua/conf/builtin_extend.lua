@@ -19,9 +19,6 @@ M.emmykeymap = function(mode, lhs, rhs)
     })
 end
 
-keymap('i', 'jk', '<ESC>', opts)
-keymap('t', 'jk', [[<C-\><C-n>]], opts)
-
 keymap('', [[\]], [[<localleader>]], {})
 
 keymap('i', '<C-b>', '<Left>', opts)
@@ -66,6 +63,25 @@ keymap('n', '<Leader>bd', [[:bd!<CR>]], opts_desc 'buffer delete current one')
 keymap('n', '<Leader>bw', [[:bw!<CR>]], opts_desc 'buffer wipeout current one')
 keymap('n', '<Leader>bp', [[:bprevious<CR>]], opts_desc 'buffer next')
 keymap('n', '<Leader>bn', [[:bnext<CR>]], opts_desc 'buffer previous')
+
+M.jk_as_esc = function()
+    keymap('t', 'k', [[<BS><C-\><C-N>]], opts)
+    keymap('i', 'k', [[<BS><ESC>]], opts)
+    vim.defer_fn(function()
+        vim.api.nvim_del_keymap('t', 'k')
+        vim.api.nvim_del_keymap('i', 'k')
+    end, 100)
+    return 'j'
+end
+
+local jk_as_esc = {
+    noremap = true,
+    desc = 'enter jk as esc mode',
+    callback = M.jk_as_esc,
+    expr = true,
+}
+keymap('i', 'j', '', jk_as_esc)
+keymap('t', 'j', '', jk_as_esc)
 
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
