@@ -64,6 +64,7 @@ M.load.iron = function()
             },
             repl_open_cmd = 'belowright 15 split',
             buflisted = true,
+            highlight_last = false,
         },
         keymaps = {
             send_motion = '<LocalLeader>s',
@@ -80,6 +81,13 @@ M.load.iron = function()
 
     keymap('n', '<localleader>rs', '<cmd>IronRepl<CR>', {})
     keymap('n', '<localleader>rr', '<cmd>IronRestart<CR>', {})
+    keymap('n', '<localleader>rh', '<cmd>IronHide<CR>', {})
+    keymap('n', '<localleader>rf', '<cmd>IronFocus<CR>', {})
+    keymap('n', '<localleader>rw', '<cmd>IronWatch file<CR>', {})
+    keymap('n', '<localleader>ra', ':IronAttach', {})
+    -- iron attach will attach current buffer to a running repl
+    -- iron focus will reopen a window for current repl if there's no window for repl
+    -- iron watch will send the entire file / mark after writing the buffer
 
     keymap('n', '<localleader>sc', '', {
         desc = 'iron send a code chunk',
