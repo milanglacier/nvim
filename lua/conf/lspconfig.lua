@@ -137,12 +137,12 @@ local on_attach = function(client, bufnr)
 
     require('aerial').on_attach(client, bufnr)
     require('conf.lsp_tools').signature(bufnr)
-    require("nvim-navic").attach(client, bufnr)
+    require('nvim-navic').attach(client, bufnr)
 end
 
 -- Setup lspconfig.
 -- -- -- copied from https://github.com/ray-x/lsp_signature.nvim/blob/master/tests/init_paq.lua
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.completion.completionItem.resolveSupport = {
     properties = { 'documentation', 'detail', 'additionalTextEdits' },
@@ -166,8 +166,7 @@ require('lspconfig').pyright.setup {
     capabilities = capabilities,
     root_dir = python_root_dir,
     settings = {
-        python = {
-        },
+        python = {},
     },
     flags = {
         debounce_text_changes = 250,
