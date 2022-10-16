@@ -4,7 +4,7 @@ vim.cmd.packadd { 'nvim-lspconfig', bang = true }
 vim.cmd.packadd { 'lspsaga.nvim', bang = true }
 vim.cmd.packadd { 'aerial.nvim', bang = true }
 vim.cmd.packadd { 'lsp_signature.nvim', bang = true }
-vim.cmd.packadd { 'lua-dev.nvim', bang = true }
+vim.cmd.packadd { 'neodev.nvim', bang = true }
 vim.cmd.packadd { 'nvim-navic', bang = true }
 
 local opts = function(options)
@@ -210,7 +210,7 @@ require('lspconfig').clangd.setup {
     capabilities = clangd_capabilities,
 }
 
-require('lua-dev').setup {}
+require('neodev').setup {}
 
 require('lspconfig').sumneko_lua.setup {
     on_attach = on_attach,

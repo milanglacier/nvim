@@ -124,7 +124,7 @@ require('packer').startup(function(use)
     use { 'rafamadriz/friendly-snippets', opt = true }
 
     -- language development
-    use { 'folke/lua-dev.nvim', opt = true }
+    use { 'folke/neodev.nvim', opt = true }
     use { 'nanotee/sqls.nvim', opt = true }
 
     -- CLI tools
