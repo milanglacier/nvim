@@ -183,10 +183,8 @@ local r_config = {
     settings = {
         r = {
             lsp = {
-                -- debug = true,
                 log_file = '~/.cache/nvim/r_lsp_log.log',
-                lint_cache = true,
-                -- max_completions = 40,
+                diagnostics = false, -- r-lsp + lintr is currently problematic
             },
         },
     },
