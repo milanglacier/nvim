@@ -19,11 +19,16 @@ local bubble_tea_template = function(opts)
 end
 
 require('orgmode').setup {
-    org_agenda_files = { org_dir .. '/*', org_dir .. '/**/*' },
+    org_agenda_files = {
+        org_dir .. '/*.org',
+        org_dir .. '/capture/*.org',
+        org_dir .. '/misc/*.org',
+        org_dir .. '/roam/*.org',
+    },
     org_default_notes_file = org_dir .. '/capture/todo.org',
     org_highlight_latex_and_related = 'native',
     org_todo_keywords = { 'TODO(t)', 'STRT', 'WAIT', 'HOLD', '|', 'DONE', 'KILL' },
-    win_split_mode = 'auto',
+    win_split_mode = 'tabnew',
     org_hide_leading_stars = true,
     org_hide_emphasis_markers = true,
 
