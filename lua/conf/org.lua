@@ -9,6 +9,7 @@ local bubble_tea_template = function(opts)
         target = org_dir .. '/capture/bubble_tea_live.org',
         template = opts.template or '* %U %?',
         description = opts.description,
+        headline = opts.headline,
     }
 end
 
@@ -22,11 +23,6 @@ require('orgmode').setup {
     org_hide_emphasis_markers = true,
 
     org_capture_templates = {
-        J = {
-            description = 'Journal',
-            template = '\n*** %<%Y-%m-%d> %<%A>\n**** %U\n\n%?',
-            target = org_dir .. '/capture/notes.org',
-        },
         t = { description = 'personal todo', template = '* TODO %? :\nSCHEDULED: %t' },
         n = {
             description = 'personal notes',
