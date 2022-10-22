@@ -109,3 +109,13 @@ cmp.setup.cmdline(':', {
         { name = 'cmdline' },
     }),
 })
+
+cmp.setup.filetype('org', {
+    sources = cmp.config.sources({
+        { name = 'orgmode' },
+        { name = 'luasnip' },
+    }, {
+        { name = 'buffer' },
+        { name = 'tags' },
+    }),
+})

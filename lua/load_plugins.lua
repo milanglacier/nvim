@@ -145,6 +145,7 @@ require('packer').startup(function(use)
     use { 'JASONews/glow-hover', opt = true }
     use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', opt = true }
     use { 'ludovicchabant/vim-gutentags', opt = true }
+    use { 'nvim-orgmode/orgmode', opt = true }
 
     -- Debugger
     use { 'mfussenegger/nvim-dap', opt = true }

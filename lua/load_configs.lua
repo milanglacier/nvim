@@ -24,6 +24,8 @@ if not vim.g.vscode then
 
     require 'conf.dap'
 
+    require 'conf.org'
+
     if vim.g.started_by_firenvim then
         require 'conf.firenvim'
     end

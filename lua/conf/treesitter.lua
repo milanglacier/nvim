@@ -1,6 +1,6 @@
-vim.cmd.packadd { 'nvim-treesitter-textobjects', bang = true}
-vim.cmd.packadd { 'nvim-ts-rainbow', bang = true}
-vim.cmd.packadd { 'nvim-ts-context-commentstring', bang = true}
+vim.cmd.packadd { 'nvim-treesitter-textobjects', bang = true }
+vim.cmd.packadd { 'nvim-ts-rainbow', bang = true }
+vim.cmd.packadd { 'nvim-ts-context-commentstring', bang = true }
 
 local keymap = vim.api.nvim_set_keymap
 
@@ -21,6 +21,7 @@ require('nvim-treesitter.configs').setup {
         'javascript',
         'regex',
         'latex',
+        'org',
     },
 
     -- Install languages synchronously (only applied to `ensure_installed`)
@@ -40,7 +41,7 @@ require('nvim-treesitter.configs').setup {
         -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
         -- using this option may slow down your editor, and you may see some duplicate highlights.
         -- Instead of true it can also be a list of languages
-        additional_vim_regex_highlighting = false,
+        additional_vim_regex_highlighting = { 'org' },
     },
 
     rainbow = {
@@ -54,7 +55,7 @@ require('nvim-treesitter.configs').setup {
 
     indent = {
         enable = true,
-        disable = { 'python' },
+        disable = { 'python', 'org' },
     },
 
     incremental_selection = {
