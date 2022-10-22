@@ -5,16 +5,21 @@ require('orgmode').setup_ts_grammar()
 local org_dir = '~/Desktop/orgmode'
 
 local bubble_tea_template = function(opts)
+    local template = '** %U %?'
+    if opts.level then
+        local additional_heading_levels = string.rep('*', opts.level - 2)
+        template = additional_heading_levels .. template
+    end
     return {
         target = org_dir .. '/capture/bubble_tea_live.org',
-        template = opts.template or '* %U %?',
+        template = opts.template or template,
         description = opts.description,
         headline = opts.headline,
     }
 end
 
 require('orgmode').setup {
-    org_agenda_files = { org_dir .. '/*' },
+    org_agenda_files = { org_dir .. '/*', org_dir .. '/**/*' },
     org_default_notes_file = org_dir .. '/capture/todo.org',
     org_highlight_latex_and_related = 'native',
     org_todo_keywords = { 'TODO(t)', 'STRT', 'WAIT', 'HOLD', '|', 'DONE', 'KILL' },
@@ -32,7 +37,7 @@ require('orgmode').setup {
         j = {
             description = 'applied jobs',
             template = '- [ ] %? %u',
-            headline = 'Misc',
+            headline = 'Applied jobs',
         },
 
         b = 'bubble tea',
@@ -54,31 +59,38 @@ require('orgmode').setup {
         },
         be = bubble_tea_template {
             description = 'eye mucus',
-            headline = 'clean/eye mucus',
+            headline = 'eye mucus',
+            level = 3,
         },
         bE = bubble_tea_template {
             description = 'ear clean',
-            headline = 'clean/ear clean',
+            headline = 'ear clean',
+            level = 3,
         },
         bb = bubble_tea_template {
             description = 'bath',
-            headline = 'clean/bath',
+            headline = 'bath',
+            level = 3,
         },
         bt = bubble_tea_template {
             description = 'trim coat',
-            headline = 'clean/trim coat',
+            headline = 'trim coat',
+            level = 3,
         },
         bg = bubble_tea_template {
             description = 'grooming',
-            headline = 'clean/grooming',
+            headline = 'grooming',
+            level = 3,
         },
         bn = bubble_tea_template {
             description = 'nailing',
-            headline = 'clean/nailing',
+            headline = 'nailing',
+            level = 3,
         },
         bB = bubble_tea_template {
             description = 'brushing teeth',
-            headline = 'clean/brushing teeth',
+            headline = 'brushing teeth',
+            level = 3,
         },
         bs = bubble_tea_template {
             description = 'symptom',
@@ -101,6 +113,11 @@ require('orgmode').setup {
             org_capture_show_help = 'g?',
         },
 
+        org = {
+            org_todo = '<LocalLeader>t',
+            org_toggle_checkbox = '<LocalLeader>x',
+        },
+
         text_objects = {
             inner_heading = 'ih',
             around_heading = 'ah',
@@ -113,3 +130,13 @@ require('orgmode').setup {
         },
     },
 }
+
+local my_augroup = require('conf.builtin_extend').my_augroup
+local autocmd = vim.api.nvim_create_autocmd
+
+autocmd('FileType', {
+    pattern = 'org',
+    desc = 'set cursorline for org filetype',
+    group = my_augroup,
+    command = 'setlocal cursorline',
+})
