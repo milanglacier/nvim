@@ -93,10 +93,10 @@ require('nvim-treesitter.configs').setup {
                 ['a<Leader>a'] = '@parameter.outer',
                 ['i<Leader>a'] = '@parameter.inner',
                 -- latex textobjects
-                ['<LocalLeader>f'] = '@frame.outer',
-                ['<LocalLeader>s'] = '@statement.outer',
-                ['<LocalLeader>b'] = '@block.outer',
-                ['<localLeader>c'] = '@class.outer',
+                ['a<Leader>lf'] = '@frame.outer',
+                ['a<Leader>ls'] = '@statement.outer',
+                ['a<Leader>lb'] = '@block.outer',
+                ['a<Leader>lc'] = '@class.outer',
             },
         },
         move = {
@@ -111,10 +111,10 @@ require('nvim-treesitter.configs').setup {
                 [']e'] = '@call.outer',
                 [']a'] = '@parameter.outer',
                 -- latex motions
-                [']<LocalLeader>f'] = '@frame.outer',
-                [']<LocalLeader>s'] = '@statement.outer',
-                [']<LocalLeader>b'] = '@block.outer',
-                [']<localLeader>c'] = '@class.outer',
+                [']<Leader>lf'] = '@frame.outer',
+                [']<Leader>ls'] = '@statement.outer',
+                [']<Leader>lb'] = '@block.outer',
+                [']<Leader>lc'] = '@class.outer',
             },
 
             goto_next_end = {
@@ -126,10 +126,10 @@ require('nvim-treesitter.configs').setup {
                 [']E'] = '@call.outer',
                 [']A'] = '@parameter.outer',
                 -- latex motions
-                [']<LocalLeader>F'] = '@frame.outer',
-                [']<LocalLeader>S'] = '@statement.outer',
-                [']<LocalLeader>B'] = '@block.outer',
-                [']<localLeader>C'] = '@class.outer',
+                [']<Leader>lF'] = '@frame.outer',
+                [']<Leader>lS'] = '@statement.outer',
+                [']<Leader>lB'] = '@block.outer',
+                [']<Leader>lC'] = '@class.outer',
             },
 
             goto_previous_start = {
@@ -141,10 +141,10 @@ require('nvim-treesitter.configs').setup {
                 ['[e'] = '@call.outer',
                 ['[a'] = '@parameter.outer',
                 -- latex motions
-                ['[<LocalLeader>f'] = '@frame.outer',
-                ['[<LocalLeader>s'] = '@statement.outer',
-                ['[<LocalLeader>b'] = '@block.outer',
-                ['[<localLeader>c'] = '@class.outer',
+                ['[<Leader>lf'] = '@frame.outer',
+                ['[<Leader>ls'] = '@statement.outer',
+                ['[<Leader>lb'] = '@block.outer',
+                ['[<Leader>lc'] = '@class.outer',
             },
 
             goto_previous_end = {
@@ -157,10 +157,10 @@ require('nvim-treesitter.configs').setup {
                 ['[E'] = '@call.outer',
                 ['[A'] = '@parameter.outer',
                 -- latex motions
-                ['[<LocalLeader>F'] = '@frame.outer',
-                ['[<LocalLeader>S'] = '@statement.outer',
-                ['[<LocalLeader>B'] = '@block.outer',
-                ['[<localLeader>C'] = '@class.outer',
+                ['[<Leader>lF'] = '@frame.outer',
+                ['[<Leader>lS'] = '@statement.outer',
+                ['[<Leader>lB'] = '@block.outer',
+                ['[<Leader>lC'] = '@class.outer',
             },
         },
     },
@@ -216,10 +216,10 @@ emmykeymap('x', '(ts-textobj-argument-outer)', 'a<Leader>a')
 emmykeymap('x', '(ts-textobj-call-outer)', 'ae')
 emmykeymap('x', '(ts-textobj-expression-outer)', 'ae')
 
-emmykeymap('x', '(ts-textobj-tex-frame-outer)', '<LocalLeader>f')
-emmykeymap('x', '(ts-textobj-tex-block-outer)', '<LocalLeader>b')
-emmykeymap('x', '(ts-textobj-tex-statement-outer)', '<LocalLeader>s')
-emmykeymap('x', '(ts-textobj-tex-class-outer)', '<LocalLeader>c')
+emmykeymap('x', '(ts-textobj-tex-frame-outer)', 'a<Leader>lf')
+emmykeymap('x', '(ts-textobj-tex-block-outer)', 'a<Leader>lb')
+emmykeymap('x', '(ts-textobj-tex-statement-outer)', 'a<Leader>ls')
+emmykeymap('x', '(ts-textobj-tex-class-outer)', 'a<Leader>lc')
 
 emmykeymap('n', '(ts-motion-class-prev-start)', '[k')
 emmykeymap('n', '(ts-motion-class-prev-end)', '[K')
@@ -233,14 +233,14 @@ emmykeymap('n', '(ts-motion-conditional-prev-end)', '[C')
 emmykeymap('n', '(ts-motion-argument-prev-start)', '[a')
 emmykeymap('n', '(ts-motion-argument-prev-end)', '[A')
 
-emmykeymap('n', '(ts-motion-tex-block-prev-start)', '[<LocalLeader>b')
-emmykeymap('n', '(ts-motion-tex-block-prev-end)', '[<LocalLeader>B')
-emmykeymap('n', '(ts-motion-tex-class-prev-start)', '[<LocalLeader>c')
-emmykeymap('n', '(ts-motion-tex-class-prev-end)', '[<LocalLeader>C')
-emmykeymap('n', '(ts-motion-tex-statement-prev-start)', '[<LocalLeader>s')
-emmykeymap('n', '(ts-motion-tex-statement-prev-end)', '[<LocalLeader>S')
-emmykeymap('n', '(ts-motion-tex-frame-prev-start)', '[<LocalLeader>f')
-emmykeymap('n', '(ts-motion-tex-frame-prev-end)', '[<LocalLeader>F')
+emmykeymap('n', '(ts-motion-tex-block-prev-start)', '[<Leader>lb')
+emmykeymap('n', '(ts-motion-tex-block-prev-end)', '[<Leader>lB')
+emmykeymap('n', '(ts-motion-tex-class-prev-start)', '[<Leader>lc')
+emmykeymap('n', '(ts-motion-tex-class-prev-end)', '[<Leader>lC')
+emmykeymap('n', '(ts-motion-tex-statement-prev-start)', '[<Leader>ls')
+emmykeymap('n', '(ts-motion-tex-statement-prev-end)', '[<Leader>lS')
+emmykeymap('n', '(ts-motion-tex-frame-prev-start)', '[<Leader>lf')
+emmykeymap('n', '(ts-motion-tex-frame-prev-end)', '[<Leader>lF')
 
 emmykeymap('x', '(ts-select-node-with-label)', '<Leader>T')
 emmykeymap('n', '(ts-swap-arguments)', '<Leader>sw')
