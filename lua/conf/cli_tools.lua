@@ -72,7 +72,7 @@ M.load.iron = function()
         },
         keymaps = {
             send_motion = '<LocalLeader>s',
-            visual_send = '<LocalLeader>ss',
+            visual_send = '<LocalLeader>s',
             send_file = '<LocalLeader>sf',
             send_line = '<LocalLeader>ss',
             send_mark = '<LocalLeader>sm',
