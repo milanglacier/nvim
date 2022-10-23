@@ -21,10 +21,13 @@ end
 
 M.load.neogit = function()
     vim.cmd.packadd { 'neogit', bang = true }
+    keymap('n', '<Leader>gg', '<cmd>Neogit<CR>', { noremap = true })
 end
 
 M.load.diffview = function()
     vim.cmd.packadd { 'diffview.nvim', bang = true }
+    keymap('n', '<Leader>gd', '<cmd>DiffviewOpen<CR>', { noremap = true })
+    keymap('n', '<Leader>gf', '<cmd>DiffviewFileHistory<CR>', { noremap = true })
 end
 
 M.load.spectre = function()
