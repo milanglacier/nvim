@@ -55,9 +55,10 @@ M.load.dsf = function()
 end
 
 M.load.matchup = function()
-    keymap('n', '<localleader>%', '<plug>(matchup-z%)', {})
-    keymap('o', '<localleader>%', '<plug>(matchup-z%)', {})
-    keymap('x', '<localleader>%', '<plug>(matchup-z%)', {})
+    -- don't need this binding
+    keymap('n', '%', '<plug>(matchup-z%)', {})
+    keymap('o', '%', '<plug>(matchup-z%)', {})
+    keymap('x', '%', '<plug>(matchup-z%)', {})
 end
 
 M.load.sneak = function()

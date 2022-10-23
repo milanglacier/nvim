@@ -12,7 +12,7 @@ end
 -- will not source those files
 local function packadd(theme_pkg)
     if is_on_start then
-        vim.cmd.packadd {theme_pkg, bang = true}
+        vim.cmd.packadd { theme_pkg, bang = true }
     else
         vim.cmd.packadd(theme_pkg)
     end
@@ -325,9 +325,9 @@ local keymap = vim.api.nvim_set_keymap
 
 keymap(
     'n',
-    '<Localleader>cs',
-    ":lua require('conf.colorscheme').pick_quickly()<CR>",
-    { noremap = true, silent = true }
+    '<Leader>mc',
+    "<CMD>lua require('conf.colorscheme').pick_quickly()<CR>",
+    { noremap = true, desc = 'misc: pick color scheme' }
 )
 
 return M

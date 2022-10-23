@@ -46,8 +46,8 @@ M.load.mkdp = function()
 
     vim.g.mkdp_filetypes = { 'markdown.pandoc', 'markdown', 'rmd' }
 
-    keymap('n', '<LocalLeader>mp', ':MarkdownPreview<cr>', { noremap = true, silent = true })
-    keymap('n', '<LocalLeader>mq', ':MarkdownPreviewStop<cr>', { noremap = true, silent = true })
+    keymap('n', '<Leader>mmp', '<cmd>MarkdownPreview<cr>', { noremap = true, desc = 'Misc Markdown Preview' })
+    keymap('n', '<Leader>mmq', '<cmd>MarkdownPreviewStop<cr>', { noremap = true, desc = 'Misc Markdown Preview Stop' })
 end
 
 M.load.iron = function()
