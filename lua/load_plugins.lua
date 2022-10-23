@@ -130,8 +130,7 @@ require('packer').startup(function(use)
     -- CLI tools
 
     -- REPL
-    -- 'jalvesaq/Nvim-R'
-    -- 'jalvesaq/vimcmdline'
+    use { 'jalvesaq/Nvim-R', opt = true }
     use { 'hkupty/iron.nvim', opt = true }
     use { 'akinsho/toggleterm.nvim', opt = true }
 

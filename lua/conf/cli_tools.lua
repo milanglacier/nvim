@@ -2,6 +2,10 @@ local M = {}
 M.load = {}
 
 local keymap = vim.api.nvim_set_keymap
+local autocmd = vim.api.nvim_create_autocmd
+local my_augroup = require('conf.builtin_extend').my_augroup
+local bufcmd = vim.api.nvim_buf_create_user_command
+local bufmap = vim.api.nvim_buf_set_keymap
 
 M.load.gitsigns = function()
     vim.cmd.packadd { 'gitsigns.nvim', bang = true }
@@ -135,16 +139,12 @@ M.load.toggleterm = function()
     keymap('n', '<Leader>t4', '<cmd>4ToggleTerm<CR>', { silent = true })
     keymap('n', '<Leader>te', [[<cmd>execute v:count . "TermExec cmd='exit;'"<CR>]], { silent = true })
 
-    local autocmd = vim.api.nvim_create_autocmd
-    local my_augroup = require('conf.builtin_extend').my_augroup
-
     autocmd('FileType', {
         desc = 'set command for rendering rmarkdown',
         pattern = 'rmd',
         group = my_augroup,
         callback = function()
             local winid = vim.api.nvim_get_current_win()
-            local bufcmd = vim.api.nvim_buf_create_user_command
 
             bufcmd(0, 'RenderRmd', function(options)
                 ---@diagnostic disable-next-line: missing-parameter
@@ -197,6 +197,24 @@ M.load.gutentags = function()
             ['%.tags'] = 'tags',
         },
     }
+end
+
+M.load.nvimr = function()
+    vim.g.R_assign = 0
+    vim.g.R_app = 'radian'
+    vim.g.R_cmd = 'R'
+    vim.g.R_args = {}
+    vim.g.R_user_maps_only = 1
+
+    autocmd('FileType', {
+        pattern = { 'r', 'rmd' },
+        group = my_augroup,
+        desc = 'set nvim-r keymap',
+        callback = function()
+            bufmap(0, 'n', '<Localleader>rs', '<Plug>RStart', { noremap = false })
+        end,
+    })
+    vim.cmd.packadd { 'Nvim-R', bang = true }
 end
 
 M.load.diffview()
