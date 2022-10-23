@@ -287,9 +287,53 @@ end
 
 M.load.which_key = function()
     vim.cmd.packadd { 'which-key.nvim', bang = true }
-    require('which-key').setup {
+    local which_key = require 'which-key'
+    which_key.setup {
         triggers = { '<leader>', '<localleader>', 'g', 'z', ']', '[', '`', '"', [[']], '@' },
     }
+
+    which_key.register {
+        ['<Leader>f'] = { name = '+find everything' },
+        ['<Leader>l'] = { name = '+language server' },
+        ['<Leader>d'] = { name = '+debugger' },
+        ['<Leader>b'] = { name = '+buffer' },
+        ['<Leader>w'] = { name = '+window' },
+        ['<Leader>e'] = { name = '+explorer' },
+        ['<Leader>t'] = { name = '+terminal' },
+        ['<Leader>o'] = { name = '+open/org' },
+        ['<Leader>g'] = { name = '+git' },
+        ['<Leader>x'] = { name = '+quickfixlist' },
+        ['<Leader><Tab>'] = { name = '+tab' },
+        ['<Leader><space>'] = { name = '+local leader' },
+        ['<Leader>m'] = { name = '+misc' },
+        ['<Leader>mm'] = { name = '+markdown' },
+        ['<Leader>md'] = { name = '+change directory' },
+        ['<LocalLeader>r'] = { name = '+REPL' },
+        ['<LocalLeader>s'] = { name = '+send to REPL(motion)' },
+        [']<Space>'] = { name = '+Additional motions' },
+        [']<Space>l'] = { name = '+latex motions' },
+        ['[<Space>'] = { name = '+Additional motions' },
+        ['[<Space>l'] = { name = '+latex motions' },
+    }
+
+    which_key.register({
+        ['<Leader>l'] = { name = '+language server' },
+        ['<Leader>f'] = { name = '+find everything' },
+        ['<Leader><space>'] = { name = '+local leader' },
+        ['<LocalLeader>s'] = { name = 'send to REPL' },
+    }, { mode = 'v' })
+
+    autocmd('FileType', {
+        group = my_augroup,
+        pattern = 'org',
+        desc = 'add which key description for org',
+        callback = function()
+            which_key.register {
+                ['<Leader>oi'] = { name = '+org insert', buffer = 0 },
+                ['<Leader>ox'] = { name = '+org clock', buffer = 0 },
+            }
+        end,
+    })
 end
 
 M.winbar_symbol = function()
