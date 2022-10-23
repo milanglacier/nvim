@@ -30,8 +30,8 @@ keymap('i', '<C-e>', '<end>', opts)
 keymap('i', '<C-h>', '<BS>', opts)
 keymap('i', '<C-k>', '<ESC>d$i', opts)
 
-keymap('n', '<Leader>cd', [[:cd %:h|pwd<cr>]], opts)
-keymap('n', '<Leader>cu', [[:cd ..|pwd<cr>]], opts)
+keymap('n', '<Leader>mdc', [[:cd %:h|pwd<cr>]], opts)
+keymap('n', '<Leader>mdu', [[:cd ..|pwd<cr>]], opts)
 
 keymap('n', '<C-g>', '<ESC>', {})
 -- <C-g> by default echos the current file name, which is useless
