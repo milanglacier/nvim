@@ -67,9 +67,11 @@ keymap('n', '<Leader>bn', [[:bnext<CR>]], opts_desc 'buffer previous')
 M.jk_as_esc = function()
     keymap('t', 'k', [[<BS><C-\><C-N>]], opts)
     keymap('i', 'k', [[<BS><ESC>]], opts)
+    keymap('v', 'k', [[k<ESC>]], opts)
     vim.defer_fn(function()
         pcall(vim.api.nvim_del_keymap, 't', 'k')
         pcall(vim.api.nvim_del_keymap, 'i', 'k')
+        pcall(vim.api.nvim_del_keymap, 'v', 'k')
     end, 100)
     return 'j'
 end
@@ -82,6 +84,7 @@ local jk_as_esc = {
 }
 keymap('i', 'j', '', jk_as_esc)
 keymap('t', 'j', '', jk_as_esc)
+keymap('v', 'j', '', jk_as_esc)
 
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
