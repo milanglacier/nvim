@@ -308,8 +308,8 @@ M.load.which_key = function()
         ['<Leader>m'] = { name = '+misc' },
         ['<Leader>mm'] = { name = '+markdown' },
         ['<Leader>md'] = { name = '+change directory' },
-        ['<LocalLeader>r'] = { name = '+REPL' },
-        ['<LocalLeader>s'] = { name = '+send to REPL(motion)' },
+        ['<Leader><Space>r'] = { name = '+REPL' },
+        ['<Leader><Space>s'] = { name = '+send to REPL(motion)' },
         [']<Space>'] = { name = '+Additional motions' },
         [']<Space>l'] = { name = '+latex motions' },
         ['[<Space>'] = { name = '+Additional motions' },
@@ -331,6 +331,18 @@ M.load.which_key = function()
             which_key.register {
                 ['<Leader>oi'] = { name = '+org insert', buffer = 0 },
                 ['<Leader>ox'] = { name = '+org clock', buffer = 0 },
+            }
+        end,
+    })
+
+    autocmd('FileType', {
+        group = my_augroup,
+        pattern = { 'r', 'rmd' },
+        desc = 'add which key description for r, rmd',
+        callback = function()
+            which_key.register {
+                ['<Leader><Space>d'] = { name = '+data frame', buffer = 0 },
+                ['<Leader><Space>o'] = { name = '+object', buffer = 0 },
             }
         end,
     })
