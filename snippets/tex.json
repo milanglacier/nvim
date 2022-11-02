@@ -31,6 +31,14 @@
         "description": "insert a command"
     },
 
+    "cross reference": {
+        "prefix": "ref",
+        "body": [
+            "\\ref{${1:fig}:$2}$0"
+        ],
+        "description": "Reference"
+    },
+
     "mathbf": {
         "prefix": "mbf",
         "body": [

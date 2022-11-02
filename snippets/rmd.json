@@ -120,7 +120,6 @@
         "prefix": "ref",
         "body": [
             "\\ref{${1:fig}:$2}$0"
-
         ],
         "description": "Reference"
     },
