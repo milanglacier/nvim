@@ -184,7 +184,6 @@ M.load.pandoc = function()
     vim.g.r_indent_ess_comments = 0
     vim.g.r_indent_ess_compatible = 0
 
-    -- vim.g['pandoc#syntax#conceal#blacklist'] = {'subscript', 'superscript', 'atx'}
     vim.g['pandoc#syntax#codeblocks#embeds#langs'] = { 'python', 'R=r', 'r', 'bash=sh', 'json' }
 end
 
