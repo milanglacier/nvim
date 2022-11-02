@@ -138,6 +138,54 @@
             "$0"
         ],
         "description": "Add a figure"
+    },
+
+    "command": {
+        "prefix": "cmd",
+        "body": [
+            "\\\\$1{$0}"
+        ],
+        "description": "insert a command"
+    },
+
+    "mathbf": {
+        "prefix": "mbf",
+        "body": [
+            "\\\\mathbf{$0}"
+        ],
+        "description": "mathbf"
+    },
+
+    "mathbb": {
+        "prefix": "mbb",
+        "body": [
+            "\\\\mathbb{$0}"
+        ],
+        "description": "mathbb"
+    },
+
+    "boldsymbol": {
+        "prefix": "boldsymbol",
+        "body": [
+            "\\\\boldsymbol{$0}"
+        ],
+        "description": "boldsymbol"
+    },
+
+    "mathrm": {
+        "prefix": "mrm",
+        "body": [
+            "\\\\mathrm{$0}"
+        ],
+        "description": "mathrm"
+    },
+
+    "mathcal": {
+        "prefix": "mcal",
+        "body": [
+            "\\\\mathcal{$0}"
+        ],
+        "description": "mathcal"
     }
 
 }
