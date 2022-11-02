@@ -2,8 +2,33 @@
     "newtheorem": {
         "prefix": "newtheorem",
         "body": [
-            "\\\\newtheorem{${1:theorem}}{${2:Theorem}}[section]$0"
+            "\\\\newtheorem{$1}{$1}[section]$0"
         ],
         "description": "newtheorem"
+    },
+
+    "textbf": {
+        "prefix": "textbf",
+        "body": [
+            "\\\\textbf{$0}"
+        ],
+        "description": "textbf"
+    },
+
+    "emph": {
+        "prefix": "emph",
+        "body": [
+            "\\\\emph{$0}"
+        ],
+        "description": "emph"
+    },
+
+    "command": {
+        "prefix": "cmd",
+        "body": [
+            "\\\\$1{$0}"
+        ],
+        "description": "insert a command"
     }
+
 }
