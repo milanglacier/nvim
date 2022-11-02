@@ -45,6 +45,36 @@
         "description": "create rmd metadata"
     },
 
+    "create rmd beamer meta data": {
+
+        "prefix": "beamer",
+        "body": [
+            "---",
+            "title: 'rmd title'",
+            "author: 'Rongzhao Yan'",
+            "date: '12/14/2021'",
+            "fontsize: 10pt",
+            "output: ",
+            "    beamer_presentation:",
+            "      latex_engine: xelatex",
+            "      theme: 'metropolis'",
+            "      colortheme: 'spruce'",
+            "      keep_tex: true",
+            "      includes:",
+            "            in_header: env.tex",
+            "bibliography: citation.bib",
+            "classoption: 'handout'",
+            "---",
+            "\n",
+            "```{r setup, include=FALSE}",
+            "knitr::opts_chunk\\$set(echo = TRUE, warning = F, message = F)",
+            "options(scipen = 10)",
+            "```",
+            "$0"
+        ],
+        "description": "create rmd beamer metadata"
+    },
+
     "pipe symbol": {
         "prefix": "pip",
         "body": [
@@ -74,6 +104,40 @@
             "<div id=\"refs\"></div>",
             "$0"
         ]
+    },
+
+    "\\begin{}…\\end{}": {
+        "prefix": "begin",
+        "body": [
+            "\\\\begin{${1:env}}",
+            "\t${1/(enumerate|itemize|list)|(description)|.*/(?1:\\item )(?2:\\item)/}$0",
+            "\\\\end{${1:env}}"
+        ],
+        "description": "Begin - End"
+    },
+
+    "cross reference": {
+        "prefix": "ref",
+        "body": [
+            "\\ref{${1:fig}:$2}$0"
+
+        ],
+        "description": "Reference"
+    },
+
+    "Figure": {
+        "prefix": "figure",
+        "body": [
+            "\\begin{figure}",
+            "\t\\begin{center}",
+            "\t\t\\includegraphics[width=1\\textwidth]{figures/$1}",
+            "\t\\end{center}",
+            "\t\\caption{$3}",
+            "\t\\label{fig:$4}",
+            "\\end{figure}",
+            "$0"
+        ],
+        "description": "Add a figure"
     }
 
 }

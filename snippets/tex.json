@@ -1,0 +1,9 @@
+{
+    "newtheorem": {
+        "prefix": "newtheorem",
+        "body": [
+            "\\\\newtheorem{${1:theorem}}{${2:Theorem}}[section]$0"
+        ],
+        "description": "newtheorem"
+    }
+}
