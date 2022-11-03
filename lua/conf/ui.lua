@@ -346,6 +346,25 @@ M.load.which_key = function()
             }
         end,
     })
+
+    autocmd('FileType', {
+        group = my_augroup,
+        pattern = 'tex',
+        desc = 'add which key description for tex',
+        callback = function()
+            which_key.register {
+                ['<Leader><Space>l'] = { name = '+vimtex', buffer = 0 },
+                ['<Leader><Space>s'] = { name = '+vimtex surround', buffer = 0 },
+                ['<Leader><Space>t'] = { name = '+vimtex toggle', buffer = 0 },
+                ['<Leader><Space>c'] = { name = 'vimtex create cmd', buffer = 0 },
+            }
+            which_key.register({
+                ['<Leader><Space>s'] = { name = '+vimtex surround', buffer = 0 },
+                ['<Leader><Space>t'] = { name = '+vimtex toggle', buffer = 0 },
+                ['<Leader><Space>c'] = { name = 'vimtex create cmd', buffer = 0 },
+            }, { mode = 'v' })
+        end,
+    })
 end
 
 M.winbar_symbol = function()
