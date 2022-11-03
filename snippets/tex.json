@@ -15,6 +15,14 @@
         "description": "textbf"
     },
 
+    "texttt": {
+        "prefix": "texttt",
+        "body": [
+            "\\\\texttt{$0}"
+        ],
+        "description": "texttt"
+    },
+
     "emph": {
         "prefix": "emph",
         "body": [
