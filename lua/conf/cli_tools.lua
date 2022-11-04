@@ -177,6 +177,7 @@ M.load.pandoc = function()
     vim.filetype.add {
         extension = {
             md = 'markdown.pandoc',
+            qmd = 'rmd',
         },
     }
 
@@ -207,6 +208,7 @@ M.load.vimtex = function()
     end
 
     autocmd('FileType', {
+        pattern = 'tex',
         group = my_augroup,
         desc = 'set keymap for tex',
         callback = function()
