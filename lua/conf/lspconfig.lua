@@ -135,7 +135,6 @@ local on_attach = function(client, bufnr)
     -- diagnostic show in line or in cursor
     bufmap(bufnr, 'n', '<Leader>ll', '<cmd>Lspsaga show_line_diagnostics<CR>', opts { 'lspsaga line diagnostic' })
 
-    require('aerial').on_attach(client, bufnr)
     require('conf.lsp_tools').signature(bufnr)
     require('nvim-navic').attach(client, bufnr)
 end
