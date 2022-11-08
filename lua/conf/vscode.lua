@@ -73,6 +73,8 @@ keymap('n', 'gr', notify 'editor.action.goToReferences', opts)
 keymap('n', '<Leader>ln', notify 'editor.action.rename', opts)
 keymap('n', '<Leader>lf', notify 'editor.action.formatDocument', opts)
 keymap('n', '<Leader>la', notify 'editor.action.refactor', opts) -- language code actions
+keymap('n', '<C-w>]', notify 'editor.action.revealDefinitionAside', opts) -- language code actions
+keymap('n', '<Leader>w]', notify 'editor.action.revealDefinitionAside', opts) -- language code actions
 
 keymap('n', '<Leader>fR', notify 'workbench.action.findInFiles', opts) -- use ripgrep to search files
 keymap('n', '<Leader>ts', notify 'workbench.action.toggleSidebarVisibility', opts)
@@ -135,7 +137,7 @@ autocmd('FileType', {
 autocmd('FileType', {
     group = M.my_vscode,
     pattern = { 'python' },
-    desc = 'set REPL keymaps for pythono',
+    desc = 'set REPL keymaps for python',
     callback = function()
         bufmap(0, 'n', '<LocalLeader>ss', notify 'jupyter.execSelectionInteractive', opts)
         bufmap(0, 'n', '<LocalLeader>sc', notify 'jupyter.runcurrentcell', opts)
