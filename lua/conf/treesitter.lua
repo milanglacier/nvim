@@ -166,7 +166,7 @@ require('nvim-treesitter.configs').setup {
     },
 
     matchup = {
-        enable = not vim.g.vscode, -- mandatory, false will disable the whole extension
+        enable = true, -- mandatory, false will disable the whole extension
         disable_virtual_text = true,
         -- disable = { "c", "ruby" },  -- optional, list of language that will be disabled
     },
