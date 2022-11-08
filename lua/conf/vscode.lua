@@ -40,7 +40,7 @@ keymap('n', '<Leader>tw', notify 'workbench.action.terminal.toggleTerminal', { s
 
 keymap('n', '<Leader>mp', notify 'markdown.showPreviewToSide', { silent = true }) -- markdown preview
 
-keymap('v', '<Leader>fm', v_notify 'editor.action.formatSelection', { silent = true })
+keymap('v', '<Leader>lf', v_notify 'editor.action.formatSelection', { silent = true })
 keymap('v', '<Leader>la', v_notify 'editor.action.refactor', { silent = true })
 keymap('v', '<Leader>fc', v_notify 'workbench.action.showCommands', { silent = true })
 
