@@ -1,5 +1,7 @@
 vim.cmd.packadd { 'orgmode', bang = true }
 
+local M = {}
+
 require('orgmode').setup_ts_grammar()
 
 local org_dir = '~/Desktop/orgmode'
@@ -43,6 +45,26 @@ require('orgmode').setup {
             description = 'applied jobs',
             template = '- [ ] %? %u',
             headline = 'Applied jobs',
+        },
+
+        e = 'english',
+        em = {
+            description = 'manually fill',
+            target = org_dir .. '/capture/english.org',
+            template = '* %^{PROMPT}\n%x\n%a\n:explanation:\n%?\n:END:',
+            -- the sentence is the content in register "+" (i.e %x)
+        },
+        er = {
+            description = 'quick fill with selected region and sentence under point',
+            target = org_dir .. '/capture/english.org',
+            template = '* %(return vim.fn.getreg "r")\n%(return vim.fn.getreg "s")\n%a\n:explanation:\n%?\n:END:',
+            -- make sure call GetVisualRegionAndSentenceUnderPoint before fill with this template
+        },
+        ew = {
+            description = 'quick fill with word and sentence under point',
+            target = org_dir .. '/capture/english.org',
+            template = '* %(return vim.fn.getreg "w")\n%(return vim.fn.getreg "s")\n%a\n:explanation:\n%?\n:END:',
+            -- make sure call GetWordAndSentenceUnderPoint before fill with this template
         },
 
         b = 'bubble tea',
@@ -138,6 +160,7 @@ require('orgmode').setup {
 
 local my_augroup = require('conf.builtin_extend').my_augroup
 local autocmd = vim.api.nvim_create_autocmd
+local command = vim.api.nvim_create_user_command
 
 autocmd('FileType', {
     pattern = 'org',
@@ -145,3 +168,30 @@ autocmd('FileType', {
     group = my_augroup,
     command = 'setlocal cursorline',
 })
+
+-- yank word under point into register "w".
+-- yank sentence under point into register "s".
+--
+-- NOTE: macros store its key sequences into
+-- registers [a-z],
+-- so this function may overwrites those macros.
+function M.get_word_and_sentence_under_point()
+    vim.cmd [[normal! "wyiw]]
+    vim.cmd [[normal! "syis]]
+end
+
+-- yank sentence under point into register "s".
+-- and yank visually selected region into register "r".
+--
+-- NOTE: macros store its key sequences into
+-- registers [a-z],
+-- so this function may overwrites those macros.
+function M.get_visual_region_and_sentenec_under_point()
+    vim.cmd [[normal! "syis]]
+    vim.cmd [[normal! gv"ry]]
+end
+
+command('GetWordAndSentenceUnderPoint', M.get_word_and_sentence_under_point, {})
+command('GetVisualRegionAndSentenceUnderPoint', M.get_visual_region_and_sentenec_under_point, {})
+
+return M
