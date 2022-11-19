@@ -5,12 +5,16 @@ import re
 import os
 import pandas as pd
 import subprocess
+import sys
 
 description = '''
 Tag the columns of data frame using ctags.
 NOTE: when supplying a .RData file,
 make sure that the data frame passed by -d (--df)
-is contained in this RData
+is contained in this RData.
+If -f (--file) is not supplied,
+the data frame's columns (each column name should be in a single line)
+will read from stdin.
 '''
 
 parser = argparse.ArgumentParser(prog='TagYankedColumns',
@@ -27,6 +31,7 @@ parser.add_argument('-d',
                     help='the name of the data frame to be tagged')
 parser.add_argument('-f',
                     '--file',
+                    default=None,
                     nargs=1,
                     help='the file that contains the data frame to be readed')
 parser.add_argument(
@@ -43,29 +48,43 @@ parser.add_argument('-A',
 
 args = parser.parse_args()
 df_name = args.df[0]
-filename = args.file[0]
 destination = args.destination[0]
 auxiliary_filepath = os.path.join(args.auxiliary[0], '.tags_' + df_name)
-
-if re.match(r'.*\.[Rr][Dd]ata', filename):
-    import pyreadr
-    df = pyreadr.read_r(filename)[df_name]
-elif re.match(r'.*\.csv', filename):
-    df = pd.read_csv(filename)
-else:
-    df = pd.read_pickle(filename)
 
 if not os.path.exists(args.auxiliary[0]):
     os.mkdir(args.auxiliary[0])
 
-# overwrite existed .tags_{df_name}
-with open(auxiliary_filepath, 'w') as f:
-    if args.extended:
-        for col in df.columns:
-            f.write(f'{df_name}[\'{col}\'] = \'nameattr\'\n')
+# if --file is supplied, load the file as data frame
+# otherwise, read the stdin as the data frame's columns' name.
+if args.file:
+    filename = args.file[0]
+    if re.match(r'.*\.[Rr][Dd]ata', filename):
+        import pyreadr
+        df = pyreadr.read_r(filename)[df_name]
+    elif re.match(r'.*\.csv', filename):
+        df = pd.read_csv(filename)
     else:
-        for col in df.columns:
-            f.write(f'{col} = \'{df_name}\'\n')
+        df = pd.read_pickle(filename)
+
+    # overwrite existed .tags_{df_name}
+    with open(auxiliary_filepath, 'w') as f:
+        if args.extended:
+            for col in df.columns:
+                f.write(f'{df_name}[\'{col}\'] = \'nameattr\'\n')
+        else:
+            for col in df.columns:
+                f.write(f'{col} = \'{df_name}\'\n')
+else:
+    colnames = sys.stdin.readlines()
+    with open(auxiliary_filepath, 'w') as f:
+        if args.extended:
+            for col in colnames:
+                col = col.rstrip()
+                f.write(f'{df_name}[\'{col}\'] = \'nameattr\'\n')
+        else:
+            for col in colnames:
+                col = col.rstrip()
+                f.write(f'{col} = \'{df_name}\'\n')
 
 # remove the existed entry of .tags_{df_name} in destination
 if os.path.exists(destination):
