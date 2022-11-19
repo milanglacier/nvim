@@ -1,3 +1,4 @@
+---@diagnostic disable: param-type-mismatch
 local M = {}
 
 local keymap = vim.api.nvim_set_keymap
@@ -233,7 +234,7 @@ autocmd('FileType', {
         })
 
         local visual_a =
-            [[:<C-U>lua require('conf.builtin_extend').textobj_code_chunk('a', '^# ?%%%%.*', '^# ?%%%%$', true)<CR>]]
+        [[:<C-U>lua require('conf.builtin_extend').textobj_code_chunk('a', '^# ?%%%%.*', '^# ?%%%%$', true)<CR>]]
 
         bufmap(0, 'x', 'a<Leader>c', visual_a, {
             silent = true,
@@ -241,7 +242,7 @@ autocmd('FileType', {
         })
 
         local visual_i =
-            [[:<C-U>lua require('conf.builtin_extend').textobj_code_chunk('i', '^# ?%%%%.*', '^# ?%%%%$', true)<CR>]]
+        [[:<C-U>lua require('conf.builtin_extend').textobj_code_chunk('i', '^# ?%%%%.*', '^# ?%%%%$', true)<CR>]]
 
         bufmap(0, 'x', 'i<Leader>c', visual_i, {
             silent = true,
@@ -280,25 +281,31 @@ autocmd('BufEnter', {
 ---Currently, the names of columns cannot contain special characters and white characters
 ---due to how the processing is handled
 ---@param df string | nil @the data frame name for yanked columns
----@param use_customized_parser boolean | nil @whether use customized parser (impl by myself)
-function M.create_tags_for_yanked_columns(df, use_customized_parser)
+---@param use_customized_parser boolean | nil @whether use customized parser
+---@param destination string | nil @which tags file will be used to store columns information
+function M.create_tags_for_yanked_columns(df, use_customized_parser, destination)
     local ft = vim.bo.filetype
     if not (ft == 'r' or ft == 'python' or ft == 'rmd') then
         return
     end
 
+    if df == nil then
+        df = 'df'
+    end
+
+    if destination == nil then
+        destination = '.tags_columns'
+    end
+
     local bufid = vim.api.nvim_get_current_buf()
 
-    local filepath_head = vim.fn.expand '%:h'
-    local filename_tail = vim.fn.expand '%:t'
-
-    local filename_without_extension = filename_tail:match '(.+)%..+'
-    local newfile = filepath_head .. '/.tags_' .. filename_without_extension
+    vim.cmd '!mkdir -p .auxtags'
+    local newfile = '.auxtags/.tags_' .. df
 
     vim.cmd.edit(newfile) -- open a file whose name is .tags_$current_file
     local newtag_bufid = vim.api.nvim_get_current_buf()
 
-    vim.cmd [[normal! Go]] -- go to the end of the buffer and create a new line
+    vim.cmd [[normal! ggdG]] -- clear the buffer
     vim.cmd [[normal! "0p]] -- paste the content just yanked into this buffer
 
     -- flag ge means: replace every occurrences in every line, and
@@ -328,10 +335,10 @@ function M.create_tags_for_yanked_columns(df, use_customized_parser)
     newfile_vim_regexed = newfile_vim_regexed:gsub('/', [[\/]])
     newfile_vim_regexed = newfile_vim_regexed:sub(2, -2) -- remove the first and last chars, i.e. ' and '
 
-    vim.cmd.edit '.tags_columns' -- open the file where ctags stores the tags
+    vim.cmd.edit(destination) -- open the file where ctags stores the tags
     local tag_bufid = vim.api.nvim_get_current_buf()
 
-    vim.cmd.global { [[/^[[:alnum:]_.]\+\s\+]] .. newfile_vim_regexed .. [[\s.\+/d]] }
+    vim.cmd.global { '/' .. newfile_vim_regexed .. '/d' }
     -- remove existed entries for the current newtag file
     vim.cmd.write()
 
@@ -343,7 +350,7 @@ function M.create_tags_for_yanked_columns(df, use_customized_parser)
         'ctags',
         '-a',
         '-f',
-        '.tags_columns',
+        destination,
         [[--fields='*']],
         '--language-force=' .. ft,
         newfile_shell_escaped,
