@@ -28,7 +28,7 @@ require('orgmode').setup {
         org_dir .. '/roam/*.org',
     },
     org_default_notes_file = org_dir .. '/capture/todo.org',
-    org_highlight_latex_and_related = 'native',
+    org_highlight_latex_and_related = 'entities',
     org_todo_keywords = { 'TODO(t)', 'STRT', 'WAIT', 'HOLD', '|', 'DONE', 'KILL' },
     win_split_mode = 'tabnew',
     org_hide_leading_stars = true,
