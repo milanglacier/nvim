@@ -85,6 +85,14 @@
             "\\\\mathcal{$0}"
         ],
         "description": "mathcal"
+    },
+
+    "xelatex": {
+        "prefix": "xelatex",
+        "body": [
+            "% !TEX TS-program = xelatex"
+        ],
+        "description": "xelatex"
     }
 
 }
