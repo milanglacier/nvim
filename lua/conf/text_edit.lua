@@ -139,15 +139,15 @@ M.load.textobj = function()
     vim.g.textobj_between_no_default_key_mappings = 1
     vim.g.textobj_chainmember_no_default_key_mappings = 1
 
-    keymap('x', 'ab', '<Plug>(textobj-between-a)', { noremap = true, silent = true })
-    keymap('o', 'ab', '<Plug>(textobj-between-a)', { noremap = true, silent = true })
-    keymap('x', 'ib', '<Plug>(textobj-between-i)', { noremap = true, silent = true })
-    keymap('o', 'ib', '<Plug>(textobj-between-i)', { noremap = true, silent = true })
+    keymap('x', 'ab', '<Plug>(textobj-between-a)', {})
+    keymap('o', 'ab', '<Plug>(textobj-between-a)', {})
+    keymap('x', 'ib', '<Plug>(textobj-between-i)', {})
+    keymap('o', 'ib', '<Plug>(textobj-between-i)', {})
 
-    keymap('x', 'a.', '<Plug>(textobj-chainmember-a)', { noremap = true, silent = true })
-    keymap('o', 'i.', '<Plug>(textobj-chainmember-i)', { noremap = true, silent = true })
-    keymap('x', 'a.', '<Plug>(textobj-chainmember-a)', { noremap = true, silent = true })
-    keymap('o', 'i.', '<Plug>(textobj-chainmember-i)', { noremap = true, silent = true })
+    keymap('o', 'a.', '<Plug>(textobj-chainmember-a)', {})
+    keymap('o', 'i.', '<Plug>(textobj-chainmember-i)', {})
+    keymap('x', 'a.', '<Plug>(textobj-chainmember-a)', {})
+    keymap('x', 'i.', '<Plug>(textobj-chainmember-i)', {})
 end
 
 M.load.colorizer = function()
