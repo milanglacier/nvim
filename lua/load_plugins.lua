@@ -56,6 +56,7 @@ require('packer').startup(function(use)
 
     -- text-editing, motions, jumps tools
     use { 'justinmk/vim-sneak' }
+    use { 'junegunn/vim-easy-align' }
     use { 'tpope/vim-surround', opt = true }
     use { 'numToStr/Comment.nvim', opt = true }
     use { 'tpope/vim-repeat' }

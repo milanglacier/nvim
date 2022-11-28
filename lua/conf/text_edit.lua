@@ -155,6 +155,11 @@ M.load.colorizer = function()
     require('colorizer').setup()
 end
 
+M.load.easy_align = function()
+    keymap('x', 'ga', '<Plug>(EasyAlign)', {})
+    keymap('n', 'ga', '<Plug>(EasyAlign)', {})
+end
+
 if not vim.g.vscode then
     M.load.colorizer()
     M.load.mini_pairs()
@@ -168,5 +173,6 @@ M.load.substitute()
 M.load.mini_ai()
 M.load.textobj()
 M.load.mini_surround()
+M.load.easy_align()
 
 return M
