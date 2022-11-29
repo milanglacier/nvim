@@ -84,6 +84,7 @@ end
 M.load.mini_ai = function()
     vim.cmd.packadd { 'mini.nvim', bang = true }
     require('mini.ai').setup {
+        search_method = 'cover',
         mappings = {
             -- Next/last variants
             around_next = 'an',
@@ -94,6 +95,7 @@ M.load.mini_ai = function()
             goto_left = 'g(',
             goto_right = 'g)',
         },
+        n_lines = 100,
     }
 end
 
