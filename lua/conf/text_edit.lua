@@ -91,8 +91,8 @@ M.load.mini_ai = function()
             around_last = 'aN',
             inside_last = 'iN',
             -- Move cursor to corresponding edge of `a` textobject
-            goto_left = 'g[',
-            goto_right = 'g]',
+            goto_left = 'g(',
+            goto_right = 'g)',
         },
     }
 end
