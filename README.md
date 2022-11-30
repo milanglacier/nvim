@@ -67,7 +67,11 @@ and some of the default plugins keymaps
 that I used frequently.
 
 The `<Leader>` key is `<Space>`,
-the `<LocalLeader>` key is `<Space><Space>` or `\`.
+the `<LocalLeader>` key is `<Space><Space>` or `<Backslash>`.
+
+In case you forget the keymaps
+you can always use `<Leader>fk` (`:Telescope keymaps`)
+to find all keymaps.
 
 ## Builtin
 
@@ -143,8 +147,8 @@ the `<LocalLeader>` key is `<Space><Space>` or `\`.
 | n    | `<Leader><Tab>l` | Go to last tab                   |
 | n    | `<Leader><Tab>1` | Go to 1st tab                    |
 | n    | `<Leader><Tab>2` | Go to 2nd tab                    |
-| n    | `<Leader><Tab>3` | Go to 1st tab                    |
-| n    | `<Leader><Tab>4` | Go to 1st tab                    |
+| n    | `<Leader><Tab>3` | Go to 3rd tab                    |
+| n    | `<Leader><Tab>4` | Go to 4th tab                    |
 
 ### Buffer
 
@@ -155,7 +159,7 @@ the `<LocalLeader>` key is `<Space><Space>` or `\`.
 | n    | `<Leader>bp` | Prev buffer            |
 | n    | `<Leader>bn` | Next buffer            |
 
-### Motion
+### Navigation
 
 | Mode | LHS  | RHS/Functionality                                         |
 |------|------|-----------------------------------------------------------|
@@ -221,6 +225,12 @@ the `<LocalLeader>` key is `<Space><Space>` or `\`.
 
 ## Text Edit
 
+### [vim-easy-align](https://github.com/junegunn/vim-easy-align)
+
+| Mode | LHS | RHS/Functionality                                                 |
+|------|-----|-------------------------------------------------------------------|
+| nv   | ga  | Align the motion / text object / selected text by input separator |
+
 ### [mini.comment](https://github.com/echasnovski/mini.nvim)
 
 | Mode | LHS | RHS/Functionality                                            |
@@ -259,8 +269,8 @@ the `<LocalLeader>` key is `<Space><Space>` or `\`.
 | ov   | aN   | Text object: find the previous following "around" text object |
 | ov   | in   | Text object: find the next following "inner" text object      |
 | ov   | iN   | Text object: find the previous following "inner" text object  |
-| nov  | `g[` | Motion: go to the start of the following "around" text object |
-| nov  | `g]` | Motion: go to the end of the following "around" text object   |
+| nov  | `g(` | Motion: go to the start of the following "around" text object |
+| nov  | `g)` | Motion: go to the end of the following "around" text object   |
 
 ### [mini.surround](https://github.com/echasnovski/mini.nvim)
 
@@ -288,16 +298,188 @@ the `<LocalLeader>` key is `<Space><Space>` or `\`.
 | ov   | ab  | Text object: around text between the input character |
 | ov   | ib  | Text object: inner text between the input character  |
 
-### [vim-textobj-beween](https://github.com/D4KU/vim-textobj-chainmember)
+### [vim-textobj-chainmember](https://github.com/D4KU/vim-textobj-chainmember)
 
 | Mode | LHS | RHS/Functionality                                     |
 |------|-----|-------------------------------------------------------|
 | ov   | a.  | Text object: around a chain of chained method calls   |
 | ov   | i.  | Text object: inner of a chain of chained method calls |
 
+## Integration with other tools
+
+### Terminal
+
+#### [toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim)
+
+| Mode | LHS          | RHS/Functionality            |
+|------|--------------|------------------------------|
+| n    | `<Leader>tw` | Toggle the `n`th terminal    |
+| n    | `<Leader>ta` | Toggle all terminals         |
+| n    | `<Leader>te` | Terminate the `n`th terminal |
+| n    | `<Leader>t2` | Toggle the 2nd terminal      |
+| n    | `<Leader>t3` | Toggle the 3rd terminal      |
+| n    | `<Leader>t4` | Toggle the 4th terminal      |
+
+### Git
+
+#### [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim)
+
+| Mode | LHS          | RHS/Functionality             |
+|------|--------------|-------------------------------|
+| n    | `<Leader>gp` | Preview current git diff hunk |
+| n    | `<Leader>gq` | Send git diff hunks to qflist |
+| n    | `]h`         | Go to next git diff hunk      |
+| n    | `[h`         | Go to previous git diff hunk  |
+
+#### [neogit](https://github.com/TimUntersberger/neogit)
+
+| Mode | LHS          | RHS/Functionality         |
+|------|--------------|---------------------------|
+| n    | `<Leader>gg` | Open Neogit git dashboard |
+
+#### [diffview.nvim](https://github.com/sindrets/diffview.nvim)
+
+| Mode | LHS          | RHS/Functionality                           |
+|------|--------------|---------------------------------------------|
+| n    | `<Leader>gd` | Compare git diff for current file with HEAD |
+| n    | `<Leader>gf` | Open git diff view for commits history      |
+
+### Ripgrep
+
+#### [nvim-spectre](https://github.com/nvim-pack/nvim-spectre)
+
+| Mode   | LHS            | RHS/Functionality                                                                                      |
+|--------|----------------|--------------------------------------------------------------------------------------------------------|
+| nv     | `<Leader>fR`   | Open ripgrep search panel (to show searched results of selected text if on visual mode) in the project |
+
+## REPL
+
+### [iron.nvim](https://github.com/hkupty/iron.nvim)
+
+| Mode   | LHS                 | RHS/Functionality                         |
+| ------ | ------------------- | ----------------------------------------- |
+| n      | `<LocalLeader>rs`   | Start the REPL                            |
+| n      | `<LocalLeader>rr`   | Restart the REPL                          |
+| n      | `<LocalLeader>rh`   | Hide the REPL window                      |
+| n      | `<LocalLeader>rf`   | Focus / open on the REPL window           |
+| n      | `<LocalLeader>rw`   | Send file content to REPL after writing   |
+| n      | `<LocalLeader>ra`   | Attach current file to a specific REPL    |
+| n      | `<LocalLeader>ri`   | Interrupt the REPL                        |
+| n      | `<LocalLeader>rq`   | Exit the REPL                             |
+| n      | `<LocalLeader>rc`   | Clear the REPL output                     |
+
+| Mode | LHS                  | RHS/Functionality                                     |
+|------|----------------------|-------------------------------------------------------|
+| nv   | `<LocalLeader>s`     | Send the motion / text object / selected text to REPL |
+| n    | `<LocalLeader>sf`    | Send the file to REPL                                 |
+| n    | `<LocalLeader>ss`    | Send current line to REPL                             |
+| n    | `<LocalLeader>sm`    | Send mark to REPL                                     |
+| n    | `<LocalLeader>s<cr>` | Send `<cr>` to REPL                                   |
+
+## Treesitter
+
+### Text objects
+
+| Mode | LHS          | RHS/Functionality                                |
+|------|--------------|--------------------------------------------------|
+| ov   | af           | Text object: around a function definition        |
+| ov   | if           | Text object: inner of a function definition      |
+| ov   | aC           | Text object: around a class definition           |
+| ov   | iC           | Text object: inner of a class definition         |
+| ov   | ak           | Text object: the same as `aC`                    |
+| ov   | ik           | Text object: the same as `iC`                    |
+| ov   | al           | Text object: around a loop                       |
+| ov   | il           | Text object: inner of a loop                     |
+| ov   | ac           | Text object: around if-else conditions           |
+| ov   | ic           | Text object: inner of if-else conditions         |
+| ov   | ae           | Text object: around a function call              |
+| ov   | `a<Leader>a` | Text object: around a parameter(argument)        |
+| ov   | `i<Leader>a` | Text object: inner of a parameter(argument)      |
+| ov   | `<Leader>T`  | Text object: around the selected treesitter node |
+
+### Navigations
+
+| Mode | LHS          | RHS/Functionality                           |
+|------|--------------|---------------------------------------------|
+| n    | `]f`         | Go to the start of next function definition |
+| n    | `]<Leader>c` | Go to the start of next class definition    |
+| n    | `]k`         | The same as `]<Leader>c`                    |
+| n    | `]l`         | Go to the start of next loop                |
+| n    | `]c`         | Go to the start of next if-else conditions  |
+| n    | `]e`         | Go to the start of next function call       |
+| n    | `]a`         | Go to the start of next parameter(argument) |
+
+| Mode | LHS          | RHS/Functionality                         |
+|------|--------------|-------------------------------------------|
+| n    | `]F`         | Go to the end of next function definition |
+| n    | `]<Leader>C` | Go to the end of next class definition    |
+| n    | `]K`         | The same as `]<Leader>C`                  |
+| n    | `]L`         | Go to the end of next loop                |
+| n    | `]C`         | Go to the end of next if-else conditions  |
+| n    | `]E`         | Go to the end of next function call       |
+| n    | `]A`         | Go to the end of next parameter(argument) |
+
+| Mode | LHS          | RHS/Functionality                               |
+|------|--------------|-------------------------------------------------|
+| n    | `[f`         | Go to the start of previous function definition |
+| n    | `[<Leader>c` | Go to the start of previous class definition    |
+| n    | `[k`         | The same as `[<Leader>c`                        |
+| n    | `[l`         | Go to the start of previous loop                |
+| n    | `[c`         | Go to the start of previous if-else conditions  |
+| n    | `[e`         | Go to the start of previous function call       |
+| n    | `[a`         | Go to the start of previous parameter(argument) |
+
+| Mode | LHS          | RHS/Functionality                         |
+|------|--------------|-------------------------------------------|
+| n    | `[F`         | Go to the end of previous function definition |
+| n    | `[<Leader>C` | Go to the end of previous class definition    |
+| n    | `[K`         | The same as `[<Leader>C`                  |
+| n    | `[L`         | Go to the end of previous loop                |
+| n    | `[C`         | Go to the end of previous if-else conditions  |
+| n    | `[E`         | Go to the end of previous function call       |
+| n    | `[A`         | Go to the end of previous parameter(argument) |
+
+### Miscellenous
+
+| Mode | LHS          | RHS/Functionality                                                     |
+|------|--------------|-----------------------------------------------------------------------|
+| n    | `<Leader>ms` | Swap two selected treesitter nodes                                    |
+| n    | `<Leader>mS` | Swap current node with selected treesitter node                       |
+| n    | `<CR><CR>`   | Start incremental selection (expand region) based on treesitter nodes |
+| v    | `<CR>`       | Expand the region based on scope                                      |
+| v    | `<Tab>`      | Expand the region based on treesitter node                            |
+| v    | `<S-Tab>`    | Shrink the region based on treesitter node                            |
+
+## Finder / Explorer
+
+### [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)
+
+| Mode | LHS          | RHS/Functionality                    |
+|------|--------------|--------------------------------------|
+| n    | `<Leader>ff` | Preview files in current working dir |
+| n    | `<Leader>fg` | Search current working dir via grep  |
+| n    | `<Leader>fb` | Preview buffers                      |
+| n    | `<Leader>fh` | Preview vimhelp                      |
+| n    | `<Leader>fo` | Preview recently visited (old) files |
+| n    | `<Leader>fp` | Show recently visited projects       |
+| n    | `<Leader>fk` | Show keymaps                         |
+| n    | `<Leader>fc` | Show commands                        |
+| n    | `<A-x>`      | Show commands                        |
+| n    | `<Leader>fC` | Show command history                 |
+| n    | `<Leader>fs` | Show lsp document symbols            |
+| n    | `<Leader>fr` | Show registers                       |
+| n    | `<Leader>fj` | Show jumplist                        |
+| n    | `<Leader>fn` | Show notifications                   |
+| n    | `<Leader>fT` | Show treesitter nodes                |
+| n    | `<Leader>ft` | Show tags                            |
+| n    | `<Leader>F`  | Show all available telescope finders |
+| n    | `<Leader>fe` | The same as `<Leader>F`              |
+
 ## Filetype Specific Keymaps
 
 ### R
+
+#### Builtin
 
 | Mode | LHS          | RHS/Functionality              |
 |------|--------------|--------------------------------|
@@ -305,15 +487,19 @@ the `<LocalLeader>` key is `<Space><Space>` or `\`.
 | ov   | `i<Leader>c` | Text objects: inner code chunk |
 
 ### Python
+
+#### Builtin
     
 | Mode | LHS          | RHS/Functionality              |
 |------|--------------|--------------------------------|
 | ov   | `a<Leader>c` | Text objects: a code chunk     |
 | ov   | `i<Leader>c` | Text objects: inner code chunk |
 
+#### [iron.nvim](https://github.com/hkupty/iron.nvim)
+
 ### Rmarkdown
 
-#### builtin
+#### Builtin
 
 | Mode | LHS  | RHS/Functionality                |
 |------|------|----------------------------------|
@@ -326,6 +512,22 @@ the `<LocalLeader>` key is `<Space><Space>` or `\`.
 |------|------|----------------------------------|
 | ov   | `ae` | Text object: a function call     |
 | ov   | `ie` | Text object: inner function call |
+
+#### [markdown-previem.nvim](https://github.com/iamcco/markdown-preview.nvim)
+
+| Mode | LHS           | RHS/Functionality      |
+|------|---------------|------------------------|
+| n    | `<Leader>mmp` | Preview rmarkdown file |
+| n    | `<Leader>mmq` | Stop previewing        |
+
+### Markdown
+
+#### [markdown-previem.nvim](https://github.com/iamcco/markdown-preview.nvim)
+
+| Mode | LHS           | RHS/Functionality     |
+|------|---------------|-----------------------|
+| n    | `<Leader>mmp` | Preview markdown file |
+| n    | `<Leader>mmq` | Stop previewing       |
 
 # Other Notes
 
