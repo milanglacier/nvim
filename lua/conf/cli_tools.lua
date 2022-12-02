@@ -326,6 +326,9 @@ M.load.nvimr = function()
     vim.g.R_objbr_place = 'console,right' -- show object browser at the right of the console
     vim.g.R_nvim_wd = 1
     vim.g.R_rmdchunk = 0
+    vim.g.R_auto_omni = {}
+    -- only manually invoke nvimr's omni completion,
+    -- do not auto trigger it
 
     local function opts_desc(opts)
         return {
