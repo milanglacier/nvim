@@ -110,8 +110,14 @@ keymap('n', '<A-H>', [[<C-w>H]], opts_desc 'win: move to left')
 keymap('n', '<A-J>', [[<C-w>J]], opts_desc 'win: move to below')
 keymap('n', '<A-K>', [[<C-w>K]], opts_desc 'win: move to above')
 keymap('n', '<A-L>', [[<C-w>L]], opts_desc 'win: move to right')
-keymap('n', '<A-o>', [[<C-w>o]], opts_desc 'win: keep this only') -- keep only current window
-keymap('n', '<A-=>', [[<C-w>=]], opts_desc 'win: balance win w/h') -- balance width/height of wins
+keymap('n', '<A-o>', [[<C-w>o]], opts_desc 'win: keep this only')
+keymap('n', '<A-=>', [[<C-w>=]], opts_desc 'win: balance win w/h')
+keymap('n', '<A-|>', [[<C-w>|]], opts_desc 'win: maximize win width')
+keymap('n', '<A-_>', [[<C-w>_]], opts_desc 'win: maxmize win height')
+keymap('n', '<A-<>', [[<C-w><]], opts_desc 'win: decrease win width')
+keymap('n', '<A->>', [[<C-w>>]], opts_desc 'win: increase win width')
+keymap('n', '<A-+>', [[<C-w>+]], opts_desc 'win: increase win height')
+keymap('n', '<A-->', [[<C-w>-]], opts_desc 'win: decrease win height')
 
 keymap('n', '<A-]>', [[<cmd>lua require('conf.move_tabs').scroll_in_float_win(1)<CR>]], { noremap = true })
 keymap('n', '<A-[>', [[<cmd>lua require('conf.move_tabs').scroll_in_float_win(-1)<CR>]], { noremap = true })
@@ -143,9 +149,13 @@ keymap('n', '<Leader>wH', [[<C-w>H]], opts_desc 'win: move to left')
 keymap('n', '<Leader>wJ', [[<C-w>J]], opts_desc 'win: move to below')
 keymap('n', '<Leader>wK', [[<C-w>K]], opts_desc 'win: move to above')
 keymap('n', '<Leader>wL', [[<C-w>L]], opts_desc 'win: move to right')
-keymap('n', '<Leader>wo', [[<C-w>o]], opts_desc 'win: keep this only') -- keep only current window
-keymap('n', '<Leader>w|', [[<C-w>|]], opts_desc 'win: maximize win width') -- maxmize width of current win
-keymap('n', '<Leader>w_', [[<C-w>_]], opts_desc 'win: maxmize win height') -- maxmize height of current win
-keymap('n', '<Leader>w=', [[<C-w>=]], opts_desc 'win: balance win w/h') -- balance width/height of wins
+keymap('n', '<Leader>wo', [[<C-w>o]], opts_desc 'win: keep this only')
+keymap('n', '<Leader>w|', [[<C-w>|]], opts_desc 'win: maximize win width')
+keymap('n', '<Leader>w_', [[<C-w>_]], opts_desc 'win: maxmize win height')
+keymap('n', '<Leader>w=', [[<C-w>=]], opts_desc 'win: balance win w/h')
+keymap('n', '<Leader>w<', [[<C-w><]], opts_desc 'win: decrease win width')
+keymap('n', '<Leader>w>', [[<C-w>>]], opts_desc 'win: increase win width')
+keymap('n', '<Leader>w+', [[<C-w>+]], opts_desc 'win: increase win height')
+keymap('n', '<Leader>w-', [[<C-w>-]], opts_desc 'win: decrease win height')
 
 return M

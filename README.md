@@ -174,6 +174,12 @@ to find all keymaps.
 | n    | `<A-L>`       | Move current win to the right  |
 | n    | `<A-o>`       | Make current win the only win  |
 | n    | `<A-=>`       | Balance the win height/width   |
+| n    | `<A-\|>`      | Maximize current win's width   |
+| n    | `<A-_>`       | Maximize current win's height  |
+| n    | `<A-<>`       | Decrease current win's width   |
+| n    | `<A->>`       | Increase current win's width   |
+| n    | `<A-+>`       | Increase current win's height  |
+| n    | `<A-->`       | Decrease current win's height  |
 | n    | `<A-]>`       | Downward scroll the float win  |
 | n    | `<A-[>`       | Upward scroll the float win    |
 | n    | `<Leader>wf`  | Move current win to prev tab   |
@@ -389,6 +395,7 @@ The following keymaps rely on [toggleterm.nvim](https://github.com/akinsho/toggl
 | n    | `<Leader>tw` | Toggle the `n`th terminal    |
 | n    | `<Leader>ta` | Toggle all terminals         |
 | n    | `<Leader>te` | Terminate the `n`th terminal |
+| n    | `<Leader>t1` | Toggle the 1st terminal      |
 | n    | `<Leader>t2` | Toggle the 2nd terminal      |
 | n    | `<Leader>t3` | Toggle the 3rd terminal      |
 | n    | `<Leader>t4` | Toggle the 4th terminal      |
