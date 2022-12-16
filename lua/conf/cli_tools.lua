@@ -139,6 +139,7 @@ M.load.toggleterm = function()
         close_on_exit = true,
     }
     keymap('n', '<Leader>ta', '<cmd>ToggleTermToggleAll<CR>', { silent = true })
+    keymap('n', '<Leader>t1', '<cmd>1ToggleTerm<CR>', { silent = true })
     keymap('n', '<Leader>t2', '<cmd>2ToggleTerm<CR>', { silent = true })
     keymap('n', '<Leader>t3', '<cmd>3ToggleTerm<CR>', { silent = true })
     keymap('n', '<Leader>t4', '<cmd>4ToggleTerm<CR>', { silent = true })
