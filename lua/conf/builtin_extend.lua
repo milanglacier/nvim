@@ -234,7 +234,7 @@ autocmd('FileType', {
         })
 
         local visual_a =
-        [[:<C-U>lua require('conf.builtin_extend').textobj_code_chunk('a', '^# ?%%%%.*', '^# ?%%%%$', true)<CR>]]
+            [[:<C-U>lua require('conf.builtin_extend').textobj_code_chunk('a', '^# ?%%%%.*', '^# ?%%%%$', true)<CR>]]
 
         bufmap(0, 'x', 'a<Leader>c', visual_a, {
             silent = true,
@@ -242,7 +242,7 @@ autocmd('FileType', {
         })
 
         local visual_i =
-        [[:<C-U>lua require('conf.builtin_extend').textobj_code_chunk('i', '^# ?%%%%.*', '^# ?%%%%$', true)<CR>]]
+            [[:<C-U>lua require('conf.builtin_extend').textobj_code_chunk('i', '^# ?%%%%.*', '^# ?%%%%$', true)<CR>]]
 
         bufmap(0, 'x', 'i<Leader>c', visual_i, {
             silent = true,
@@ -412,11 +412,17 @@ autocmd('FileType', {
     end,
 })
 
-function M.open_URI_under_cursor()
+function M.open_URI_under_cursor(use_w3m)
     local function open_uri(uri)
         if type(uri) ~= 'nil' then
             uri = string.gsub(uri, '#', '\\#') --double escapes any # signs
             uri = '"' .. uri .. '"'
+
+            if use_w3m then
+                vim.cmd.terminal { 'w3m', uri }
+                return true
+            end
+
             vim.cmd['!'] { 'open', uri }
             vim.cmd.redraw()
             return true
@@ -439,13 +445,23 @@ function M.open_URI_under_cursor()
 end
 
 command('OpenURIUnderCursor', M.open_URI_under_cursor, {})
+command('OpenURIUnderCursorWithW3m', function()
+    M.open_URI_under_cursor(true)
+end, {})
 
-keymap('n', 'go', '', {
+keymap('n', '<Leader>olx', '', {
     callback = M.open_URI_under_cursor,
     noremap = true,
-    desc = 'open URI under the cursor',
+    desc = 'open URI under the cursor with xdg-open',
 })
--- the default of `go` is go to nth bytes, which is useless
+
+keymap('n', '<Leader>olw', '', {
+    callback = function()
+        M.open_URI_under_cursor(true)
+    end,
+    noremap = true,
+    desc = 'open URI under the cursor with w3m',
+})
 
 command('CondaEnv', function(options)
     vim.env.PATH = options.args .. ':' .. vim.env.PATH

@@ -243,9 +243,11 @@ to find all keymaps.
 
 ## Builtin miscellenous keymaps
 
+
 | Mode | LHS           | RHS/Functionality                                      |
 |------|---------------|--------------------------------------------------------|
-| n    | go            | Open URI under cursor                                  |
+| n    | `<Leader>olx` | Open URI under cursor using xdg-open                   |
+| n    | `<Leader>olw` | Open URI under cursor using w3m                   |
 | n    | `<C-g>`       | `<ESC>`                                                |
 | n    | `<Leader>mt`  | search current word from tags file and send to loclist |
 | n    | `<Leader>mdc` | Set working dir as current file's dir                  |

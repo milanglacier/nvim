@@ -301,6 +301,7 @@ M.load.which_key = function()
         ['<Leader>e'] = { name = '+explorer' },
         ['<Leader>t'] = { name = '+terminal' },
         ['<Leader>o'] = { name = '+open/org' },
+        ['<Leader>ol'] = { name = '+open/links' },
         ['<Leader>g'] = { name = '+git' },
         ['<Leader>x'] = { name = '+quickfixlist' },
         ['<Leader><Tab>'] = { name = '+tab' },
