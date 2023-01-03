@@ -284,8 +284,10 @@ vim.fn.sign_define('DiagnosticSignHint', { text = '', texthl = 'DiagnosticSig
 
 local command = vim.api.nvim_create_user_command
 
-local has_virtual_text = true
-local has_underline = true
+local has_virtual_text = false
+local has_underline = false
+
+vim.diagnostic.config { virtual_text = has_virtual_text, underline = has_underline }
 
 command('DiagnosticVirtualTextToggle', function()
     has_virtual_text = not has_virtual_text
