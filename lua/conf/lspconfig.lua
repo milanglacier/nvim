@@ -275,6 +275,14 @@ require('lspconfig').ltex.setup {
             return filetype
         end
     end,
+    settings = {
+        ltex = {
+            disabledRules = {
+                ['en-US'] = { 'DATE_NEW_YEAR', 'UPPERCASE_SENTENCE_START' },
+                ['zh-CN'] = { 'DATE_NEW_YEAR', 'UPPERCASE_SENTENCE_START' },
+            },
+        },
+    },
 }
 
 vim.fn.sign_define('DiagnosticSignError', { text = '✗', texthl = 'DiagnosticSignError' })
