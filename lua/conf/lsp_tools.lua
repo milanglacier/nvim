@@ -86,6 +86,8 @@ M.load.lspsaga = function()
     }
 end
 
+M.original_hover_handler = vim.lsp.handlers['textDocument/hover']
+
 M.load.glow_hover = function()
     vim.cmd.packadd { 'glow-hover', bang = true }
 

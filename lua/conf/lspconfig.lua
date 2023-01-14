@@ -55,10 +55,44 @@ local on_attach = function(client, bufnr)
     )
 
     -- hover
-    bufmap(bufnr, 'n', 'gh', '<cmd>Lspsaga hover_doc<CR>', opts { 'lspsaga hover doc' })
+    bufmap(
+        bufnr,
+        'n',
+        'gh',
+        '',
+        opts {
+            'lsp hover doc with builtin renderer.',
+            function()
+                vim.lsp.handlers['textDocument/hover'] = require('conf.lsp_tools').original_hover_handler
+                vim.lsp.buf.hover()
+                -- after typing gh, within 400 milliseconds typing h will switch into the popup window
+                vim.api.nvim_buf_set_keymap(0, 'n', 'h', '', {
+                    callback = function()
+                        local current_buf = vim.api.nvim_get_current_buf()
+                        vim.lsp.buf.hover()
+                        vim.defer_fn(function()
+                            vim.api.nvim_buf_del_keymap(current_buf, 'n', 'h')
+                        end, 400)
+                    end,
+                })
+            end,
+        }
+    )
 
     -- use glow-hover
-    bufmap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts { 'lsp hover by glow' })
+    bufmap(
+        bufnr,
+        'n',
+        'K',
+        '',
+        opts {
+            'lsp hover by glow',
+            function()
+                require('conf.lsp_tools').load.glow_hover()
+                vim.lsp.buf.hover()
+            end,
+        }
+    )
 
     -- signaturehelp
     bufmap(bufnr, 'n', '<Leader>ls', '', opts { 'signature help', vim.lsp.buf.signature_help })
