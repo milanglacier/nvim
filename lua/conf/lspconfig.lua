@@ -285,6 +285,14 @@ require('lspconfig').ltex.setup {
     },
 }
 
+require('lspconfig').ds_pinyin_lsp.setup {
+    filetypes = { 'markdown', 'markdown.pandoc', 'rmd' },
+    init_options = {
+        db_path = os.getenv 'HOME' .. '/Downloads/dict.db3',
+        completion_on = false, -- don't enable the completion by default
+    },
+}
+
 vim.fn.sign_define('DiagnosticSignError', { text = '✗', texthl = 'DiagnosticSignError' })
 vim.fn.sign_define('DiagnosticSignWarn', { text = '!', texthl = 'DiagnosticSignWarn' })
 vim.fn.sign_define('DiagnosticSignInformation', { text = '', texthl = 'DiagnosticSignInfo' })

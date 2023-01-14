@@ -113,6 +113,7 @@ cmp.setup.cmdline(':', {
 cmp.setup.filetype('org', {
     sources = cmp.config.sources({
         { name = 'orgmode' },
+        { name = 'nvim_lsp' },
         { name = 'luasnip' },
     }, {
         { name = 'buffer' },
