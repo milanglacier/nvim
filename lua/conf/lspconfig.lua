@@ -148,150 +148,190 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
 }
 
 -- Copied from lspconfig/server_configurations/pylsp.lua
-local function python_root_dir(fname)
-    local util = require 'lspconfig.util'
-    local root_files = {
-        'pyproject.toml',
-        'setup.py',
-        'setup.cfg',
-        'requirements.txt',
-        'Pipfile',
+
+local enabled_lsps = { 'r', 'python', 'bash', 'cpp', 'vim', 'nvim', 'pinyin', 'ltex_ls', 'sql', 'latex' }
+
+local lsp_configs = {}
+
+lsp_configs.python = function()
+    local function python_root_dir(fname)
+        local util = require 'lspconfig.util'
+        local root_files = {
+            'pyproject.toml',
+            'setup.py',
+            'setup.cfg',
+            'requirements.txt',
+            'Pipfile',
+        }
+        return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)
+    end
+
+    require('lspconfig').pyright.setup {
+        on_attach = on_attach,
+        capabilities = capabilities,
+        root_dir = python_root_dir,
+        settings = {
+            python = {},
+        },
+        flags = {
+            debounce_text_changes = 250,
+        },
     }
-    return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)
 end
 
-require('lspconfig').pyright.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    root_dir = python_root_dir,
-    settings = {
-        python = {},
-    },
-    flags = {
-        debounce_text_changes = 250,
-    },
-}
-
-local r_config = {
-    on_attach = on_attach,
-    flags = {
-        debounce_text_changes = 300,
-    },
-    capabilities = capabilities,
-    settings = {
-        r = {
-            lsp = {
-                log_file = '~/.cache/nvim/r_lsp_log.log',
-                diagnostics = false, -- r-lsp + lintr is currently problematic
+lsp_configs.r = function()
+    local r_config = {
+        on_attach = on_attach,
+        flags = {
+            debounce_text_changes = 300,
+        },
+        capabilities = capabilities,
+        settings = {
+            r = {
+                lsp = {
+                    log_file = '~/.cache/nvim/r_lsp_log.log',
+                    diagnostics = false, -- r-lsp + lintr is currently problematic
+                },
             },
         },
-    },
-}
+    }
 
-require('lspconfig').r_language_server.setup(r_config)
+    require('lspconfig').r_language_server.setup(r_config)
+end
 
-require('lspconfig').texlab.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-}
+lsp_configs.latex = function()
+    require('lspconfig').texlab.setup {
+        on_attach = on_attach,
+        capabilities = capabilities,
+    }
+end
 
-require('lspconfig').bashls.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-}
+lsp_configs.bash = function()
+    require('lspconfig').bashls.setup {
+        on_attach = on_attach,
+        capabilities = capabilities,
+    }
+end
 
-local clangd_capabilities = vim.deepcopy(capabilities)
-clangd_capabilities.offsetEncoding = { 'utf-16' }
+lsp_configs.cpp = function()
+    local clangd_capabilities = vim.deepcopy(capabilities)
+    clangd_capabilities.offsetEncoding = { 'utf-16' }
 
-require('lspconfig').clangd.setup {
-    on_attach = on_attach,
-    capabilities = clangd_capabilities,
-}
+    require('lspconfig').clangd.setup {
+        on_attach = on_attach,
+        capabilities = clangd_capabilities,
+    }
+end
 
-require('neodev').setup {}
+lsp_configs.nvim = function()
+    require('neodev').setup {}
 
-require('lspconfig').sumneko_lua.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    settings = {
-        Lua = {
-            diagnostics = {
-                globals = { 'vim' },
-            },
-            telemetry = {
-                enable = false,
-            },
-        },
-    },
-}
-
-require('lspconfig').vimls.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-}
-
-require('lspconfig').sqls.setup {
-    on_attach = function(client, bufnr)
-        vim.cmd.packadd { 'sqls.nvim', bang = true }
-
-        on_attach(client, bufnr)
-        require('sqls').on_attach(client, bufnr)
-        bufmap(bufnr, 'n', '<LocalLeader>ss', '<cmd>SqlsExecuteQuery<CR>', { silent = true })
-        bufmap(bufnr, 'v', '<LocalLeader>ss', '<cmd>SqlsExecuteQuery<CR>', { silent = true })
-        bufmap(bufnr, 'n', '<LocalLeader>sv', '<cmd>SqlsExecuteQueryVertical<CR>', { silent = true })
-        bufmap(bufnr, 'v', '<LocalLeader>sv', '<cmd>SqlsExecuteQueryVertical<CR>', { silent = true })
-    end,
-    capabilities = capabilities,
-    single_file_support = false,
-    on_new_config = function(new_config, new_rootdir)
-        new_config.cmd = {
-            'sqls',
-            '-config',
-            new_rootdir .. '/config.yml',
-        }
-    end,
-}
-
--- referenced from https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/ltex.lua
-local language_id_mapping = {
-    bib = 'bibtex',
-    plaintex = 'tex',
-    rnoweb = 'sweave',
-    rst = 'restructuredtext',
-    tex = 'latex',
-    xhtml = 'xhtml',
-    rmd = 'markdown',
-}
-
-require('lspconfig').ltex.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    filetypes = { 'bib', 'gitcommit', 'markdown', 'org', 'plaintex', 'rst', 'rnoweb', 'tex', 'rmd', 'markdown.pandoc' },
-    get_language_id = function(_, filetype)
-        local language_id = language_id_mapping[filetype]
-        if language_id then
-            return language_id
-        else
-            return filetype
-        end
-    end,
-    settings = {
-        ltex = {
-            disabledRules = {
-                ['en-US'] = { 'DATE_NEW_YEAR', 'UPPERCASE_SENTENCE_START' },
-                ['zh-CN'] = { 'DATE_NEW_YEAR', 'UPPERCASE_SENTENCE_START' },
+    require('lspconfig').sumneko_lua.setup {
+        on_attach = on_attach,
+        capabilities = capabilities,
+        settings = {
+            Lua = {
+                diagnostics = {
+                    globals = { 'vim' },
+                },
+                telemetry = {
+                    enable = false,
+                },
             },
         },
-    },
-}
+    }
+end
 
-require('lspconfig').ds_pinyin_lsp.setup {
-    filetypes = { 'markdown', 'markdown.pandoc', 'rmd' },
-    init_options = {
-        db_path = os.getenv 'HOME' .. '/Downloads/dict.db3',
-        completion_on = false, -- don't enable the completion by default
-    },
-}
+lsp_configs.vim = function()
+    require('lspconfig').vimls.setup {
+        on_attach = on_attach,
+        capabilities = capabilities,
+    }
+end
+
+lsp_configs.sql = function()
+    require('lspconfig').sqls.setup {
+        on_attach = function(client, bufnr)
+            vim.cmd.packadd { 'sqls.nvim', bang = true }
+
+            on_attach(client, bufnr)
+            require('sqls').on_attach(client, bufnr)
+            bufmap(bufnr, 'n', '<LocalLeader>ss', '<cmd>SqlsExecuteQuery<CR>', { silent = true })
+            bufmap(bufnr, 'v', '<LocalLeader>ss', '<cmd>SqlsExecuteQuery<CR>', { silent = true })
+            bufmap(bufnr, 'n', '<LocalLeader>sv', '<cmd>SqlsExecuteQueryVertical<CR>', { silent = true })
+            bufmap(bufnr, 'v', '<LocalLeader>sv', '<cmd>SqlsExecuteQueryVertical<CR>', { silent = true })
+        end,
+        capabilities = capabilities,
+        single_file_support = false,
+        on_new_config = function(new_config, new_rootdir)
+            new_config.cmd = {
+                'sqls',
+                '-config',
+                new_rootdir .. '/config.yml',
+            }
+        end,
+    }
+end
+
+lsp_configs.ltex_ls = function()
+    -- referenced from https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/ltex.lua
+    local language_id_mapping = {
+        bib = 'bibtex',
+        plaintex = 'tex',
+        rnoweb = 'sweave',
+        rst = 'restructuredtext',
+        tex = 'latex',
+        xhtml = 'xhtml',
+        rmd = 'markdown',
+    }
+
+    require('lspconfig').ltex.setup {
+        on_attach = on_attach,
+        capabilities = capabilities,
+        filetypes = {
+            'bib',
+            'gitcommit',
+            'markdown',
+            'org',
+            'plaintex',
+            'rst',
+            'rnoweb',
+            'tex',
+            'rmd',
+            'markdown.pandoc',
+        },
+        get_language_id = function(_, filetype)
+            local language_id = language_id_mapping[filetype]
+            if language_id then
+                return language_id
+            else
+                return filetype
+            end
+        end,
+        settings = {
+            ltex = {
+                disabledRules = {
+                    ['en-US'] = { 'DATE_NEW_YEAR', 'UPPERCASE_SENTENCE_START' },
+                    ['zh-CN'] = { 'DATE_NEW_YEAR', 'UPPERCASE_SENTENCE_START' },
+                },
+            },
+        },
+    }
+end
+
+lsp_configs.pinyin = function()
+    require('lspconfig').ds_pinyin_lsp.setup {
+        filetypes = { 'markdown', 'markdown.pandoc', 'rmd' },
+        init_options = {
+            db_path = os.getenv 'HOME' .. '/Downloads/dict.db3',
+            completion_on = false, -- don't enable the completion by default
+        },
+    }
+end
+
+for _, lsp in pairs(enabled_lsps) do
+    lsp_configs[lsp]()
+end
 
 vim.fn.sign_define('DiagnosticSignError', { text = '✗', texthl = 'DiagnosticSignError' })
 vim.fn.sign_define('DiagnosticSignWarn', { text = '!', texthl = 'DiagnosticSignWarn' })
