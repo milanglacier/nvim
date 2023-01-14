@@ -98,7 +98,7 @@ local on_attach = function(client, bufnr)
             end,
         }
     )
-    bufmap(bufnr, 'n', '<Leader>lD', '<cmd>Lspsaga preview_definition<CR>', opts { 'lspsaga preview definition' })
+    bufmap(bufnr, 'n', '<Leader>lD', '<cmd>Lspsaga peek_definition<CR>', opts { 'lspsaga preview definition' })
 
     -- workspace
     local bufcmd = vim.api.nvim_buf_create_user_command
@@ -136,16 +136,15 @@ local on_attach = function(client, bufnr)
     bufmap(bufnr, 'n', '<Leader>ll', '<cmd>Lspsaga show_line_diagnostics<CR>', opts { 'lspsaga line diagnostic' })
 
     require('conf.lsp_tools').signature(bufnr)
-    require('nvim-navic').attach(client, bufnr)
+
+    if client.server_capabilities.documentSymbolProvider then
+        require('nvim-navic').attach(client, bufnr)
+    end
 end
 
 -- Setup lspconfig.
 -- -- -- copied from https://github.com/ray-x/lsp_signature.nvim/blob/master/tests/init_paq.lua
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities.textDocument.completion.completionItem.resolveSupport = {
-    properties = { 'documentation', 'detail', 'additionalTextEdits' },
-}
 
 -- Copied from lspconfig/server_configurations/pylsp.lua
 
