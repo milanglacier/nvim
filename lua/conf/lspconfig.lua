@@ -266,7 +266,7 @@ local language_id_mapping = {
 require('lspconfig').ltex.setup {
     on_attach = on_attach,
     capabilities = capabilities,
-    filetypes = { 'bib', 'gitcommit', 'markdown', 'org', 'plaintex', 'rst', 'rnoweb', 'tex', 'rmd' },
+    filetypes = { 'bib', 'gitcommit', 'markdown', 'org', 'plaintex', 'rst', 'rnoweb', 'tex', 'rmd', 'markdown.pandoc' },
     get_language_id = function(_, filetype)
         local language_id = language_id_mapping[filetype]
         if language_id then
