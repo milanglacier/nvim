@@ -52,26 +52,37 @@ end
 
 M.load.lspsaga = function()
     local saga = require 'lspsaga'
-    saga.init_lsp_saga {
-        code_action_lightbulb = {
-            enable = false,
+    saga.setup {
+        lightbulb = {
+            sign = false,
+            virtual_text = true,
         },
-        move_in_saga = { prev = 'k', next = 'j' },
-        finder_action_keys = {
+        finder = {
             open = { 'o', '<cr>' },
             vsplit = 'v',
             split = 's',
             quit = { 'q', '<ESC>' },
             scroll_down = '<C-f>',
             scroll_up = '<C-b>',
-            -- quit can be a table
         },
-        code_action_keys = {
-            quit = { 'q', '<ESC>' },
-            exec = '<CR>',
+        code_action = {
+            keys = {
+                quit = '<ESC>',
+                exec = '<CR>',
+            },
         },
-        rename_action_quit = '<ESC>',
-        max_preview_lines = 100,
+        rename = {
+            quit = '<ESC>',
+            in_select = false,
+        },
+        diagnostic = {
+            keys = {
+                exec_action = '<CR>',
+            },
+        },
+        ui = {
+            border = 'rounded',
+        },
     }
 end
 
