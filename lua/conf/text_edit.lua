@@ -162,6 +162,28 @@ M.load.easy_align = function()
     keymap('n', 'ga', '<Plug>(EasyAlign)', {})
 end
 
+M.load.mini_block_move = function()
+    vim.cmd.packadd { 'mini.nvim', bang = true }
+    require('mini.move').setup {
+        mappings = {
+            line_left = '',
+            line_right = '',
+            line_down = '',
+            line_up = '',
+            -- don't enable block move in normal mode
+        },
+    }
+end
+
+M.rm_trailing_space = function()
+    vim.cmd [[%s/\s\+$//e]]
+end
+
+keymap('n', '<Leader>m<space>', '', {
+    callback = M.rm_trailing_space,
+    desc = 'Misc: remove trailing spaces',
+})
+
 if not vim.g.vscode then
     M.load.colorizer()
     M.load.mini_pairs()
@@ -176,5 +198,6 @@ M.load.mini_ai()
 M.load.textobj()
 M.load.mini_surround()
 M.load.easy_align()
+M.load.mini_block_move()
 
 return M
