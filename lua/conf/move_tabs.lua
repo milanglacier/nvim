@@ -158,4 +158,14 @@ keymap('n', '<Leader>w>', [[<C-w>>]], opts_desc 'win: increase win width')
 keymap('n', '<Leader>w+', [[<C-w>+]], opts_desc 'win: increase win height')
 keymap('n', '<Leader>w-', [[<C-w>-]], opts_desc 'win: decrease win height')
 
+keymap('n', '<Leader><Tab>o', [[:tabonly<cr>]], opts_desc 'tab: delete other tabs')
+keymap('n', '<Leader><Tab>n', [[:tabnew<cr>]], opts_desc 'tab: new tab')
+keymap('n', '<Leader><Tab>c', [[:tabclose<cr>]], opts_desc 'tab: close this tab')
+keymap('n', '<Leader><Tab>f', [[:tabfirst<cr>]], opts_desc 'tab: first tab')
+keymap('n', '<Leader><Tab>l', [[:tablast<cr>]], opts_desc 'tab: last tab')
+keymap('n', '<Leader><Tab>1', [[1gt]], opts_desc 'tab: 1st tab')
+keymap('n', '<Leader><Tab>2', [[2gt]], opts_desc 'tab: 2nd tab')
+keymap('n', '<Leader><Tab>3', [[3gt]], opts_desc 'tab: 3rd tab')
+keymap('n', '<Leader><Tab>4', [[4gt]], opts_desc 'tab: 4th tab')
+
 return M

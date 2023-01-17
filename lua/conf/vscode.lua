@@ -123,6 +123,16 @@ keymap('v', '<Leader>lf', v_notify 'editor.action.formatSelection', opts)
 keymap('v', '<Leader>la', v_notify 'editor.action.refactor', opts)
 keymap('v', '<Leader>fc', v_notify 'workbench.action.showCommands', opts)
 
+keymap('n', '<Leader><Tab>o', [[:Tabonly<cr>]], opts_desc 'tab: delete other tabs')
+keymap('n', '<Leader><Tab>n', [[:Tabnew<cr>]], opts_desc 'tab: new tab')
+keymap('n', '<Leader><Tab>c', [[:Tabclose<cr>]], opts_desc 'tab: close this tab')
+keymap('n', '<Leader><Tab>f', [[:Tabfirst<cr>]], opts_desc 'tab: first tab')
+keymap('n', '<Leader><Tab>l', [[:Tablast<cr>]], opts_desc 'tab: last tab')
+keymap('n', '<Leader><Tab>1', [[1gt]], opts_desc 'tab: 1st tab')
+keymap('n', '<Leader><Tab>2', [[2gt]], opts_desc 'tab: 2nd tab')
+keymap('n', '<Leader><Tab>3', [[3gt]], opts_desc 'tab: 3rd tab')
+keymap('n', '<Leader><Tab>4', [[4gt]], opts_desc 'tab: 4th tab')
+
 autocmd('FileType', {
     group = M.my_vscode,
     pattern = { 'r', 'rmd' },

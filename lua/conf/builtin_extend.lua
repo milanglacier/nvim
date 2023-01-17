@@ -50,16 +50,6 @@ keymap('n', '<Leader>mt', [[:ltag <C-R><C-W> | lopen<cr>]], opts_desc 'misc: tag
 -- <C-R> insert text in the register to the command line
 -- <C-W> alias for the word under cursor
 
-keymap('n', '<Leader><Tab>o', [[:tabonly<cr>]], opts)
-keymap('n', '<Leader><Tab>n', [[:tabnew<cr>]], opts)
-keymap('n', '<Leader><Tab>c', [[:tabclose<cr>]], opts)
-keymap('n', '<Leader><Tab>f', [[:tabfirst<cr>]], opts)
-keymap('n', '<Leader><Tab>l', [[:tablast<cr>]], opts)
-keymap('n', '<Leader><Tab>1', [[1gt]], opts)
-keymap('n', '<Leader><Tab>2', [[2gt]], opts)
-keymap('n', '<Leader><Tab>3', [[3gt]], opts)
-keymap('n', '<Leader><Tab>4', [[4gt]], opts)
-
 keymap('n', '<Leader>bd', [[:bd!<CR>]], opts_desc 'buffer delete current one')
 keymap('n', '<Leader>bw', [[:bw!<CR>]], opts_desc 'buffer wipeout current one')
 keymap('n', '<Leader>bp', [[:bprevious<CR>]], opts_desc 'buffer next')
