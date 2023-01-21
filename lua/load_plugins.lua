@@ -82,7 +82,7 @@ require('packer').startup(function(use)
         end,
     }
     use { 'nvim-treesitter/nvim-treesitter-textobjects', opt = true }
-    use { 'p00f/nvim-ts-rainbow', opt = true }
+    use { 'mrjones2014/nvim-ts-rainbow', opt = true }
     use { 'mfussenegger/nvim-treehopper', opt = true }
     use { 'mizlan/iswap.nvim', opt = true }
     use { 'romgrk/nvim-treesitter-context', opt = true }
