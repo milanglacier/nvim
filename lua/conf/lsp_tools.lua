@@ -83,6 +83,9 @@ M.load.lspsaga = function()
         ui = {
             border = 'rounded',
         },
+        symbol_in_winbar = {
+            enable = false,
+        },
     }
 end
 
