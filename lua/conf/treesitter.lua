@@ -22,6 +22,7 @@ require('nvim-treesitter.configs').setup {
         'regex',
         'latex',
         'org',
+        'markdown',
     },
 
     -- Install languages synchronously (only applied to `ensure_installed`)
@@ -41,7 +42,7 @@ require('nvim-treesitter.configs').setup {
         -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
         -- using this option may slow down your editor, and you may see some duplicate highlights.
         -- Instead of true it can also be a list of languages
-        additional_vim_regex_highlighting = { 'org', 'latex' },
+        additional_vim_regex_highlighting = { 'org', 'latex', 'markdown' },
     },
 
     rainbow = {
@@ -199,6 +200,27 @@ if not vim.g.vscode then
         throttle = true,
     }
 end
+
+local autocmd = vim.api.nvim_create_autocmd
+local my_augroup = require('conf.builtin_extend').my_augroup
+
+autocmd('FileType', {
+    pattern = { 'rmd' },
+    group = my_augroup,
+    desc = 'disable treesitter highlight',
+    callback = function()
+        vim.defer_fn(function()
+            vim.cmd 'TSBufDisable highlight'
+            -- this is an embarassing hack
+            -- currently nvimr will issue errors
+            -- when pandoc-syntax highlight and treesitter parser for markdown
+            -- is simultaneously enabled.
+            -- The strategy is don't enable pandoc-syntax at the start
+            -- until nvimr is successfully loaded,
+            -- then disable treesitter's highlight.
+        end, 300)
+    end,
+})
 
 local emmykeymap = require('conf.builtin_extend').emmykeymap
 

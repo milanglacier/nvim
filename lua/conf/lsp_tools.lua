@@ -129,6 +129,11 @@ M.load.nullls = function()
     end
 
     null_ls.setup {
+        should_attach = function(bufnr)
+            return not vim.api.nvim_buf_get_name(bufnr):match 'tmp-%.'
+            -- don't start null-ls for those virtual files created by quarto-nvim
+            -- which is used for fetching completions from different langauges.
+        end,
         fallback_severity = vim.diagnostic.severity.INFO,
         sources = {
             source_wrapper { null_ls.builtins.formatting.stylua },

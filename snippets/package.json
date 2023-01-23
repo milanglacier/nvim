@@ -18,6 +18,10 @@
                 "path": "./qmd.json"
             },
             {
+                "language": "markdown",
+                "path": "./qmd.json"
+            },
+            {
                 "language": "python",
                 "path": "./python.json"
             },

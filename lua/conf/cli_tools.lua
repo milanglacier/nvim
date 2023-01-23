@@ -70,6 +70,7 @@ M.load.iron = function()
                 r = radian,
                 rmd = radian,
                 quarto = radian,
+                markdown = radian,
                 python = ipython,
             },
             repl_open_cmd = 'belowright 15 split',
@@ -107,7 +108,7 @@ M.load.iron = function()
 
             if vim.bo.filetype == 'r' or vim.bo.filetype == 'python' then
                 return local_leader .. 'si' .. leader .. 'c'
-            elseif vim.bo.filetype == 'rmd' or vim.bo.filetype == 'quarto' then
+            elseif vim.bo.filetype == 'rmd' or vim.bo.filetype == 'quarto' or vim.bo.filetype == 'markdown' then
                 return local_leader .. 'sic'
                 -- Note: in an expression mapping, <LocalLeader>
                 -- and <Leader> cannot be automatically mapped
@@ -115,6 +116,16 @@ M.load.iron = function()
             end
         end,
         expr = true,
+    })
+
+    autocmd('FileType', {
+        pattern = { 'quarto', 'markdown' },
+        group = my_augroup,
+        desc = 'set up switching iron repls keymap',
+        callback = function()
+            bufmap(0, 'n', '<LocalLeader>ap', '<cmd>IronAttach python<cr>', { desc = 'switch to python REPL' })
+            bufmap(0, 'n', '<LocalLeader>ar', '<cmd>IronAttach markdown<cr>', { desc = 'switch to R REPL' })
+        end,
     })
 end
 
@@ -222,7 +233,6 @@ end
 M.load.pandoc = function()
     vim.cmd.packadd { 'vim-pandoc-syntax', bang = true }
     vim.cmd.packadd { 'vim-rmarkdown', bang = true }
-    vim.cmd.packadd { 'quarto-vim', bang = true }
 
     vim.filetype.add {
         extension = {
@@ -376,6 +386,8 @@ M.load.nvimr = function()
     vim.g.R_nvim_wd = 1
     vim.g.R_rmdchunk = 0
     vim.g.R_auto_omni = {}
+    vim.g.R_filetypes = { 'r', 'rmd', 'rrst', 'rnoweb', 'rhelp' }
+    -- don't use quarto with nvimr
     -- only manually invoke nvimr's omni completion,
     -- do not auto trigger it
 
@@ -387,7 +399,7 @@ M.load.nvimr = function()
     end
 
     autocmd('FileType', {
-        pattern = { 'r', 'rmd', 'quarto' },
+        pattern = { 'r', 'rmd' },
         group = my_augroup,
         desc = 'set nvim-r keymap',
         callback = function()
@@ -426,6 +438,24 @@ M.load.nvimr = function()
     vim.cmd.packadd { 'Nvim-R', bang = true }
 end
 
+M.load.quarto = function()
+    vim.cmd.packadd { 'otter.nvim' }
+    vim.cmd.packadd { 'nvim-lspconfig' }
+    autocmd('FileType', {
+        pattern = 'quarto',
+        group = my_augroup,
+        desc = 'enable multip language support for quarto',
+        callback = function()
+            vim.bo.ft = 'markdown'
+            vim.defer_fn(function()
+                require('otter').activate({ 'r', 'python' }, true)
+                -- defer activation, otherwise those hidden buffer
+                -- i.e R, python will not be activated (they are virtual buffer).
+            end, 500)
+        end,
+    })
+end
+
 M.load.diffview()
 M.load.gitsigns()
 M.load.iron()
@@ -437,5 +467,6 @@ M.load.pandoc()
 M.load.gutentags()
 M.load.nvimr()
 M.load.vimtex()
+M.load.quarto()
 
 return M

@@ -91,7 +91,6 @@ require('packer').startup(function(use)
     -- Set markdown/rmd/quarto syntax highlighting
     use { 'vim-pandoc/vim-pandoc-syntax', opt = true }
     use { 'vim-pandoc/vim-rmarkdown', branch = 'official-filetype', opt = true }
-    use { 'quarto-dev/quarto-vim', opt = true }
 
     -- Fuzzy finder for file search
     use { 'nvim-lua/plenary.nvim' }
@@ -148,6 +147,7 @@ require('packer').startup(function(use)
     use { 'ludovicchabant/vim-gutentags', opt = true }
     use { 'nvim-orgmode/orgmode', opt = true }
     use { 'lervag/vimtex', opt = true }
+    use { 'jmbuhr/otter.nvim', opt = true }
 
     -- Debugger
     use { 'mfussenegger/nvim-dap', opt = true }

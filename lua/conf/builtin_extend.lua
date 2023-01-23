@@ -266,7 +266,8 @@ autocmd('BufEnter', {
 ---
 ---for R, type `colnames(df)` to print names of columns
 ---in REPL, and then type `yap` to yank the whole region
----then switch back to the R file buffer and then call this function
+---then switch back to the R file buffer and then call this function.
+-- Currently, quarto is treated the same as rmarkdown (i.e data frame is treated as R data frame).
 ---
 ---Currently, the names of columns cannot contain special characters and white characters
 ---due to how the processing is handled
@@ -275,7 +276,7 @@ autocmd('BufEnter', {
 ---@param destination string | nil @which tags file will be used to store columns information
 function M.create_tags_for_yanked_columns(df, use_customized_parser, destination)
     local ft = vim.bo.filetype
-    if not (ft == 'r' or ft == 'python' or ft == 'rmd' or ft == 'quarto') then
+    if not (ft == 'r' or ft == 'python' or ft == 'rmd' or ft == 'quarto' or ft == 'markdown') then
         return
     end
 
@@ -332,7 +333,7 @@ function M.create_tags_for_yanked_columns(df, use_customized_parser, destination
     -- remove existed entries for the current newtag file
     vim.cmd.write()
 
-    if ft == 'rmd' or ft == 'quarto' then
+    if ft == 'rmd' or ft == 'quarto' or ft == 'markdown' then
         ft = 'r'
     end
 

@@ -62,6 +62,8 @@ cmp.setup {
             mode = 'symbol_text',
             maxwidth = 60,
             menu = {
+                org = '',
+                otter = '凉',
                 nvim_lsp = '',
                 buffer = '﬘',
                 luasnip = '',
@@ -118,5 +120,17 @@ cmp.setup.filetype('org', {
     }, {
         { name = 'buffer' },
         { name = 'tags' },
+    }),
+})
+
+cmp.setup.filetype('markdown', {
+    sources = cmp.config.sources({
+        { name = 'otter' },
+        { name = 'nvim_lsp' },
+        { name = 'luasnip' },
+        { name = 'tags' },
+    }, {
+        { name = 'buffer' },
+        { name = 'path' },
     }),
 })
