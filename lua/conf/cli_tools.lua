@@ -169,16 +169,41 @@ M.load.toggleterm = function()
             })
         end,
     })
+
+    autocmd('FileType', {
+        desc = 'set command for rendering quarto',
+        pattern = 'quarto',
+        group = my_augroup,
+        callback = function()
+            local winid = vim.api.nvim_get_current_win()
+
+            bufcmd(0, 'RenderQuarto', function(options)
+                ---@diagnostic disable-next-line: missing-parameter
+                local current_file = vim.fn.expand '%:.' -- relative path to current wd
+                current_file = vim.fn.shellescape(current_file)
+
+                local cmd = string.format([[R --quiet -e "quarto::quarto_render(%s)"]], current_file)
+                local term_id = options.args ~= '' and tonumber(options.args) or nil
+
+                ---@diagnostic disable-next-line: missing-parameter
+                require('toggleterm').exec(cmd, term_id)
+                vim.cmd.normal { 'G', bang = true }
+                vim.api.nvim_set_current_win(winid)
+            end, {
+                nargs = '?', -- 0 or 1 arg
+            })
+        end,
+    })
 end
 
 M.load.pandoc = function()
     vim.cmd.packadd { 'vim-pandoc-syntax', bang = true }
     vim.cmd.packadd { 'vim-rmarkdown', bang = true }
+    vim.cmd.packadd { 'quarto-vim', bang = true }
 
     vim.filetype.add {
         extension = {
             md = 'markdown.pandoc',
-            qmd = 'rmd',
         },
     }
 
@@ -339,7 +364,7 @@ M.load.nvimr = function()
     end
 
     autocmd('FileType', {
-        pattern = { 'r', 'rmd' },
+        pattern = { 'r', 'rmd', 'quarto' },
         group = my_augroup,
         desc = 'set nvim-r keymap',
         callback = function()
@@ -375,6 +400,16 @@ M.load.nvimr = function()
         end,
     })
 
+    autocmd('FileType', {
+        pattern = { 'quarto' },
+        group = my_augroup,
+        desc = 'set quarto preview keymap',
+        callback = function()
+            bufmap(0, 'n', '<Localleader>qr', '<Plug>RQuartoRender', opts_desc { 'Quarto Render' })
+            bufmap(0, 'n', '<Localleader>qp', '<Plug>RQuartoPreview', opts_desc { 'Quarto Preview' })
+            bufmap(0, 'n', '<Localleader>qs', '<Plug>RQuartoStop', opts_desc { 'Quarto Stop' })
+        end,
+    })
     vim.cmd.packadd { 'Nvim-R', bang = true }
 end
 

@@ -9,40 +9,58 @@
         "description": "create r code chunk"
     }, 
 
+    "create python code chunk": {
+        "prefix": "pyc",
+        "body": [
+            "```{python}",
+            "$0",
+            "```"
+        ],
+        "description": "create r code chunk"
+    }, 
 
     "create r plot code chunk": {
         "prefix": "rp",
         "body": [
-            "```{r plot, fig.align = 'center', fig.height=3, fig.cap = '', out.width='100%'}",
+            "```{r}",
+            "#| label: figure",
+            "#| fig-cap: 'caption of figure'",
+            "#| fig-align: 'center'",
+            "#| fig-width: 6",
+            "#| fig-height: 3",
+            "#| fig-format: 'jpeg'",
+            "#| fig-dpi: 300",
+            "#| out-width: '100%'",
             "$0",
             "```"
         ],
         "description": "create r plot code chunk"
     },
 
-    "create rmd pdf template": {
+    "create quarto pdf template": {
 
         "prefix": "pdf",
         "body": [
             "---",
-            "title: 'rmd title'",
+            "title: 'qmd title'",
             "author: 'Rongzhao Yan'",
-            "date: '12/14/2021'",
-            "output: ",
-            "    bookdown::pdf_document2:",
-            "      toc: False",
-            "      includes:",
-            "            in_header: tem.tex",
-            "bibliography: citation.bib",
+            "date: '01/14/2023'",
+            "execute:",
+            "  echo: false",
+            "  warning: false",
+            "  error: false",
+            "format:",
+            "  pdf:",
+            "    toc: true",
+            "    number-sections: true",
+            "    df-print: kable",
+            "    include-in-header:",
+            "      - env.tex",
             "---",
             "\n",
-            "```{r setup, include=FALSE}",
-            "knitr::opts_chunk\\$set(echo = TRUE, warning = F, message = F)",
-            "options(scipen = 10)",
-            "```",
             "$0"
         ],
-        "description": "create rmd pdf template"
+        "description": "create quarto pdf template"
     },
 
     "create rmd beamer meta data": {
@@ -50,26 +68,23 @@
         "prefix": "beamer",
         "body": [
             "---",
-            "title: 'rmd title'",
+            "title: 'qmd title'",
             "author: 'Rongzhao Yan'",
-            "date: '12/14/2021'",
-            "fontsize: 10pt",
-            "output: ",
-            "    beamer_presentation:",
-            "      latex_engine: xelatex",
-            "      theme: 'metropolis'",
-            "      colortheme: 'spruce'",
-            "      keep_tex: true",
-            "      includes:",
-            "            in_header: env.tex",
-            "bibliography: citation.bib",
-            "classoption: 'handout'",
+            "date: '01/14/2023'",
+            "execute:",
+            "  echo: false",
+            "  warning: false",
+            "  error: false",
+            "format:",
+            "  beamer:",
+            "    fontsize: '10pt'",
+            "    theme: 'metropolis'",
+            "    colortheme: 'spruce'",
+            "    df-print: kable",
+            "    include-in-header:",
+            "      - env.tex",
             "---",
             "\n",
-            "```{r setup, include=FALSE}",
-            "knitr::opts_chunk\\$set(echo = TRUE, warning = F, message = F)",
-            "options(scipen = 10)",
-            "```",
             "$0"
         ],
         "description": "create rmd beamer metadata"

@@ -338,12 +338,23 @@ M.load.which_key = function()
 
     autocmd('FileType', {
         group = my_augroup,
-        pattern = { 'r', 'rmd' },
-        desc = 'add which key description for r, rmd',
+        pattern = { 'r', 'rmd', 'quarto' },
+        desc = 'add which key description for r, rmd, quarto',
         callback = function()
             which_key.register {
                 ['<Leader><Space>d'] = { name = '+data frame', buffer = 0 },
                 ['<Leader><Space>o'] = { name = '+object', buffer = 0 },
+            }
+        end,
+    })
+
+    autocmd('FileType', {
+        group = my_augroup,
+        pattern = { 'quarto' },
+        desc = 'add which key description for quarto',
+        callback = function()
+            which_key.register {
+                ['<Leader><Space>q'] = { name = '+quarto', buffer = 0 },
             }
         end,
     })
