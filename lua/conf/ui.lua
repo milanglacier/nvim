@@ -350,17 +350,6 @@ M.load.which_key = function()
 
     autocmd('FileType', {
         group = my_augroup,
-        pattern = { 'quarto' },
-        desc = 'add which key description for quarto',
-        callback = function()
-            which_key.register {
-                ['<Leader><Space>q'] = { name = '+quarto', buffer = 0 },
-            }
-        end,
-    })
-
-    autocmd('FileType', {
-        group = my_augroup,
         pattern = 'tex',
         desc = 'add which key description for tex',
         callback = function()

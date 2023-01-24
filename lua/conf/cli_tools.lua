@@ -422,16 +422,6 @@ M.load.nvimr = function()
         end,
     })
 
-    autocmd('FileType', {
-        pattern = { 'quarto' },
-        group = my_augroup,
-        desc = 'set quarto preview keymap',
-        callback = function()
-            bufmap(0, 'n', '<Localleader>qr', '<Plug>RQuartoRender', opts_desc { 'Quarto Render' })
-            bufmap(0, 'n', '<Localleader>qp', '<Plug>RQuartoPreview', opts_desc { 'Quarto Preview' })
-            bufmap(0, 'n', '<Localleader>qs', '<Plug>RQuartoStop', opts_desc { 'Quarto Stop' })
-        end,
-    })
     vim.cmd.packadd { 'Nvim-R', bang = true }
 end
 
