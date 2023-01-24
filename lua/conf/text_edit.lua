@@ -35,7 +35,7 @@ end
 M.load.dsf = function()
     autocmd('FileType', {
         group = my_augroup,
-        pattern = 'rmd',
+        pattern = { 'rmd', 'quarto' },
         callback = function()
             local bufmap = vim.api.nvim_buf_set_keymap
             bufmap(0, 'o', 'ae', '<Plug>DsfTextObjectA', { silent = true })

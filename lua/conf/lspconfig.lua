@@ -316,6 +316,7 @@ lsp_configs.ltex_ls = function()
         tex = 'latex',
         xhtml = 'xhtml',
         rmd = 'markdown',
+        quarto = 'markdown',
     }
 
     require('lspconfig').ltex.setup {
@@ -332,6 +333,7 @@ lsp_configs.ltex_ls = function()
             'tex',
             'rmd',
             'markdown.pandoc',
+            'quarto',
         },
         get_language_id = function(_, filetype)
             local language_id = language_id_mapping[filetype]
@@ -354,7 +356,7 @@ end
 
 lsp_configs.pinyin = function()
     require('lspconfig').ds_pinyin_lsp.setup {
-        filetypes = { 'markdown', 'markdown.pandoc', 'rmd' },
+        filetypes = { 'markdown', 'markdown.pandoc', 'rmd', 'quarto' },
         init_options = {
             db_path = os.getenv 'HOME' .. '/Downloads/dict.db3',
             completion_on = false, -- don't enable the completion by default

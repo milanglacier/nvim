@@ -49,7 +49,7 @@ end
 M.load.mkdp = function()
     vim.cmd.packadd { 'markdown-preview.nvim', bang = true }
 
-    vim.g.mkdp_filetypes = { 'markdown.pandoc', 'markdown', 'rmd' }
+    vim.g.mkdp_filetypes = { 'markdown.pandoc', 'markdown', 'rmd', 'quarto' }
 
     keymap('n', '<Leader>mmp', '<cmd>MarkdownPreview<cr>', { noremap = true, desc = 'Misc Markdown Preview' })
     keymap('n', '<Leader>mmq', '<cmd>MarkdownPreviewStop<cr>', { noremap = true, desc = 'Misc Markdown Preview Stop' })
@@ -69,6 +69,7 @@ M.load.iron = function()
             repl_definition = {
                 r = radian,
                 rmd = radian,
+                quarto = radian,
                 python = ipython,
             },
             repl_open_cmd = 'belowright 15 split',
@@ -106,7 +107,7 @@ M.load.iron = function()
 
             if vim.bo.filetype == 'r' or vim.bo.filetype == 'python' then
                 return local_leader .. 'si' .. leader .. 'c'
-            elseif vim.bo.filetype == 'rmd' then
+            elseif vim.bo.filetype == 'rmd' or vim.bo.filetype == 'quarto' then
                 return local_leader .. 'sic'
                 -- Note: in an expression mapping, <LocalLeader>
                 -- and <Leader> cannot be automatically mapped
