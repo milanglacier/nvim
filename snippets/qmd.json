@@ -7,7 +7,7 @@
             "```"
         ],
         "description": "create r code chunk"
-    }, 
+    },
 
     "create python code chunk": {
         "prefix": "pyc",
@@ -17,7 +17,25 @@
             "```"
         ],
         "description": "create r code chunk"
-    }, 
+    },
+
+    "create python plot chunk": {
+        "prefix": "pyp",
+        "body": [
+            "```{python}",
+            "#| label: figure",
+            "#| fig-cap: 'caption of figure'",
+            "#| fig-align: 'center'",
+            "#| fig-width: 6",
+            "#| fig-height: 3",
+            "#| fig-format: 'jpeg'",
+            "#| fig-dpi: 300",
+            "#| out-width: '100%'",
+            "$0",
+            "```"
+        ],
+        "description": "create r code chunk"
+    },
 
     "create r plot code chunk": {
         "prefix": "rp",
