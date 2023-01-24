@@ -192,6 +192,28 @@ M.load.toggleterm = function()
             end, {
                 nargs = '?', -- 0 or 1 arg
             })
+
+            bufcmd(0, 'PreviewQuarto', function(options)
+                ---@diagnostic disable-next-line: missing-parameter
+                local current_file = vim.fn.expand '%:.' -- relative path to current wd
+                current_file = vim.fn.shellescape(current_file)
+
+                local cmd = string.format(
+                    [[R --quiet -e "n = 0; while (TRUE) if (n == 0) { quarto::quarto_preview(%s); n = 1 }"]],
+                    -- quarto_preview runs async
+                    -- so set up a dead loop to force it keep running in the foreground
+                    -- to prevent R from automatically exiting.
+                    current_file
+                )
+                local term_id = options.args ~= '' and tonumber(options.args) or nil
+
+                ---@diagnostic disable-next-line: missing-parameter
+                require('toggleterm').exec(cmd, term_id)
+                vim.cmd.normal { 'G', bang = true }
+                vim.api.nvim_set_current_win(winid)
+            end, {
+                nargs = '?', -- 0 or 1 arg
+            })
         end,
     })
 end
