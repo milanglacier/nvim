@@ -201,27 +201,6 @@ if not vim.g.vscode then
     }
 end
 
-local autocmd = vim.api.nvim_create_autocmd
-local my_augroup = require('conf.builtin_extend').my_augroup
-
-autocmd('FileType', {
-    pattern = { 'rmd' },
-    group = my_augroup,
-    desc = 'disable treesitter highlight',
-    callback = function()
-        vim.defer_fn(function()
-            vim.cmd 'TSBufDisable highlight'
-            -- this is an embarassing hack
-            -- currently nvimr will issue errors
-            -- when pandoc-syntax highlight and treesitter parser for markdown
-            -- is simultaneously enabled.
-            -- The strategy is don't enable pandoc-syntax at the start
-            -- until nvimr is successfully loaded,
-            -- then disable treesitter's highlight.
-        end, 300)
-    end,
-})
-
 local emmykeymap = require('conf.builtin_extend').emmykeymap
 
 emmykeymap('n', '(ts-incre-selection-init)', '<CR><CR>')
