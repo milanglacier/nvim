@@ -62,7 +62,7 @@ cmp.setup {
             mode = 'symbol_text',
             maxwidth = 60,
             menu = {
-                org = '',
+                orgmode = '',
                 otter = '凉',
                 nvim_lsp = '',
                 buffer = '﬘',
