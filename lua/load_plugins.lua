@@ -69,9 +69,11 @@ require('packer').startup(function(use)
     use { 'kana/vim-textobj-user' }
     use { 'D4KU/vim-textobj-chainmember', opt = true }
     use { 'thinca/vim-textobj-between', opt = true }
+    use { 'monaqa/dial.nvim', opt = true }
 
     -- text editing tools only for nvim
     use { 'norcalli/nvim-colorizer.lua', opt = true }
+    use { 'folke/todo-comments.nvim', opt = true }
     use { 'windwp/nvim-autopairs', opt = true }
 
     -- Tree sitter for enhanced text obj and syntax capturality

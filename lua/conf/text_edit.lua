@@ -175,6 +175,44 @@ M.load.mini_block_move = function()
     }
 end
 
+M.load.todo_comments = function()
+    vim.cmd.packadd { 'todo-comments.nvim', bang = true }
+    require('todo-comments').setup {}
+end
+
+M.load.dial = function()
+    vim.cmd.packadd { 'dial.nvim', bang = true }
+    local augend = require 'dial.augend'
+    local universal = {
+        augend.integer.alias.decimal_int, -- nonnegative decimal number (0, 1, 2, 3, ...)
+        augend.integer.alias.hex, -- nonnegative hex number  (0x01, 0x1a1f, etc.)
+        augend.date.alias['%Y-%m-%d'], -- date (2022/02/19, etc.)
+        augend.date.alias['%m/%d/%Y'], -- date (02/19/2022, etc.)
+        augend.date.alias['%Y年%-m月%-d日'],
+        augend.date.alias['%H:%M'],
+        augend.date.alias['%H:%M:%S'],
+        augend.constant.alias.bool, -- boolean value (true <-> false)
+        augend.constant.new { elements = { 'and', 'or' } },
+        augend.constant.new { elements = { 'True', 'False' } },
+        augend.constant.new { elements = { 'TRUE', 'FALSE' } },
+        augend.constant.new { elements = { '&&', '||' }, word = false },
+        augend.constant.new { elements = { '&', '|' }, word = false },
+        augend.date.new {
+            pattern = '%Y-%m-%d %H:%M',
+            default_kind = 'sec',
+        },
+    }
+    require('dial.config').augends:register_group {
+        default = universal,
+    }
+    keymap('n', '<C-a>', '<Plug>(dial-increment)', { desc = 'increment' })
+    keymap('n', '<C-x>', '<Plug>(dial-decrement)', { desc = 'decrement' })
+    keymap('x', '<C-a>', '<Plug>(dial-increment)', { desc = 'increment' })
+    keymap('x', '<C-x>', '<Plug>(dial-decrement)', { desc = 'decrement' })
+    keymap('x', 'g<C-a>', 'g<Plug>(dial-increment)', { desc = 'ordered increment' })
+    keymap('x', 'g<C-x>', 'g<Plug>(dial-decrement)', { desc = 'ordered decrement' })
+end
+
 M.rm_trailing_space = function()
     vim.cmd [[%s/\s\+$//e]]
 end
@@ -187,6 +225,7 @@ keymap('n', '<Leader>m<space>', '', {
 if not vim.g.vscode then
     M.load.colorizer()
     M.load.mini_pairs()
+    M.load.todo_comments()
 end
 
 M.load.mini_comment()
@@ -199,5 +238,6 @@ M.load.textobj()
 M.load.mini_surround()
 M.load.easy_align()
 M.load.mini_block_move()
+M.load.dial()
 
 return M
