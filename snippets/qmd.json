@@ -23,7 +23,7 @@
         "prefix": "pyp",
         "body": [
             "```{python}",
-            "#| label: figure",
+            "#| label: fig-figure",
             "#| fig-cap: 'caption of figure'",
             "#| fig-align: 'center'",
             "#| fig-width: 6",
@@ -34,14 +34,14 @@
             "$0",
             "```"
         ],
-        "description": "create r code chunk"
+        "description": "create python plot code chunk"
     },
 
     "create r plot code chunk": {
         "prefix": "rp",
         "body": [
             "```{r}",
-            "#| label: figure",
+            "#| label: fig-figure",
             "#| fig-cap: 'caption of figure'",
             "#| fig-align: 'center'",
             "#| fig-width: 6",
@@ -53,6 +53,54 @@
             "```"
         ],
         "description": "create r plot code chunk"
+    },
+
+    "create r table code chunk": {
+        "prefix": "rtbl",
+        "body": [
+            "```{r}",
+            "#| label: tbl-table",
+            "#| tbl-cap: 'caption of table'",
+            "$0",
+            "```"
+        ],
+        "description": "create r table code chunk"
+    },
+
+    "create python table code chunk using knitr": {
+        "prefix": "pytblkr",
+        "body": [
+            "```{python}",
+            "#| label: tbl-table",
+            "#| tbl-cap: 'caption of table'",
+            "#| output: asis",
+            "$0",
+            "print(${1:df}.to_markdown(index=False))",
+            "```"
+        ],
+        "description": "create python table code chunk using knitr"
+    },
+
+    "create python table code chunk using jupyter": {
+        "prefix": "pytbljp",
+        "body": [
+            "```{python}",
+            "#| label: tbl-table",
+            "#| tbl-cap: 'caption of table'",
+            "$0",
+            "Markdown(tablulate(${1:df}.values,headers=${1:df}.columns))",
+            "```"
+        ],
+        "description": "create python table code chunk using jupyter"
+    },
+
+    "code to import printing table method": {
+        "prefix": "pyimptbl",
+        "body": [
+            "from IPython.display import Markdown",
+            "from tabulate import tabulate"
+        ],
+        "description": "code to import printing table method"
     },
 
     "create quarto pdf template": {
