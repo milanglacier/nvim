@@ -1,23 +1,49 @@
 {
-	"create r code chunk": {
-		"prefix": "rc",
-		"body": [
-			"# %%",
-			"$0",
-			"# %%"
-		],
-		"description": "create R code chunk"
-	},
+    "create r code chunk": {
+        "prefix": "rc",
+        "body": [
+            "# %%",
+            "$0",
+            "# %%"
+        ],
+        "description": "create R code chunk"
+    },
 
-        "pipe symbol": {
-            "prefix": "pip",
-            "body": ["%>% $0"],
-            "description": "pipe"
-        },
+    "httpgd": {
+        "prefix": "httpgd",
+        "body": [
+            "if (interactive()) httpgd::hgd()"
+        ],
+        "description": "start a hgd session for viewing plots."
+    },
 
-        "assignment symbol": {
-            "prefix": "eq",
-            "body": ["<- $0"],
-            "description": "assignment symbol"
-        }
+    "view data frame with formattable()": {
+        "prefix": "vdff",
+        "body": [
+            "|>",
+            "formattable::formattable()"
+        ],
+        "description": "View the data frame with formattable"
+    },
+
+    "view data frame with View()": {
+        "prefix": "vdfv",
+        "body": [
+            "|>",
+            "View()"
+        ],
+        "description": "View the data frame with View"
+    },
+
+    "pipe symbol": {
+        "prefix": "pip",
+        "body": ["%>% $0"],
+        "description": "pipe"
+    },
+
+    "assignment symbol": {
+        "prefix": "eq",
+        "body": ["<- $0"],
+        "description": "assignment symbol"
+    }
 }

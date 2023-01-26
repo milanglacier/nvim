@@ -103,6 +103,32 @@
         "description": "code to import printing table method"
     },
 
+    "httpgd": {
+        "prefix": "httpgd",
+        "body": [
+            "if (interactive()) httpgd::hgd()"
+        ],
+        "description": "start a hgd session for viewing plots."
+    },
+
+    "view data frame with formattable()": {
+        "prefix": "vdff",
+        "body": [
+            "|>",
+            "formattable::formattable()"
+        ],
+        "description": "View the data frame with formattable"
+    },
+
+    "view data frame with View()": {
+        "prefix": "vdfv",
+        "body": [
+            "|>",
+            "View()"
+        ],
+        "description": "View the data frame with View"
+    },
+
     "create quarto pdf template": {
 
         "prefix": "pdf",
