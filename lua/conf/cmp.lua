@@ -123,7 +123,7 @@ cmp.setup.filetype('org', {
     }),
 })
 
-cmp.setup.filetype('markdown', {
+cmp.setup.filetype('quarto', {
     sources = cmp.config.sources({
         { name = 'otter' },
         { name = 'nvim_lsp' },

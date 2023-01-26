@@ -124,7 +124,7 @@ M.load.iron = function()
         desc = 'set up switching iron repls keymap',
         callback = function()
             bufmap(0, 'n', '<LocalLeader>ap', '<cmd>IronAttach python<cr>', { desc = 'switch to python REPL' })
-            bufmap(0, 'n', '<LocalLeader>ar', '<cmd>IronAttach markdown<cr>', { desc = 'switch to R REPL' })
+            bufmap(0, 'n', '<LocalLeader>ar', '<cmd>IronAttach quarto<cr>', { desc = 'switch to R REPL' })
         end,
     })
 end
@@ -233,6 +233,7 @@ end
 M.load.pandoc = function()
     vim.cmd.packadd { 'vim-pandoc-syntax', bang = true }
     vim.cmd.packadd { 'vim-rmarkdown', bang = true }
+    vim.cmd.packadd { 'quarto-vim', bang = true }
 
     vim.filetype.add {
         extension = {
@@ -446,7 +447,6 @@ M.load.quarto = function()
         group = my_augroup,
         desc = 'enable multip language support for quarto',
         callback = function()
-            vim.bo.ft = 'markdown'
             vim.defer_fn(function()
                 require('otter').activate({ 'r', 'python' }, true)
                 -- defer activation, otherwise those hidden buffer

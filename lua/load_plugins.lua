@@ -93,6 +93,7 @@ require('packer').startup(function(use)
     -- Set markdown/rmd/quarto syntax highlighting
     use { 'vim-pandoc/vim-pandoc-syntax', opt = true }
     use { 'vim-pandoc/vim-rmarkdown', branch = 'official-filetype', opt = true }
+    use { 'quarto-dev/quarto-vim', opt = true }
 
     -- Fuzzy finder for file search
     use { 'nvim-lua/plenary.nvim' }
