@@ -29,7 +29,22 @@ keymap('i', '<C-n>', '<Down>', opts)
 keymap('i', '<C-a>', '<home>', opts)
 keymap('i', '<C-e>', '<end>', opts)
 keymap('i', '<C-h>', '<BS>', opts)
-keymap('i', '<C-k>', '<ESC>d$i', opts)
+keymap('i', '<C-d>', '<Del>', opts)
+keymap('i', '<C-k>', '<C-o>D', opts)
+
+-- cannot use { silent = true } here, the reason is unknown.
+keymap('c', '<C-b>', '<Left>', { noremap = true })
+keymap('c', '<C-p>', '<Up>', { noremap = true })
+keymap('c', '<C-f>', '<Right>', { noremap = true })
+keymap('c', '<C-n>', '<Down>', { noremap = true })
+keymap('c', '<C-a>', '<home>', { noremap = true })
+keymap('c', '<C-e>', '<end>', { noremap = true })
+keymap('c', '<C-h>', '<BS>', { noremap = true })
+keymap('c', '<C-d>', '<Del>', { noremap = true })
+keymap('c', '<C-k>', [[<C-\>e(strpart(getcmdline(), 0, getcmdpos() - 1))<CR>]], { noremap = true })
+-- do the same as <C-k> in insert mode is a bit complex in cmdline mode.
+keymap('c', '<A-b>', '<S-Left>', { noremap = true })
+keymap('c', '<A-f>', '<S-Right>', { noremap = true })
 
 keymap('n', '<Leader>mdc', [[:cd %:h|pwd<cr>]], opts)
 keymap('n', '<Leader>mdu', [[:cd ..|pwd<cr>]], opts)
