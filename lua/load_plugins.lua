@@ -89,6 +89,7 @@ require('packer').startup(function(use)
     use { 'mizlan/iswap.nvim', opt = true }
     use { 'romgrk/nvim-treesitter-context', opt = true }
     use { 'JoosepAlviste/nvim-ts-context-commentstring', opt = true }
+    use { 'cshuaimin/ssr.nvim', bang = true }
 
     -- Set markdown/rmd/quarto syntax highlighting
     use { 'vim-pandoc/vim-pandoc-syntax', opt = true }
