@@ -91,7 +91,15 @@ require('cmp_git').setup()
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline('/', {
     mapping = cmp.mapping.preset.cmdline {
-        ['<Tab>'] = { c = cmp.mapping.confirm { select = true } },
+        ['<Tab>'] = {
+            c = function()
+                if cmp.visible() then
+                    cmp.confirm { select = true }
+                else
+                    cmp.complete()
+                end
+            end,
+        },
         ['<A-Space>'] = { c = cmp.mapping.complete() },
     },
     sources = {
@@ -102,7 +110,15 @@ cmp.setup.cmdline('/', {
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline(':', {
     mapping = cmp.mapping.preset.cmdline {
-        ['<Tab>'] = { c = cmp.mapping.confirm { select = true } },
+        ['<Tab>'] = {
+            c = function()
+                if cmp.visible() then
+                    cmp.confirm { select = true }
+                else
+                    cmp.complete()
+                end
+            end,
+        },
         ['<A-Space>'] = { c = cmp.mapping.complete() },
     },
     sources = cmp.config.sources({
