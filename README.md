@@ -28,6 +28,7 @@
     + [Text objects for functions keymaps](#text-objects-for-functions-keymaps)
     + [Quick navigation keymaps](#quick-navigation-keymaps)
     + [Text objects enhancement keymaps](#text-objects-enhancement-keymaps)
+    + [Block text movement](#block-text-movement)
     + [Surround pairs keymaps](#surround-pairs-keymaps)
     + [substitution keymaps](#substitution-keymaps)
     + [Other text objects keymaps](#other-text-objects-keymaps)
@@ -142,14 +143,17 @@ to find all keymaps.
 
 | Mode | LHS     | RHS/Functionality                 |
 |------|---------|-----------------------------------|
-| i    | `<C-b>` | `<Left>`                          |
-| i    | `<C-p>` | `<Up>`                            |
-| i    | `<C-f>` | `<Right>`                         |
-| i    | `<C-n>` | `<Down>`                          |
-| i    | `<C-a>` | `<Home>`                          |
-| i    | `<C-e>` | `<End>`                           |
-| i    | `<C-h>` | `<Backspace>`                     |
-| i    | `<C-k>` | Del chars from cursor to line end |
+| ic   | `<C-b>` | `<Left>`                          |
+| ic   | `<C-p>` | `<Up>`                            |
+| ic   | `<C-f>` | `<Right>`                         |
+| ic   | `<C-n>` | `<Down>`                          |
+| ic   | `<C-a>` | Go to Beginning of the line       |
+| ic   | `<C-e>` | Go to end of the line             |
+| ic   | `<C-h>` | `<Backspace>`                     |
+| ic   | `<C-k>` | Del chars from cursor to line end |
+| ic   | `<C-d>` | Delete a char forwardly           |
+| c    | `<A-f>` | Move cursor to next word          |
+| c    | `<A-b>` | Move cursor to previous word      |
 | ivt  | `jk`    | Switch to normal mode             |
 
 ### Builtin window keymaps
@@ -346,6 +350,17 @@ The following keymaps rely on [mini.ai](https://github.com/echasnovski/mini.nvim
 | ov   | iN   | Text object: find the previous following "inner" text object  |
 | nov  | `g(` | Motion: go to the start of the following "around" text object |
 | nov  | `g)` | Motion: go to the end of the following "around" text object   |
+
+### Block text movement
+
+The following keymaps rely on [mini.move](https://github.com/echasnovski/mini.nvim)
+
+| Mode | LHS     | RHS/Functionality            |
+|------|---------|------------------------------|
+| v    | `<A-h>` | Move left the block of text  |
+| v    | `<A-j>` | Move down the block of text  |
+| v    | `<A-k>` | Move up the block of text    |
+| v    | `<A-l>` | Move right the block of text |
 
 ### Surround pairs keymaps
 
