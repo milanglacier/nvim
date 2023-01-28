@@ -169,5 +169,10 @@ keymap('n', '<Leader><Tab>1', [[1gt]], opts_desc 'tab: 1st tab')
 keymap('n', '<Leader><Tab>2', [[2gt]], opts_desc 'tab: 2nd tab')
 keymap('n', '<Leader><Tab>3', [[3gt]], opts_desc 'tab: 3rd tab')
 keymap('n', '<Leader><Tab>4', [[4gt]], opts_desc 'tab: 4th tab')
+keymap('n', '<Leader><Tab>5', [[5gt]], opts_desc 'tab: 5th tab')
+keymap('n', '<Leader><Tab>6', [[6gt]], opts_desc 'tab: 6th tab')
+keymap('n', '<Leader><Tab>7', [[7gt]], opts_desc 'tab: 7th tab')
+keymap('n', '<Leader><Tab>8', [[8gt]], opts_desc 'tab: 8th tab')
+keymap('n', '<Leader><Tab>9', [[9gt]], opts_desc 'tab: 9th tab')
 
 return M
