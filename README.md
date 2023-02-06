@@ -213,15 +213,22 @@ to find all keymaps.
 
 | Mode | LHS              | RHS/Functionality                |
 |------|------------------|----------------------------------|
+| n    | `<Leader><Tab>[` | Go to next tab                   |
+| n    | `<Leader><Tab>]` | Go to prev tab                   |
 | n    | `<Leader><Tab>n` | Create a new tab                 |
 | n    | `<Leader><Tab>c` | Close current tab                |
 | n    | `<Leader><Tab>o` | Close other tabs except this one |
-| n    | `<Leader><Tab>f` | Go to first tab                  |
-| n    | `<Leader><Tab>l` | Go to last tab                   |
+| n    | `<Leader><Tab>h` | Move tab to the left             |
+| n    | `<Leader><Tab>l` | Move tab to the right            |
 | n    | `<Leader><Tab>1` | Go to 1st tab                    |
 | n    | `<Leader><Tab>2` | Go to 2nd tab                    |
 | n    | `<Leader><Tab>3` | Go to 3rd tab                    |
 | n    | `<Leader><Tab>4` | Go to 4th tab                    |
+| n    | `<Leader><Tab>5` | Go to 5th tab                    |
+| n    | `<Leader><Tab>6` | Go to 6th tab                    |
+| n    | `<Leader><Tab>7` | Go to 7th tab                    |
+| n    | `<Leader><Tab>8` | Go to 8th tab                    |
+| n    | `<Leader><Tab>9` | Go to 9th tab                    |
 
 ### Builtin buffer keymaps
 
