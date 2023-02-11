@@ -88,7 +88,7 @@
             "#| label: tbl-table",
             "#| tbl-cap: 'caption of table'",
             "$0",
-            "Markdown(tablulate(${1:df}.values,headers=${1:df}.columns))",
+            "Markdown(tablulate(${1:df}.values,headers=$1.columns))",
             "```"
         ],
         "description": "create python table code chunk using jupyter"
