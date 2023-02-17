@@ -95,7 +95,8 @@ autocmd('FileType', {
     pattern = 'TelescopePrompt',
     group = my_augroup,
     callback = function()
-        bufmap(0, 'i', '<C-k>', '<ESC>ld$i', opts)
+        bufmap(0, 'i', '<C-k>', '<ESC>ld$i', {})
+        bufmap(0, 'i', '<C-u>', '<C-u>', {})
     end,
     desc = 'Set C-k works correctly in Telescope Prompt',
 })
