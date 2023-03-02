@@ -145,6 +145,7 @@ require('orgmode').setup {
         org = {
             org_todo = '<LocalLeader>t',
             org_toggle_checkbox = '<LocalLeader>x',
+            org_cycle = '<Localleader><Tab>',
         },
 
         text_objects = {
