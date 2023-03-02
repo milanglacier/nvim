@@ -33,6 +33,8 @@ require('orgmode').setup {
     win_split_mode = 'tabnew',
     org_hide_leading_stars = true,
     org_hide_emphasis_markers = true,
+    org_indent_mode = 'noindent',
+    org_tags_column = 0,
 
     org_capture_templates = {
         t = { description = 'personal todo', template = '* TODO %? :\nSCHEDULED: %t' },
