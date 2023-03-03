@@ -12,6 +12,7 @@ vim.cmd.packadd { 'cmp-git', bang = true }
 vim.cmd.packadd { 'lspkind-nvim', bang = true }
 
 local cmp = require 'cmp'
+local types = require 'cmp.types'
 local lspkind = require 'lspkind'
 local luasnip = require 'luasnip'
 
@@ -20,6 +21,8 @@ local my_mappings = {
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<A-Space>'] = cmp.mapping.complete(),
     ['<CR>'] = cmp.mapping.confirm { select = true },
+    ['<C-n>'] = cmp.mapping.select_next_item { behavior = types.cmp.SelectBehavior.Insert },
+    ['<C-p>'] = cmp.mapping.select_prev_item { behavior = types.cmp.SelectBehavior.Insert },
     ['<Tab>'] = cmp.mapping(function(fallback)
         if cmp.visible() then
             cmp.confirm { select = true }
