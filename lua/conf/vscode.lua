@@ -77,6 +77,7 @@ keymap('n', '<C-w>]', notify 'editor.action.revealDefinitionAside', opts) -- lan
 keymap('n', '<Leader>w]', notify 'editor.action.revealDefinitionAside', opts) -- language code actions
 
 keymap('n', '<Leader>fR', notify 'workbench.action.findInFiles', opts) -- use ripgrep to search files
+keymap('n', '<Leader>fg', notify 'workbench.action.findInFiles', opts) -- use ripgrep to search files
 keymap('n', '<Leader>ts', notify 'workbench.action.toggleSidebarVisibility', opts)
 keymap('n', '<Leader>th', notify 'workbench.action.toggleAuxiliaryBar', opts) -- toggle docview (help page)
 keymap('n', '<Leader>tp', notify 'workbench.action.togglePanel', opts)
