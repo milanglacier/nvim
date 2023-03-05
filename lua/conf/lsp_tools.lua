@@ -128,6 +128,8 @@ M.load.nullls = function()
         return source.with(args)
     end
 
+    local sql_formatter_config_file = os.getenv 'HOME' .. '/.config/sql_formatter/sql_formatter.json'
+
     null_ls.setup {
         should_attach = function(bufnr)
             return not vim.api.nvim_buf_get_name(bufnr):match 'tmp-%.'
@@ -143,6 +145,13 @@ M.load.nullls = function()
             source_wrapper {
                 null_ls.builtins.formatting.prettierd,
                 filetypes = { 'markdown.pandoc', 'json', 'markdown', 'rmd', 'yaml', 'quarto' },
+            },
+            source_wrapper {
+                null_ls.builtins.formatting.sql_formatter,
+                args = vim.fn.empty(vim.fn.glob(sql_formatter_config_file)) == 0
+                and { '--config', sql_formatter_config_file }
+                or nil,
+                -- this expression = 0 means this file exists.
             },
             source_wrapper {
                 null_ls.builtins.formatting.yapf,
