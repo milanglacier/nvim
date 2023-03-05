@@ -67,6 +67,7 @@ local function v_notify(cmd)
     return string.format("<cmd>call VSCodeNotifyVisual('%s', 1)<CR>", cmd)
 end
 
+-- LSP related keymaps
 keymap('n', '<Leader>xr', notify 'references-view.findReferences', opts) -- language references
 keymap('n', '<Leader>xd', notify 'workbench.actions.view.problems', opts) -- language diagnostics
 keymap('n', 'gr', notify 'editor.action.goToReferences', opts)
@@ -76,17 +77,26 @@ keymap('n', '<Leader>la', notify 'editor.action.refactor', opts) -- language cod
 keymap('n', '<C-w>]', notify 'editor.action.revealDefinitionAside', opts) -- language code actions
 keymap('n', '<Leader>w]', notify 'editor.action.revealDefinitionAside', opts) -- language code actions
 
+-- search/find related keymaps
 keymap('n', '<Leader>fR', notify 'workbench.action.findInFiles', opts) -- use ripgrep to search files
 keymap('n', '<Leader>fg', notify 'workbench.action.findInFiles', opts) -- use ripgrep to search files
-keymap('n', '<Leader>ts', notify 'workbench.action.toggleSidebarVisibility', opts)
-keymap('n', '<Leader>th', notify 'workbench.action.toggleAuxiliaryBar', opts) -- toggle docview (help page)
-keymap('n', '<Leader>tp', notify 'workbench.action.togglePanel', opts)
 keymap('n', '<Leader>fc', notify 'workbench.action.showCommands', opts) -- find commands
 keymap('n', '<Leader>ff', notify 'workbench.action.quickOpen', opts) -- find files
+
+-- toggle UI components keymaps
+keymap('n', '<Leader>tp', notify 'workbench.action.togglePanel', opts)
+keymap('n', '<Leader>ts', notify 'workbench.action.toggleSidebarVisibility', opts)
+keymap('n', '<Leader>th', notify 'workbench.action.toggleAuxiliaryBar', opts) -- toggle docview (help page)
 keymap('n', '<Leader>tw', notify 'workbench.action.terminal.toggleTerminal', opts) -- terminal window
 
+-- switch focus keymaps
+keymap('n', '<Leader>ss', notify 'workbench.action.focusSideBar', opts) -- switch to sidebar
+keymap('n', '<Leader>sp', notify 'workbench.action.focusPanel', opts) -- switch to panel
+
+--misc keymaps
 keymap('n', '<Leader>mp', notify 'markdown.showPreviewToSide', opts) -- markdown preview
 
+-- window keymaps
 --copied from https://github.com/vscode-neovim/vscode-neovim/blob/master/vim/vscode-window-commands.vim
 keymap('n', '<Leader>ww', notify 'workbench.action.focusNextGroup', opts)
 keymap('n', '<Leader>wp', notify 'workbench.action.focusPreviousGroup', opts)
@@ -120,10 +130,7 @@ keymap('n', '<Leader>w-', '', opts_desc('dec height', manage_height_or_width('h'
 keymap('n', '<Leader>w>', '', opts_desc('inc width', manage_height_or_width('w', '+')))
 keymap('n', '<Leader>w<', '', opts_desc('dec height', manage_height_or_width('w', '-')))
 
-keymap('v', '<Leader>lf', v_notify 'editor.action.formatSelection', opts)
-keymap('v', '<Leader>la', v_notify 'editor.action.refactor', opts)
-keymap('v', '<Leader>fc', v_notify 'workbench.action.showCommands', opts)
-
+-- tab related keymaps
 keymap('n', '<Leader><Tab>o', [[:Tabonly<cr>]], opts_desc 'tab: delete other tabs')
 keymap('n', '<Leader><Tab>n', [[:Tabnew<cr>]], opts_desc 'tab: new tab')
 keymap('n', '<Leader><Tab>c', [[:Tabclose<cr>]], opts_desc 'tab: close this tab')
@@ -133,6 +140,25 @@ keymap('n', '<Leader><Tab>1', [[1gt]], opts_desc 'tab: 1st tab')
 keymap('n', '<Leader><Tab>2', [[2gt]], opts_desc 'tab: 2nd tab')
 keymap('n', '<Leader><Tab>3', [[3gt]], opts_desc 'tab: 3rd tab')
 keymap('n', '<Leader><Tab>4', [[4gt]], opts_desc 'tab: 4th tab')
+
+-- navigation keymaps
+keymap('n', ']r', notify 'references-view.next', opts)
+keymap('n', '[r', notify 'references-view.prev', opts)
+keymap('n', ']d', notify 'editor.action.marker.nextInFiles', opts)
+-- next diagnostic result (markers usually are diagnostic result)
+keymap('n', '[d', notify 'editor.action.marker.prevInFiles', opts)
+-- previous diagnostic result
+keymap('n', ']q', notify 'search.action.focusNextSearchResult', opts)
+-- next quickfix result (vim's quickfix list usually shows search results)
+keymap('n', '[q', notify 'search.action.focusPreviousSearchResult', opts)
+-- previous quickfix result
+
+-- VISUAL MODE keymaps
+
+-- lsp keymaps
+keymap('v', '<Leader>lf', v_notify 'editor.action.formatSelection', opts)
+keymap('v', '<Leader>la', v_notify 'editor.action.refactor', opts)
+keymap('v', '<Leader>fc', v_notify 'workbench.action.showCommands', opts)
 
 autocmd('FileType', {
     group = M.my_vscode,
