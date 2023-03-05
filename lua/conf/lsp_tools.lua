@@ -145,10 +145,6 @@ M.load.nullls = function()
                 filetypes = { 'markdown.pandoc', 'json', 'markdown', 'rmd', 'yaml', 'quarto' },
             },
             source_wrapper {
-                null_ls.builtins.formatting.sqlfluff,
-                extra_args = { '--dialect', 'mysql' },
-            },
-            source_wrapper {
                 null_ls.builtins.formatting.yapf,
                 { 'pyproject.toml' },
             },

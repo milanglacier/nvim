@@ -129,7 +129,6 @@ notifications instead of stopping altogether.
 ## sql deps
 
 1. `sqls`
-2. `sqlfluff`
 
 ## bash deps
 
