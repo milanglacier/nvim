@@ -1,3 +1,4 @@
+- [Features](#features)
 - [Dependencies](#dependencies)
   * [python deps](#python-deps)
   * [r deps](#r-deps)
@@ -62,11 +63,38 @@
     + [Latex keymaps](#latex-keymaps)
 - [Other Notes](#other-notes)
 
+# Features
+
+- Built on modern devtools including LSP and treesitter. Treesitter delivers
+  AST-level highlighting, text objects, and navigations, while LSP offers
+  features like auto completion, go to definition and reference, and code
+  diagnostics. By harnessing the power of both Ctags and LSP, this
+  configuration brings a harmonic blend of old-school and modern development
+  tools.
+
+- Vim's exceptional text editing capabilities are further amplified by a host
+  of powerful plugins focusing on text editing. (Remember it is pure text
+  editing makes vim vim.)
+
+- This configuration is specifically tailored toward data science toolsets,
+  including python, R, SQL, Latex, rmarkdown, and quarto.
+
+- Curated configuration working together with vscode thanks to
+  [vscode-neovim](https://github.com/vscode-neovim/vscode-neovim). Access all
+  the familiar neovim keybindings, including translations of equivalent
+  commands in vscode, even when working with complex graphical content like
+  Jupyter notebooks. And many neovim plugins, such as treesitter, can be
+  embedded seamlessly in vscode, allowing for a smooth and uninterrupted
+  workflow.
+
 # Dependencies
 
-The dependencies should be installed by yourself.
-Automatic LSP installer is not preferred,
-however none of them are hard-dependencies.
+The dependencies should be installed by yourself. Automatic LSP installer is
+not preferred, however none of them are hard-dependencies. That is, most of
+them are language servers and linters associated with corresponding languages.
+they can be selectively installed based on your individual needs. Even if some
+dependencies are missing, neovim will continue to function, simply sending
+notifications instead of stopping altogether.
 
 ## python deps
 
