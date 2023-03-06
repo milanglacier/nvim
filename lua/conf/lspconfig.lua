@@ -288,6 +288,10 @@ lsp_configs.sql = function()
             vim.cmd.packadd { 'sqls.nvim', bang = true }
 
             on_attach(client, bufnr)
+
+            -- The document formatting implementation of sqls is buggy.
+            client.server_capabilities.documentFormattingProvider = false
+
             require('sqls').on_attach(client, bufnr)
             bufmap(bufnr, 'n', '<LocalLeader>ss', '<cmd>SqlsExecuteQuery<CR>', { silent = true })
             bufmap(bufnr, 'v', '<LocalLeader>ss', '<cmd>SqlsExecuteQuery<CR>', { silent = true })
