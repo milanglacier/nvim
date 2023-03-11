@@ -48,7 +48,7 @@ local on_attach = function(client, bufnr)
         bufnr,
         'x',
         '<Leader>la',
-        ':<C-U>lua vim.lsp.buf.range_code_action()<CR>',
+        ':<C-U>lua vim.lsp.buf.code_action()<CR>',
         opts {
             'lsp range code action',
         }
@@ -183,7 +183,7 @@ local on_attach = function(client, bufnr)
 
     -- format
     bufmap(bufnr, 'n', '<Leader>lf', '<cmd>lua vim.lsp.buf.format { async = true }<CR>', opts { 'lsp format' })
-    bufmap(bufnr, 'v', '<Leader>lf', ':<C-U>lua vim.lsp.buf.range_formatting()<CR>', opts { 'lsp range format' })
+    bufmap(bufnr, 'v', '<Leader>lf', '<cmd>lua vim.lsp.buf.format { async = true }<CR>', opts { 'lsp range format' })
 
     -- diagnostic
     bufmap(
