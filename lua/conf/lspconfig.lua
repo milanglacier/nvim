@@ -132,7 +132,36 @@ local on_attach = function(client, bufnr)
             end,
         }
     )
+
+    bufmap(
+        bufnr,
+        'n',
+        '<Leader>lci',
+        '',
+        opts {
+            desc = 'lsp incoming calls',
+            callback = require('telescope.builtin').lsp_incoming_calls,
+        }
+    )
+    bufmap(
+        bufnr,
+        'n',
+        '<Leader>lco',
+        '',
+        opts {
+            desc = 'lsp outgoing calls',
+            callback = require('telescope.builtin').lsp_outgoing_calls,
+        }
+    )
+
     bufmap(bufnr, 'n', '<Leader>lD', '<cmd>Lspsaga peek_definition<CR>', opts { 'lspsaga preview definition' })
+    bufmap(
+        bufnr,
+        'n',
+        '<Leader>lT',
+        '<cmd>Lspsaga peek_type_definition<CR>',
+        opts { 'lspsaga preview type definition' }
+    )
 
     -- workspace
     local bufcmd = vim.api.nvim_buf_create_user_command
