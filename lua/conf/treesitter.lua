@@ -23,6 +23,7 @@ require('nvim-treesitter.configs').setup {
         'latex',
         'org',
         'markdown',
+        'go',
     },
 
     -- Install languages synchronously (only applied to `ensure_installed`)

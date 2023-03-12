@@ -156,6 +156,7 @@ require('packer').startup(function(use)
     -- Debugger
     use { 'mfussenegger/nvim-dap', opt = true }
     use { 'mfussenegger/nvim-dap-python', opt = true }
+    use { 'leoluz/nvim-dap-go', opt = true }
     use { 'rcarriga/nvim-dap-ui', opt = true }
     use { 'nvim-telescope/telescope-dap.nvim', opt = true }
     use { 'theHamsta/nvim-dap-virtual-text', opt = true }

@@ -211,7 +211,7 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- Copied from lspconfig/server_configurations/pylsp.lua
 
-local enabled_lsps = { 'r', 'python', 'bash', 'cpp', 'vim', 'nvim', 'pinyin', 'ltex_ls', 'sql', 'latex' }
+local enabled_lsps = { 'r', 'python', 'bash', 'cpp', 'vim', 'nvim', 'pinyin', 'ltex_ls', 'sql', 'latex', 'go' }
 
 local lsp_configs = {}
 
@@ -394,6 +394,12 @@ lsp_configs.pinyin = function()
             db_path = os.getenv 'HOME' .. '/Downloads/dict.db3',
             completion_on = false, -- don't enable the completion by default
         },
+    }
+end
+
+lsp_configs.go = function()
+    require('lspconfig').gopls.setup {
+        on_attach = on_attach,
     }
 end
 

@@ -456,6 +456,18 @@ M.load.quarto = function()
     })
 end
 
+M.load.go = function()
+    autocmd('FileType', {
+        group = my_augroup,
+        pattern = 'go',
+        desc = 'set buffer opts for go',
+        callback = function()
+            vim.bo.expandtab = false
+            -- go uses tab instead of spaces.
+        end,
+    })
+end
+
 M.load.diffview()
 M.load.gitsigns()
 M.load.iron()
@@ -468,5 +480,6 @@ M.load.gutentags()
 M.load.nvimr()
 M.load.vimtex()
 M.load.quarto()
+M.load.go()
 
 return M

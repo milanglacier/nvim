@@ -1,10 +1,12 @@
 vim.cmd.packadd { 'nvim-dap', bang = true }
 vim.cmd.packadd { 'nvim-dap-python', bang = true }
+vim.cmd.packadd { 'nvim-dap-go', bang = true }
 vim.cmd.packadd { 'nvim-dap-ui', bang = true }
 vim.cmd.packadd { 'telescope-dap.nvim', bang = true }
 vim.cmd.packadd { 'nvim-dap-virtual-text', bang = true }
 
 require('dap-python').setup 'python3'
+require('dap-go').setup {}
 
 local dap = require 'dap'
 local dapui = require 'dapui'
