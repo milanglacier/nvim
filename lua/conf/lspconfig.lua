@@ -328,13 +328,14 @@ lsp_configs.sql = function()
             bufmap(bufnr, 'v', '<LocalLeader>sv', '<cmd>SqlsExecuteQueryVertical<CR>', { silent = true })
         end,
         capabilities = capabilities,
-        single_file_support = false,
         on_new_config = function(new_config, new_rootdir)
-            new_config.cmd = {
-                'sqls',
-                '-config',
-                new_rootdir .. '/config.yml',
-            }
+            if vim.fn.filereadable(new_rootdir .. '/config.yml') == 1 then
+                new_config.cmd = {
+                    'sqls',
+                    '-config',
+                    new_rootdir .. '/config.yml',
+                }
+            end
         end,
     }
 end
