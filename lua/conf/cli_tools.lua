@@ -62,6 +62,7 @@ M.load.iron = function()
 
     local radian = require('iron.fts.r').radian
     local ipython = require('iron.fts.python').ipython
+    local aichat = require('iron.fts.markdown').aichat
 
     iron.setup {
         config = {
@@ -70,7 +71,8 @@ M.load.iron = function()
                 r = radian,
                 rmd = radian,
                 quarto = radian,
-                markdown = radian,
+                markdown = aichat,
+                ['markdown.pandoc'] = aichat,
                 python = ipython,
             },
             repl_open_cmd = 'belowright 15 split',
