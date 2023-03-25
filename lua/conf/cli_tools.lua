@@ -459,6 +459,46 @@ M.load.quarto = function()
     })
 end
 
+M.load.copilot = function()
+    vim.cmd.packadd { 'copilot.lua', bang = true }
+
+    autocmd('InsertEnter', {
+        group = my_augroup,
+        once = true,
+        desc = 'load copilot',
+        callback = function()
+            require('copilot').setup {
+                panel = {
+                    enabled = false,
+                },
+                suggestion = {
+                    enabled = true,
+                    auto_trigger = false,
+                    debounce = 75,
+                    keymap = {
+                        accept = '<M-Y>',
+                        next = '<M-]>',
+                        prev = '<M-[>',
+                        dismiss = '<M-q>',
+                    },
+                },
+            }
+
+            keymap('n', '<Leader>tg', '', {
+                noremap = true,
+                callback = require('copilot.suggestion').toggle_auto_trigger,
+                desc = 'toggle copilot',
+            })
+
+            keymap('i', '<M-y>', '', {
+                noremap = true,
+                callback = require('copilot.suggestion').accept_line,
+                desc = '[copilot] accept line',
+            })
+        end,
+    })
+end
+
 M.load.go = function()
     autocmd('FileType', {
         group = my_augroup,
@@ -483,6 +523,7 @@ M.load.gutentags()
 M.load.nvimr()
 M.load.vimtex()
 M.load.quarto()
+M.load.copilot()
 M.load.go()
 
 return M

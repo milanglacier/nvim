@@ -37,6 +37,7 @@
     + [Terminal emulator keymaps](#terminal-emulator-keymaps)
     + [Git keymaps](#git-keymaps)
     + [Ripgrep keymaps](#ripgrep-keymaps)
+    + [Copilot keymaps](#copilot-keymaps)
   * [REPL keymaps](#repl-keymaps)
   * [Treesitter keymaps](#treesitter-keymaps)
     + [Syntax based text objects keymaps](#syntax-based-text-objects-keymaps)
@@ -485,6 +486,18 @@ The following keymaps rely on [nvim-spectre](https://github.com/nvim-pack/nvim-s
 | Mode   | LHS            | RHS/Functionality                                                                                      |
 |--------|----------------|--------------------------------------------------------------------------------------------------------|
 | nv     | `<Leader>fR`   | Open ripgrep search panel (to show searched results of selected text if on visual mode) in the project |
+
+### Copilot keymaps
+
+The following keymaps rely on [copilot.lua](https://github.com/zbirenbaum/copilot.lua)
+
+| Mode | LHS          | RHS/Functionality                     |
+|------|--------------|---------------------------------------|
+| n    | `<Leader>tg` | Toggle auto-suggestion for copilot    |
+| i    | `<M-Y>`      | Accept the whole suggestion           |
+| i    | `<M-y>`      | Accept suggestion of current line     |
+| i    | `<M-[>`      | Show previous suggestion from copilot |
+| i    | `<M-]>`      | Show next suggestion from copilot     |
 
 ## REPL keymaps
 

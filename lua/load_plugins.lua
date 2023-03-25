@@ -152,6 +152,7 @@ require('packer').startup(function(use)
     use { 'nvim-orgmode/orgmode', opt = true }
     use { 'lervag/vimtex', opt = true }
     use { 'jmbuhr/otter.nvim', opt = true }
+    use { 'zbirenbaum/copilot.lua', opt = true }
 
     -- Debugger
     use { 'mfussenegger/nvim-dap', opt = true }
