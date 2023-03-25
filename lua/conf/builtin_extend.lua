@@ -70,6 +70,15 @@ keymap('n', '<Leader>bw', [[:bw!<CR>]], opts_desc 'buffer wipeout current one')
 keymap('n', '<Leader>bp', [[:bprevious<CR>]], opts_desc 'buffer next')
 keymap('n', '<Leader>bn', [[:bnext<CR>]], opts_desc 'buffer previous')
 
+keymap('n', '<Leader>th', '<cmd>lua vim.o.hlsearch = not vim.o.hlsearch<CR>', opts_desc 'toggle highlight')
+keymap('n', '<Leader>tw', '<cmd>lua vim.wo.wrap = not vim.wo.wrap<CR>', opts_desc 'toggle wrap')
+keymap(
+    'n',
+    '<Leader>tc',
+    '<cmd>lua vim.wo.conceallevel = vim.wo.conceallevel == 2 and 0 or 2<CR>',
+    opts_desc 'toggle conceal'
+)
+
 M.jk_as_esc = function()
     keymap('t', 'k', [[<BS><C-\><C-N>]], opts)
     keymap('i', 'k', [[<BS><ESC>]], opts)
@@ -239,7 +248,7 @@ autocmd('FileType', {
         })
 
         local visual_a =
-            [[:<C-U>lua require('conf.builtin_extend').textobj_code_chunk('a', '^# ?%%%%.*', '^# ?%%%%$', true)<CR>]]
+        [[:<C-U>lua require('conf.builtin_extend').textobj_code_chunk('a', '^# ?%%%%.*', '^# ?%%%%$', true)<CR>]]
 
         bufmap(0, 'x', 'a<Leader>c', visual_a, {
             silent = true,
@@ -247,7 +256,7 @@ autocmd('FileType', {
         })
 
         local visual_i =
-            [[:<C-U>lua require('conf.builtin_extend').textobj_code_chunk('i', '^# ?%%%%.*', '^# ?%%%%$', true)<CR>]]
+        [[:<C-U>lua require('conf.builtin_extend').textobj_code_chunk('i', '^# ?%%%%.*', '^# ?%%%%$', true)<CR>]]
 
         bufmap(0, 'x', 'i<Leader>c', visual_i, {
             silent = true,
@@ -482,8 +491,8 @@ end, {
         table.insert(conda_envs, conda_base)
 
         conda_envs = vim.tbl_map(function(x)
-            return x .. '/bin'
-        end, conda_envs)
+                return x .. '/bin'
+            end, conda_envs)
         return conda_envs
     end,
 })

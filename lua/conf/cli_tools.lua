@@ -144,7 +144,7 @@ M.load.toggleterm = function()
                 return vim.o.columns * 0.30
             end
         end,
-        open_mapping = [[<Leader>tw]],
+        open_mapping = [[<Leader>ot]],
         shade_terminals = false,
         start_in_insert = false,
         insert_mappings = false,

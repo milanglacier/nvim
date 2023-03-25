@@ -299,7 +299,7 @@ M.load.which_key = function()
         ['<Leader>b'] = { name = '+buffer' },
         ['<Leader>w'] = { name = '+window' },
         ['<Leader>e'] = { name = '+explorer' },
-        ['<Leader>t'] = { name = '+terminal' },
+        ['<Leader>t'] = { name = '+terminal/toggle' },
         ['<Leader>o'] = { name = '+open/org' },
         ['<Leader>ol'] = { name = '+open/links' },
         ['<Leader>g'] = { name = '+git' },

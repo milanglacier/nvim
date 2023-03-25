@@ -282,16 +282,18 @@ to find all keymaps.
 
 ## Builtin miscellenous keymaps
 
-
 | Mode | LHS           | RHS/Functionality                                      |
 |------|---------------|--------------------------------------------------------|
 | n    | `<Leader>olx` | Open URI under cursor using xdg-open                   |
-| n    | `<Leader>olw` | Open URI under cursor using w3m                   |
+| n    | `<Leader>olw` | Open URI under cursor using w3m                        |
 | n    | `<C-g>`       | `<ESC>`                                                |
 | n    | `<Leader>mt`  | search current word from tags file and send to loclist |
 | n    | `<Leader>mdc` | Set working dir as current file's dir                  |
 | n    | `<Leader>mdu` | Set working dir up one level from current working dir  |
 | n    | `<Leader>mc`  | Pick a color scheme                                    |
+| n    | `<Leader>th`  | Toggle highlight serach (see `:h hlsearch`)            |
+| n    | `<Leader>tw`  | Toggle wrap (see `:h wrap`)                            |
+| n    | `<Leader>tc`  | set `conceallevel` between 0 and 2 (see `:h wrap`)     |
 
 ## UI keymaps
 
@@ -444,7 +446,7 @@ The following keymaps rely on [toggleterm.nvim](https://github.com/akinsho/toggl
 
 | Mode | LHS          | RHS/Functionality            |
 |------|--------------|------------------------------|
-| n    | `<Leader>tw` | Toggle the `n`th terminal    |
+| n    | `<Leader>ot` | open the `n`th terminal      |
 | n    | `<Leader>ta` | Toggle all terminals         |
 | n    | `<Leader>te` | Terminate the `n`th terminal |
 | n    | `<Leader>t1` | Toggle the 1st terminal      |
