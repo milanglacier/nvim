@@ -349,8 +349,7 @@ lsp_configs.ltex_ls = function()
         rst = 'restructuredtext',
         tex = 'latex',
         xhtml = 'xhtml',
-        rmd = 'markdown',
-        quarto = 'markdown',
+        ['markdown.pandoc'] = 'markdown',
     }
 
     require('lspconfig').ltex.setup {
