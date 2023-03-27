@@ -478,12 +478,24 @@ keymap('n', '<Leader>olw', '', {
     desc = 'open URI under the cursor with w3m',
 })
 
-command('CondaEnv', function(options)
+command('CondaActivateEnv', function(options)
+    if not vim.env.CONDA_PREFIX then
+        return
+    end
     vim.env.PATH = options.args .. ':' .. vim.env.PATH
 end, {
     nargs = 1,
     complete = function(_, _, _)
         local conda_base = vim.env.CONDA_PREFIX
+        -- if CONDA_PREFIX is nil, then do nothing
+        if not conda_base then
+            return {}
+        end
+
+        if not M.env_pre_conda then
+            M.env_pre_conda = vim.env.PATH
+        end
+
         local conda_env_dir = conda_base .. '/envs'
         local conda_envs = vim.fn.glob(conda_env_dir .. '/*')
 
@@ -491,10 +503,20 @@ end, {
         table.insert(conda_envs, conda_base)
 
         conda_envs = vim.tbl_map(function(x)
-                return x .. '/bin'
-            end, conda_envs)
+            return x .. '/bin'
+        end, conda_envs)
         return conda_envs
     end,
+    desc = 'This command activates a conda environment, assuming that the base environment is already activated. If the environment variable CONDA_PREFIX is not present, this command will not perform any action.',
+})
+
+command('CondaDeactivate', function(_)
+    if not M.env_pre_conda then
+        return
+    end
+    vim.env.PATH = M.env_pre_conda
+end, {
+    desc = 'This command deactivates a conda environment, except for the base environment',
 })
 
 command('Wbq', 'w | bd', {})
