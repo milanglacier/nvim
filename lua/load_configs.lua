@@ -10,6 +10,8 @@ if not vim.g.vscode then
     require 'conf.text_edit'
     require 'conf.cli_tools'
 
+    require 'conf.langs'
+
     require 'conf.treesitter'
 
     require 'conf.utils'
@@ -32,6 +34,9 @@ if not vim.g.vscode then
 else
     require 'conf.builtin_extend'
     require 'conf.text_edit'
+
+    require 'conf.langs'
+
     require 'conf.treesitter'
 
     require 'conf.vscode'
