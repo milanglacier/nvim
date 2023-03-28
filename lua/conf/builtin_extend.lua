@@ -248,7 +248,7 @@ autocmd('FileType', {
         })
 
         local visual_a =
-        [[:<C-U>lua require('conf.builtin_extend').textobj_code_chunk('a', '^# ?%%%%.*', '^# ?%%%%$', true)<CR>]]
+            [[:<C-U>lua require('conf.builtin_extend').textobj_code_chunk('a', '^# ?%%%%.*', '^# ?%%%%$', true)<CR>]]
 
         bufmap(0, 'x', 'a<Leader>c', visual_a, {
             silent = true,
@@ -256,7 +256,7 @@ autocmd('FileType', {
         })
 
         local visual_i =
-        [[:<C-U>lua require('conf.builtin_extend').textobj_code_chunk('i', '^# ?%%%%.*', '^# ?%%%%$', true)<CR>]]
+            [[:<C-U>lua require('conf.builtin_extend').textobj_code_chunk('i', '^# ?%%%%.*', '^# ?%%%%$', true)<CR>]]
 
         bufmap(0, 'x', 'i<Leader>c', visual_i, {
             silent = true,
@@ -482,6 +482,8 @@ command('CondaActivateEnv', function(options)
     if not vim.env.CONDA_PREFIX then
         return
     end
+    vim.cmd.CondaDeactivate()
+    M.conda_current_env_path = options.args
     vim.env.PATH = options.args .. ':' .. vim.env.PATH
 end, {
     nargs = 1,
@@ -490,10 +492,6 @@ end, {
         -- if CONDA_PREFIX is nil, then do nothing
         if not conda_base then
             return {}
-        end
-
-        if not M.env_pre_conda then
-            M.env_pre_conda = vim.env.PATH
         end
 
         local conda_env_dir = conda_base .. '/envs'
@@ -507,14 +505,21 @@ end, {
         end, conda_envs)
         return conda_envs
     end,
-    desc = 'This command activates a conda environment, assuming that the base environment is already activated. If the environment variable CONDA_PREFIX is not present, this command will not perform any action.',
+    desc = [[This command activates a conda environment, assuming that the base environment is already activated.
+If the environment variable CONDA_PREFIX is not present, this command will not perform any action.]],
 })
 
 command('CondaDeactivate', function(_)
-    if not M.env_pre_conda then
+    if not M.conda_current_env_path then
         return
     end
-    vim.env.PATH = M.env_pre_conda
+    local env_split = vim.split(vim.env.PATH, ':')
+    for idx, path in ipairs(env_split) do
+        if path == M.conda_current_env_path then
+            table.remove(env_split, idx)
+        end
+    end
+    vim.env.PATH = table.concat(env_split, ':')
 end, {
     desc = 'This command deactivates a conda environment, except for the base environment',
 })
