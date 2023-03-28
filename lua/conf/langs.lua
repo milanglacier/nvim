@@ -335,17 +335,15 @@ M.load.vimtex = function()
     })
 end
 
-M.load.go = function()
-    autocmd('FileType', {
-        group = my_augroup,
-        pattern = 'go',
-        desc = 'set buffer opts for go',
-        callback = function()
-            vim.bo.expandtab = false
-            -- go uses tab instead of spaces.
-        end,
-    })
-end
+autocmd('FileType', {
+    group = my_augroup,
+    pattern = 'go',
+    desc = 'set buffer opts for go',
+    callback = function()
+        vim.bo.expandtab = false
+        -- go uses tab instead of spaces.
+    end,
+})
 
 M.load.nvimr = function()
     vim.g.R_assign = 0
@@ -425,7 +423,6 @@ end
 if not vim.g.vscode then
     M.load.vimtex()
     M.load.pandoc()
-    M.load.go()
     M.load.nvimr()
     M.load.quarto()
 end
