@@ -164,13 +164,19 @@ command('CondaActivateEnv', function(options)
         return
     end
     vim.cmd.CondaDeactivate()
-    M.conda_current_env_path = options.args
-    vim.env.PATH = options.args .. ':' .. vim.env.PATH
+    M.conda_current_env_path = options.args .. '/bin'
+    vim.env.PATH = options.args .. '/bin:' .. vim.env.PATH
+    vim.env.CONDA_PREFIX_1 = vim.env.CONDA_PREFIX
+    vim.env.CONDA_PREFIX = options.args
 end, {
     nargs = 1,
     complete = function(_, _, _)
-        local conda_base = vim.env.CONDA_PREFIX
-        -- if CONDA_PREFIX is nil, then do nothing
+        local conda_base = vim.env.CONDA_PREFIX_1 or vim.env.CONDA_PREFIX
+        -- if currently under the base environment, then vim.env.CONDA_PREFIX
+        -- is the path to the base environment of conda. If currently under
+        -- another conda environment, then vim.env.CONDA_PREFIX_1 is the
+        -- path to the base environment of conda
+        -- if conda_base is nil, then do nothing
         if not conda_base then
             return {}
         end
@@ -181,9 +187,6 @@ end, {
         conda_envs = vim.split(conda_envs, '\n')
         table.insert(conda_envs, conda_base)
 
-        conda_envs = vim.tbl_map(function(x)
-            return x .. '/bin'
-        end, conda_envs)
         return conda_envs
     end,
     desc = [[This command activates a conda environment, assuming that the base environment is already activated.
@@ -201,6 +204,8 @@ command('CondaDeactivate', function(_)
         end
     end
     vim.env.PATH = table.concat(env_split, ':')
+    vim.env.CONDA_PREFIX = vim.env.CONDA_PREFIX_1
+    vim.env.CONDA_PREFIX_1 = nil
 end, {
     desc = 'This command deactivates a conda environment, except for the base environment',
 })
