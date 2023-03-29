@@ -80,7 +80,6 @@ autocmd('FileType', {
     group = M.my_augroup,
     desc = 'set rmarkdown code chunk textobj',
     callback = function()
-        local bufmap = vim.api.nvim_buf_set_keymap
         bufmap(0, 'o', 'ac', '', {
             silent = true,
             desc = 'rmd/quarto code chunk text object a',
@@ -117,7 +116,6 @@ autocmd('FileType', {
     group = M.my_augroup,
     desc = 'set r, python code chunk textobj',
     callback = function()
-        local bufmap = vim.api.nvim_buf_set_keymap
         bufmap(0, 'o', 'a<Leader>c', '', {
             silent = true,
             desc = 'code chunk text object a',
