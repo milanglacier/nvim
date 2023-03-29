@@ -206,6 +206,7 @@ command('CondaDeactivate', function(_)
     vim.env.PATH = table.concat(env_split, ':')
     vim.env.CONDA_PREFIX = vim.env.CONDA_PREFIX_1
     vim.env.CONDA_PREFIX_1 = nil
+    M.conda_current_env_path = nil
 end, {
     desc = 'This command deactivates a conda environment, except for the base environment',
 })
@@ -240,6 +241,7 @@ command('PyVenvDeactivate', function(options)
     end
     vim.env.PATH = table.concat(env_split, ':')
     vim.env.VIRTUAL_ENV = nil
+    M.pyvenv_current_env_path = nil
 end, {
     desc = 'This command deactivates a python venv.',
 })
