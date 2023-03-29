@@ -205,6 +205,40 @@ end, {
     desc = 'This command deactivates a conda environment, except for the base environment',
 })
 
+command('PyVenvActivate', function(options)
+    vim.cmd.PyVenvDeactivate()
+    local path = options.args
+    path = vim.fn.fnamemodify(path, ':p:h')
+    -- get the absolute path, and remove the trailing "/"
+    path = string.gsub(path, '/bin$', '')
+    -- remove the trailing '/bin'
+    vim.env.VIRTUAL_ENV = path
+    path = path .. '/bin'
+    -- remove the trailing `/` in the string.
+    M.pyvenv_current_env_path = path
+    vim.env.PATH = path .. ':' .. vim.env.PATH
+end, {
+    nargs = 1,
+    complete = 'dir',
+    desc = [[This command activates a python venv. The path to the python virtual environment may include "/bin/" or not.]],
+})
+
+command('PyVenvDeactivate', function(options)
+    if not M.pyvenv_current_env_path then
+        return
+    end
+    local env_split = vim.split(vim.env.PATH, ':')
+    for idx, path in ipairs(env_split) do
+        if path == M.pyvenv_current_env_path then
+            table.remove(env_split, idx)
+        end
+    end
+    vim.env.PATH = table.concat(env_split, ':')
+    vim.env.VIRTUAL_ENV = nil
+end, {
+    desc = 'This command deactivates a python venv.',
+})
+
 M.load.pandoc = function()
     vim.cmd.packadd { 'vim-pandoc-syntax', bang = true }
     vim.cmd.packadd { 'vim-rmarkdown', bang = true }
