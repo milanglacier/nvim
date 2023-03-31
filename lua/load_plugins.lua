@@ -30,7 +30,6 @@ require('packer').startup(function(use)
     use { 'ishan9299/nvim-solarized-lua', opt = true }
 
     -- Fix bugs and Utilities
-    use { 'antoinemadec/FixCursorHold.nvim' }
     use { 'ahmedkhalf/project.nvim', opt = true }
     use { 'kyazdani42/nvim-tree.lua', opt = true } -- file explorer
     use { 'milanglacier/smartim', opt = true } -- automatically switch input method when switch mode
