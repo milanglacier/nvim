@@ -137,6 +137,7 @@ require('packer').startup(function(use)
     use { 'jalvesaq/Nvim-R', opt = true }
     use { 'hkupty/iron.nvim', opt = true }
     use { 'akinsho/toggleterm.nvim', opt = true }
+    use { 'goerz/jupytext.vim', opt = true }
 
     -- Git
     use { 'lewis6991/gitsigns.nvim', opt = true }

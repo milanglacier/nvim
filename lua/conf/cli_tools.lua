@@ -289,6 +289,19 @@ M.load.copilot = function()
     })
 end
 
+M.load.jupytext = function()
+    vim.cmd.packadd { 'jupytext.vim', bang = true }
+    vim.g.jupytext_enabled = 1
+    -- the jupytext_fmt is not flexible enough to support fetch the format
+    -- dynamically for example if you want to use jupytext for both python and
+    -- R and given two different formats like py:percent and R:percent (or just
+    -- auto:percent). Since it is expected that one will use jupyter notebook
+    -- mainly for python I will just set the default format to py:percent.
+
+    -- TODO: write a PR to jupytext.vim to support multiple format.
+    vim.g.jupytext_fmt = 'py:percent'
+end
+
 M.load.diffview()
 M.load.gitsigns()
 M.load.iron()
@@ -298,5 +311,6 @@ M.load.spectre()
 M.load.toggleterm()
 M.load.gutentags()
 M.load.copilot()
+M.load.jupytext()
 
 return M
