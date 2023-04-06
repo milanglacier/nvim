@@ -1,11 +1,22 @@
 {
-	"create python code chunk": {
-		"prefix": "rc",
-		"body": [
-			"# %%",
-			"$0",
-			"# %%"
-		],
-		"description": "create python code chunk"
-	}
+    "create python code chunk": {
+        "prefix": "rc",
+        "body": [
+            "# %%",
+            "$0",
+            "# %%"
+        ],
+        "description": "create python code chunk"
+    },
+
+    "create markdown chunk": {
+        "prefix": "mc",
+        "body": [
+            "# %% [markdown]",
+            "$0",
+            "# %%"
+        ],
+        "description": "create python code chunk"
+    }
+
 }
