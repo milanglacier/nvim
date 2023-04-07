@@ -1,5 +1,5 @@
 vim.cmd.packadd { 'nvim-treesitter-textobjects', bang = true }
-vim.cmd.packadd { 'nvim-ts-rainbow', bang = true }
+vim.cmd.packadd { 'nvim-ts-rainbow2', bang = true }
 vim.cmd.packadd { 'nvim-ts-context-commentstring', bang = true }
 
 local keymap = vim.api.nvim_set_keymap
@@ -35,7 +35,6 @@ require('nvim-treesitter.configs').setup {
     highlight = {
         -- `false` will disable the whole extension
         enable = not vim.g.vscode,
-
         -- list of language that will be disabled
         -- disable = { "c", "rust" },
 
@@ -48,11 +47,11 @@ require('nvim-treesitter.configs').setup {
 
     rainbow = {
         enable = not vim.g.vscode,
-        -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
-        extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
-        max_file_lines = nil, -- Do not enable for files with more than n lines, int
-        -- colors = {}, -- table of hex strings
-        -- termcolors = {} -- table of colour name strings
+        query = {
+            'rainbow-parens',
+            html = 'rainbow-tags',
+            latex = 'rainbow-blocks',
+        },
     },
 
     indent = {
@@ -77,21 +76,16 @@ require('nvim-treesitter.configs').setup {
             keymaps = {
                 ['af'] = '@function.outer',
                 ['if'] = '@function.inner',
-
                 ['aC'] = '@class.outer',
                 ['iC'] = '@class.inner',
                 ['ak'] = '@class.outer',
                 ['ik'] = '@class.inner',
-
                 ['al'] = '@loop.outer',
                 ['il'] = '@loop.inner',
-
                 ['ac'] = '@conditional.outer',
                 ['ic'] = '@conditional.inner',
-
                 ['ie'] = '@call.inner',
                 ['ae'] = '@call.outer',
-
                 ['a<Leader>a'] = '@parameter.outer',
                 ['i<Leader>a'] = '@parameter.inner',
                 -- latex textobjects
@@ -118,7 +112,6 @@ require('nvim-treesitter.configs').setup {
                 [']<Leader>lb'] = '@block.outer',
                 [']<Leader>lc'] = '@class.outer',
             },
-
             goto_next_end = {
                 [']F'] = '@function.outer',
                 [']<Leader>C'] = '@class.outer',
@@ -133,7 +126,6 @@ require('nvim-treesitter.configs').setup {
                 [']<Leader>lB'] = '@block.outer',
                 [']<Leader>lC'] = '@class.outer',
             },
-
             goto_previous_start = {
                 ['[f'] = '@function.outer',
                 ['[<Leader>c'] = '@class.outer',
@@ -148,9 +140,7 @@ require('nvim-treesitter.configs').setup {
                 ['[<Leader>lb'] = '@block.outer',
                 ['[<Leader>lc'] = '@class.outer',
             },
-
             goto_previous_end = {
-
                 ['[F'] = '@function.outer',
                 ['[<Leader>C'] = '@class.outer',
                 ['[K'] = '@class.outer',
