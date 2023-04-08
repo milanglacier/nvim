@@ -13,8 +13,6 @@ require('packer').init {
 }
 
 require('packer').startup(function(use)
-    -- optimize startup
-    use { 'lewis6991/impatient.nvim' }
     use { 'wbthomason/packer.nvim' }
 
     -- colorschemes

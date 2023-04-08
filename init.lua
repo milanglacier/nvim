@@ -11,7 +11,7 @@ if need_bootstrap then
         command = 'quitall',
     })
 else
-    require('impatient').enable_profile()
+    vim.loader.enable()
 end
 
 require 'basic_settings'
