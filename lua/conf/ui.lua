@@ -110,31 +110,14 @@ M.load.lualine = function()
         extensions = { 'aerial', 'nvim-tree', 'quickfix', 'toggleterm' },
     }
 
-    lualine.hide {
-        place = { 'tabline' },
-        unhide = false,
-    } -- disable tabline when init nvim
-
-    autocmd('TabNew', {
-        group = my_augroup,
-        desc = 'init lualine tabline',
-        callback = function()
-            lualine.hide {
-                place = { 'tabline' },
-                unhide = true,
-            }
-        end,
-    })
-    autocmd('TabClosed', {
+    autocmd('TabEnter', {
         group = my_augroup,
         desc = 'toggle lualine tabline',
         callback = function()
-            if #vim.api.nvim_list_tabpages() < 2 then
-                lualine.hide {
-                    place = { 'tabline' },
-                    unhide = false,
-                }
-            end
+            --HACK: lualine will set &showtabline to 2 if you have configured
+            --lualine for displaying tabline. We want to restore the default
+            --behavior here.
+            vim.o.showtabline = 1
         end,
     })
 end
