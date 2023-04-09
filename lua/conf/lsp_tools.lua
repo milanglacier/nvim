@@ -99,11 +99,14 @@ M.load.nullls = function()
 
     local null_ls = require 'null-ls'
     local util = require 'null-ls.utils'
+    local helper = require 'null-ls.helpers'
 
     local function root_pattern_wrapper(patterns)
-        return function()
-            return util.root_pattern('.git', unpack(patterns or {}))(vim.fn.expand '%:p')
-        end
+        -- referenced from
+        -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/lua/null-ls/builtins/diagnostics/flake8.lua
+        return helper.cache.by_bufnr(function(params)
+            return util.root_pattern('.git', unpack(patterns or {}))(params.bufname)
+        end)
     end
 
     local function source_wrapper(args)
@@ -125,28 +128,29 @@ M.load.nullls = function()
         end,
         fallback_severity = vim.diagnostic.severity.INFO,
         sources = {
-            source_wrapper { null_ls.builtins.formatting.stylua },
-            source_wrapper { null_ls.builtins.diagnostics.selene },
-            source_wrapper { null_ls.builtins.code_actions.gitsigns },
-            source_wrapper { null_ls.builtins.code_actions.refactoring },
+            source_wrapper { null_ls.builtins.formatting.stylua, { '.stylua.toml' } },
+            source_wrapper { null_ls.builtins.diagnostics.selene, { 'selene.toml' } },
+            null_ls.builtins.code_actions.gitsigns,
+            null_ls.builtins.code_actions.refactoring,
             source_wrapper {
                 null_ls.builtins.formatting.prettierd,
+                { '.prettirrc', '.prettirrc.json', '.prettirrc.yaml' },
                 filetypes = { 'markdown.pandoc', 'json', 'markdown', 'rmd', 'yaml', 'quarto' },
             },
             source_wrapper {
                 null_ls.builtins.formatting.sql_formatter,
                 args = vim.fn.empty(vim.fn.glob(sql_formatter_config_file)) == 0
-                and { '--config', sql_formatter_config_file }
-                or nil,
+                        and { '--config', sql_formatter_config_file }
+                    or nil,
                 -- this expression = 0 means this file exists.
             },
             source_wrapper {
                 null_ls.builtins.formatting.yapf,
-                { 'pyproject.toml' },
+                { 'pyproject.toml', '.style.yapf' },
             },
             source_wrapper {
                 null_ls.builtins.diagnostics.flake8,
-                { 'pyproject.toml' },
+                { '.flake8', 'setup.cfg' },
             },
         },
     }
