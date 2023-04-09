@@ -168,7 +168,7 @@ local on_attach = function(client, bufnr)
         elseif options.args == 'remove' then
             vim.lsp.buf.remove_workspace_folder()
         elseif options.args == 'show' then
-            vim.pretty_print(vim.lsp.buf.list_workspace_folders())
+            vim.print(vim.lsp.buf.list_workspace_folders())
         end
     end, {
         nargs = 1,
