@@ -144,7 +144,6 @@ require('packer').startup(function(use)
 
     -- Other cli tools, ripgrep, hover, markdown, etc
     use { 'nvim-pack/nvim-spectre', opt = true }
-    use { 'JASONews/glow-hover', opt = true }
     use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', opt = true }
     use { 'ludovicchabant/vim-gutentags', opt = true }
     use { 'nvim-orgmode/orgmode', opt = true }

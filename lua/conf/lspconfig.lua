@@ -63,7 +63,6 @@ local on_attach = function(client, bufnr)
         opts {
             'lsp hover doc with builtin renderer.',
             function()
-                vim.lsp.handlers['textDocument/hover'] = require('conf.lsp_tools').original_hover_handler
                 vim.lsp.buf.hover()
                 -- after typing gh, within 400 milliseconds typing h will switch into the popup window
                 vim.api.nvim_buf_set_keymap(0, 'n', 'h', '', {
@@ -86,11 +85,8 @@ local on_attach = function(client, bufnr)
         'K',
         '',
         opts {
-            'lsp hover by glow',
-            function()
-                require('conf.lsp_tools').load.glow_hover()
-                vim.lsp.buf.hover()
-            end,
+            'lsp hover',
+            vim.lsp.buf.hover,
         }
     )
 

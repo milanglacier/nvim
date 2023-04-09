@@ -89,19 +89,6 @@ M.load.lspsaga = function()
     }
 end
 
-M.original_hover_handler = vim.lsp.handlers['textDocument/hover']
-
-M.load.glow_hover = function()
-    vim.cmd.packadd { 'glow-hover', bang = true }
-
-    require('glow-hover').setup {
-        max_width = 90,
-        padding = 5,
-        border = 'rounded',
-        glow_path = 'glow',
-    }
-end
-
 M.load.refactor = function()
     vim.cmd.packadd { 'refactoring.nvim', bang = true }
     require('refactoring').setup {}
@@ -166,7 +153,6 @@ M.load.nullls = function()
 end
 
 M.load.aerial()
-M.load.glow_hover()
 M.load.lspkind()
 M.load.lspsaga()
 M.load.refactor()
