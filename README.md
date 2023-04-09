@@ -125,7 +125,6 @@ notifications instead of stopping altogether.
 
 1. `yarn`: this is required to install `markdown-previem.nvim`.
 2. `prettierd`
-3. `glow`
 
 ## sql deps
 
@@ -150,8 +149,7 @@ run this program, so I use a `homebrew` installed `latexindent` instead.
 
 ## general purpose deps
 
-1. `codespell`
-2. `universal-ctags`
+1. `universal-ctags`
 
 # Keymaps
 
