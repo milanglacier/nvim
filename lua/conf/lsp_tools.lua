@@ -152,6 +152,11 @@ M.load.nullls = function()
                 null_ls.builtins.diagnostics.flake8,
                 { '.flake8', 'setup.cfg' },
             },
+            source_wrapper {
+                null_ls.builtins.diagnostics.vale,
+                { '.vale.ini' },
+                filetypes = { 'org', 'markdown', 'markdown.pandoc', 'rmd', 'quarto' },
+            },
         },
     }
 end
