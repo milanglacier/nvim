@@ -6,19 +6,9 @@ local my_augroup = require('conf.builtin_extend').my_augroup
 local autocmd = vim.api.nvim_create_autocmd
 local keymap = vim.api.nvim_set_keymap
 
-M.load.autopairs = function()
-    vim.cmd.packadd { 'nvim-autopairs', bang = true }
-    require('nvim-autopairs').setup {}
-end
-
 M.load.mini_pairs = function()
     vim.cmd.packadd { 'mini.nvim', bang = true }
     require('mini.pairs').setup {}
-end
-
-M.load.comment = function()
-    vim.cmd.packadd { 'Comment.nvim', bang = true }
-    require('Comment').setup()
 end
 
 M.load.mini_comment = function()
@@ -76,11 +66,6 @@ M.load.sneak = function()
     keymap('', 'T', '<Plug>Sneak_T', {})
 end
 
-M.load.targets = function()
-    vim.cmd.packadd { 'targets.vim', bang = true }
-    vim.g.targets_nl = { 'n', 'N' }
-end
-
 M.load.mini_ai = function()
     vim.cmd.packadd { 'mini.nvim', bang = true }
     require('mini.ai').setup {
@@ -97,10 +82,6 @@ M.load.mini_ai = function()
         },
         n_lines = 100,
     }
-end
-
-M.load.surround = function()
-    vim.cmd.packadd { 'vim-surround', bang = true }
 end
 
 M.load.mini_surround = function()
