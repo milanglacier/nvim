@@ -6,7 +6,6 @@ require('mini.misc').setup {}
 local M = {}
 
 local header_verse = {
-
     [[
 Bright star, would I were steadfast as thee art!
  John Keats]],
@@ -64,46 +63,44 @@ Are overtaken.
     length = 6,
 }
 
-if vim.fn.has 'gui_running' == 0 then
-    local starter = require 'mini.starter'
+local starter = require 'mini.starter'
 
-    math.randomseed(os.time()) -- random initialize
-    local _ = math.random()
-    _ = math.random()
-    _ = math.random() -- warming up
+math.randomseed(os.time()) -- random initialize
+local _ = math.random()
+_ = math.random()
+_ = math.random() -- warming up
 
-    starter.setup {
-        header = header_verse[math.random(1, header_verse.length)],
-        items = {
+starter.setup {
+    header = header_verse[math.random(1, header_verse.length)],
+    items = {
+        {
             {
-                {
-                    action = [[lua require("conf.colorscheme").pick_randomly()]],
-                    name = 'pick new theme!',
-                    section = 'Appearance',
-                },
-                {
-                    action = [[lua require("conf.mini").change_verses()]],
-                    name = 'show new verses!',
-                    section = 'Appearance',
-                },
-                { action = 'Telescope projects', name = 'recent projects', section = 'Telescope' },
-                { action = 'Telescope oldfiles', name = 'old files', section = 'Telescope' },
-                { action = 'Telescope find_files', name = 'find files', section = 'Telescope' },
-                { action = 'Telescope command_history', name = 'command history', section = 'Telescope' },
-                { action = 'Telescope jumplist', name = 'jumplist', section = 'Telescope' },
-                { name = 'edit new buffer', action = 'enew', section = 'Builtin actions' },
-                { name = 'quit Neovim', action = 'qall!', section = 'Builtin actions' },
+                action = [[lua require("conf.colorscheme").pick_randomly()]],
+                name = 'pick new theme!',
+                section = 'Appearance',
             },
+            {
+                action = [[lua require("conf.mini").change_verses()]],
+                name = 'show new verses!',
+                section = 'Appearance',
+            },
+            { action = 'Telescope projects', name = 'recent projects', section = 'Telescope' },
+            { action = 'Telescope oldfiles', name = 'old files', section = 'Telescope' },
+            { action = 'Telescope find_files', name = 'find files', section = 'Telescope' },
+            { action = 'Telescope command_history', name = 'command history', section = 'Telescope' },
+            { action = 'Telescope jumplist', name = 'jumplist', section = 'Telescope' },
+            { name = 'edit new buffer', action = 'enew', section = 'Builtin actions' },
+            { name = 'quit Neovim', action = 'qall!', section = 'Builtin actions' },
         },
-        content_hooks = {
-            starter.gen_hook.adding_bullet(),
-            starter.gen_hook.aligning('center', 'center'),
-        },
-        starter.gen_hook.padding(5, 2),
-        footer = foot_verse[math.random(1, foot_verse.length)],
-        query_updaters = [[abcdefhijklmnopqrsuvwxyz]],
-    }
-end
+    },
+    content_hooks = {
+        starter.gen_hook.adding_bullet(),
+        starter.gen_hook.aligning('center', 'center'),
+    },
+    starter.gen_hook.padding(5, 2),
+    footer = foot_verse[math.random(1, foot_verse.length)],
+    query_updaters = [[abcdefhijklmnopqrsuvwxyz]],
+}
 
 M.change_verses = function()
     math.randomseed(os.time()) -- random initialize
