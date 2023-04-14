@@ -19,6 +19,7 @@ vim.o.smartcase = true
 vim.o.linebreak = true
 vim.o.hidden = true
 vim.o.laststatus = 3
+vim.o.cmdheight = 0
 
 vim.o.clipboard = 'unnamedplus'
 vim.o.completeopt = 'menu,menuone,noselect'
@@ -38,6 +39,7 @@ if not vim.g.vscode then
         'SF_Mono_Regular:h15',
         'Space_Mono_Nerd_Font_Complete:h15',
         'Monego_Nerd_Font_Fix:h15',
+        'CaskaydiaCove_Nerd_Font:h15',
     }
 
     local gui_cursor = {
@@ -49,6 +51,6 @@ if not vim.g.vscode then
         'sm:block-blinkwait175-blinkoff150-blinkon175',
     }
 
-    vim.o.guifont = gui_font[4]
+    vim.o.guifont = gui_font[6]
     vim.o.guicursor = table.concat(gui_cursor, ',')
 end
