@@ -197,6 +197,15 @@ if not vim.g.vscode then
         enable = true,
         throttle = true,
     }
+
+    -- NOTE: If you have opened the file via `telescope find_files`,
+    -- Treesitter's fold feature may not work properly. To reactivate it,
+    -- refresh the buffer by using `:e`.
+    vim.o.foldmethod = 'expr'
+    vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
+    -- don't fold any text at startup
+    vim.o.foldlevel = 99
+    vim.o.foldlevelstart = 99
 end
 
 local emmykeymap = require('conf.builtin_extend').emmykeymap
