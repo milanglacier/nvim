@@ -19,6 +19,8 @@ telescope.setup {
                 ['<C-b>'] = 'preview_scrolling_up',
                 ['<C-f>'] = 'preview_scrolling_down',
                 ['<C-/>'] = 'which_key',
+                ['<C-u>'] = false,
+                ['<C-k>'] = false,
             },
             n = {
                 ['t'] = 'select_tab',
@@ -84,17 +86,3 @@ keymap('n', '<leader>fm', '<cmd>Telescope marks<cr>', opts)
 keymap('n', '<leader>F', '<cmd>Telescope builtin include_extensions=true<cr>', opts_desc 'Telescope extensions')
 keymap('n', '<leader>fe', '<cmd>Telescope builtin include_extensions=true<cr>', opts_desc 'Telescope extensions')
 keymap('n', '<A-x>', '<cmd>Telescope commands<cr>', opts_desc 'Telescope extensions')
-
-local my_augroup = require('conf.builtin_extend').my_augroup
-local autocmd = vim.api.nvim_create_autocmd
-local bufmap = vim.api.nvim_buf_set_keymap
-
-autocmd('FileType', {
-    pattern = 'TelescopePrompt',
-    group = my_augroup,
-    callback = function()
-        bufmap(0, 'i', '<C-k>', '<ESC>ld$i', {})
-        bufmap(0, 'i', '<C-u>', '<C-u>', {})
-    end,
-    desc = 'Set C-k works correctly in Telescope Prompt',
-})
