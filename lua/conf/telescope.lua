@@ -8,9 +8,6 @@ local telescope = require 'telescope'
 
 telescope.setup {
     pickers = {
-        find_files = {
-            find_command = { 'rg', '--files', '--iglob', '!.git', '--hidden', '--no-ignore-vcs' },
-        },
         keymaps = {
             modes = { 'n', 'i', 'c', 'x', 'v', 'o', '', '!' },
         },
@@ -67,6 +64,7 @@ end
 local keymap = vim.api.nvim_set_keymap
 
 keymap('n', '<leader>ff', '<cmd>Telescope find_files<cr>', opts)
+keymap('n', '<leader>fF', '<cmd>Telescope find_files no_ignore=true<cr>', opts)
 keymap('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', opts)
 keymap('n', '<leader>fb', '<cmd>Telescope buffers<cr>', opts)
 keymap('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', opts)
