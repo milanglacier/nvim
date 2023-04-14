@@ -150,7 +150,7 @@ local on_attach = function(client, bufnr)
         }
     )
 
-    bufmap(bufnr, 'n', '<Leader>lD', '<cmd>Lspsaga peek_definition<CR>', opts { 'lspsaga preview definition' })
+    bufmap(bufnr, 'n', '<Leader>lp', '<cmd>Lspsaga peek_definition<CR>', opts { 'lspsaga preview definition' })
     bufmap(
         bufnr,
         'n',
@@ -186,8 +186,15 @@ local on_attach = function(client, bufnr)
         bufnr,
         'n',
         '<Leader>ld',
-        '',
-        opts { 'lsp diagnostics by telescope', require('telescope.builtin').diagnostics }
+        '<cmd>Telescope diagnostics bufnr=0<CR>',
+        opts { 'lsp file diagnostics by telescope' }
+    )
+    bufmap(
+        bufnr,
+        'n',
+        '<Leader>lw',
+        '<cmd>Telescope diagnostics root_dir=true<CR>',
+        opts { 'lsp workspace diagnostics by telescope' }
     )
     bufmap(bufnr, 'n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', opts { 'lspsaga prev diagnostic' })
     bufmap(bufnr, 'n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>', opts { 'lspsaga next diagnostic' })
@@ -204,6 +211,8 @@ end
 -- Setup lspconfig.
 -- -- -- copied from https://github.com/ray-x/lsp_signature.nvim/blob/master/tests/init_paq.lua
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
+-- disable semantic tokens
+capabilities.semanticTokensProvider = false
 
 -- Copied from lspconfig/server_configurations/pylsp.lua
 
