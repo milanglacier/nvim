@@ -65,8 +65,8 @@ end
 
 local keymap = vim.api.nvim_set_keymap
 
-keymap('n', '<leader>ff', '<cmd>Telescope find_files<cr>', opts)
-keymap('n', '<leader>fF', '<cmd>Telescope find_files no_ignore=true<cr>', opts)
+keymap('n', '<leader>ff', '<cmd>Telescope find_files hidden=true<cr>', opts)
+keymap('n', '<leader>fF', '<cmd>Telescope find_files no_ignore=true hidden=true<cr>', opts)
 keymap('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', opts)
 keymap('n', '<leader>fb', '<cmd>Telescope buffers<cr>', opts)
 keymap('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', opts)
