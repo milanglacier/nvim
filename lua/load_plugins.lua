@@ -125,7 +125,12 @@ require('packer').startup(function(use)
     use { 'folke/neodev.nvim', opt = true }
     use { 'nanotee/sqls.nvim', opt = true }
 
-    -- CLI tools
+    -- cli tools
+
+    -- installer
+    use { 'williamboman/mason.nvim', opt = true, run = ':MasonUpdate' }
+    -- neovim installer that helps you to install external command line
+    -- programs
 
     -- REPL
     use { 'jalvesaq/Nvim-R', opt = true }

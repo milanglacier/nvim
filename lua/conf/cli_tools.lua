@@ -302,6 +302,11 @@ M.load.jupytext = function()
     vim.g.jupytext_fmt = 'py:percent'
 end
 
+M.load.mason = function()
+    vim.cmd.packadd { 'mason.nvim', bang = true }
+    require('mason').setup {}
+end
+
 M.load.diffview()
 M.load.gitsigns()
 M.load.iron()
@@ -312,5 +317,6 @@ M.load.toggleterm()
 M.load.gutentags()
 M.load.copilot()
 M.load.jupytext()
+M.load.mason()
 
 return M
