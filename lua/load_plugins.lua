@@ -129,7 +129,7 @@ require('packer').startup(function(use)
 
     -- REPL
     use { 'jalvesaq/Nvim-R', opt = true }
-    use { 'hkupty/iron.nvim', opt = true }
+    use { 'Vigemus/iron.nvim', opt = true }
     use { 'akinsho/toggleterm.nvim', opt = true }
     use { 'goerz/jupytext.vim', opt = true }
 
