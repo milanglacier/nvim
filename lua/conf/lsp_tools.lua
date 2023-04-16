@@ -55,7 +55,7 @@ M.load.lspsaga = function()
     saga.setup {
         lightbulb = {
             sign = false,
-            virtual_text = true,
+            virtual_text = false,
         },
         finder = {
             open = { 'o', '<cr>' },
