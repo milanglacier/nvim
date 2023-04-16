@@ -42,7 +42,7 @@ M.load.lualine = function()
                     end,
                 }, -- "" will be nil in lualine
             },
-            lualine_c = { { 'filename', path = 1 } }, -- relative path
+            lualine_c = { { 'filename', path = 1 }, { 'searchcount' } }, -- relative path
             lualine_x = {
                 { 'diagnostics', sources = { 'nvim_workspace_diagnostic' } },
                 encoding,
