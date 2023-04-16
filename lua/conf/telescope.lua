@@ -11,6 +11,15 @@ telescope.setup {
         keymaps = {
             modes = { 'n', 'i', 'c', 'x', 'v', 'o', '', '!' },
         },
+        find_files = {
+            find_command = function(_)
+                if 1 == vim.fn.executable 'rg' then
+                    return { 'rg', '--files', '--color', 'never', '--iglob', '!.git' }
+                else
+                    return { 'find', '.', '-type', 'f', '-not', '-path', '*/.git/*' }
+                end
+            end,
+        },
     },
     defaults = {
         mappings = {
