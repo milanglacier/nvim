@@ -20,31 +20,6 @@ M.load.lualine = function()
         return ret
     end
 
-    local mode_remap = {
-        ['NORMAL'] = 'N',
-        ['O-PENDING'] = 'OP',
-        ['VISUAL'] = 'V',
-        ['V-LINE'] = 'V-L',
-        ['V-BLOCK'] = 'V-B',
-        ['SELECT'] = 'S',
-        ['S-LINE'] = 'S-L',
-        ['S-BLOCK'] = 'S-B',
-        ['INSERT'] = 'I',
-        ['REPLACE'] = 'R',
-        ['V-REPLACE'] = 'V-R',
-        ['COMMAND'] = 'C',
-        ['EX'] = 'EX',
-        ['MORE'] = 'MORE',
-        ['CONFIRM'] = '✓',
-        ['SHELL'] = 'SH',
-        ['TERMINAL'] = 'TERM',
-    }
-
-    local shorten_mode_name = function()
-        local mode = require 'lualine.components.mode'()
-        return mode_remap[mode] or mode
-    end
-
     local lualine = require 'lualine'
 
     lualine.setup {
@@ -57,7 +32,7 @@ M.load.lualine = function()
             always_divide_middle = false,
         },
         sections = {
-            lualine_a = { shorten_mode_name },
+            lualine_a = { 'mode' },
             lualine_b = {
                 'branch',
                 {
