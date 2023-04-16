@@ -59,7 +59,7 @@ M.load.lualine = function()
             lualine_b = { { 'tabs', mode = 2, max_length = vim.o.columns } },
         },
         winbar = {
-            lualine_b = {
+            lualine_a = {
                 { 'filetype', icon_only = true },
                 { 'filename', path = 0 },
             },
@@ -67,7 +67,9 @@ M.load.lualine = function()
             lualine_x = {
                 function()
                     return ' '
-                end, -- this is to avoid annoying highlight (high contrast color)
+                end,
+                -- this is to avoid annoying highlight (high contrast color)
+                -- when no winbar_symbol, diagnostics and diff is available.
                 { 'diagnostics', sources = { 'nvim_diagnostic' } },
                 'diff',
             },
