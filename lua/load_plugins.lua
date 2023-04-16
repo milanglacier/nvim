@@ -24,8 +24,6 @@ require('packer').startup(function(use)
     use { 'ellisonleao/gruvbox.nvim', opt = true }
     use { 'rebelot/kanagawa.nvim', opt = true }
     use { 'catppuccin/nvim', as = 'catppuccin', opt = true }
-    use { 'marko-cerovac/material.nvim', opt = true }
-    use { 'ishan9299/nvim-solarized-lua', opt = true }
 
     -- Fix bugs and Utilities
     use { 'ahmedkhalf/project.nvim', opt = true }

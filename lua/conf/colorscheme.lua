@@ -25,11 +25,8 @@ local night_scheme_options = {
         'tokyonight',
         'everforest',
         'gruvbox',
-        'minischeme',
         'kanagawa',
         'catppuccin',
-        'material',
-        'edge',
     },
     cmd = {
         function()
@@ -56,9 +53,6 @@ local night_scheme_options = {
         end,
         function()
             packadd [[gruvbox.nvim]]
-        end,
-        function()
-            packadd [[mini.nvim]]
         end,
         function()
             packadd [[kanagawa.nvim]]
@@ -98,23 +92,6 @@ local night_scheme_options = {
                 },
             }
         end,
-        function()
-            packadd [[material.nvim]]
-            vim.g.material_style = 'palenight'
-            require('material').setup {
-                contrast = {
-                    floating_windows = true,
-                    line_number = true,
-                    sign_column = true,
-                    sidebars = true,
-                },
-            }
-        end,
-        function()
-            packadd [[edge]]
-            vim.g.edge_diagnostic_virtual_text = 'colored'
-            vim.g.edge_better_performance = 1
-        end,
     },
 }
 
@@ -125,9 +102,7 @@ local day_scheme_options = {
         'tokyonight',
         'everforest',
         'gruvbox',
-        'material',
         'edge',
-        'solarized',
         'catppuccin',
     },
     cmd = {
@@ -156,25 +131,9 @@ local day_scheme_options = {
             packadd [[gruvbox.nvim]]
         end,
         function()
-            packadd [[material.nvim]]
-            vim.g.material_style = 'lighter'
-            require('material').setup {
-                contrast = {
-                    floating_windows = true,
-                    line_number = true,
-                    sign_column = true,
-                    sidebars = true,
-                },
-            }
-        end,
-        function()
             packadd [[edge]]
             vim.g.edge_diagnostic_virtual_text = 'colored'
             vim.g.edge_better_performance = 1
-        end,
-        function()
-            packadd [[nvim-solarized-lua]]
-            vim.g.solarized_italics = 0
         end,
         function()
             packadd [[catppuccin]]
