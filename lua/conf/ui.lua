@@ -324,7 +324,6 @@ M.load.which_key = function()
         ['<Leader>l'] = { name = '+language server' },
         ['<Leader>f'] = { name = '+find everything' },
         ['<Leader><space>'] = { name = '+local leader' },
-        ['<LocalLeader>s'] = { name = 'send to REPL' },
     }, { mode = 'v' })
 
     autocmd('FileType', {
