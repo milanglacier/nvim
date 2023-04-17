@@ -322,6 +322,7 @@ M.load.which_key = function()
 
     which_key.register({
         ['<Leader>l'] = { name = '+language server' },
+        ['<Leader>m'] = { name = '+misc' },
         ['<Leader>f'] = { name = '+find everything' },
         ['<Leader><space>'] = { name = '+local leader' },
     }, { mode = 'v' })
