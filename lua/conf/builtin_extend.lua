@@ -78,6 +78,12 @@ keymap(
     '<cmd>lua vim.wo.conceallevel = vim.wo.conceallevel == 2 and 0 or 2<CR>',
     opts_desc 'toggle conceal'
 )
+keymap(
+    'n',
+    '<Leader>tH',
+    '<cmd>lua vim.o.cmdheight = vim.o.cmdheight == 0 and 1 or 0<CR>',
+    opts_desc 'toggle cmdheight'
+)
 
 M.jk_as_esc = function()
     keymap('t', 'k', [[<BS><C-\><C-N>]], opts)
