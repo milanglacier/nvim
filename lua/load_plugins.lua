@@ -123,7 +123,7 @@ require('packer').startup(function(use)
     -- cli tools
 
     -- installer
-    use { 'williamboman/mason.nvim', opt = true, run = ':MasonUpdate' }
+    use { 'williamboman/mason.nvim', opt = true }
     -- neovim installer that helps you to install external command line
     -- programs
 
@@ -140,7 +140,7 @@ require('packer').startup(function(use)
 
     -- Other cli tools, ripgrep, hover, markdown, etc
     use { 'nvim-pack/nvim-spectre', opt = true }
-    use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', opt = true }
+    use { 'iamcco/markdown-preview.nvim', run = 'cd app && npm install', opt = true }
     use { 'ludovicchabant/vim-gutentags', opt = true }
     use { 'nvim-orgmode/orgmode', opt = true }
     use { 'lervag/vimtex', opt = true }
