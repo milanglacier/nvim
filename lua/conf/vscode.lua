@@ -73,7 +73,7 @@ keymap('n', '<Leader>xd', notify 'workbench.actions.view.problems', opts) -- lan
 keymap('n', 'gr', notify 'editor.action.goToReferences', opts)
 keymap('n', '<Leader>ln', notify 'editor.action.rename', opts)
 keymap('n', '<Leader>lf', notify 'editor.action.formatDocument', opts)
-keymap('n', '<Leader>la', notify 'editor.action.quickfix', opts) -- language code actions
+keymap('n', '<Leader>la', notify 'editor.action.quickFix', opts) -- language code actions
 keymap('n', '<Leader>lr', notify 'editor.action.refactor', opts) -- language refactor
 keymap('n', '<C-w>]', notify 'editor.action.revealDefinitionAside', opts) -- language code actions
 keymap('n', '<Leader>w]', notify 'editor.action.revealDefinitionAside', opts) -- language code actions
@@ -165,7 +165,7 @@ keymap('n', '[q', notify 'search.action.focusPreviousSearchResult', opts)
 
 -- lsp keymaps
 keymap('v', '<Leader>lf', v_notify 'editor.action.formatSelection', opts)
-keymap('v', '<Leader>la', v_notify 'editor.action.quickfix', opts)
+keymap('v', '<Leader>la', v_notify 'editor.action.quickFix', opts)
 keymap('v', '<Leader>lr', v_notify 'editor.action.refactor', opts)
 keymap('v', '<Leader>fc', v_notify 'workbench.action.showCommands', opts)
 
