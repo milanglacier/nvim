@@ -159,6 +159,8 @@ keymap('n', '<Leader>w<', [[<C-w><]], opts_desc 'win: decrease win width')
 keymap('n', '<Leader>w>', [[<C-w>>]], opts_desc 'win: increase win width')
 keymap('n', '<Leader>w+', [[<C-w>+]], opts_desc 'win: increase win height')
 keymap('n', '<Leader>w-', [[<C-w>-]], opts_desc 'win: decrease win height')
+keymap('n', '<Leader>w]', '<C-w>]', opts_desc 'win: jump to tags')
+keymap('n', '<Leader>wg]', '<C-w>g]', opts_desc 'win: select tags to jump')
 
 keymap('n', '<Leader><Tab>o', [[:tabonly<cr>]], opts_desc 'tab: delete other tabs')
 keymap('n', '<Leader><Tab>n', [[:tabnew<cr>]], opts_desc 'tab: new tab')
