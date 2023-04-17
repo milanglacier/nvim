@@ -70,7 +70,7 @@ keymap('n', '<Leader>bw', [[:bw!<CR>]], opts_desc 'buffer wipeout current one')
 keymap('n', '<Leader>bp', [[:bprevious<CR>]], opts_desc 'buffer next')
 keymap('n', '<Leader>bn', [[:bnext<CR>]], opts_desc 'buffer previous')
 
-keymap('n', '<Leader>th', '<cmd>lua vim.o.hlsearch = not vim.o.hlsearch<CR>', opts_desc 'toggle highlight')
+keymap('n', '<Leader>th', '<cmd>nohlsearch<CR>', opts_desc 'toggle hlsearch')
 keymap('n', '<Leader>tw', '<cmd>lua vim.wo.wrap = not vim.wo.wrap<CR>', opts_desc 'toggle wrap')
 keymap(
     'n',
