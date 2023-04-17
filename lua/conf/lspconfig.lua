@@ -294,7 +294,10 @@ lsp_configs.nvim = function()
     require('neodev').setup {}
 
     require('lspconfig').lua_ls.setup {
-        on_attach = on_attach,
+        on_attach = function(client, bufnr)
+            client.server_capabilities.documentFormattingProvider = false
+            on_attach(client, bufnr)
+        end,
         capabilities = capabilities,
         settings = {
             Lua = {
