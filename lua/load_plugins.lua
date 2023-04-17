@@ -37,9 +37,6 @@ require('packer').startup(function(use)
             vim.fn['firenvim#install'](0)
         end,
     }
-    -- very simple, naive completion without LSP
-    -- 'skywind3000/vim-auto-popmenu'
-    -- 'skywind3000/vim-dict'
 
     -- UI
     use { 'nvim-lualine/lualine.nvim', opt = true }
