@@ -22,6 +22,49 @@ M.load.lualine = function()
 
     local lualine = require 'lualine'
 
+    local diagnostics_sources = require('lualine.components.diagnostics.sources').sources
+
+    diagnostics_sources.get_diagnostics_in_current_root_dir = function()
+        local buffers = vim.api.nvim_list_bufs()
+        local severity = vim.diagnostic.severity
+        local cwd = vim.loop.cwd()
+
+        local function dir_is_parent_of_buf(buf, dir)
+            local filename = vim.api.nvim_buf_get_name(buf)
+            if vim.fn.filereadable(filename) == 0 then
+                return false
+            end
+
+            for path in vim.fs.parents(filename) do
+                if dir == path then
+                    return true
+                end
+            end
+            return false
+        end
+
+        local function get_num_of_diags_in_buf(severity_level, buf)
+            local count = vim.diagnostic.get(buf, { severity = severity_level })
+            return vim.tbl_count(count)
+        end
+
+        local diagnostics_of_error = 0
+        local diagnostics_of_warn = 0
+        local diagnostics_of_info = 0
+        local diagnostics_of_hint = 0
+
+        for _, buf in ipairs(buffers) do
+            if dir_is_parent_of_buf(buf, cwd) then
+                diagnostics_of_error = diagnostics_of_error + get_num_of_diags_in_buf(severity.ERROR, buf)
+                diagnostics_of_warn = diagnostics_of_warn + get_num_of_diags_in_buf(severity.WARN, buf)
+                diagnostics_of_info = diagnostics_of_info + get_num_of_diags_in_buf(severity.INFO, buf)
+                diagnostics_of_hint = diagnostics_of_hint + get_num_of_diags_in_buf(severity.HINT, buf)
+            end
+        end
+
+        return diagnostics_of_error, diagnostics_of_warn, diagnostics_of_info, diagnostics_of_hint
+    end
+
     lualine.setup {
         options = {
             icons_enabled = true,
@@ -44,7 +87,7 @@ M.load.lualine = function()
             },
             lualine_c = { { 'filename', path = 1 }, { 'searchcount' } }, -- relative path
             lualine_x = {
-                { 'diagnostics', sources = { 'nvim_workspace_diagnostic' } },
+                { 'diagnostics', sources = { 'get_diagnostics_in_current_root_dir' } },
                 encoding,
                 fileformat,
                 'filetype',
