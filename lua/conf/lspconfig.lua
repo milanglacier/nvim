@@ -170,11 +170,18 @@ local on_attach = function(client, bufnr)
     -- diagnostic show in line or in cursor
     bufmap(bufnr, 'n', '<Leader>ll', '<cmd>Lspsaga show_line_diagnostics<CR>', opts { 'lspsaga line diagnostic' })
 
-    require('conf.lsp_tools').signature(bufnr)
+    -- require('conf.lsp_tools').signature(bufnr)
 
     if client.server_capabilities.documentSymbolProvider then
         require('nvim-navic').attach(client, bufnr)
     end
+
+    -- HACK: in nvim 0.9+, lspconfig will set &tagfunc to vim.lsp.tagfunc
+    -- automatically. For lsp that does not support workspace symbol, this
+    -- function may cause conflict because `cmp-nvim-tags` which uses tags to
+    -- search workspace symbol, leading to an error when `vim.lsp.tagfunc` is
+    -- called. To prev ent this behavior, we disable it.
+    vim.bo.tagfunc = nil
 end
 
 -- Setup lspconfig.
