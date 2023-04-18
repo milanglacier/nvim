@@ -17,13 +17,17 @@ local opts = function(options)
 end
 
 local bufmap = vim.api.nvim_buf_set_keymap
+local my_augroup = require('conf.builtin_extend').my_augroup
+local autocmd = vim.api.nvim_create_autocmd
+local bufcmd = vim.api.nvim_buf_create_user_command
+local command = vim.api.nvim_create_user_command
 
-local on_attach = function(client, bufnr)
-    bufmap(bufnr, 'n', '<Leader>lt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts { 'lsp type definition' })
+local attach_keymaps = function()
+    bufmap(0, 'n', '<Leader>lt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts { 'lsp type definition' })
 
     -- reference
     bufmap(
-        bufnr,
+        0,
         'n',
         'gr',
         '',
@@ -38,14 +42,14 @@ local on_attach = function(client, bufnr)
         }
     )
 
-    bufmap(bufnr, 'n', '<Leader>lF', '<cmd>Lspsaga lsp_finder<CR>', opts { 'lspsaga finder' })
+    bufmap(0, 'n', '<Leader>lF', '<cmd>Lspsaga lsp_finder<CR>', opts { 'lspsaga finder' })
 
     -- code action
     -- bufmap(bufnr, 'n', '<Leader>ca', "<cmd>lua require('lspsaga.codeaction').code_action()<CR>", opts {})
     -- bufmap(bufnr, 'v', '<Leader>ca', ":lua require('lspsaga.codeaction').range_code_action()<CR>", opts {})
-    bufmap(bufnr, 'n', '<Leader>la', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts { 'lsp code action' })
+    bufmap(0, 'n', '<Leader>la', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts { 'lsp code action' })
     bufmap(
-        bufnr,
+        0,
         'x',
         '<Leader>la',
         ':<C-U>lua vim.lsp.buf.code_action()<CR>',
@@ -55,19 +59,19 @@ local on_attach = function(client, bufnr)
     )
 
     -- hover
-    bufmap(bufnr, 'n', 'gh', '', opts { 'lsp hover', vim.lsp.buf.hover })
+    bufmap(0, 'n', 'gh', '', opts { 'lsp hover', vim.lsp.buf.hover })
 
-    bufmap(bufnr, 'n', 'K', '', opts { 'lsp hover', vim.lsp.buf.hover })
+    bufmap(0, 'n', 'K', '', opts { 'lsp hover', vim.lsp.buf.hover })
 
     -- signaturehelp
-    bufmap(bufnr, 'n', '<Leader>ls', '', opts { 'signature help', vim.lsp.buf.signature_help })
+    bufmap(0, 'n', '<Leader>ls', '', opts { 'signature help', vim.lsp.buf.signature_help })
 
     -- rename
-    bufmap(bufnr, 'n', '<Leader>ln', '<cmd>Lspsaga rename<CR>', opts { 'lspsaga rename' })
+    bufmap(0, 'n', '<Leader>ln', '<cmd>Lspsaga rename<CR>', opts { 'lspsaga rename' })
 
     -- go to definition, implementation
     bufmap(
-        bufnr,
+        0,
         'n',
         'gd',
         '',
@@ -83,7 +87,7 @@ local on_attach = function(client, bufnr)
     )
 
     bufmap(
-        bufnr,
+        0,
         'n',
         '<Leader>li',
         '',
@@ -99,7 +103,7 @@ local on_attach = function(client, bufnr)
     )
 
     bufmap(
-        bufnr,
+        0,
         'n',
         '<Leader>lci',
         '',
@@ -109,7 +113,7 @@ local on_attach = function(client, bufnr)
         }
     )
     bufmap(
-        bufnr,
+        0,
         'n',
         '<Leader>lco',
         '',
@@ -119,19 +123,11 @@ local on_attach = function(client, bufnr)
         }
     )
 
-    bufmap(bufnr, 'n', '<Leader>lp', '<cmd>Lspsaga peek_definition<CR>', opts { 'lspsaga preview definition' })
-    bufmap(
-        bufnr,
-        'n',
-        '<Leader>lT',
-        '<cmd>Lspsaga peek_type_definition<CR>',
-        opts { 'lspsaga preview type definition' }
-    )
+    bufmap(0, 'n', '<Leader>lp', '<cmd>Lspsaga peek_definition<CR>', opts { 'lspsaga preview definition' })
+    bufmap(0, 'n', '<Leader>lT', '<cmd>Lspsaga peek_type_definition<CR>', opts { 'lspsaga preview type definition' })
 
     -- workspace
-    local bufcmd = vim.api.nvim_buf_create_user_command
-
-    bufcmd(bufnr, 'LspWorkspace', function(options)
+    bufcmd(0, 'LspWorkspace', function(options)
         if options.args == 'add' then
             vim.lsp.buf.add_workspace_folder()
         elseif options.args == 'remove' then
@@ -147,48 +143,44 @@ local on_attach = function(client, bufnr)
     })
 
     -- format
-    bufmap(bufnr, 'n', '<Leader>lf', '<cmd>lua vim.lsp.buf.format { async = true }<CR>', opts { 'lsp format' })
-    bufmap(bufnr, 'v', '<Leader>lf', '<cmd>lua vim.lsp.buf.format { async = true }<CR>', opts { 'lsp range format' })
+    bufmap(0, 'n', '<Leader>lf', '<cmd>lua vim.lsp.buf.format { async = true }<CR>', opts { 'lsp format' })
+    bufmap(0, 'v', '<Leader>lf', '<cmd>lua vim.lsp.buf.format { async = true }<CR>', opts { 'lsp range format' })
 
     -- diagnostic
+    bufmap(0, 'n', '<Leader>ld', '<cmd>Telescope diagnostics bufnr=0<CR>', opts { 'lsp file diagnostics by telescope' })
     bufmap(
-        bufnr,
-        'n',
-        '<Leader>ld',
-        '<cmd>Telescope diagnostics bufnr=0<CR>',
-        opts { 'lsp file diagnostics by telescope' }
-    )
-    bufmap(
-        bufnr,
+        0,
         'n',
         '<Leader>lw',
         '<cmd>Telescope diagnostics root_dir=true<CR>',
         opts { 'lsp workspace diagnostics by telescope' }
     )
-    bufmap(bufnr, 'n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', opts { 'lspsaga prev diagnostic' })
-    bufmap(bufnr, 'n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>', opts { 'lspsaga next diagnostic' })
+    bufmap(0, 'n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', opts { 'lspsaga prev diagnostic' })
+    bufmap(0, 'n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>', opts { 'lspsaga next diagnostic' })
     -- diagnostic show in line or in cursor
-    bufmap(bufnr, 'n', '<Leader>ll', '<cmd>Lspsaga show_line_diagnostics<CR>', opts { 'lspsaga line diagnostic' })
-
-    -- require('conf.lsp_tools').signature(bufnr)
-
-    if client.server_capabilities.documentSymbolProvider then
-        require('nvim-navic').attach(client, bufnr)
-    end
-
-    -- HACK: in nvim 0.9+, lspconfig will set &tagfunc to vim.lsp.tagfunc
-    -- automatically. For lsp that does not support workspace symbol, this
-    -- function may cause conflict because `cmp-nvim-tags` which uses tags to
-    -- search workspace symbol, leading to an error when `vim.lsp.tagfunc` is
-    -- called. To prev ent this behavior, we disable it.
-    vim.bo.tagfunc = nil
+    bufmap(0, 'n', '<Leader>ll', '<cmd>Lspsaga show_line_diagnostics<CR>', opts { 'lspsaga line diagnostic' })
 end
 
+autocmd('LspAttach', {
+    group = my_augroup,
+    callback = attach_keymaps,
+    desc = 'Attach lsp keymaps',
+})
+
+autocmd('LspAttach', {
+    group = my_augroup,
+    callback = function(args)
+        local bufnr = args.buf
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        if client.server_capabilities.documentSymbolProvider then
+            require('nvim-navic').attach(client, bufnr)
+        end
+    end,
+    desc = 'Attach navic',
+})
+
 -- Setup lspconfig.
--- -- -- copied from https://github.com/ray-x/lsp_signature.nvim/blob/master/tests/init_paq.lua
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
--- disable semantic tokens
-capabilities.semanticTokensProvider = false
 
 -- Copied from lspconfig/server_configurations/pylsp.lua
 
@@ -210,7 +202,6 @@ lsp_configs.python = function()
     end
 
     require('lspconfig').pyright.setup {
-        on_attach = on_attach,
         capabilities = capabilities,
         root_dir = python_root_dir,
         settings = {
@@ -224,7 +215,6 @@ end
 
 lsp_configs.r = function()
     local r_config = {
-        on_attach = on_attach,
         flags = {
             debounce_text_changes = 300,
         },
@@ -244,14 +234,12 @@ end
 
 lsp_configs.latex = function()
     require('lspconfig').texlab.setup {
-        on_attach = on_attach,
         capabilities = capabilities,
     }
 end
 
 lsp_configs.bash = function()
     require('lspconfig').bashls.setup {
-        on_attach = on_attach,
         capabilities = capabilities,
     }
 end
@@ -261,7 +249,6 @@ lsp_configs.cpp = function()
     clangd_capabilities.offsetEncoding = { 'utf-16' }
 
     require('lspconfig').clangd.setup {
-        on_attach = on_attach,
         capabilities = clangd_capabilities,
     }
 end
@@ -270,9 +257,8 @@ lsp_configs.nvim = function()
     require('neodev').setup {}
 
     require('lspconfig').lua_ls.setup {
-        on_attach = function(client, bufnr)
+        on_attach = function(client, _)
             client.server_capabilities.documentFormattingProvider = false
-            on_attach(client, bufnr)
         end,
         capabilities = capabilities,
         settings = {
@@ -290,7 +276,6 @@ end
 
 lsp_configs.vim = function()
     require('lspconfig').vimls.setup {
-        on_attach = on_attach,
         capabilities = capabilities,
     }
 end
@@ -300,7 +285,12 @@ lsp_configs.sql = function()
         on_attach = function(client, bufnr)
             vim.cmd.packadd { 'sqls.nvim', bang = true }
 
-            on_attach(client, bufnr)
+            -- HACK: in nvim 0.9+, lspconfig will set &tagfunc to vim.lsp.tagfunc
+            -- automatically. For lsp that does not support workspace symbol, this
+            -- function may cause conflict because `cmp-nvim-tags` which uses tags to
+            -- search workspace symbol, leading to an error when `vim.lsp.tagfunc` is
+            -- called. To prev ent this behavior, we disable it.
+            vim.bo.tagfunc = nil
 
             -- The document formatting implementation of sqls is buggy.
             client.server_capabilities.documentFormattingProvider = false
@@ -335,9 +325,7 @@ lsp_configs.pinyin = function()
 end
 
 lsp_configs.go = function()
-    require('lspconfig').gopls.setup {
-        on_attach = on_attach,
-    }
+    require('lspconfig').gopls.setup {}
 end
 
 for _, lsp in pairs(enabled_lsps) do
@@ -348,8 +336,6 @@ vim.fn.sign_define('DiagnosticSignError', { text = '✗', texthl = 'DiagnosticSi
 vim.fn.sign_define('DiagnosticSignWarn', { text = '!', texthl = 'DiagnosticSignWarn' })
 vim.fn.sign_define('DiagnosticSignInformation', { text = '', texthl = 'DiagnosticSignInfo' })
 vim.fn.sign_define('DiagnosticSignHint', { text = '', texthl = 'DiagnosticSignHint' })
-
-local command = vim.api.nvim_create_user_command
 
 local has_virtual_text = false
 local has_underline = false
