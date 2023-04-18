@@ -210,13 +210,6 @@ end
 lsp_configs.r = function()
     require('lspconfig').r_language_server.setup {
         capabilities = capabilities,
-        settings = {
-            r = {
-                lsp = {
-                    diagnostics = false,
-                },
-            },
-        },
     }
 end
 
