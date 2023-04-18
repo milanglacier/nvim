@@ -384,6 +384,15 @@ autocmd('FileType', {
     end,
 })
 
+autocmd('FileType', {
+    group = my_augroup,
+    pattern = 'sql',
+    desc = 'set commentstring for sql',
+    callback = function()
+        vim.bo.commentstring = '-- %s'
+    end,
+})
+
 M.load.nvimr = function()
     vim.g.R_assign = 0
     vim.g.R_app = 'radian'
