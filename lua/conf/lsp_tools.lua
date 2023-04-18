@@ -1,6 +1,8 @@
 local M = {}
 M.load = {}
 local bufmap = vim.api.nvim_buf_set_keymap
+local autocmd = vim.api.nvim_create_autocmd
+local my_augroup = require('conf.builtin_extend').my_augroup
 
 M.load.lspkind = function()
     require('lspkind').init {
@@ -19,21 +21,32 @@ M.load.lspkind = function()
     }
 end
 
-M.signature = function(bufnr)
-    require('lsp_signature').on_attach({
-        bind = true, -- This is mandatory, otherwise border config won't get registered.
-        handler_opts = {
-            border = 'double',
-        },
-        floating_window = false,
-        toggle_key = '<A-x>',
-        floating_window_off_x = 15, -- adjust float windows x position.
-        floating_window_off_y = 15,
-        hint_enable = false,
-        -- hint_prefix = "",
-        -- doc_lines = 5,
-        time_interval = 100,
-    }, bufnr)
+M.load.signature = function()
+    autocmd('LspAttach', {
+        group = my_augroup,
+        desc = 'Attach signature',
+        callback = function(args)
+            local bufnr = args.buf
+            local client = vim.lsp.get_client_by_id(args.data.client_id)
+            if client.server_capabilities.signatureHelpProvider then
+                require('lsp_signature').on_attach({
+                    bind = true, -- This is mandatory, otherwise border config won't get registered.
+                    handler_opts = {
+                        border = 'double',
+                    },
+                    floating_window = false,
+                    toggle_key = '<A-s>',
+                    select_signature_key = '<A-S>',
+                    floating_window_off_x = 15, -- adjust float windows x position.
+                    floating_window_off_y = 15,
+                    hint_enable = false,
+                    -- hint_prefix = "",
+                    -- doc_lines = 5,
+                    time_interval = 100,
+                }, bufnr)
+            end
+        end,
+    })
 end
 
 M.load.aerial = function()
@@ -166,5 +179,6 @@ M.load.lspkind()
 M.load.lspsaga()
 M.load.refactor()
 M.load.nullls()
+M.load.signature()
 
 return M
