@@ -40,7 +40,6 @@ M.load.nvim_tree = function()
         git = {
             ignore = false,
         },
-        hijack_netrw = false,
     }
 
     local keymap = vim.api.nvim_set_keymap
