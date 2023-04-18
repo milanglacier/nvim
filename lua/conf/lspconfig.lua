@@ -55,40 +55,9 @@ local on_attach = function(client, bufnr)
     )
 
     -- hover
-    bufmap(
-        bufnr,
-        'n',
-        'gh',
-        '',
-        opts {
-            'lsp hover doc with builtin renderer.',
-            function()
-                vim.lsp.buf.hover()
-                -- after typing gh, within 400 milliseconds typing h will switch into the popup window
-                vim.api.nvim_buf_set_keymap(0, 'n', 'h', '', {
-                    callback = function()
-                        local current_buf = vim.api.nvim_get_current_buf()
-                        vim.lsp.buf.hover()
-                        vim.defer_fn(function()
-                            vim.api.nvim_buf_del_keymap(current_buf, 'n', 'h')
-                        end, 400)
-                    end,
-                })
-            end,
-        }
-    )
+    bufmap(bufnr, 'n', 'gh', '', opts { 'lsp hover', vim.lsp.buf.hover })
 
-    -- use glow-hover
-    bufmap(
-        bufnr,
-        'n',
-        'K',
-        '',
-        opts {
-            'lsp hover',
-            vim.lsp.buf.hover,
-        }
-    )
+    bufmap(bufnr, 'n', 'K', '', opts { 'lsp hover', vim.lsp.buf.hover })
 
     -- signaturehelp
     bufmap(bufnr, 'n', '<Leader>ls', '', opts { 'signature help', vim.lsp.buf.signature_help })
@@ -336,15 +305,15 @@ lsp_configs.sql = function()
             bufmap(bufnr, 'v', '<LocalLeader>sv', '<cmd>SqlsExecuteQueryVertical<CR>', { silent = true })
         end,
         capabilities = capabilities,
-        on_new_config = function(new_config, new_rootdir)
-            if vim.fn.filereadable(new_rootdir .. '/config.yml') == 1 then
-                new_config.cmd = {
-                    'sqls',
-                    '-config',
-                    new_rootdir .. '/config.yml',
-                }
-            end
-        end,
+        -- on_new_config = function(new_config, new_rootdir)
+        --     if vim.fn.filereadable(new_rootdir .. '/config.yml') == 1 then
+        --         new_config.cmd = {
+        --             'sqls',
+        --             '-config',
+        --             new_rootdir .. '/config.yml',
+        --         }
+        --     end
+        -- end,
     }
 end
 
