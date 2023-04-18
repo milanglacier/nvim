@@ -204,32 +204,20 @@ lsp_configs.python = function()
     require('lspconfig').pyright.setup {
         capabilities = capabilities,
         root_dir = python_root_dir,
-        settings = {
-            python = {},
-        },
-        flags = {
-            debounce_text_changes = 250,
-        },
     }
 end
 
 lsp_configs.r = function()
-    local r_config = {
-        flags = {
-            debounce_text_changes = 300,
-        },
+    require('lspconfig').r_language_server.setup {
         capabilities = capabilities,
         settings = {
             r = {
                 lsp = {
-                    log_file = '~/.cache/nvim/r_lsp_log.log',
-                    diagnostics = false, -- r-lsp + lintr is currently problematic
+                    diagnostics = false,
                 },
             },
         },
     }
-
-    require('lspconfig').r_language_server.setup(r_config)
 end
 
 lsp_configs.latex = function()
