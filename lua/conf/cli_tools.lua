@@ -22,11 +22,10 @@ M.load.gitsigns = function()
 end
 
 M.load.neogit = function()
-    keymap('n', '<Leader>gg', '<cmd>lua require("neogit").open()<CR>', { noremap = true, desc = 'Neogit' })
+    keymap('n', '<Leader>gg', '<cmd>Neogit<CR>', { noremap = true, desc = 'Neogit' })
 end
 
 M.load.diffview = function()
-    require 'diffview'
     keymap('n', '<Leader>gd', '<cmd>DiffviewOpen<CR>', { noremap = true })
     keymap('n', '<Leader>gf', '<cmd>DiffviewFileHistory<CR>', { noremap = true })
 end
