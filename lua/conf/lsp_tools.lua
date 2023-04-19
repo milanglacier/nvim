@@ -103,12 +103,10 @@ M.load.lspsaga = function()
 end
 
 M.load.refactor = function()
-    vim.cmd.packadd { 'refactoring.nvim', bang = true }
     require('refactoring').setup {}
 end
 
 M.load.nullls = function()
-    vim.cmd.packadd { 'null-ls.nvim', bang = true }
 
     local null_ls = require 'null-ls'
     local util = require 'null-ls.utils'

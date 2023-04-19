@@ -5,7 +5,6 @@ local autocmd = vim.api.nvim_create_autocmd
 local my_augroup = require('conf.builtin_extend').my_augroup
 
 M.load.lualine = function()
-    vim.cmd.packadd { 'lualine.nvim', bang = true }
     -- Override 'encoding': Don't display if encoding is UTF-8.
     local encoding = function()
         local ret, _ = (vim.bo.fenc or vim.go.enc):gsub('^utf%-8$', '')
@@ -234,8 +233,6 @@ M.get_workspace_diff = function()
 end
 
 M.load.notify = function()
-    vim.cmd.packadd { 'nvim-notify', bang = true }
-
     vim.notify = require 'notify'
 
     require('notify').setup {
@@ -249,12 +246,10 @@ M.load.notify = function()
 end
 
 M.load.devicons = function()
-    vim.cmd.packadd { 'nvim-web-devicons', bang = true }
     require('nvim-web-devicons').setup()
 end
 
 M.load.trouble = function()
-    vim.cmd.packadd { 'trouble.nvim', bang = true }
     require('trouble').setup {
         mode = 'quickfix',
         action_keys = {
@@ -289,7 +284,6 @@ M.load.trouble = function()
 end
 
 M.load.which_key = function()
-    vim.cmd.packadd { 'which-key.nvim', bang = true }
     local which_key = require 'which-key'
     which_key.setup {
         triggers = { '<leader>', '<localleader>', 'g', 'z', ']', '[', '`', '"', [[']], '@' },
@@ -372,7 +366,6 @@ M.load.which_key = function()
 end
 
 M.winbar_symbol = function()
-    vim.cmd.packadd { 'nvim-navic', bang = true }
     local navic = require 'nvim-navic'
 
     if navic.is_available() then

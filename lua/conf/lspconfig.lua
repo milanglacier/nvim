@@ -1,12 +1,3 @@
--- Mappings.
--- See `:help vim.diagnostic.*` for documentation on any of the below functions
-vim.cmd.packadd { 'nvim-lspconfig', bang = true }
-vim.cmd.packadd { 'lspsaga.nvim', bang = true }
-vim.cmd.packadd { 'aerial.nvim', bang = true }
-vim.cmd.packadd { 'lsp_signature.nvim', bang = true }
-vim.cmd.packadd { 'neodev.nvim', bang = true }
-vim.cmd.packadd { 'nvim-navic', bang = true }
-
 local opts = function(options)
     return {
         noremap = true,
@@ -264,7 +255,6 @@ end
 lsp_configs.sql = function()
     require('lspconfig').sqls.setup {
         on_attach = function(client, bufnr)
-            vim.cmd.packadd { 'sqls.nvim', bang = true }
 
             -- HACK: in nvim 0.9+, lspconfig will set &tagfunc to vim.lsp.tagfunc
             -- automatically. For lsp that does not support workspace symbol, this

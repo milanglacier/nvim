@@ -8,6 +8,8 @@ local command = vim.api.nvim_create_user_command
 local bufcmd = vim.api.nvim_buf_create_user_command
 local bufmap = vim.api.nvim_buf_set_keymap
 
+local lazy = require 'lazy'
+
 local function opts_desc(opts)
     return {
         desc = opts[1],
@@ -247,10 +249,6 @@ end, {
 })
 
 M.load.pandoc = function()
-    vim.cmd.packadd { 'vim-pandoc-syntax', bang = true }
-    vim.cmd.packadd { 'vim-rmarkdown', bang = true }
-    vim.cmd.packadd { 'quarto-vim', bang = true }
-
     vim.filetype.add {
         extension = {
             md = 'markdown.pandoc',
@@ -262,10 +260,11 @@ M.load.pandoc = function()
     vim.g.r_indent_ess_compatible = 0
 
     vim.g['pandoc#syntax#codeblocks#embeds#langs'] = { 'python', 'R=r', 'r', 'bash=sh', 'json' }
+
+    lazy.load { plugins = { 'vim-pandoc-syntax', 'vim-rmarkdown', 'quarto-vim' } }
 end
 
 M.load.vimtex = function()
-    vim.cmd.packadd { 'vimtex', bang = true }
     vim.g.vimtex_mappings_enabled = 0
     vim.g.vimtex_imaps_enabled = 0
     vim.g.tex_flavor = 'latex'
@@ -282,6 +281,8 @@ M.load.vimtex = function()
         vim.g.vimtex_view_skim_sync = 1
         vim.g.vimtex_view_skim_activate = 1
     end
+
+    lazy.load { plugins = { 'vimtex' } }
 
     autocmd('FileType', {
         pattern = 'tex',
@@ -411,6 +412,8 @@ M.load.nvimr = function()
     -- only manually invoke nvimr's omni completion,
     -- do not auto trigger it
 
+    lazy.load { plugins = { 'Nvim-R' } }
+
     autocmd('FileType', {
         pattern = { 'r', 'rmd' },
         group = my_augroup,
@@ -447,13 +450,9 @@ M.load.nvimr = function()
             bufmap(0, 'n', '<Localleader>dv', '<Plug>RViewDFv', opts_desc { 'R dataframe vsplit' })
         end,
     })
-
-    vim.cmd.packadd { 'Nvim-R', bang = true }
 end
 
 M.load.quarto = function()
-    vim.cmd.packadd { 'otter.nvim' }
-    vim.cmd.packadd { 'nvim-lspconfig' }
     autocmd('FileType', {
         pattern = 'quarto',
         group = my_augroup,

@@ -1,9 +1,3 @@
-vim.cmd.packadd { 'telescope.nvim', bang = true }
-vim.cmd.packadd { 'telescope-fzf-native.nvim', bang = true }
-vim.cmd.packadd { 'telescope-ui-select.nvim', bang = true }
-vim.cmd.packadd { 'project.nvim', bang = true }
-vim.cmd.packadd { 'nvim-notify', bang = true }
-
 local telescope = require 'telescope'
 
 telescope.setup {

@@ -1,161 +1,158 @@
-local max_jobs = nil
--- if #list_uis() == 0, then nvim runs in headless mode,
--- there's a packer bug:
--- in headless mode, max_jobs must be nil,
--- in TUI mode, max_jobs shouldn't be too large
-if #vim.api.nvim_list_uis() > 0 then
-    max_jobs = 10
-end
-
-require('packer').init {
-    compile_on_sync = false,
-    max_jobs = max_jobs,
-}
-
-require('packer').startup(function(use)
-    use { 'wbthomason/packer.nvim' }
+require('lazy').setup({
+    { 'folke/lazy.nvim' },
 
     -- colorschemes
-    use { 'EdenEast/nightfox.nvim', opt = true }
-    use { 'rose-pine/neovim', as = 'rose-pine', opt = true }
-    use { 'folke/tokyonight.nvim', branch = 'main', opt = true }
-    use { 'sainnhe/everforest', opt = true }
-    use { 'sainnhe/edge', opt = true }
-    use { 'ellisonleao/gruvbox.nvim', opt = true }
-    use { 'rebelot/kanagawa.nvim', opt = true }
-    use { 'catppuccin/nvim', as = 'catppuccin', opt = true }
+    { 'EdenEast/nightfox.nvim' },
+    { 'rose-pine/neovim', name = 'rose-pine' },
+    { 'folke/tokyonight.nvim', branch = 'main' },
+    { 'sainnhe/everforest' },
+    { 'sainnhe/edge' },
+    { 'ellisonleao/gruvbox.nvim' },
+    { 'rebelot/kanagawa.nvim' },
+    { 'catppuccin/nvim', name = 'catppuccin' },
 
     -- Fix bugs and Utilities
-    use { 'ahmedkhalf/project.nvim', opt = true }
-    use { 'kyazdani42/nvim-tree.lua', opt = true } -- file explorer
-    use { 'milanglacier/smartim', opt = true } -- automatically switch input method when switch mode
-    use { 'sindrets/winshift.nvim', opt = true }
-    use {
-        'glacambre/firenvim',
-        opt = true,
-        run = function()
-            vim.fn['firenvim#install'](0)
-        end,
-    }
+    { 'ahmedkhalf/project.nvim' },
+    { 'kyazdani42/nvim-tree.lua' }, -- file explorer
+    { 'milanglacier/smartim' }, -- automatically switch input method when switch mode
+    { 'sindrets/winshift.nvim' },
 
     -- UI
-    use { 'nvim-lualine/lualine.nvim', opt = true }
-    use { 'rcarriga/nvim-notify', opt = true }
-    use { 'echasnovski/mini.nvim', opt = true }
-    use { 'folke/trouble.nvim', opt = true }
-    use { 'folke/which-key.nvim', opt = true }
-    use { 'kyazdani42/nvim-web-devicons', opt = true }
+    { 'nvim-lualine/lualine.nvim' },
+    { 'rcarriga/nvim-notify' },
+    { 'echasnovski/mini.nvim' },
+    { 'folke/trouble.nvim' },
+    { 'folke/which-key.nvim' },
+    { 'kyazdani42/nvim-web-devicons' },
 
     -- text-editing, motions, jumps tools
-    use { 'justinmk/vim-sneak' }
-    use { 'junegunn/vim-easy-align' }
-    use { 'tpope/vim-repeat' }
-    use { 'michaeljsmith/vim-indent-object' }
-    use { 'AndrewRadev/dsf.vim' }
-    use { 'gbprod/substitute.nvim' }
-    use { 'andymass/vim-matchup' }
-    use { 'tommcdo/vim-exchange' }
-    use { 'kana/vim-textobj-user' }
-    use { 'D4KU/vim-textobj-chainmember', opt = true }
-    use { 'thinca/vim-textobj-between', opt = true }
-    use { 'monaqa/dial.nvim', opt = true }
+    { 'justinmk/vim-sneak' },
+    { 'junegunn/vim-easy-align' },
+    { 'tpope/vim-repeat', lazy = false },
+    { 'michaeljsmith/vim-indent-object', lazy = false },
+    { 'AndrewRadev/dsf.vim' },
+    { 'gbprod/substitute.nvim' },
+    { 'andymass/vim-matchup' },
+    { 'tommcdo/vim-exchange' },
+    { 'kana/vim-textobj-user' },
+    { 'D4KU/vim-textobj-chainmember' },
+    { 'thinca/vim-textobj-between' },
+    { 'monaqa/dial.nvim' },
 
     -- text editing tools only for nvim
-    use { 'norcalli/nvim-colorizer.lua', opt = true }
-    use { 'folke/todo-comments.nvim', opt = true }
+    { 'norcalli/nvim-colorizer.lua' },
+    { 'folke/todo-comments.nvim' },
 
     -- Tree sitter for enhanced text obj and syntax capturality
-    use {
+    {
         'nvim-treesitter/nvim-treesitter',
-        run = function()
+        build = function()
             require('nvim-treesitter.install').update { sync = true }
         end,
-    }
-    use { 'nvim-treesitter/nvim-treesitter-textobjects', opt = true }
-    use { 'HiPhish/nvim-ts-rainbow2', opt = true }
-    use { 'mfussenegger/nvim-treehopper', opt = true }
-    use { 'mizlan/iswap.nvim', opt = true }
-    use { 'romgrk/nvim-treesitter-context', opt = true }
-    use { 'JoosepAlviste/nvim-ts-context-commentstring', opt = true }
-    use { 'cshuaimin/ssr.nvim', bang = true }
+    },
+    { 'nvim-treesitter/nvim-treesitter-textobjects' },
+    { 'HiPhish/nvim-ts-rainbow2' },
+    { 'mfussenegger/nvim-treehopper' },
+    { 'mizlan/iswap.nvim' },
+    { 'romgrk/nvim-treesitter-context' },
+    { 'JoosepAlviste/nvim-ts-context-commentstring' },
+    { 'cshuaimin/ssr.nvim' },
 
     -- Set markdown/rmd/quarto syntax highlighting
-    use { 'vim-pandoc/vim-pandoc-syntax', opt = true }
-    use { 'vim-pandoc/vim-rmarkdown', branch = 'official-filetype', opt = true }
-    use { 'quarto-dev/quarto-vim', opt = true }
+    { 'vim-pandoc/vim-pandoc-syntax' },
+    { 'vim-pandoc/vim-rmarkdown', branch = 'official-filetype' },
+    { 'quarto-dev/quarto-vim' },
 
     -- Fuzzy finder for file search
-    use { 'nvim-lua/plenary.nvim' }
-    use { 'nvim-telescope/telescope.nvim', opt = true }
-    use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', opt = true }
-    use { 'nvim-telescope/telescope-ui-select.nvim', opt = true }
+    { 'nvim-lua/plenary.nvim' },
+    { 'nvim-telescope/telescope.nvim' },
+    { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+    { 'nvim-telescope/telescope-ui-select.nvim' },
 
     -- LSP config
-    use { 'neovim/nvim-lspconfig', opt = true }
+    { 'neovim/nvim-lspconfig' },
 
     -- lsp related tools, including lsp symbols, symbol outline, etc.
-    use { 'glepnir/lspsaga.nvim', opt = true }
-    use { 'stevearc/aerial.nvim', opt = true }
-    use { 'onsails/lspkind-nvim', opt = true }
-    use { 'ray-x/lsp_signature.nvim', opt = true }
-    use { 'jose-elias-alvarez/null-ls.nvim', opt = true }
-    use { 'ThePrimeagen/refactoring.nvim', opt = true }
-    use { 'SmiteshP/nvim-navic', opt = true }
+    { 'glepnir/lspsaga.nvim' },
+    { 'stevearc/aerial.nvim' },
+    { 'onsails/lspkind-nvim' },
+    { 'ray-x/lsp_signature.nvim' },
+    { 'jose-elias-alvarez/null-ls.nvim' },
+    { 'ThePrimeagen/refactoring.nvim' },
+    { 'SmiteshP/nvim-navic' },
 
     -- Completion
-    use { 'hrsh7th/cmp-nvim-lsp', opt = true }
-    use { 'hrsh7th/cmp-buffer', opt = true }
-    use { 'hrsh7th/cmp-path', opt = true }
-    use { 'hrsh7th/cmp-cmdline', opt = true }
-    use { 'hrsh7th/nvim-cmp', opt = true }
-    use { 'hrsh7th/cmp-nvim-lua', opt = true }
-    use { 'kdheepak/cmp-latex-symbols', opt = true }
-    use { 'L3MON4D3/LuaSnip', opt = true }
-    use { 'saadparwaiz1/cmp_luasnip', opt = true }
-    use { 'quangnguyen30192/cmp-nvim-tags', opt = true }
-    use { 'petertriho/cmp-git', opt = true }
-    use { 'rafamadriz/friendly-snippets', opt = true }
+    {
+        'hrsh7th/nvim-cmp',
+        dependencies = {
+            { 'hrsh7th/cmp-nvim-lsp' },
+            { 'hrsh7th/cmp-buffer' },
+            { 'hrsh7th/cmp-path' },
+            { 'hrsh7th/cmp-cmdline' },
+            { 'hrsh7th/cmp-nvim-lua' },
+            { 'kdheepak/cmp-latex-symbols' },
+            { 'L3MON4D3/LuaSnip' },
+            { 'saadparwaiz1/cmp_luasnip' },
+            { 'quangnguyen30192/cmp-nvim-tags' },
+            { 'petertriho/cmp-git' },
+            { 'rafamadriz/friendly-snippets' },
+        },
+    },
 
     -- language development
-    use { 'folke/neodev.nvim', opt = true }
-    use { 'nanotee/sqls.nvim', opt = true }
+    { 'folke/neodev.nvim' },
+    { 'nanotee/sqls.nvim' },
 
     -- cli tools
 
     -- installer
-    use { 'williamboman/mason.nvim', opt = true }
+    { 'williamboman/mason.nvim' },
     -- neovim installer that helps you to install external command line
     -- programs
 
     -- REPL
-    use { 'jalvesaq/Nvim-R', opt = true }
-    use { 'Vigemus/iron.nvim', opt = true }
-    use { 'akinsho/toggleterm.nvim', opt = true }
-    use { 'goerz/jupytext.vim', opt = true }
+    { 'jalvesaq/Nvim-R' },
+    { 'Vigemus/iron.nvim' },
+    { 'akinsho/toggleterm.nvim' },
+    { 'goerz/jupytext.vim' },
 
     -- Git
-    use { 'lewis6991/gitsigns.nvim', opt = true }
-    use { 'TimUntersberger/neogit', opt = true }
-    use { 'sindrets/diffview.nvim', opt = true }
+    { 'lewis6991/gitsigns.nvim' },
+    { 'TimUntersberger/neogit' },
+    { 'sindrets/diffview.nvim' },
 
     -- Other cli tools, ripgrep, hover, markdown, etc
-    use { 'nvim-pack/nvim-spectre', opt = true }
-    use { 'iamcco/markdown-preview.nvim', run = 'cd app && npm install', opt = true }
-    use { 'ludovicchabant/vim-gutentags', opt = true }
-    use { 'nvim-orgmode/orgmode', opt = true }
-    use { 'lervag/vimtex', opt = true }
-    use { 'jmbuhr/otter.nvim', opt = true }
-    use { 'zbirenbaum/copilot.lua', opt = true }
+    { 'nvim-pack/nvim-spectre' },
+    { 'iamcco/markdown-preview.nvim', build = 'cd app && npm install' },
+    { 'ludovicchabant/vim-gutentags' },
+    { 'nvim-orgmode/orgmode' },
+    { 'lervag/vimtex' },
+    { 'jmbuhr/otter.nvim' },
+    { 'zbirenbaum/copilot.lua' },
 
     -- Debugger
-    use { 'mfussenegger/nvim-dap', opt = true }
-    use { 'mfussenegger/nvim-dap-python', opt = true }
-    use { 'leoluz/nvim-dap-go', opt = true }
-    use { 'rcarriga/nvim-dap-ui', opt = true }
-    use { 'nvim-telescope/telescope-dap.nvim', opt = true }
-    use { 'theHamsta/nvim-dap-virtual-text', opt = true }
-
-    if PACKER_BOOTSTRAP_SUCCESS then
-        require('packer').sync()
-    end
-end)
+    { 'mfussenegger/nvim-dap' },
+    { 'mfussenegger/nvim-dap-python' },
+    { 'leoluz/nvim-dap-go' },
+    { 'rcarriga/nvim-dap-ui' },
+    { 'nvim-telescope/telescope-dap.nvim' },
+    { 'theHamsta/nvim-dap-virtual-text' },
+}, {
+    defaults = {
+        lazy = true,
+    },
+    performance = {
+        rtp = {
+            disabled_plugins = {
+                'gzip',
+                'matchit',
+                'matchparen',
+                'netrwPlugin',
+                'tarPlugin',
+                'tohtml',
+                'tutor',
+                'zipPlugin',
+            },
+        },
+    },
+})

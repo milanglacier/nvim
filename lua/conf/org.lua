@@ -1,5 +1,3 @@
-vim.cmd.packadd { 'orgmode', bang = true }
-
 local M = {}
 
 require('orgmode').setup_ts_grammar()

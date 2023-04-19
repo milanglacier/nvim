@@ -6,13 +6,13 @@ local my_augroup = require('conf.builtin_extend').my_augroup
 local autocmd = vim.api.nvim_create_autocmd
 local keymap = vim.api.nvim_set_keymap
 
+local lazy = require 'lazy'
+
 M.load.mini_pairs = function()
-    vim.cmd.packadd { 'mini.nvim', bang = true }
     require('mini.pairs').setup {}
 end
 
 M.load.mini_comment = function()
-    vim.cmd.packadd { 'mini.nvim', bang = true }
     require('mini.comment').setup {
         hooks = {
             pre = function()
@@ -42,6 +42,8 @@ M.load.dsf = function()
     keymap('n', 'csf', '<Plug>DsfChange', { silent = true })
     keymap('n', 'dsnf', '<Plug>DsfNextDelete', { silent = true })
     keymap('n', 'csnf', '<Plug>DsfNextChange', { silent = true })
+
+    lazy.load { plugins = { 'dsf.vim' } }
 end
 
 M.load.matchup = function()
@@ -49,6 +51,8 @@ M.load.matchup = function()
     keymap('n', '%', '<plug>(matchup-z%)', {})
     keymap('o', '%', '<plug>(matchup-z%)', {})
     keymap('x', '%', '<plug>(matchup-z%)', {})
+
+    lazy.load { plugins = { 'vim-matchup' } }
 end
 
 M.load.sneak = function()
@@ -64,10 +68,11 @@ M.load.sneak = function()
     keymap('', 'F', '<Plug>Sneak_F', {})
     keymap('', 't', '<Plug>Sneak_t', {})
     keymap('', 'T', '<Plug>Sneak_T', {})
+
+    lazy.load { plugins = { 'vim-sneak' } }
 end
 
 M.load.mini_ai = function()
-    vim.cmd.packadd { 'mini.nvim', bang = true }
     require('mini.ai').setup {
         search_method = 'cover',
         mappings = {
@@ -85,7 +90,6 @@ M.load.mini_ai = function()
 end
 
 M.load.mini_surround = function()
-    vim.cmd.packadd { 'mini.nvim', bang = true }
     require('mini.surround').setup {
         mappings = {
             add = '<Plug>(mini-surround-add)',
@@ -116,9 +120,6 @@ M.load.substitute = function()
 end
 
 M.load.textobj = function()
-    vim.cmd.packadd { 'vim-textobj-chainmember', bang = true }
-    vim.cmd.packadd { 'vim-textobj-between', bang = true }
-
     vim.g.textobj_between_no_default_key_mappings = 1
     vim.g.textobj_chainmember_no_default_key_mappings = 1
 
@@ -131,20 +132,22 @@ M.load.textobj = function()
     keymap('o', 'i.', '<Plug>(textobj-chainmember-i)', {})
     keymap('x', 'a.', '<Plug>(textobj-chainmember-a)', {})
     keymap('x', 'i.', '<Plug>(textobj-chainmember-i)', {})
+
+    lazy.load { plugins = { 'vim-textobj-user', 'vim-textobj-between', 'vim-textobj-chainmember' } }
 end
 
 M.load.colorizer = function()
-    vim.cmd.packadd { 'nvim-colorizer.lua', bang = true }
     require('colorizer').setup()
 end
 
 M.load.easy_align = function()
     keymap('x', 'ga', '<Plug>(EasyAlign)', {})
     keymap('n', 'ga', '<Plug>(EasyAlign)', {})
+
+    lazy.load { plugins = { 'vim-easy-align' } }
 end
 
 M.load.mini_block_move = function()
-    vim.cmd.packadd { 'mini.nvim', bang = true }
     require('mini.move').setup {
         mappings = {
             line_left = '',
@@ -157,12 +160,10 @@ M.load.mini_block_move = function()
 end
 
 M.load.todo_comments = function()
-    vim.cmd.packadd { 'todo-comments.nvim', bang = true }
     require('todo-comments').setup {}
 end
 
 M.load.dial = function()
-    vim.cmd.packadd { 'dial.nvim', bang = true }
     local augend = require 'dial.augend'
     local universal = {
         augend.integer.alias.decimal_int, -- nonnegative decimal number (0, 1, 2, 3, ...)

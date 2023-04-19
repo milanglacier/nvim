@@ -1,16 +1,3 @@
-vim.cmd.packadd { 'nvim-cmp', bang = true }
-vim.cmd.packadd { 'cmp-nvim-lsp', bang = true }
-vim.cmd.packadd { 'cmp-buffer', bang = true }
-vim.cmd.packadd { 'cmp-path', bang = true }
-vim.cmd.packadd { 'cmp-cmdline', bang = true }
-vim.cmd.packadd { 'cmp-nvim-lua', bang = true }
-vim.cmd.packadd { 'cmp-latex-symbols', bang = true }
-vim.cmd.packadd { 'cmp_luasnip', bang = true }
-vim.cmd.packadd { 'cmp-nvim-tags', bang = true }
-vim.cmd.packadd { 'cmp-git', bang = true }
-
-vim.cmd.packadd { 'lspkind-nvim', bang = true }
-
 local cmp = require 'cmp'
 local types = require 'cmp.types'
 local lspkind = require 'lspkind'

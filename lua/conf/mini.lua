@@ -1,8 +1,3 @@
-vim.cmd.packadd { 'mini.nvim', bang = true }
-
-require('mini.cursorword').setup {}
-require('mini.misc').setup {}
-
 local M = {}
 
 local header_verse = {
@@ -142,5 +137,7 @@ autocmd('ColorScheme', {
         highlight_link { linked = 'MiniCursorwordCurrent', linking = 'CursorLine' }
     end,
 })
+
+require('mini.cursorword').setup {}
 
 return M

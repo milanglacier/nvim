@@ -1,21 +1,8 @@
 local M = {}
-local is_on_start = true
 
 local function colorscheme_cmd(bg, theme)
     vim.o.background = bg
     vim.cmd.colorscheme(theme)
-end
-
--- packadd! will source /plugin/* at startup
--- packadd will source /plugin/* immediately
--- so calling packadd! after nvim already started
--- will not source those files
-local function packadd(theme_pkg)
-    if is_on_start then
-        vim.cmd.packadd { theme_pkg, bang = true }
-    else
-        vim.cmd.packadd(theme_pkg)
-    end
 end
 
 local night_scheme_options = {
@@ -29,33 +16,26 @@ local night_scheme_options = {
         'catppuccin',
     },
     cmd = {
+        function() end,
         function()
-            packadd [[nightfox.nvim]]
-        end,
-        function()
-            packadd [[rose-pine]]
             require('rose-pine').setup {
                 dark_variant = 'moon',
                 disable_italics = true,
             }
         end,
         function()
-            packadd [[tokyonight.nvim]]
             vim.g.tokyonight_style = 'night'
             vim.g.tokyonight_italic_keywords = false
             vim.g.tokyonight_italic_comments = false
         end,
         function()
-            packadd [[everforest]]
             vim.g.everforest_background = 'soft'
             vim.g.everforest_diagnostic_virtual_text = 'colored'
             vim.g.everforest_better_performance = 1
+            require('lazy').load { plugins = { 'everforest' } }
         end,
+        function() end,
         function()
-            packadd [[gruvbox.nvim]]
-        end,
-        function()
-            packadd [[kanagawa.nvim]]
             require('kanagawa').setup {
                 globalStatus = vim.o.laststatus == 3,
                 commentStyle = { italic = false },
@@ -65,7 +45,6 @@ local night_scheme_options = {
             }
         end,
         function()
-            packadd [[catppuccin]]
             vim.g.catppuccin_flavour = 'mocha'
             require('catppuccin').setup {
                 term_colors = true,
@@ -106,37 +85,29 @@ local day_scheme_options = {
         'catppuccin',
     },
     cmd = {
+        function() end,
         function()
-            packadd [[nightfox.nvim]]
-        end,
-        function()
-            packadd [[rose-pine]]
             require('rose-pine').setup {
                 disable_italics = true,
             }
         end,
         function()
-            packadd [[tokyonight.nvim]]
             vim.g.tokyonight_style = 'day'
             vim.g.tokyonight_italic_keywords = false
             vim.g.tokyonight_italic_comments = false
         end,
         function()
-            packadd [[everforest]]
             vim.g.everforest_background = 'soft'
             vim.g.everforest_diagnostic_virtual_text = 'colored'
             vim.g.everforest_better_performance = 1
         end,
+        function() end,
         function()
-            packadd [[gruvbox.nvim]]
-        end,
-        function()
-            packadd [[edge]]
             vim.g.edge_diagnostic_virtual_text = 'colored'
             vim.g.edge_better_performance = 1
+            require('lazy').load { plugins = { 'edge' } }
         end,
         function()
-            packadd [[catppuccin]]
             vim.g.catppuccin_flavour = 'latte'
             require('catppuccin').setup {
                 term_colors = true,
@@ -278,7 +249,6 @@ M.switch_colorscheme_with_day_night()
 -- the color scheme at start up is loaded, next will
 -- change the state to indicate when loading a new theme
 -- at run time, /plugin/* should be sourced
-is_on_start = false
 
 local keymap = vim.api.nvim_set_keymap
 

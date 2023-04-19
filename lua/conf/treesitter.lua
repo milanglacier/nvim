@@ -1,7 +1,3 @@
-vim.cmd.packadd { 'nvim-treesitter-textobjects', bang = true }
-vim.cmd.packadd { 'nvim-ts-rainbow2', bang = true }
-vim.cmd.packadd { 'nvim-ts-context-commentstring', bang = true }
-
 local keymap = vim.api.nvim_set_keymap
 
 require('nvim-treesitter.configs').setup {
@@ -173,11 +169,6 @@ require('nvim-treesitter.configs').setup {
 }
 
 if not vim.g.vscode then
-    vim.cmd.packadd { 'nvim-treehopper', bang = true }
-    vim.cmd.packadd { 'nvim-treesitter-context', bang = true }
-    vim.cmd.packadd { 'iswap.nvim', bang = true }
-    vim.cmd.packadd { 'ssr.nvim', bang = true }
-
     local opts = function(desc)
         return {
             silent = true,

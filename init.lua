@@ -1,18 +1,17 @@
-local packer_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
-local need_bootstrap = not pcall(require, 'packer')
-
+local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
+local need_bootstrap = not vim.loop.fs_stat(lazypath)
 if need_bootstrap then
-    PACKER_BOOTSTRAP_SUCCESS =
-        vim.fn.system { 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', packer_path }
-    vim.cmd.packadd 'packer.nvim'
-    local autocmd = vim.api.nvim_create_autocmd
-    autocmd('User', {
-        pattern = 'PackerComplete',
-        command = 'quitall',
-    })
-else
-    vim.loader.enable()
+    vim.fn.system {
+        'git',
+        'clone',
+        '--filter=blob:none',
+        'https://github.com/folke/lazy.nvim.git',
+        lazypath,
+    }
 end
+
+vim.opt.rtp:prepend(lazypath)
+vim.loader.enable()
 
 require 'basic_settings'
 require 'load_plugins'
