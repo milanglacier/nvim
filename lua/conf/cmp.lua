@@ -158,6 +158,8 @@ local function load_cmp()
 end
 
 autocmd({ 'InsertEnter', 'CmdlineEnter' }, {
+    group = my_augroup,
+    desc = 'Load cmp',
     once = true,
     callback = function()
         if not did_load_cmp then
