@@ -23,6 +23,7 @@ require('lazy').setup({
     { 'echasnovski/mini.nvim' },
     { 'folke/trouble.nvim' },
     { 'folke/which-key.nvim' },
+    { 'lukas-reineke/indent-blankline.nvim' },
     { 'kyazdani42/nvim-web-devicons' },
 
     -- text-editing, motions, jumps tools

@@ -3,6 +3,7 @@ M.load = {}
 
 local autocmd = vim.api.nvim_create_autocmd
 local my_augroup = require('conf.builtin_extend').my_augroup
+local set_hl = vim.api.nvim_set_hl
 
 M.load.lualine = function()
     -- Override 'encoding': Don't display if encoding is UTF-8.
@@ -365,6 +366,15 @@ M.load.which_key = function()
     })
 end
 
+M.load.indent_blankline = function()
+    require('indent_blankline').setup {
+        char = '┆',
+        context_char = '┆',
+        show_current_context = true,
+    }
+    set_hl(0, 'IndentBlanklineContextChar', { link = 'Type' })
+end
+
 M.winbar_symbol = function()
     local navic = require 'nvim-navic'
 
@@ -414,6 +424,7 @@ M.load.lualine()
 M.load.notify()
 M.load.trouble()
 M.load.which_key()
+M.load.indent_blankline()
 M.set_git_workspace_diff()
 
 return M

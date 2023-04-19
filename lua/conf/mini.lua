@@ -109,13 +109,6 @@ M.change_verses = function()
     _G.MiniStarter.refresh()
 end
 
-require('mini.indentscope').setup {
-    mappings = {
-        object_scope = '',
-        object_scope_with_border = '',
-    },
-}
-
 local my_augroup = require('conf.builtin_extend').my_augroup
 local autocmd = vim.api.nvim_create_autocmd
 local set_hl = vim.api.nvim_set_hl
