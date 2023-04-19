@@ -33,7 +33,7 @@ require('lazy').setup({
     { 'AndrewRadev/dsf.vim' },
     { 'gbprod/substitute.nvim' },
     { 'andymass/vim-matchup' },
-    { 'tommcdo/vim-exchange' },
+    { 'tommcdo/vim-exchange', lazy = false },
     { 'kana/vim-textobj-user' },
     { 'D4KU/vim-textobj-chainmember' },
     { 'thinca/vim-textobj-between' },
