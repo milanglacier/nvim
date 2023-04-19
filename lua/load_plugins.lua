@@ -49,14 +49,16 @@ require('lazy').setup({
         build = function()
             require('nvim-treesitter.install').update { sync = true }
         end,
+        dependencies = {
+            { 'nvim-treesitter/nvim-treesitter-textobjects' },
+            { 'HiPhish/nvim-ts-rainbow2' },
+            { 'mfussenegger/nvim-treehopper' },
+            { 'mizlan/iswap.nvim' },
+            { 'romgrk/nvim-treesitter-context' },
+            { 'JoosepAlviste/nvim-ts-context-commentstring' },
+            { 'cshuaimin/ssr.nvim' },
+        },
     },
-    { 'nvim-treesitter/nvim-treesitter-textobjects' },
-    { 'HiPhish/nvim-ts-rainbow2' },
-    { 'mfussenegger/nvim-treehopper' },
-    { 'mizlan/iswap.nvim' },
-    { 'romgrk/nvim-treesitter-context' },
-    { 'JoosepAlviste/nvim-ts-context-commentstring' },
-    { 'cshuaimin/ssr.nvim' },
 
     -- Set markdown/rmd/quarto syntax highlighting
     { 'vim-pandoc/vim-pandoc-syntax' },
@@ -82,10 +84,14 @@ require('lazy').setup({
     { 'SmiteshP/nvim-navic' },
 
     -- Completion
+
+    -- nvim-lspconfig requires cmp-nvim-lsp, so we shouldn't consider
+    -- cmp-nvim-lsp as dependencies of nvim-cmp because all the dependencies
+    -- will be loaded at once.
+    { 'hrsh7th/cmp-nvim-lsp' },
     {
         'hrsh7th/nvim-cmp',
         dependencies = {
-            { 'hrsh7th/cmp-nvim-lsp' },
             { 'hrsh7th/cmp-buffer' },
             { 'hrsh7th/cmp-path' },
             { 'hrsh7th/cmp-cmdline' },
@@ -118,8 +124,8 @@ require('lazy').setup({
 
     -- Git
     { 'lewis6991/gitsigns.nvim' },
-    { 'TimUntersberger/neogit' },
-    { 'sindrets/diffview.nvim' },
+    { 'TimUntersberger/neogit', cmd = 'Neogit' },
+    { 'sindrets/diffview.nvim', cmd = { 'DiffviewOpen', 'DiffviewFileHistory' } },
 
     -- Other cli tools, ripgrep, hover, markdown, etc
     { 'nvim-pack/nvim-spectre' },
