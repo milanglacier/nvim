@@ -103,11 +103,31 @@ M.load.lspsaga = function()
 end
 
 M.load.refactor = function()
-    require('refactoring').setup {}
+    autocmd('FileType', {
+        pattern = { 'go', 'python', 'lua' },
+        once = true,
+        desc = 'Load refactoring.nvim',
+        callback = function()
+            require('refactoring').setup {}
+            bufmap(
+                0,
+                'n',
+                '<Leader>lr',
+                '<CMD>lua require("refactoring").select_refactor()<CR>',
+                { desc = 'refactoring' }
+            )
+            bufmap(
+                0,
+                'v',
+                '<Leader>lr',
+                ':lua require("refactoring").select_refactor()<CR>',
+                { desc = 'refactoring' }
+            )
+        end,
+    })
 end
 
 M.load.nullls = function()
-
     local null_ls = require 'null-ls'
     local util = require 'null-ls.utils'
     local helper = require 'null-ls.helpers'
