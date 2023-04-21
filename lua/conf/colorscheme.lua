@@ -5,145 +5,158 @@ local function colorscheme_cmd(bg, theme)
     vim.cmd.colorscheme(theme)
 end
 
-local night_scheme_options = {
-    name = {
-        'nightfox',
-        'rose-pine',
-        'tokyonight',
-        'everforest',
-        'gruvbox',
-        'kanagawa',
-        'catppuccin',
-    },
-    cmd = {
-        function() end,
-        function()
-            require('rose-pine').setup {
-                dark_variant = 'moon',
-                disable_italics = true,
-            }
-        end,
-        function()
-            vim.g.tokyonight_style = 'night'
-            vim.g.tokyonight_italic_keywords = false
-            vim.g.tokyonight_italic_comments = false
-        end,
-        function()
-            vim.g.everforest_background = 'soft'
-            vim.g.everforest_diagnostic_virtual_text = 'colored'
-            vim.g.everforest_better_performance = 1
-            require('lazy').load { plugins = { 'everforest' } }
-        end,
-        function() end,
-        function()
-            require('kanagawa').setup {
-                globalStatus = vim.o.laststatus == 3,
-                commentStyle = { italic = false },
-                keywordStyle = { italic = false },
-                variablebuiltinStyle = { italic = false },
-                statementStyle = { bold = false },
-            }
-        end,
-        function()
-            vim.g.catppuccin_flavour = 'mocha'
-            require('catppuccin').setup {
-                term_colors = true,
-                styles = {
-                    comments = {},
-                    functions = {},
-                    keywords = {},
-                    strings = {},
-                    variables = {},
-                },
-                integrations = {
-                    lsp_trouble = true,
-                    neogit = true,
-                    ts_rainbow = true,
-                    which_key = true,
-                    lsp_saga = true,
-                    notify = true,
-                    mini = true,
-                    vim_sneak = true,
-                    dap = {
-                        enabled = true,
-                        enable_ui = true,
+local scheme_options = {
+    night = {
+        { 'nightfox' },
+        {
+            'rose-pine',
+            function()
+                require('rose-pine').setup {
+                    dark_variant = 'moon',
+                    disable_italics = true,
+                }
+            end,
+        },
+        {
+            'tokyonight',
+            function()
+                vim.g.tokyonight_style = 'night'
+                vim.g.tokyonight_italic_keywords = false
+                vim.g.tokyonight_italic_comments = false
+            end,
+        },
+        {
+            'everforest',
+            function()
+                vim.g.everforest_background = 'soft'
+                vim.g.everforest_diagnostic_virtual_text = 'colored'
+                vim.g.everforest_better_performance = 1
+                require('lazy').load { plugins = { 'everforest' } }
+            end,
+        },
+        { 'gruvbox' },
+        {
+            'kanagawa',
+            function()
+                require('kanagawa').setup {
+                    globalStatus = vim.o.laststatus == 3,
+                    commentStyle = { italic = false },
+                    keywordStyle = { italic = false },
+                    variablebuiltinStyle = { italic = false },
+                    statementStyle = { bold = false },
+                }
+            end,
+        },
+        {
+            'catppuccin',
+            function()
+                vim.g.catppuccin_flavour = 'mocha'
+                require('catppuccin').setup {
+                    term_colors = true,
+                    styles = {
+                        comments = {},
+                        functions = {},
+                        keywords = {},
+                        strings = {},
+                        variables = {},
                     },
-                },
-            }
-        end,
+                    integrations = {
+                        lsp_trouble = true,
+                        neogit = true,
+                        ts_rainbow = true,
+                        which_key = true,
+                        lsp_saga = true,
+                        notify = true,
+                        mini = true,
+                        vim_sneak = true,
+                        dap = {
+                            enabled = true,
+                            enable_ui = true,
+                        },
+                    },
+                }
+            end,
+        },
+    },
+    day = {
+        { 'dawnfox' },
+        {
+            'rose-pine',
+            function()
+                require('rose-pine').setup {
+                    disable_italics = true,
+                }
+            end,
+        },
+        {
+            'tokyonight',
+            function()
+                vim.g.tokyonight_style = 'day'
+                vim.g.tokyonight_italic_keywords = false
+                vim.g.tokyonight_italic_comments = false
+            end,
+        },
+        {
+            'everforest',
+            function()
+                vim.g.everforest_background = 'soft'
+                vim.g.everforest_diagnostic_virtual_text = 'colored'
+                vim.g.everforest_better_performance = 1
+            end,
+        },
+        { 'gruvbox' },
+        {
+            'edge',
+            function()
+                vim.g.edge_diagnostic_virtual_text = 'colored'
+                vim.g.edge_better_performance = 1
+                require('lazy').load { plugins = { 'edge' } }
+            end,
+        },
+        {
+            'catppuccin',
+            function()
+                vim.g.catppuccin_flavour = 'latte'
+                require('catppuccin').setup {
+                    term_colors = true,
+                    styles = {
+                        comments = {},
+                        functions = {},
+                        keywords = {},
+                        strings = {},
+                        variables = {},
+                    },
+                    integrations = {
+                        lsp_trouble = true,
+                        neogit = true,
+                        ts_rainbow = true,
+                        which_key = true,
+                        lsp_saga = true,
+                        notify = true,
+                        mini = true,
+                        vim_sneak = true,
+                        dap = {
+                            enabled = true,
+                            enable_ui = true,
+                        },
+                    },
+                }
+            end,
+        },
     },
 }
 
-local day_scheme_options = {
-    name = {
-        'dawnfox',
-        'rose-pine',
-        'tokyonight',
-        'everforest',
-        'gruvbox',
-        'edge',
-        'catppuccin',
-    },
-    cmd = {
-        function() end,
-        function()
-            require('rose-pine').setup {
-                disable_italics = true,
-            }
-        end,
-        function()
-            vim.g.tokyonight_style = 'day'
-            vim.g.tokyonight_italic_keywords = false
-            vim.g.tokyonight_italic_comments = false
-        end,
-        function()
-            vim.g.everforest_background = 'soft'
-            vim.g.everforest_diagnostic_virtual_text = 'colored'
-            vim.g.everforest_better_performance = 1
-        end,
-        function() end,
-        function()
-            vim.g.edge_diagnostic_virtual_text = 'colored'
-            vim.g.edge_better_performance = 1
-            require('lazy').load { plugins = { 'edge' } }
-        end,
-        function()
-            vim.g.catppuccin_flavour = 'latte'
-            require('catppuccin').setup {
-                term_colors = true,
-                styles = {
-                    comments = {},
-                    functions = {},
-                    keywords = {},
-                    strings = {},
-                    variables = {},
-                },
-                integrations = {
-                    lsp_trouble = true,
-                    neogit = true,
-                    ts_rainbow = true,
-                    which_key = true,
-                    lsp_saga = true,
-                    notify = true,
-                    mini = true,
-                    vim_sneak = true,
-                    dap = {
-                        enabled = true,
-                        enable_ui = true,
-                    },
-                },
-            }
-        end,
-    },
-}
-
-local pick_colorscheme = function(bg, theme_id)
+local function pick_colorscheme(bg, id)
     if bg == 1 then -- background = dark
-        night_scheme_options.cmd[theme_id]()
-        colorscheme_cmd('dark', night_scheme_options.name[theme_id])
+        if scheme_options.night[id][2] then
+            scheme_options.night[id][2]()
+        end
+        colorscheme_cmd('dark', scheme_options.night[id][1])
     else -- background = light
-        day_scheme_options.cmd[theme_id]()
-        colorscheme_cmd('light', day_scheme_options.name[theme_id])
+        if scheme_options.day[id][2] then
+            scheme_options.day[id][2]()
+        end
+        colorscheme_cmd('light', scheme_options.day[id][1])
     end
 end
 
@@ -158,17 +171,17 @@ function M.pick_randomly()
 
     local time = os.date '*t'
     local bg = 1
-    local rd = 0
+    local scheme_id = 0
 
     if (time.hour <= night_to_day) or (time.hour >= day_to_night) then
         bg = 1
-        rd = math.random(1, #night_scheme_options.name)
+        scheme_id = math.random(1, #scheme_options.night)
     else
         bg = 2
-        rd = math.random(1, #day_scheme_options.name)
+        scheme_id = math.random(1, #scheme_options.day)
     end
 
-    pick_colorscheme(bg, rd)
+    pick_colorscheme(bg, scheme_id)
 end
 
 function M.switch_colorscheme_with_day_night()
@@ -193,24 +206,24 @@ function M.switch_colorscheme_with_day_night()
 end
 
 local function select_colorscheme_based_on_bg(bg)
-    local theme_options
+    local theme_options_at_time
 
     if bg == 1 then
-        theme_options = night_scheme_options
+        theme_options_at_time = scheme_options.night
     else
-        theme_options = day_scheme_options
+        theme_options_at_time = scheme_options.day
     end
 
     local items_to_be_selected = {}
 
-    for i = 1, #theme_options.name do
+    for i = 1, #theme_options_at_time do
         table.insert(items_to_be_selected, i)
     end
 
     vim.ui.select(items_to_be_selected, {
         prompt = 'select one colorscheme',
         format_item = function(item)
-            return theme_options.name[item]
+            return theme_options_at_time[item][1]
         end,
     }, function(theme_id)
         pick_colorscheme(bg, theme_id)
