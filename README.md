@@ -462,6 +462,8 @@ The following keymaps rely on [gitsigns.nvim](https://github.com/lewis6991/gitsi
 | Mode | LHS          | RHS/Functionality             |
 | ---- | ------------ | ----------------------------- |
 | n    | `<Leader>gp` | Preview current git diff hunk |
+| n    | `<Leader>gs` | Stage current git diff hunk   |
+| n    | `<Leader>gr` | Reset current git diff hunk   |
 | n    | `<Leader>gq` | Send git diff hunks to qflist |
 | n    | `]h`         | Go to next git diff hunk      |
 | n    | `[h`         | Go to previous git diff hunk  |
