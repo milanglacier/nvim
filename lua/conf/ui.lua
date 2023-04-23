@@ -20,10 +20,12 @@ M.load.lualine = function()
         return ret
     end
 
+    -- current file is lua/conf/ui.lua
+    -- current working directory is ~/.config/nvim
+    -- this function will return "nvim"
+    -- 
+    ---@return string project_name
     local project_name = function()
-        -- current file is lua/conf/ui.lua
-        -- current working directory is ~/.config/nvim
-        -- this function will return "nvim"
         return ' ' .. vim.fn.fnamemodify('%', ':p:h:t')
     end
 
