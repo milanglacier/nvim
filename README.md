@@ -90,21 +90,28 @@
 
 # Dependencies
 
-The dependencies should be installed by yourself. Automatic LSP installer is
-not preferred, however none of them are hard-dependencies. That is, most of
-them are language servers and linters associated with corresponding languages.
-they can be selectively installed based on your individual needs. Even if some
-dependencies are missing, neovim will continue to function, simply sending
-notifications instead of stopping altogether.
+You are responsible for installing the dependencies, but most of them are
+optional. They consist mainly of language servers and linters that correspond
+to their respective languages. You can choose the ones you need and leave out
+the others. Even if certain dependencies are absent, neovim will still operate
+and display notifications instead of halting completely.
+
+If your system lacks a proper package manager, such as with Windows, or if the
+packages are out of date, as with Debian, you can use `Mason.nvim`, a neovim
+plugin specifically to install some of the dependencies. Dependencies marked
+with a `*` can be installed through `Mason.nvim`. To install these packages
+within neovim, enter `:Mason` in the prompt, and a popup window will appear
+with the intuitive interface of `Mason`. From there, you can easily install
+packages.
 
 ## python deps
 
 1. `python`.
 2. `debugpy`: this module should be included by the `python` at the top of your `$PATH`.
 3. `ipython`
-4. `yapf`
-5. `flake8`
-6. `pyright`
+4. `yapf*`
+5. `flake8*`
+6. `pyright*`
 
 ## r deps
 
@@ -113,39 +120,39 @@ notifications instead of stopping altogether.
 
 ## lua deps
 
-1. `lua-language-server`
-2. `stylua`
-3. `selene`
+1. `lua-language-server*`
+2. `stylua*`
+3. `selene*`
 
 ## vimscript deps
 
-1. `vim-language-server`
+1. `vim-language-server*`
 
 ## markdown deps
 
-1. `yarn`: this is required to install `markdown-previem.nvim`.
-2. `prettierd`
+1. `prettierd*`
+2. `vale*`
 
 ## sql deps
 
-1. `sqls`
-2. `sql-formatter`
+1. `sqls*`
+2. `sql-formatter*`
 
 ## bash deps
 
-1. `bash-language-server`
-2. `shellcheck`
+1. `bash-language-server*`
+2. `shellcheck*`
 
 ## latex deps
 
-1. `texlab`
-2. `chktex`: `texlive` ships with this, so no need to install itself by yourself.
-3. `latexindent`: while `texlive` ships this for you, `perl` shipped by macOS cannot
-   run this program, so I use a `homebrew` installed `latexindent` instead.
+1. `texlab*`
+2. `latexindent*`: while this package is shipped with `texlive`, `perl` shipped
+   by macOS cannot run this program, so I use a `homebrew` installed
+   `latexindent` instead.
 
 ## cpp deps
 
-1. `clangd`: Apple's `xcode` command line tools ship this for you.
+1. `clangd*`: Apple's `xcode` command line tools ship this for you.
 
 ## general purpose deps
 
