@@ -20,6 +20,13 @@ M.load.lualine = function()
         return ret
     end
 
+    local project_name = function()
+        -- current file is lua/conf/ui.lua
+        -- current working directory is ~/.config/nvim
+        -- this function will return "nvim"
+        return ' ' .. vim.fn.fnamemodify('%', ':p:h:t')
+    end
+
     local lualine = require 'lualine'
 
     local diagnostics_sources = require('lualine.components.diagnostics.sources').sources
@@ -78,6 +85,7 @@ M.load.lualine = function()
             lualine_a = { 'mode' },
             lualine_b = {
                 'branch',
+                project_name,
                 {
                     M.get_workspace_diff,
                     cond = function()
