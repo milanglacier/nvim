@@ -121,8 +121,9 @@ and wild!
 - This screenshot showcases writing Lua code with smart autocompletion through
   both language server (LSP) and universal-ctags (ctags). This combination
   seamlessly blends old-school and modern tools. The bottom window shows the
-  occurrence of referenced symbols that you specify, while the right window shows
-  the symbol outline of the current file.
+  occurrence of referenced symbols that you specify (via `lsp find
+  references`), while the right window shows the symbol outline of the current
+  file (via `lsp document symbols`).
 
 ![literate-programming](./assets/literate-programming.png)
 
