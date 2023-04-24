@@ -1,4 +1,9 @@
 - [Features](#features)
+  - [Modern Devtools Integration](#modern-devtools-integration)
+  - [Powerful Text Edit Plugins](#powerful-text-edit-plugins)
+  - [Tailored for Data Science](#tailored-for-data-science)
+  - [Seamless Integration with Vscode](#seamless-integration-with-vscode)
+  - [Be Wild](#be-wild)
 - [Dependencies](#dependencies)
   - [python deps](#python-deps)
   - [r deps](#r-deps)
@@ -66,27 +71,41 @@
 
 # Features
 
-- Built on modern devtools including LSP and treesitter. Treesitter delivers
-  AST-level highlighting, text objects, and navigations, while LSP offers
-  features like auto completion, go to definition and reference, and code
-  diagnostics. By harnessing the power of both Ctags and LSP, this
-  configuration brings a harmonic blend of old-school and modern development
-  tools.
+## Modern Devtools Integration
 
-- Vim's exceptional text editing capabilities are further amplified by a host
-  of powerful plugins focusing on text editing. (Remember it is pure text
-  editing makes vim vim.)
+Built on modern devtools including LSP and treesitter. Treesitter delivers
+AST-level highlighting, text objects, and navigations, while LSP offers
+features like auto completion, go to definition and reference, and code
+diagnostics. By harnessing the power of both Ctags and LSP, this configuration
+brings a harmonic blend of old-school and modern development tools.
 
-- This configuration is specifically tailored toward data science toolsets,
-  including python, R, SQL, Latex, rmarkdown, and quarto.
+## Powerful Text Edit Plugins
 
-- Curated configuration working together with vscode thanks to
-  [vscode-neovim](https://github.com/vscode-neovim/vscode-neovim). Access all
-  the familiar neovim keybindings, including translations of equivalent
-  commands in vscode, even when working with complex graphical content like
-  Jupyter notebooks. And many neovim plugins, such as treesitter, can be
-  embedded seamlessly in vscode, allowing for a smooth and uninterrupted
-  workflow.
+Vim's exceptional text editing capabilities are further amplified by a host of
+powerful plugins focusing on text editing. (Remember it is pure text editing
+makes vim vim.)
+
+## Tailored for Data Science
+
+This configuration is specifically tailored toward data science toolsets,
+including python, R, SQL, Latex, rmarkdown, and quarto.
+
+## Seamless Integration with Vscode
+
+Curated configuration working together with vscode thanks to
+[vscode-neovim](https://github.com/vscode-neovim/vscode-neovim). Access all the
+familiar neovim keybindings, including translations of equivalent commands in
+vscode, even when working with complex graphical content like Jupyter
+notebooks. And many neovim plugins, such as treesitter, can be embedded
+seamlessly in vscode, allowing for a smooth and uninterrupted workflow.
+
+## Be Wild
+
+randomly selects a theme from a curated list each time you start up and
+automatically switches between day and night themes at scheduled time.
+Additionally, the displayed verses on the welcome screen is also randomized with
+each launch. With neovim, you can have a fresh experience every time. Be casual
+and wild!
 
 # Dependencies
 
