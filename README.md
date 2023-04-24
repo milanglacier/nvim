@@ -4,6 +4,7 @@
   - [Tailored for Data Science](#tailored-for-data-science)
   - [Seamless Integration with Vscode](#seamless-integration-with-vscode)
   - [Be Wild](#be-wild)
+- [Showcase](#showcase)
 - [Dependencies](#dependencies)
   - [python deps](#python-deps)
   - [r deps](#r-deps)
@@ -101,11 +102,40 @@ seamlessly in vscode, allowing for a smooth and uninterrupted workflow.
 
 ## Be Wild
 
-randomly selects a theme from a curated list each time you start up and
+Randomly select a theme from a curated list each time you start up and
 automatically switches between day and night themes at scheduled time.
 Additionally, the displayed verses on the welcome screen is also randomized with
 each launch. With neovim, you can have a fresh experience every time. Be casual
 and wild!
+
+# Showcase
+
+![welcome-screen](assets/welcome-screen.png)
+
+- The welcome screen displays two verses randomly selected from my curated
+  collection. You can select new verses and color schemes at random or access
+  frequently used commands from this screen.
+
+![lsp](./assets/lsp-ctags.png)
+
+- This screenshot showcases writing Lua code with smart autocompletion through
+  both language server (LSP) and universal-ctags (ctags). This combination
+  seamlessly blends old-school and modern tools. The bottom window shows the
+  occurrence of referenced symbols that you specify, while the right window shows
+  the symbol outline of the current file.
+
+![literate-programming](./assets/literate-programming.png)
+
+- This screenshot demonstrates the use of literate programming in neovim, which
+  is highly beneficial for data science workflows. You can write code in both
+  Python and R with intelligent autocompletion from both LSP and Ctags in quarto
+  or markdown files. Moreover, you can send your code to both R and Python REPL
+  simultaneously.
+
+![dap](./assets/dap-python.png)
+
+- This screenshot demonstrates how to debug Python program in neovim. Stepping through
+  the code and watching variables and stack frames, just like in vscode.
 
 # Dependencies
 
