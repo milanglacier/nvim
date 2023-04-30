@@ -60,7 +60,6 @@ local function load_cmp()
         }, {
             { name = 'buffer' },
             { name = 'path' },
-            { name = 'latex_symbols' },
         }),
         formatting = {
             format = lspkind.cmp_format {
