@@ -77,6 +77,7 @@ local function load_cmp()
                     tags = '',
                     cmdline = 'גּ',
                     latex_symbols = '',
+                    cmp_nvim_r = 'ﳒ',
                 },
             },
         },
@@ -151,6 +152,18 @@ local function load_cmp()
             { name = 'luasnip' },
             { name = 'tags' },
         }, {
+            { name = 'buffer' },
+            { name = 'path' },
+        }),
+    })
+
+    cmp.setup.filetype({ 'r', 'rmd' }, {
+        sources = cmp.config.sources({
+            { name = 'nvim_lsp' },
+            { name = 'luasnip' },
+            { name = 'tags' },
+        }, {
+            { name = 'cmp_nvim_r' },
             { name = 'buffer' },
             { name = 'path' },
         }),

@@ -103,6 +103,7 @@ require('lazy').setup({
             { 'quangnguyen30192/cmp-nvim-tags' },
             { 'petertriho/cmp-git' },
             { 'rafamadriz/friendly-snippets' },
+            { 'jalvesaq/cmp-nvim-r' },
         },
     },
 

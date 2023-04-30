@@ -824,10 +824,6 @@ The following keymaps rely on [Nvim-R](https://github.com/jalvesaq/Nvim-R)
 | n    | `<LocalLeader>dv` | View the data frame in a vertical split window   |
 | n    | `<LocalLeader>dh` | View the `head()` of a data frame                |
 
-| Mode | LHS          | RHS/Functionality                                                                                                              |
-| ---- | ------------ | ------------------------------------------------------------------------------------------------------------------------------ |
-| i    | `<C-x><C-o>` | Manually invoke the completion from `Nvim-R` (useful for completing column names), see details in the [5th note](#other-notes) |
-
 ### Python keymaps
 
 #### Builtin keymaps for Python
@@ -933,14 +929,3 @@ The following keymaps rely on [vimtex](https://github.com/lervag/vimtex)
 
 4. `vim-matchup` will (intentionally) hide the status-line if the matched pair are spanned
    over entire screen to show the other side of the pair.
-
-5. There are two completion backends for `R`, `Nvim-R` and `languageserver`.
-   `languageserver` provides completions mainly based on static analysis on your code.
-   `Nvim-R` provides completions mainly based on querying the running R session.
-   `languageserver` is more reliable to provide completions for code that is not evaluated,
-   `Nvim-R` is more reliable to provide dynamic completions (e.g. column names of data frame).
-   By default, autocompletion only uses `languageserver` source.
-   If you want to get the completions from `Nvim-R` (e.g. you want to get column names of data frame),
-   you can type `<C-x><C-o>` to manually invoke it.
-   If you want to have `Nvim-R` enabled in the autocompletion popup menu,
-   you can use this plugin: [cmp-nvim-r](https://github.com/jalvesaq/cmp-nvim-r/).

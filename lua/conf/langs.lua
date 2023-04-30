@@ -406,7 +406,6 @@ M.load.nvimr = function()
     vim.g.R_objbr_place = 'console,right' -- show object browser at the right of the console
     vim.g.R_nvim_wd = 1
     vim.g.R_rmdchunk = 0
-    vim.g.R_auto_omni = {}
     vim.g.R_filetypes = { 'r', 'rmd', 'rrst', 'rnoweb', 'rhelp' }
     -- don't use quarto with nvimr
     -- only manually invoke nvimr's omni completion,
