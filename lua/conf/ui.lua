@@ -23,11 +23,18 @@ M.load.lualine = function()
     -- current file is lua/conf/ui.lua
     -- current working directory is ~/.config/nvim
     -- this function will return "nvim"
-    -- 
+    --
     ---@return string project_name
     local project_name = function()
         return ' ' .. vim.fn.fnamemodify('%', ':p:h:t')
     end
+
+    local file_status_symbol = {
+        modified = '',
+        readonly = '',
+        new = '',
+        unnamed = '󰽤',
+    }
 
     local lualine = require 'lualine'
 
@@ -95,7 +102,7 @@ M.load.lualine = function()
                     end,
                 }, -- "" will be nil in lualine
             },
-            lualine_c = { { 'filename', path = 1 }, { 'searchcount' } }, -- relative path
+            lualine_c = { { 'filename', path = 1, symbols = file_status_symbol }, { 'searchcount' } }, -- relative path
             lualine_x = {
                 { 'diagnostics', sources = { 'get_diagnostics_in_current_root_dir' } },
                 encoding,
@@ -114,7 +121,7 @@ M.load.lualine = function()
         winbar = {
             lualine_a = {
                 { 'filetype', icon_only = true },
-                { 'filename', path = 0 },
+                { 'filename', path = 0, symbols = file_status_symbol },
             },
             lualine_c = { M.winbar_symbol },
             lualine_x = {
@@ -130,7 +137,7 @@ M.load.lualine = function()
         inactive_winbar = {
             lualine_a = {
                 { 'filetype', icon_only = true },
-                { 'filename', path = 0 },
+                { 'filename', path = 0, symbols = file_status_symbol },
             },
             lualine_x = {
                 { 'diagnostics', sources = { 'nvim_diagnostic' } },
