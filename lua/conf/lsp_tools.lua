@@ -116,13 +116,7 @@ M.load.refactor = function()
                 '<CMD>lua require("refactoring").select_refactor()<CR>',
                 { desc = 'refactoring' }
             )
-            bufmap(
-                0,
-                'v',
-                '<Leader>lr',
-                ':lua require("refactoring").select_refactor()<CR>',
-                { desc = 'refactoring' }
-            )
+            bufmap(0, 'v', '<Leader>lr', ':lua require("refactoring").select_refactor()<CR>', { desc = 'refactoring' })
         end,
     })
 end
