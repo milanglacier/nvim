@@ -19,7 +19,7 @@ vim.o.smartcase = true
 vim.o.linebreak = true
 vim.o.hidden = true
 vim.o.laststatus = 3
-vim.o.cmdheight = 0
+vim.o.cmdheight = 1
 
 vim.o.clipboard = 'unnamedplus'
 vim.o.completeopt = 'menu,menuone,noselect'
