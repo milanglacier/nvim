@@ -95,12 +95,7 @@ M.load.lualine = function()
             lualine_b = {
                 'branch',
                 project_name,
-                {
-                    M.get_workspace_diff,
-                    cond = function()
-                        return M.get_workspace_diff() ~= nil
-                    end,
-                }, -- "" will be nil in lualine
+                M.get_workspace_diff,
             },
             lualine_c = { { 'filename', path = 1, symbols = file_status_symbol }, { 'searchcount' } }, -- relative path
             lualine_x = {
@@ -245,6 +240,8 @@ M.get_workspace_diff = function()
             end
             return diff_string
         end
+
+        return ''
     else
         return ''
     end
