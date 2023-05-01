@@ -96,6 +96,9 @@ M.load.lualine = function()
                     'starter',
                     '', -- scratch buffer has no filetype.
                 },
+                statusline = {
+                    'starter',
+                },
             },
         },
         sections = {
