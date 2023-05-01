@@ -96,6 +96,9 @@ M.load.lualine = function()
                     'starter',
                     'Trouble',
                     'qf',
+                    'NeogitStatus',
+                    'NeogitCommitMessage',
+                    'NeogitPopup',
                 },
                 statusline = {
                     'starter',
