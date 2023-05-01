@@ -79,7 +79,7 @@ end
 
 autocmd('FileType', {
     pattern = { 'rmd', 'quarto' },
-    group = M.my_augroup,
+    group = my_augroup,
     desc = 'set rmarkdown code chunk textobj',
     callback = function()
         bufmap(0, 'o', 'ac', '', {
@@ -115,7 +115,7 @@ autocmd('FileType', {
 
 autocmd('FileType', {
     pattern = { 'r', 'python' },
-    group = M.my_augroup,
+    group = my_augroup,
     desc = 'set r, python code chunk textobj',
     callback = function()
         bufmap(0, 'o', 'a<Leader>c', '', {
@@ -153,7 +153,7 @@ autocmd('FileType', {
 })
 
 autocmd('FileType', {
-    group = M.my_augroup,
+    group = my_augroup,
     pattern = { 'r', 'rmd', 'quarto' },
     desc = 'set r, rmd, and quarto keyword pattern to include .',
     callback = function()
