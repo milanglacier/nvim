@@ -89,6 +89,14 @@ M.load.lualine = function()
             section_separators = { left = '', right = '' },
             disabled_filetypes = {},
             always_divide_middle = false,
+            disabled_filetypes = {
+                winbar = {
+                    'aerial',
+                    'NvimTree',
+                    'starter',
+                    '', -- scratch buffer has no filetype.
+                },
+            },
         },
         sections = {
             lualine_a = { 'mode' },
