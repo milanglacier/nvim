@@ -94,7 +94,8 @@ M.load.lualine = function()
                     'aerial',
                     'NvimTree',
                     'starter',
-                    '', -- scratch buffer has no filetype.
+                    'Trouble',
+                    'qf',
                 },
                 statusline = {
                     'starter',
