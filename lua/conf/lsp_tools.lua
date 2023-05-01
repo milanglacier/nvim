@@ -53,14 +53,8 @@ M.load.aerial = function()
     require('aerial').setup {
         backends = { 'lsp', 'treesitter', 'markdown' },
         close_automatic_events = { 'unsupported' },
-        default_bindings = true,
         filter_kind = false,
         show_guides = true,
-        on_attach = function(bufnr)
-            bufmap(bufnr, 'n', '<leader>lo', '<cmd>AerialToggle!<CR>', {
-                desc = 'lsp symbol outline',
-            })
-        end,
     }
 end
 

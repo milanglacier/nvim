@@ -150,6 +150,8 @@ local attach_keymaps = function()
     bufmap(0, 'n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>', opts { 'lspsaga next diagnostic' })
     -- diagnostic show in line or in cursor
     bufmap(0, 'n', '<Leader>ll', '<cmd>Lspsaga show_line_diagnostics<CR>', opts { 'lspsaga line diagnostic' })
+
+    bufmap(0, 'n', '<leader>lo', '<cmd>AerialToggle!<CR>', opts { 'lsp symbol outline' })
 end
 
 autocmd('LspAttach', {
@@ -255,7 +257,6 @@ end
 lsp_configs.sql = function()
     require('lspconfig').sqls.setup {
         on_attach = function(client, bufnr)
-
             -- HACK: in nvim 0.9+, lspconfig will set &tagfunc to vim.lsp.tagfunc
             -- automatically. For lsp that does not support workspace symbol, this
             -- function may cause conflict because `cmp-nvim-tags` which uses tags to
