@@ -94,7 +94,7 @@ M.load.iron = function()
     keymap('n', '<localleader>rf', '<cmd>IronFocus<CR>', {})
     keymap('n', '<localleader>rw', '<cmd>IronWatch file<CR>', {})
     keymap('n', '<localleader>ra', ':IronAttach', {})
-    keymap('n', '<localleader>rq', '<cmd>IronAttach markdown<CR>', {})
+    keymap('n', '<localleader>rg', '<cmd>IronAttach markdown<CR>', { desc = 'Iron attach to chatgpt' })
     -- iron attach will attach current buffer to a running repl
     -- iron focus will reopen a window for current repl if there's no window for repl
     -- iron watch will send the entire file / mark after writing the buffer
