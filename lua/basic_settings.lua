@@ -25,6 +25,11 @@ vim.o.clipboard = 'unnamedplus'
 vim.o.completeopt = 'menu,menuone,noselect'
 vim.o.tags = vim.o.tags .. ',.tags_columns'
 
+-- don't fold any text at startup
+vim.o.foldmethod = 'indent'
+vim.o.foldlevel = 99
+vim.o.foldlevelstart = 99
+
 vim.g.mapleader = ' '
 vim.g.maplocalleader = [[  ]]
 

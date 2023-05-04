@@ -1,4 +1,6 @@
 local keymap = vim.api.nvim_set_keymap
+local autocmd = vim.api.nvim_create_autocmd
+local my_augroup = require('conf.builtin_extend').my_augroup
 
 require('nvim-treesitter.configs').setup {
     -- One of "all", "maintained" (parsers with maintainers), or a list of languages
@@ -8,7 +10,6 @@ require('nvim-treesitter.configs').setup {
         'cpp',
         'lua',
         'vim',
-        'julia',
         'yaml',
         'toml',
         'json',
@@ -190,14 +191,30 @@ if not vim.g.vscode then
         throttle = true,
     }
 
-    -- NOTE: If you have opened the file via `telescope find_files`,
-    -- Treesitter's fold feature may not work properly. To reactivate it,
-    -- refresh the buffer by using `:e`.
-    vim.o.foldmethod = 'expr'
     vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
-    -- don't fold any text at startup
-    vim.o.foldlevel = 99
-    vim.o.foldlevelstart = 99
+
+    autocmd('FileType', {
+        pattern = {
+            'python',
+            'c',
+            'cpp',
+            'go',
+            'html',
+            'javascript',
+            'json',
+            'tex',
+            'markdown',
+            'markdown.pandoc',
+            'lua',
+            'query',
+            'vim',
+            'toml',
+            'yaml',
+        },
+        group = my_augroup,
+        desc = 'Use treesitter fold',
+        command = 'setlocal foldmethod=expr',
+    })
 end
 
 local emmykeymap = require('conf.builtin_extend').emmykeymap
