@@ -1,4 +1,18 @@
 local telescope = require 'telescope'
+local actions = require 'telescope.actions'
+
+-- see
+-- https://github.com/nvim-telescope/telescope.nvim/issues/559#issuecomment-1311441898
+-- telescope pickers break the fold when you entering the files in insert mode.
+-- The workaround is entering normal mode before calling the command.
+local function stopinsert(callback)
+    return function(prompt_bufnr)
+        vim.cmd.stopinsert()
+        vim.schedule(function()
+            actions[callback](prompt_bufnr)
+        end)
+    end
+end
 
 telescope.setup {
     pickers = {
@@ -18,10 +32,14 @@ telescope.setup {
     defaults = {
         mappings = {
             i = {
-                ['<C-s>'] = 'select_horizontal',
+                ['<C-s>'] = stopinsert 'select_horizontal',
+                ['<C-v>'] = stopinsert 'select_vertical',
+                ['<C-t>'] = stopinsert 'select_tab',
+                ['<CR>'] = stopinsert 'select_default',
                 ['<C-b>'] = 'preview_scrolling_up',
                 ['<C-f>'] = 'preview_scrolling_down',
                 ['<C-/>'] = 'which_key',
+                ['<C-x>'] = false,
                 ['<C-u>'] = false,
                 ['<C-k>'] = false,
             },
