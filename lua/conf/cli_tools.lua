@@ -159,9 +159,8 @@ M.load.toggleterm = function()
         pattern = 'rmd',
         group = my_augroup,
         callback = function()
-            local winid = vim.api.nvim_get_current_win()
-
             bufcmd(0, 'RenderRmd', function(options)
+                local winid = vim.api.nvim_get_current_win()
                 ---@diagnostic disable-next-line: missing-parameter
                 local current_file = vim.fn.expand '%:.' -- relative path to current wd
                 current_file = vim.fn.shellescape(current_file)
@@ -184,14 +183,13 @@ M.load.toggleterm = function()
         pattern = 'quarto',
         group = my_augroup,
         callback = function()
-            local winid = vim.api.nvim_get_current_win()
-
             bufcmd(0, 'RenderQuarto', function(options)
+                local winid = vim.api.nvim_get_current_win()
                 ---@diagnostic disable-next-line: missing-parameter
                 local current_file = vim.fn.expand '%:.' -- relative path to current wd
                 current_file = vim.fn.shellescape(current_file)
 
-                local cmd = string.format([[R --quiet -e "quarto::quarto_render(%s)"]], current_file)
+                local cmd = string.format([[quarto render %s]], current_file)
                 local term_id = options.args ~= '' and tonumber(options.args) or nil
 
                 ---@diagnostic disable-next-line: missing-parameter
@@ -203,17 +201,12 @@ M.load.toggleterm = function()
             })
 
             bufcmd(0, 'PreviewQuarto', function(options)
+                local winid = vim.api.nvim_get_current_win()
                 ---@diagnostic disable-next-line: missing-parameter
                 local current_file = vim.fn.expand '%:.' -- relative path to current wd
                 current_file = vim.fn.shellescape(current_file)
 
-                local cmd = string.format(
-                    [[R --quiet -e "n = 0; while (TRUE) if (n == 0) { quarto::quarto_preview(%s); n = 1 }"]],
-                    -- quarto_preview runs async
-                    -- so set up a dead loop to force it keep running in the foreground
-                    -- to prevent R from automatically exiting.
-                    current_file
-                )
+                local cmd = string.format([[quarto preview %s]], current_file)
                 local term_id = options.args ~= '' and tonumber(options.args) or nil
 
                 ---@diagnostic disable-next-line: missing-parameter
