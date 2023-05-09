@@ -34,6 +34,8 @@ require('orgmode').setup {
     org_indent_mode = 'noindent',
     org_tags_column = 0,
 
+    org_src_window_setup = 'belowright 40 new',
+
     org_capture_templates = {
         t = { description = 'personal todo', template = '* TODO %? :\nSCHEDULED: %t' },
         n = {
