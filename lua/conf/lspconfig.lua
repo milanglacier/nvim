@@ -162,6 +162,21 @@ autocmd('LspAttach', {
 
 autocmd('LspAttach', {
     group = my_augroup,
+    callback = function()
+        -- HACK: in nvim 0.9+, lspconfig will set &tagfunc to vim.lsp.tagfunc
+        -- automatically. For lsp that does not support workspace symbol, this
+        -- function may cause conflict because `cmp-nvim-tags` which uses tags
+        -- to search workspace symbol, leading to an error when
+        -- `vim.lsp.tagfunc` is called. To prevent this behavior, we disable
+        -- it. Besides, vim.lsp.tagfunc also has performance issue if you want
+        -- to use it in completion.
+        vim.bo.tagfunc = nil
+    end,
+    desc = 'Do not use lsp as tagfunc.',
+})
+
+autocmd('LspAttach', {
+    group = my_augroup,
     callback = function(args)
         local bufnr = args.buf
         local client = vim.lsp.get_client_by_id(args.data.client_id)
@@ -257,13 +272,6 @@ end
 lsp_configs.sql = function()
     require('lspconfig').sqls.setup {
         on_attach = function(client, bufnr)
-            -- HACK: in nvim 0.9+, lspconfig will set &tagfunc to vim.lsp.tagfunc
-            -- automatically. For lsp that does not support workspace symbol, this
-            -- function may cause conflict because `cmp-nvim-tags` which uses tags to
-            -- search workspace symbol, leading to an error when `vim.lsp.tagfunc` is
-            -- called. To prev ent this behavior, we disable it.
-            vim.bo.tagfunc = nil
-
             -- The document formatting implementation of sqls is buggy.
             client.server_capabilities.documentFormattingProvider = false
 
