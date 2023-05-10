@@ -423,7 +423,7 @@ M.winbar_symbol = function()
 
         ts_status = require('nvim-treesitter').statusline {
             indicator_size = size,
-            separator = '  ',
+            separator = '  ',
         } or ''
 
         if ts_status ~= nil and ts_status ~= '' then

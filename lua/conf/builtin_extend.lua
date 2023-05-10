@@ -12,7 +12,7 @@ local opts_desc = function(desc)
     }
 end
 
-M.magic_prefix = ''
+M.magic_prefix = ''
 M.emmykeymap = function(mode, lhs, rhs)
     lhs = M.magic_prefix .. lhs
     keymap(mode, lhs, rhs, {
