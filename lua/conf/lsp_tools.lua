@@ -8,7 +8,7 @@ M.load.lspkind = function()
     require('lspkind').init {
         mode = 'symbol_text',
         symbol_map = {
-            Number = '',
+            Number = '󰎠',
             Array = '',
             Variable = '',
             Method = 'ƒ',
