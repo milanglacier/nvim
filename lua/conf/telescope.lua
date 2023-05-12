@@ -79,6 +79,7 @@ keymap('n', '<leader>fc', '<cmd>Telescope commands<cr>', opts)
 keymap('n', '<leader>fC', '<cmd>Telescope command_history<cr>', opts)
 
 keymap('n', '<leader>fs', '<cmd>Telescope lsp_document_symbols<cr>', opts)
+keymap('n', '<leader>fw', '<cmd>Telescope lsp_dynamic_workspace_symbols<cr>', opts)
 keymap('n', '<leader>fr', '<cmd>Telescope registers<cr>', opts)
 keymap('n', '<leader>fj', '<cmd>Telescope jumplist<cr>', opts)
 keymap('n', '<leader>fo', '<cmd>Telescope oldfiles<cr>', opts)
