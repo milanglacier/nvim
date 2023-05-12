@@ -22,8 +22,9 @@ require('orgmode').setup {
     org_agenda_files = {
         org_dir .. '/*.org',
         org_dir .. '/capture/*.org',
-        org_dir .. '/misc/*.org',
+        org_dir .. '/interview/*.org',
         org_dir .. '/roam/*.org',
+        org_dir .. '/work/*.org',
     },
     org_default_notes_file = org_dir .. '/capture/todo.org',
     org_highlight_latex_and_related = 'entities',
