@@ -67,6 +67,7 @@ _ = math.random() -- warming up
 
 starter.setup {
     header = header_verse[math.random(1, header_verse.length)],
+    evaluate_single = true,
     items = {
         {
             {
