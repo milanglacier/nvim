@@ -110,28 +110,4 @@ M.change_verses = function()
     _G.MiniStarter.refresh()
 end
 
-local my_augroup = require('conf.builtin_extend').my_augroup
-local autocmd = vim.api.nvim_create_autocmd
-local set_hl = vim.api.nvim_set_hl
-local highlight_link = function(opts)
-    set_hl(0, opts.linked, { link = opts.linking })
-end
-
--- The colorscheme is loaded at conf.colorscheme
--- autocmd defined in the next will not execute at that time
--- now need to manually reset the HL at the first time.
-highlight_link { linked = 'MiniCursorword', linking = 'CursorLine' }
-highlight_link { linked = 'MiniCursorwordCurrent', linking = 'CursorLine' }
-
-autocmd('ColorScheme', {
-    group = my_augroup,
-    desc = [[Link MiniCursorword's highlight to CursorLine]],
-    callback = function()
-        highlight_link { linked = 'MiniCursorword', linking = 'CursorLine' }
-        highlight_link { linked = 'MiniCursorwordCurrent', linking = 'CursorLine' }
-    end,
-})
-
-require('mini.cursorword').setup {}
-
 return M
