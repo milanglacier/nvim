@@ -125,7 +125,18 @@ M.load.lualine = function()
             lualine_a = {
                 { 'filetype', icon_only = true },
             },
-            lualine_b = { { 'tabs', mode = 2, max_length = vim.o.columns } },
+            lualine_b = {
+                { 'tabs', mode = 2, max_length = vim.o.columns },
+                {
+                    function()
+                        vim.o.showtabline = 1
+                        return ''
+                        --HACK: lualine will set &showtabline to 2 if you have configured
+                        --lualine for displaying tabline. We want to restore the default
+                        --behavior here.
+                    end,
+                },
+            },
         },
         winbar = {
             lualine_a = {
@@ -155,17 +166,6 @@ M.load.lualine = function()
         },
         extensions = { 'aerial', 'nvim-tree', 'quickfix', 'toggleterm' },
     }
-
-    autocmd('TabEnter', {
-        group = my_augroup,
-        desc = 'toggle lualine tabline',
-        callback = function()
-            --HACK: lualine will set &showtabline to 2 if you have configured
-            --lualine for displaying tabline. We want to restore the default
-            --behavior here.
-            vim.o.showtabline = 1
-        end,
-    })
 end
 
 M.git_workspace_diff = {}
