@@ -146,8 +146,8 @@ local attach_keymaps = function()
         '<cmd>Telescope diagnostics root_dir=true<CR>',
         opts { 'lsp workspace diagnostics by telescope' }
     )
-    bufmap(0, 'n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', opts { 'lspsaga prev diagnostic' })
-    bufmap(0, 'n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>', opts { 'lspsaga next diagnostic' })
+    bufmap(0, 'n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts { 'lspsaga prev diagnostic' })
+    bufmap(0, 'n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts { 'lspsaga next diagnostic' })
     -- diagnostic show in line or in cursor
     bufmap(0, 'n', '<Leader>ll', '<cmd>Lspsaga show_line_diagnostics<CR>', opts { 'lspsaga line diagnostic' })
 
