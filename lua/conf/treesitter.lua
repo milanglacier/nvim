@@ -33,7 +33,6 @@ require('nvim-treesitter.configs').setup {
 
     highlight = {
         -- `false` will disable the whole extension
-        enable = not vim.g.vscode,
         -- list of language that will be disabled
         -- disable = { "c", "rust" },
 
@@ -45,7 +44,6 @@ require('nvim-treesitter.configs').setup {
     },
 
     rainbow = {
-        enable = not vim.g.vscode,
         query = {
             'rainbow-parens',
             html = 'rainbow-tags',
@@ -171,52 +169,50 @@ require('nvim-treesitter.configs').setup {
     },
 }
 
-if not vim.g.vscode then
-    local opts = function(desc)
-        return {
-            silent = true,
-            noremap = true,
-            desc = desc,
-        }
-    end
-
-    keymap('o', '<leader>T', ":<C-U>lua require('tsht').nodes()<CR>", opts 'treesitter nodes')
-    keymap('v', '<leader>T', ":<C-U>lua require('tsht').nodes()<CR>", opts 'treesitter nodes')
-    keymap('n', '<leader>ms', '<cmd>ISwap<cr>', opts 'misc: treesitter swap')
-    keymap('n', '<leader>mS', '<cmd>ISwapWith<cr>', opts 'misc: treesitter swapwith')
-    keymap('n', '<leader>mr', [[<cmd>lua require('ssr').open()<cr>]], opts 'misc: treesitter structural replace')
-    keymap('v', '<leader>mr', [[<cmd>lua require('ssr').open()<cr>]], opts 'misc: treesitter structural replace')
-
-    require('treesitter-context').setup {
-        enable = true,
-        throttle = true,
+local opts = function(desc)
+    return {
+        silent = true,
+        noremap = true,
+        desc = desc,
     }
-
-    vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
-
-    autocmd('FileType', {
-        pattern = {
-            'python',
-            'c',
-            'cpp',
-            'go',
-            'html',
-            'javascript',
-            'json',
-            'tex',
-            'markdown',
-            'markdown.pandoc',
-            'lua',
-            'query',
-            'vim',
-            'toml',
-            'yaml',
-        },
-        group = my_augroup,
-        desc = 'Use treesitter fold',
-        command = 'setlocal foldmethod=expr',
-    })
 end
+
+keymap('o', '<leader>T', ":<C-U>lua require('tsht').nodes()<CR>", opts 'treesitter nodes')
+keymap('v', '<leader>T', ":<C-U>lua require('tsht').nodes()<CR>", opts 'treesitter nodes')
+keymap('n', '<leader>ms', '<cmd>ISwap<cr>', opts 'misc: treesitter swap')
+keymap('n', '<leader>mS', '<cmd>ISwapWith<cr>', opts 'misc: treesitter swapwith')
+keymap('n', '<leader>mr', [[<cmd>lua require('ssr').open()<cr>]], opts 'misc: treesitter structural replace')
+keymap('v', '<leader>mr', [[<cmd>lua require('ssr').open()<cr>]], opts 'misc: treesitter structural replace')
+
+require('treesitter-context').setup {
+    enable = true,
+    throttle = true,
+}
+
+vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
+
+autocmd('FileType', {
+    pattern = {
+        'python',
+        'c',
+        'cpp',
+        'go',
+        'html',
+        'javascript',
+        'json',
+        'tex',
+        'markdown',
+        'markdown.pandoc',
+        'lua',
+        'query',
+        'vim',
+        'toml',
+        'yaml',
+    },
+    group = my_augroup,
+    desc = 'Use treesitter fold',
+    command = 'setlocal foldmethod=expr',
+})
 
 local emmykeymap = require('conf.builtin_extend').emmykeymap
 

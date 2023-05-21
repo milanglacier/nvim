@@ -466,11 +466,9 @@ M.load.quarto = function()
     })
 end
 
-if not vim.g.vscode then
-    M.load.vimtex()
-    M.load.pandoc()
-    M.load.nvimr()
-    M.load.quarto()
-end
+M.load.vimtex()
+M.load.pandoc()
+M.load.nvimr()
+M.load.quarto()
 
 return M

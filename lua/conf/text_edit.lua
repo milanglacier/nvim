@@ -56,11 +56,7 @@ M.load.matchup = function()
 end
 
 M.load.sneak = function()
-    if vim.g.vscode then
-        vim.g['sneak#label'] = 0
-    else
-        vim.g['sneak#label'] = 1
-    end
+    vim.g['sneak#label'] = 1
 
     vim.g['sneak#use_ic_scs'] = 1
 
@@ -204,11 +200,9 @@ keymap('n', '<Leader>m<space>', '', {
     desc = 'Misc: remove trailing spaces',
 })
 
-if not vim.g.vscode then
-    M.load.colorizer()
-    M.load.mini_pairs()
-    M.load.todo_comments()
-end
+M.load.colorizer()
+M.load.mini_pairs()
+M.load.todo_comments()
 
 M.load.mini_comment()
 M.load.dsf()
