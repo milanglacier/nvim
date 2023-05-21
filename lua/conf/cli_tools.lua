@@ -33,8 +33,6 @@ M.load.diffview = function()
 end
 
 M.load.spectre = function()
-    require('spectre').setup()
-
     keymap('n', '<Leader>fR', "<cmd>lua require('spectre').open()<CR>", { noremap = true, desc = 'rg at side panel' })
     keymap(
         'v',
