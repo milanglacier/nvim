@@ -33,7 +33,7 @@ require('lazy').setup({
     { 'michaeljsmith/vim-indent-object', lazy = false },
     { 'AndrewRadev/dsf.vim' },
     { 'gbprod/substitute.nvim' },
-    { 'andymass/vim-matchup' },
+    { 'andymass/vim-matchup', event = 'VeryLazy' },
     { 'tommcdo/vim-exchange', lazy = false },
     { 'kana/vim-textobj-user' },
     { 'D4KU/vim-textobj-chainmember' },

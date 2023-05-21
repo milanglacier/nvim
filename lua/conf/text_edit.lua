@@ -47,12 +47,11 @@ M.load.dsf = function()
 end
 
 M.load.matchup = function()
-    -- don't need this binding
-    keymap('n', '%', '<plug>(matchup-z%)', {})
-    keymap('o', '%', '<plug>(matchup-z%)', {})
-    keymap('x', '%', '<plug>(matchup-z%)', {})
-
-    lazy.load { plugins = { 'vim-matchup' } }
+    -- don't need this binding, remap them to some keys not likely to trigger
+    keymap('n', '%', '<plug>(matchup-z%)', {})
+    keymap('o', '%', '<plug>(matchup-z%)', {})
+    keymap('x', '%', '<plug>(matchup-z%)', {})
+    keymap('i', '%', '<plug>(matchup-c_g%)', {})
 end
 
 M.load.sneak = function()
