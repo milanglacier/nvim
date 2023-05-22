@@ -23,7 +23,6 @@ vim.o.cmdheight = 1
 
 vim.o.clipboard = 'unnamedplus'
 vim.o.completeopt = 'menu,menuone,noselect'
-vim.o.tags = vim.o.tags .. ',.tags_columns'
 
 -- don't fold any text at startup
 vim.o.foldmethod = 'indent'
