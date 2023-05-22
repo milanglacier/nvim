@@ -32,6 +32,7 @@ require('nvim-treesitter.configs').setup {
     -- ignore_install = { "javascript" },
 
     highlight = {
+        enable = true,
         -- `false` will disable the whole extension
         -- list of language that will be disabled
         -- disable = { "c", "rust" },
@@ -44,6 +45,7 @@ require('nvim-treesitter.configs').setup {
     },
 
     rainbow = {
+        enable = true,
         query = {
             'rainbow-parens',
             html = 'rainbow-tags',
