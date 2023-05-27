@@ -162,55 +162,78 @@ autocmd('FileType', {
 })
 
 command('CondaActivateEnv', function(options)
-    if not vim.env.CONDA_PREFIX then
+    if vim.fn.executable 'conda' == 0 then
+        print 'conda not found'
         return
     end
+
     vim.cmd.CondaDeactivate()
-    M.conda_current_env_path = options.args .. '/bin'
-    vim.env.PATH = options.args .. '/bin:' .. vim.env.PATH
-    vim.env.CONDA_PREFIX_1 = vim.env.CONDA_PREFIX
-    vim.env.CONDA_PREFIX = options.args
+
+    local conda_info = vim.json.decode(vim.fn.system 'conda info --json')
+    M.conda_info = conda_info
+
+    if options.args then
+        M.conda_current_env_path = options.args
+    else
+        M.conda_current_env_path = conda_info.root_prefix
+    end
+
+    -- if conda_current_env_path is found in $PATH, do nothing, else prepend it to $PATH
+    if not string.find(vim.env.PATH, M.conda_current_env_path .. '/bin') then
+        vim.env.PATH = M.conda_current_env_path .. '/bin:' .. vim.env.PATH
+    end
+
+    vim.env.CONDA_PREFIX = M.conda_current_env_path
+    vim.env.CONDA_DEFAULT_ENV = vim.fn.fnamemodify(M.conda_current_env_path, ':t')
+    vim.env.CONDA_SHLVL = 1
 end, {
-    nargs = 1,
+    nargs = '?',
     complete = function(_, _, _)
-        local conda_base = vim.env.CONDA_PREFIX_1 or vim.env.CONDA_PREFIX
-        -- if currently under the base environment, then vim.env.CONDA_PREFIX
-        -- is the path to the base environment of conda. If currently under
-        -- another conda environment, then vim.env.CONDA_PREFIX_1 is the
-        -- path to the base environment of conda
-        -- if conda_base is nil, then do nothing
-        if not conda_base then
+        if vim.fn.executable 'conda' == 0 then
             return {}
         end
 
-        local conda_env_dir = conda_base .. '/envs'
-        local conda_envs = vim.fn.glob(conda_env_dir .. '/*')
+        local conda_envs
 
-        conda_envs = vim.split(conda_envs, '\n')
-        table.insert(conda_envs, conda_base)
+        -- use cache to speed up completion
+        if M.conda_info then
+            conda_envs = M.conda_info.envs
+        else
+            M.conda_info = vim.json.decode(vim.fn.system 'conda info --json')
+            conda_envs = M.conda_info.envs
+        end
 
         return conda_envs
     end,
-    desc = [[This command activates a conda environment, assuming that the base environment is already activated.
-If the environment variable CONDA_PREFIX is not present, this command will not perform any action.]],
 })
 
 command('CondaDeactivate', function(_)
-    if not M.conda_current_env_path then
+    if vim.fn.executable 'conda' == 0 then
+        print 'conda not found'
         return
     end
+
+    local conda_info = vim.json.decode(vim.fn.system 'conda info --json')
+
+    if not M.current_env_path then
+        M.conda_current_env_path = conda_info.root_prefix
+    end
+
     local env_split = vim.split(vim.env.PATH, ':')
     for idx, path in ipairs(env_split) do
-        if path == M.conda_current_env_path then
+        if path == M.conda_current_env_path .. '/bin' then
             table.remove(env_split, idx)
         end
     end
     vim.env.PATH = table.concat(env_split, ':')
-    vim.env.CONDA_PREFIX = vim.env.CONDA_PREFIX_1
-    vim.env.CONDA_PREFIX_1 = nil
+    vim.env.CONDA_PREFIX = nil
+    vim.env.CONDA_DEFAULT_ENV = nil
+    vim.env.CONDA_SHLVL = 0
     M.conda_current_env_path = nil
 end, {
-    desc = 'This command deactivates a conda environment, except for the base environment',
+    desc = [[This command deactivates a conda environment. Note that after the
+execution, the conda env will be completely cleared (i.e. without base
+environment activated).]],
 })
 
 command('PyVenvActivate', function(options)
