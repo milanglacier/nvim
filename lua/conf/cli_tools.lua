@@ -150,7 +150,12 @@ M.load.toggleterm = function()
     keymap('n', '<Leader>t2', '<cmd>2ToggleTerm<CR>', { silent = true })
     keymap('n', '<Leader>t3', '<cmd>3ToggleTerm<CR>', { silent = true })
     keymap('n', '<Leader>t4', '<cmd>4ToggleTerm<CR>', { silent = true })
-    keymap('n', '<Leader>te', [[<cmd>execute v:count . "TermExec cmd='exit;'"<CR>]], { silent = true })
+    keymap(
+        'n',
+        '<Leader>te',
+        [[<cmd>execute v:count . "TermExec cmd='exit;'"<CR>]],
+        { silent = true, desc = 'quit terminal' }
+    )
 
     autocmd('FileType', {
         desc = 'set command for rendering rmarkdown',
