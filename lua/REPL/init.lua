@@ -147,20 +147,20 @@ M.setup = function(opts)
     M.config = vim.tbl_deep_extend('force', default_config(), opts or {})
 end
 
-api.nvim_create_user_command('AichatStart', function(opts)
+api.nvim_create_user_command('REPLStart', function(opts)
     -- if calling the command without any count, we want count to become 1.
     create_repl(opts.count == 0 and 1 or opts.count, opts.args)
 end, { count = true, nargs = '?' })
 
-api.nvim_create_user_command('AichatCleanup', function()
+api.nvim_create_user_command('REPLCleanup', function()
     repl_cleanup()
 end, { desc = 'clean invalid repls, and rearrange the repls order.' })
 
-api.nvim_create_user_command('AichatFocus', function(opts)
+api.nvim_create_user_command('REPLFocus', function(opts)
     focus_repl(opts.count == 0 and 1 or opts.count)
 end, { count = true })
 
-api.nvim_create_user_command('AichatClose', function(opts)
+api.nvim_create_user_command('REPLClose', function(opts)
     local id = opts.count == 0 and 1 or opts.count
     if not repl_is_valid(id) then
         return
@@ -169,7 +169,7 @@ api.nvim_create_user_command('AichatClose', function(opts)
     repl_cleanup()
 end, { count = true })
 
-api.nvim_create_user_command('AichatSendVisual', function(opts)
+api.nvim_create_user_command('REPLSendVisual', function(opts)
     -- we must use `<ESC>` to clear those marks to mark '> and '> to be able to
     -- access the updated visual range. Those magic letters 'nx' are coming
     -- from Vigemus/iron.nvim and I am not quiet understand the effect of those
@@ -185,7 +185,7 @@ api.nvim_create_user_command('AichatSendVisual', function(opts)
     fn.chansend(M.repls[id].term, lines)
 end, { count = true })
 
-api.nvim_create_user_command('AichatSendLine', function(opts)
+api.nvim_create_user_command('REPLSendLine', function(opts)
     local id = opts.count == 0 and 1 or opts.count
     if not repl_is_valid(id) then
         return
