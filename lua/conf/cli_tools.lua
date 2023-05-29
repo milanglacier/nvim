@@ -324,7 +324,6 @@ M.load.REPL = function()
                         -- to the corresponding keys, you have to do the mapping manually
                     end
                 end,
-                expr = true,
             })
         end,
     })
