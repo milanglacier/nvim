@@ -237,6 +237,10 @@ M.load.REPL = function()
         callback = run_cmd_with_count 'REPLFocus aichat',
         desc = 'Focus on Aichat REPL',
     })
+    keymap('n', '<Leader>ch', '', {
+        callback = run_cmd_with_count 'REPLHide aichat',
+        desc = 'Hide Aichat REPL',
+    })
     keymap('v', '<Leader>cr', '', {
         callback = run_cmd_with_count 'REPLSendVisual aichat',
         desc = 'Send visual region to Aichat',
@@ -282,6 +286,10 @@ M.load.REPL = function()
             bufmap(0, 'n', '<LocalLeader>rf', '', {
                 callback = run_cmd_with_count 'REPLFocus',
                 desc = 'Focus on REPL',
+            })
+            bufmap(0, 'n', '<LocalLeader>rh', '', {
+                callback = run_cmd_with_count 'REPLHide',
+                desc = 'Hide REPL',
             })
             bufmap(0, 'v', '<LocalLeader>s', '', {
                 callback = run_cmd_with_count 'REPLSendVisual',

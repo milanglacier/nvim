@@ -257,6 +257,30 @@ closest REPL with the specified name. For instance, `3REPLFocus ipython`
 will focus on the closest ipython REPL relative to id 3.]],
 })
 
+api.nvim_create_user_command('REPLHide', function(opts)
+    local id = opts.count == 0 and 1 or opts.count
+    if opts.args ~= '' then
+        id = find_closest_repl_from_id_with_name(id, opts.args)
+    end
+    if not repl_is_valid(id) then
+        vim.notify(string.format("REPL %d doesn't exist", id or -1))
+        return
+    end
+
+    local win = vim.fn.bufwinid(M.repls[id].bufnr)
+    if win ~= -1 then
+        vim.api.nvim_set_current_win(win)
+        vim.cmd [[quit]]
+    end
+end, {
+    count = true,
+    nargs = '?',
+    desc = [[Hide the ith REPL. The first REPL is the default. If an
+optional argument is provided, the function will attempt to hide on the
+closest REPL with the specified name. For instance, `3REPLHide ipython`
+will hide on the closest ipython REPL relative to id 3.]],
+})
+
 api.nvim_create_user_command('REPLClose', function(opts)
     local id = opts.count == 0 and 1 or opts.count
     if opts.args ~= '' then
