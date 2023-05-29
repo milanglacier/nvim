@@ -266,10 +266,11 @@ M.load.REPL = function()
         markdown = 'radian',
         ['markdown.pandoc'] = 'radian',
         python = 'ipython',
+        sh = 'bash',
     }
 
     autocmd('FileType', {
-        pattern = { 'quarto', 'markdown', 'markdown.pandoc', 'rmd', 'python' },
+        pattern = { 'quarto', 'markdown', 'markdown.pandoc', 'rmd', 'python', 'sh' },
         group = my_augroup,
         desc = 'set up REPL keymap',
         callback = function()

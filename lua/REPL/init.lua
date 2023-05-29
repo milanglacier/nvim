@@ -14,6 +14,12 @@ local default_config = function()
             aichat = { cmd = 'aichat', formatter = M.formatter.bracketed_pasting },
             radian = { cmd = 'radian', formatter = M.formatter.bracketed_pasting },
             ipython = { cmd = 'ipython', formatter = M.formatter.bracketed_pasting },
+            python = { cmd = 'python', formatter = M.formatter.trim_empty_lines },
+            R = { cmd = 'R', formatter = M.formatter.trim_empty_lines },
+            -- bash version >= 4.4 supports bracketed paste mode. but macos
+            -- shipped with bash 3.2, so we don't use bracketed paste mode for
+            -- bash.
+            bash = { cmd = 'bash', formatter = M.formatter.trim_empty_lines },
         },
         default_repl = 'aichat',
         close_on_exit = true,
@@ -138,6 +144,23 @@ function M.formatter.bracketed_pasting(lines)
 
         table.insert(new, close_code .. cr)
 
+        return new
+    end
+end
+
+function M.formatter.trim_empty_lines(lines)
+    local cr = '\13'
+    if #lines == 1 then
+        return { lines[1] .. cr }
+    else
+        local new = {}
+        for _, line in ipairs(lines) do
+            if line ~= '' then
+                table.insert(new, line)
+            end
+        end
+
+        table.insert(new, cr)
         return new
     end
 end
