@@ -295,6 +295,45 @@ M.load.mason = function()
     require('mason').setup {}
 end
 
+M.load.aichat_repl = function()
+    local function run_cmd_with_count(cmd)
+        return function()
+            vim.cmd(string.format('%d%s', vim.v.count1, cmd))
+        end
+    end
+
+    require('aichat_repl').setup {}
+
+    keymap('n', '<Leader>cs', '', {
+        callback = run_cmd_with_count 'AichatStart',
+        desc = 'Start an Aichat REPL',
+    })
+    keymap('n', '<Leader>cf', '', {
+        callback = run_cmd_with_count 'AichatFocus',
+        desc = 'Focus on Aichat REPL',
+    })
+    keymap('v', '<Leader>cr', '', {
+        callback = run_cmd_with_count 'AichatSendVisual',
+        desc = 'Send visual region to Aichat',
+    })
+    keymap('n', '<Leader>crr', '', {
+        callback = run_cmd_with_count 'AichatSendLine',
+        desc = 'Send motion to Aichat',
+    })
+    keymap('n', '<Leader>cl', '', {
+        callback = require('aichat_repl').send_motion,
+        desc = 'Send current line to Aichat',
+    })
+    keymap('n', '<Leader>cq', '', {
+        callback = run_cmd_with_count 'AichatClose',
+        desc = 'Quit Aichat',
+    })
+    keymap('n', '<Leader>cc', '', {
+        callback = run_cmd_with_count 'AichatCleanup',
+        desc = 'Clear aichat REPLs.',
+    })
+end
+
 M.load.diffview()
 M.load.gitsigns()
 M.load.iron()
@@ -306,5 +345,6 @@ M.load.gutentags()
 M.load.copilot()
 M.load.jupytext()
 M.load.mason()
+M.load.aichat_repl()
 
 return M

@@ -330,6 +330,7 @@ M.load.which_key = function()
         ['<Leader>ol'] = { name = '+open/links' },
         ['<Leader>g'] = { name = '+git' },
         ['<Leader>x'] = { name = '+quickfixlist' },
+        ['<Leader>c'] = { name = '+chatgpt' },
         ['<Leader><Tab>'] = { name = '+tab' },
         ['<Leader><space>'] = { name = '+local leader' },
         ['<Leader>m'] = { name = '+misc' },
@@ -345,6 +346,7 @@ M.load.which_key = function()
 
     which_key.register({
         ['<Leader>l'] = { name = '+language server' },
+        ['<Leader>c'] = { name = '+chatgpt' },
         ['<Leader>m'] = { name = '+misc' },
         ['<Leader>f'] = { name = '+find everything' },
         ['<Leader><space>'] = { name = '+local leader' },
