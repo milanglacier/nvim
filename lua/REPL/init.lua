@@ -169,7 +169,7 @@ M.send_motion_internal = function(motion)
     -- hack: allow dot-repeat
     if motion == nil then
         vim.go.operatorfunc = [[v:lua.require'REPL'.send_motion_internal]]
-        vim.cmd [[normal! g@]]
+        api.nvim_feedkeys('g@', 'ni', false)
     end
 
     -- The `vim.v.count` variable refers to the count of motions. For example,
