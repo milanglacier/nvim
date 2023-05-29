@@ -320,7 +320,7 @@ M.load.aichat_repl = function()
         callback = run_cmd_with_count 'AichatSendLine',
         desc = 'Send motion to Aichat',
     })
-    keymap('n', '<Leader>cl', '', {
+    keymap('n', '<Leader>cr', '', {
         callback = require('aichat_repl').send_motion,
         desc = 'Send current line to Aichat',
     })
@@ -328,8 +328,7 @@ M.load.aichat_repl = function()
         callback = run_cmd_with_count 'AichatClose',
         desc = 'Quit Aichat',
     })
-    keymap('n', '<Leader>cc', '', {
-        callback = run_cmd_with_count 'AichatCleanup',
+    keymap('n', '<Leader>cc', '<CMD>AichatCleanup<CR>', {
         desc = 'Clear aichat REPLs.',
     })
 end

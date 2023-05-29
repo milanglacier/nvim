@@ -155,6 +155,7 @@ api.nvim_create_user_command('AichatClose', function(opts)
         return
     end
     fn.chansend(M.repls[id].term, string.char(4))
+    repl_cleanup()
 end, { count = true })
 
 api.nvim_create_user_command('AichatSendVisual', function(opts)
