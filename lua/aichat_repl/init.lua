@@ -2,16 +2,23 @@ local M = {}
 local api = vim.api
 local fn = vim.fn
 
-local default_config = {
-    buflisted = true,
-    scratch = true,
-    ft = 'REPL',
-    wincmd = 'belowright 15 split',
-    cmd = 'aichat',
-    close_on_exit = true,
-}
+M.formatter = {}
 
-M.config = default_config
+local default_config = function()
+    return {
+        buflisted = true,
+        scratch = true,
+        ft = 'REPL',
+        wincmd = 'belowright 15 split',
+        metas = {
+            aichat = { cmd = 'aichat', formatter = M.formatter.bracketed_pasting },
+            radian = { cmd = 'radian', formatter = M.formatter.bracketed_pasting },
+            ipython = { cmd = 'ipython', formatter = M.formatter.bracketed_pasting },
+        },
+        default_repl = 'aichat',
+        close_on_exit = true,
+    }
+end
 
 M.repls = {}
 
@@ -37,7 +44,7 @@ local function repl_cleanup()
     M.repls = valid_repls
 
     for id, repl in pairs(M.repls) do
-        api.nvim_buf_set_name(repl.bufnr, string.format('#aichat#%d', id))
+        api.nvim_buf_set_name(repl.bufnr, string.format('#%s#%d', repl.name, id))
     end
 end
 
@@ -54,8 +61,9 @@ local function focus_repl(id)
     end
 end
 
-local function create_repl(id)
+local function create_repl(id, repl)
     if repl_is_valid(id) then
+        vim.notify(string.format('REPL %d already exists, no new REPL is created', id))
         focus_repl(id)
         return
     end
@@ -77,9 +85,12 @@ local function create_repl(id)
         end
     end
 
-    local term = fn.termopen(M.config.cmd, opts)
-    api.nvim_buf_set_name(bufnr, string.format('#aichat#%d', id))
-    M.repls[id] = { bufnr = bufnr, term = term }
+    if repl == nil or repl == '' then
+        repl = M.config.default_repl
+    end
+    local term = fn.termopen(M.config.metas[repl].cmd, opts)
+    api.nvim_buf_set_name(bufnr, string.format('#%s#%d', repl, id))
+    M.repls[id] = { bufnr = bufnr, term = term, name = repl }
 end
 
 -- currently only support line-wise sending in both visual and operator mode.
@@ -89,10 +100,10 @@ local function get_lines(mode)
 
     local begin_line = fn.getpos(begin_mark)[2]
     local end_line = fn.getpos(end_mark)[2]
-    return api.nvim_buf_get_lines(0, begin_line - 1, end_line, 0)
+    return api.nvim_buf_get_lines(0, begin_line - 1, end_line, false)
 end
 
-local function bracketed_pasting(lines)
+function M.formatter.bracketed_pasting(lines)
     local open_code = '\27[200~'
     local close_code = '\27[201~'
     local cr = '\13'
@@ -121,7 +132,7 @@ M.send_motion_internal = function(_)
         return
     end
     local lines = get_lines 'operator'
-    lines = bracketed_pasting(lines)
+    lines = M.config.metas[M.repls[id].name].formatter(lines)
     fn.chansend(M.repls[id].term, lines)
 end
 
@@ -133,13 +144,13 @@ M.send_motion = function()
 end
 
 M.setup = function(opts)
-    M.config = vim.tbl_deep_extend('force', M.config, opts or {})
+    M.config = vim.tbl_deep_extend('force', default_config(), opts or {})
 end
 
 api.nvim_create_user_command('AichatStart', function(opts)
     -- if calling the command without any count, we want count to become 1.
-    create_repl(opts.count == 0 and 1 or opts.count)
-end, { count = true })
+    create_repl(opts.count == 0 and 1 or opts.count, opts.args)
+end, { count = true, nargs = '?' })
 
 api.nvim_create_user_command('AichatCleanup', function()
     repl_cleanup()
@@ -170,7 +181,7 @@ api.nvim_create_user_command('AichatSendVisual', function(opts)
         return
     end
     local lines = get_lines 'visual'
-    lines = bracketed_pasting(lines)
+    lines = M.config.metas[M.repls[id].name].formatter(lines)
     fn.chansend(M.repls[id].term, lines)
 end, { count = true })
 
@@ -180,8 +191,8 @@ api.nvim_create_user_command('AichatSendLine', function(opts)
         return
     end
     local line = api.nvim_get_current_line()
-    line = bracketed_pasting { line }
-    fn.chansend(M.repls[id].term, line)
+    local lines = M.config.metas[M.repls[id].name].formatter { line }
+    fn.chansend(M.repls[id].term, lines)
 end, { count = true })
 
 return M
