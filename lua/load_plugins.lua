@@ -118,7 +118,6 @@ require('lazy').setup({
 
     -- REPL
     { 'jalvesaq/Nvim-R' },
-    { 'milanglacier/iron.nvim' },
     { 'akinsho/toggleterm.nvim' },
     { 'goerz/jupytext.vim' },
 

@@ -51,81 +51,6 @@ M.load.mkdp = function()
     lazy.load { plugins = { 'markdown-preview.nvim' } }
 end
 
-M.load.iron = function()
-    local iron = require 'iron.core'
-
-    local radian = require('iron.fts.r').radian
-    local ipython = require('iron.fts.python').ipython
-    local aichat = require('iron.fts.markdown').aichat
-
-    iron.setup {
-        config = {
-            scratch_repl = true,
-            repl_definition = {
-                r = radian,
-                rmd = radian,
-                quarto = radian,
-                markdown = aichat,
-                ['markdown.pandoc'] = aichat,
-                python = ipython,
-            },
-            repl_open_cmd = 'belowright 15 split',
-            buflisted = true,
-            highlight_last = false,
-        },
-        keymaps = {
-            send_motion = '<LocalLeader>s',
-            visual_send = '<LocalLeader>s',
-            send_file = '<LocalLeader>sf',
-            send_line = '<LocalLeader>ss',
-            send_mark = '<LocalLeader>sm',
-            cr = '<LocalLeader>s<cr>',
-            interrupt = '<LocalLeader>ri',
-            exit = '<LocalLeader>rq',
-            clear = '<LocalLeader>rc',
-        },
-    }
-
-    keymap('n', '<localleader>rs', '<cmd>IronRepl<CR>', {})
-    keymap('n', '<localleader>rr', '<cmd>IronRestart<CR>', {})
-    keymap('n', '<localleader>rh', '<cmd>IronHide<CR>', {})
-    keymap('n', '<localleader>rf', '<cmd>IronFocus<CR>', {})
-    keymap('n', '<localleader>rw', '<cmd>IronWatch file<CR>', {})
-    keymap('n', '<localleader>ra', ':IronAttach', {})
-    keymap('n', '<localleader>rg', '<cmd>IronAttach markdown<CR>', { desc = 'Iron attach to chatgpt' })
-    -- iron attach will attach current buffer to a running repl
-    -- iron focus will reopen a window for current repl if there's no window for repl
-    -- iron watch will send the entire file / mark after writing the buffer
-
-    keymap('n', '<localleader>sc', '', {
-        desc = 'send a code chunk',
-        callback = function()
-            local local_leader = vim.g.maplocalleader
-            local leader = vim.g.mapleader
-
-            if vim.bo.filetype == 'r' or vim.bo.filetype == 'python' then
-                return local_leader .. 'si' .. leader .. 'c'
-            elseif vim.bo.filetype == 'rmd' or vim.bo.filetype == 'quarto' or vim.bo.filetype == 'markdown' then
-                return local_leader .. 'sic'
-                -- Note: in an expression mapping, <LocalLeader>
-                -- and <Leader> cannot be automatically mapped
-                -- to the corresponding keys, you have to do the mapping manually
-            end
-        end,
-        expr = true,
-    })
-
-    autocmd('FileType', {
-        pattern = { 'quarto', 'markdown' },
-        group = my_augroup,
-        desc = 'set up switching iron repls keymap',
-        callback = function()
-            bufmap(0, 'n', '<LocalLeader>ap', '<cmd>IronAttach python<cr>', { desc = 'switch to python REPL' })
-            bufmap(0, 'n', '<LocalLeader>ar', '<cmd>IronAttach quarto<cr>', { desc = 'switch to R REPL' })
-        end,
-    })
-end
-
 M.load.toggleterm = function()
     require('toggleterm').setup {
         -- size can be a number or function which is passed the current terminal
@@ -407,7 +332,6 @@ end
 
 M.load.diffview()
 M.load.gitsigns()
--- M.load.iron()
 M.load.mkdp()
 M.load.neogit()
 M.load.spectre()
