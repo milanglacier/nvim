@@ -1,11 +1,9 @@
 local M = {}
 M.load = {}
 
-local keymap = vim.api.nvim_set_keymap
 local autocmd = vim.api.nvim_create_autocmd
 local my_augroup = require('conf.builtin_extend').my_augroup
 local command = vim.api.nvim_create_user_command
-local bufcmd = vim.api.nvim_buf_create_user_command
 local bufmap = vim.api.nvim_buf_set_keymap
 
 local lazy = require 'lazy'
@@ -172,7 +170,7 @@ command('CondaActivateEnv', function(options)
     local conda_info = vim.json.decode(vim.fn.system 'conda info --json')
     M.conda_info = conda_info
 
-    if options.args then
+    if options.args ~= '' then
         M.conda_current_env_path = options.args
     else
         M.conda_current_env_path = conda_info.root_prefix
@@ -254,7 +252,7 @@ end, {
     desc = [[This command activates a python venv. The path to the python virtual environment may include "/bin/" or not.]],
 })
 
-command('PyVenvDeactivate', function(options)
+command('PyVenvDeactivate', function(_)
     if not M.pyvenv_current_env_path then
         return
     end
