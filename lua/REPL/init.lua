@@ -50,7 +50,8 @@ end
 
 local function focus_repl(id)
     if not repl_is_valid(id) then
-        vim.notify(string.format("REPL %d doesn't exist", id))
+        -- if id is nil, print it as -1
+        vim.notify(string.format("REPL %d doesn't exist", id or -1))
         return
     end
     local win = fn.bufwinid(M.repls[id].bufnr)
@@ -149,7 +150,7 @@ M.send_motion_internal = function(_)
     local id = vim.v.prevcount == 0 and 1 or vim.v.prevcount
 
     if not repl_is_valid(id) then
-        vim.notify(string.format("REPL %d doesn't exist", id))
+        vim.notify(string.format("REPL %d doesn't exist", id or -1))
         return
     end
     local lines = get_lines 'operator'
@@ -162,7 +163,7 @@ M.send_motion_internal_to_closest_repl = function(_)
     id = find_closest_repl_from_id_with_name(id, vim.b[0].closest_repl_name)
 
     if not repl_is_valid(id) then
-        vim.notify(string.format("REPL %d doesn't exist", id))
+        vim.notify(string.format("REPL %d doesn't exist", id or -1))
         return
     end
     local lines = get_lines 'operator'
@@ -228,7 +229,7 @@ api.nvim_create_user_command('REPLClose', function(opts)
         id = find_closest_repl_from_id_with_name(id, opts.args)
     end
     if not repl_is_valid(id) then
-        vim.notify(string.format("REPL %d doesn't exist", id))
+        vim.notify(string.format("REPL %d doesn't exist", id or -1))
         return
     end
     fn.chansend(M.repls[id].term, string.char(4))
@@ -254,7 +255,7 @@ api.nvim_create_user_command('REPLSendVisual', function(opts)
         id = find_closest_repl_from_id_with_name(id, opts.args)
     end
     if not repl_is_valid(id) then
-        vim.notify(string.format("REPL %d doesn't exist", id))
+        vim.notify(string.format("REPL %d doesn't exist", id or -1))
         return
     end
     local lines = get_lines 'visual'
@@ -277,7 +278,7 @@ api.nvim_create_user_command('REPLSendLine', function(opts)
         id = find_closest_repl_from_id_with_name(id, opts.args)
     end
     if not repl_is_valid(id) then
-        vim.notify(string.format("REPL %d doesn't exist", id))
+        vim.notify(string.format("REPL %d doesn't exist", id or -1))
         return
     end
     local line = api.nvim_get_current_line()
