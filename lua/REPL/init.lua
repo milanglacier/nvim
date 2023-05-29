@@ -165,7 +165,13 @@ function M.formatter.trim_empty_lines(lines)
     end
 end
 
-M.send_motion_internal = function(_)
+M.send_motion_internal = function(motion)
+    -- hack: allow dot-repeat
+    if motion == nil then
+        vim.go.operatorfunc = [[v:lua.require'REPL'.send_motion_internal]]
+        vim.cmd [[normal! g@]]
+    end
+
     -- The `vim.v.count` variable refers to the count of motions. For example,
     -- in `y2ap`, `vim.v.count` would equal 2. To obtain the count of the
     -- normal keymap, rather than the motion count, use `vim.v.prevcount`. For
@@ -181,7 +187,12 @@ M.send_motion_internal = function(_)
     fn.chansend(M.repls[id].term, lines)
 end
 
-M.send_motion_internal_to_closest_repl = function(_)
+M.send_motion_internal_to_closest_repl = function(motion)
+    if motion == nil then
+        vim.go.operatorfunc = [[v:lua.require'REPL'.send_motion_internal_to_closest_repl]]
+        api.nvim_feedkeys('g@', 'ni', false)
+    end
+
     local id = vim.v.prevcount == 0 and 1 or vim.v.prevcount
     id = find_closest_repl_from_id_with_name(id, vim.b[0].closest_repl_name)
 
@@ -197,11 +208,11 @@ end
 M.send_motion = function(closest_repl_name)
     if closest_repl_name then
         vim.b[0].closest_repl_name = closest_repl_name
-        vim.o.operatorfunc = [[v:lua.require'REPL'.send_motion_internal_to_closest_repl]]
+        vim.go.operatorfunc = [[v:lua.require'REPL'.send_motion_internal_to_closest_repl]]
         api.nvim_feedkeys('g@', 'ni', false)
     else
         vim.b[0].closest_repl_name = nil
-        vim.o.operatorfunc = [[v:lua.require'REPL'.send_motion_internal]]
+        vim.go.operatorfunc = [[v:lua.require'REPL'.send_motion_internal]]
         -- Those magic letters 'ni' are coming from Vigemus/iron.nvim and I am not
         -- quite understand the effect of those magic letters.
         api.nvim_feedkeys('g@', 'ni', false)
