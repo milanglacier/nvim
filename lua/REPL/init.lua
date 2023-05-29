@@ -26,17 +26,17 @@ local default_config = function()
     }
 end
 
-M.repls = {}
+M._repls = {}
 
 local function repl_is_valid(id)
-    return M.repls[id] ~= nil and api.nvim_buf_is_loaded(M.repls[id].bufnr)
+    return M._repls[id] ~= nil and api.nvim_buf_is_loaded(M._repls[id].bufnr)
 end
 
 -- rearrange repls such that there's no gap in the repls table.
 local function repl_cleanup()
     local valid_repls = {}
     local valid_repls_id = {}
-    for id, _ in pairs(M.repls) do
+    for id, _ in pairs(M._repls) do
         if repl_is_valid(id) then
             table.insert(valid_repls_id, id)
         end
@@ -45,16 +45,16 @@ local function repl_cleanup()
     table.sort(valid_repls_id)
 
     for _, id in ipairs(valid_repls_id) do
-        table.insert(valid_repls, M.repls[id])
+        table.insert(valid_repls, M._repls[id])
     end
-    M.repls = valid_repls
+    M._repls = valid_repls
 
-    for id, repl in pairs(M.repls) do
+    for id, repl in pairs(M._repls) do
         -- to avoid name conflict, we add a temp prefix
         api.nvim_buf_set_name(repl.bufnr, string.format('#%s#temp#%d', repl.name, id))
     end
 
-    for id, repl in pairs(M.repls) do
+    for id, repl in pairs(M._repls) do
         api.nvim_buf_set_name(repl.bufnr, string.format('#%s#%d', repl.name, id))
     end
 end
@@ -65,12 +65,12 @@ local function focus_repl(id)
         vim.notify(string.format("REPL %d doesn't exist", id or -1))
         return
     end
-    local win = fn.bufwinid(M.repls[id].bufnr)
+    local win = fn.bufwinid(M._repls[id].bufnr)
     if win ~= -1 then
         api.nvim_set_current_win(win)
     else
-        vim.cmd(M.config.wincmd)
-        api.nvim_set_current_buf(M.repls[id].bufnr)
+        vim.cmd(M._config.wincmd)
+        api.nvim_set_current_buf(M._repls[id].bufnr)
     end
 end
 
@@ -81,13 +81,13 @@ local function create_repl(id, repl)
         return
     end
 
-    local bufnr = api.nvim_create_buf(M.config.buflisted, M.config.scratch)
-    api.nvim_buf_set_option(bufnr, 'filetype', M.config.ft)
-    vim.cmd(M.config.wincmd)
+    local bufnr = api.nvim_create_buf(M._config.buflisted, M._config.scratch)
+    api.nvim_buf_set_option(bufnr, 'filetype', M._config.ft)
+    vim.cmd(M._config.wincmd)
     api.nvim_set_current_buf(bufnr)
 
     local opts = {}
-    if M.config.close_on_exit then
+    if M._config.close_on_exit then
         opts.on_exit = function()
             local bufwinid = fn.bufwinid(bufnr)
             while bufwinid ~= -1 do
@@ -99,18 +99,18 @@ local function create_repl(id, repl)
     end
 
     if repl == nil or repl == '' then
-        repl = M.config.default_repl
+        repl = M._config.default_repl
     end
-    local term = fn.termopen(M.config.metas[repl].cmd, opts)
+    local term = fn.termopen(M._config.metas[repl].cmd, opts)
     api.nvim_buf_set_name(bufnr, string.format('#%s#%d', repl, id))
-    M.repls[id] = { bufnr = bufnr, term = term, name = repl }
+    M._repls[id] = { bufnr = bufnr, term = term, name = repl }
 end
 
 -- get the id of the closest repl whose name is `NAME` from the `ID`
 local function find_closest_repl_from_id_with_name(id, name)
     local closest_id = nil
     local closest_distance = math.huge
-    for repl_id, repl in pairs(M.repls) do
+    for repl_id, repl in pairs(M._repls) do
         if repl.name == name then
             local distance = math.abs(repl_id - id)
             if distance < closest_distance then
@@ -126,10 +126,10 @@ local function find_closest_repl_from_id_with_name(id, name)
 end
 
 local function repl_swap(id_1, id_2)
-    local repl_1 = M.repls[id_1]
-    local repl_2 = M.repls[id_2]
-    M.repls[id_1] = repl_2
-    M.repls[id_2] = repl_1
+    local repl_1 = M._repls[id_1]
+    local repl_2 = M._repls[id_2]
+    M._repls[id_1] = repl_2
+    M._repls[id_2] = repl_1
     repl_cleanup()
 end
 
@@ -178,10 +178,10 @@ function M.formatter.trim_empty_lines(lines)
     end
 end
 
-M.send_motion_internal = function(motion)
+M._send_motion_internal = function(motion)
     -- hack: allow dot-repeat
     if motion == nil then
-        vim.go.operatorfunc = [[v:lua.require'REPL'.send_motion_internal]]
+        vim.go.operatorfunc = [[v:lua.require'REPL'._send_motion_internal]]
         api.nvim_feedkeys('g@', 'ni', false)
     end
 
@@ -196,13 +196,13 @@ M.send_motion_internal = function(motion)
         return
     end
     local lines = get_lines 'operator'
-    lines = M.config.metas[M.repls[id].name].formatter(lines)
-    fn.chansend(M.repls[id].term, lines)
+    lines = M._config.metas[M._repls[id].name].formatter(lines)
+    fn.chansend(M._repls[id].term, lines)
 end
 
-M.send_motion_internal_to_closest_repl = function(motion)
+M._send_motion_internal_to_closest_repl = function(motion)
     if motion == nil then
-        vim.go.operatorfunc = [[v:lua.require'REPL'.send_motion_internal_to_closest_repl]]
+        vim.go.operatorfunc = [[v:lua.require'REPL'._send_motion_internal_to_closest_repl]]
         api.nvim_feedkeys('g@', 'ni', false)
     end
 
@@ -214,18 +214,18 @@ M.send_motion_internal_to_closest_repl = function(motion)
         return
     end
     local lines = get_lines 'operator'
-    lines = M.config.metas[M.repls[id].name].formatter(lines)
-    fn.chansend(M.repls[id].term, lines)
+    lines = M._config.metas[M._repls[id].name].formatter(lines)
+    fn.chansend(M._repls[id].term, lines)
 end
 
 M.send_motion = function(closest_repl_name)
     if closest_repl_name then
         vim.b[0].closest_repl_name = closest_repl_name
-        vim.go.operatorfunc = [[v:lua.require'REPL'.send_motion_internal_to_closest_repl]]
+        vim.go.operatorfunc = [[v:lua.require'REPL'._send_motion_internal_to_closest_repl]]
         api.nvim_feedkeys('g@', 'ni', false)
     else
         vim.b[0].closest_repl_name = nil
-        vim.go.operatorfunc = [[v:lua.require'REPL'.send_motion_internal]]
+        vim.go.operatorfunc = [[v:lua.require'REPL'._send_motion_internal]]
         -- Those magic letters 'ni' are coming from Vigemus/iron.nvim and I am not
         -- quite understand the effect of those magic letters.
         api.nvim_feedkeys('g@', 'ni', false)
@@ -233,8 +233,8 @@ M.send_motion = function(closest_repl_name)
 end
 
 M.setup = function(opts)
-    M.config = vim.tbl_deep_extend('force', default_config(), opts or {})
-    M.config.metas = vim.tbl_deep_extend('force', M.config.metas, M.config.additional_metas or {})
+    M._config = vim.tbl_deep_extend('force', default_config(), opts or {})
+    M._config.metas = vim.tbl_deep_extend('force', M._config.metas, M._config.additional_metas or {})
 end
 
 api.nvim_create_user_command('REPLStart', function(opts)
@@ -245,7 +245,7 @@ end, {
     nargs = '?',
     complete = function()
         local metas = {}
-        for name, _ in pairs(M.config.metas) do
+        for name, _ in pairs(M._config.metas) do
             table.insert(metas, name)
         end
         return metas
@@ -281,7 +281,7 @@ api.nvim_create_user_command('REPLHide', function(opts)
         return
     end
 
-    local win = fn.bufwinid(M.repls[id].bufnr)
+    local win = fn.bufwinid(M._repls[id].bufnr)
     if win ~= -1 then
         api.nvim_set_current_win(win)
         vim.cmd [[quit]]
@@ -304,7 +304,7 @@ api.nvim_create_user_command('REPLClose', function(opts)
         vim.notify(string.format("REPL %d doesn't exist", id or -1))
         return
     end
-    fn.chansend(M.repls[id].term, string.char(4))
+    fn.chansend(M._repls[id].term, string.char(4))
     repl_cleanup()
 end, {
     count = true,
@@ -320,7 +320,7 @@ api.nvim_create_user_command('REPLSwap', function(opts)
     local id_2 = tonumber(opts.fargs[2])
 
     local repl_ids = {}
-    for id, _ in pairs(M.repls) do
+    for id, _ in pairs(M._repls) do
         table.insert(repl_ids, id)
     end
 
@@ -330,13 +330,13 @@ api.nvim_create_user_command('REPLSwap', function(opts)
         vim.ui.select(repl_ids, {
             prompt = 'select first REPL',
             format_item = function(item)
-                return item .. ' ' .. M.repls[item].name
+                return item .. ' ' .. M._repls[item].name
             end,
         }, function(id1)
             vim.ui.select(repl_ids, {
                 prompt = 'select second REPL',
                 format_item = function(item)
-                    return item .. ' ' .. M.repls[item].name
+                    return item .. ' ' .. M._repls[item].name
                 end,
             }, function(id2)
                 repl_swap(id1, id2)
@@ -346,7 +346,7 @@ api.nvim_create_user_command('REPLSwap', function(opts)
         vim.ui.select(repl_ids, {
             prompt = 'select second REPL',
             format_item = function(item)
-                return item .. ' ' .. M.repls[item].name
+                return item .. ' ' .. M._repls[item].name
             end,
         }, function(id2)
             repl_swap(id_1, id2)
@@ -377,8 +377,8 @@ api.nvim_create_user_command('REPLSendVisual', function(opts)
         return
     end
     local lines = get_lines 'visual'
-    lines = M.config.metas[M.repls[id].name].formatter(lines)
-    fn.chansend(M.repls[id].term, lines)
+    lines = M._config.metas[M._repls[id].name].formatter(lines)
+    fn.chansend(M._repls[id].term, lines)
 end, {
     count = true,
     nargs = '?',
@@ -400,8 +400,8 @@ api.nvim_create_user_command('REPLSendLine', function(opts)
         return
     end
     local line = api.nvim_get_current_line()
-    local lines = M.config.metas[M.repls[id].name].formatter { line }
-    fn.chansend(M.repls[id].term, lines)
+    local lines = M._config.metas[M._repls[id].name].formatter { line }
+    fn.chansend(M._repls[id].term, lines)
 end, {
     count = true,
     nargs = '?',
