@@ -309,23 +309,25 @@ M.load.REPL = function()
         desc = 'Start an Aichat REPL',
     })
     keymap('n', '<Leader>cf', '', {
-        callback = run_cmd_with_count 'REPLFocus',
+        callback = run_cmd_with_count 'REPLFocus aichat',
         desc = 'Focus on Aichat REPL',
     })
     keymap('v', '<Leader>cr', '', {
-        callback = run_cmd_with_count 'REPLSendVisual',
+        callback = run_cmd_with_count 'REPLSendVisual aichat',
         desc = 'Send visual region to Aichat',
     })
     keymap('n', '<Leader>crr', '', {
-        callback = run_cmd_with_count 'REPLSendLine',
+        callback = run_cmd_with_count 'REPLSendLine aichat',
         desc = 'Send motion to Aichat',
     })
     keymap('n', '<Leader>cr', '', {
-        callback = require('REPL').send_motion,
+        callback = function()
+            require('REPL').send_motion 'aichat'
+        end,
         desc = 'Send current line to Aichat',
     })
     keymap('n', '<Leader>cq', '', {
-        callback = run_cmd_with_count 'REPLClose',
+        callback = run_cmd_with_count 'REPLClose aichat',
         desc = 'Quit Aichat',
     })
     keymap('n', '<Leader>cc', '<CMD>REPLCleanup<CR>', {

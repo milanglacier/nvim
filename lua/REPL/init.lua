@@ -50,6 +50,7 @@ end
 
 local function focus_repl(id)
     if not repl_is_valid(id) then
+        vim.notify(string.format("REPL %d doesn't exist", id))
         return
     end
     local win = fn.bufwinid(M.repls[id].bufnr)
@@ -93,6 +94,25 @@ local function create_repl(id, repl)
     M.repls[id] = { bufnr = bufnr, term = term, name = repl }
 end
 
+-- get the id of the closest repl whose name is `NAME` from the `ID`
+local function find_closest_repl_from_id_with_name(id, name)
+    local closest_id = nil
+    local closest_distance = math.huge
+    for repl_id, repl in pairs(M.repls) do
+        if repl.name == name then
+            local distance = math.abs(repl_id - id)
+            if distance < closest_distance then
+                closest_id = repl_id
+                closest_distance = distance
+            end
+            if distance == 0 then
+                break
+            end
+        end
+    end
+    return closest_id
+end
+
 -- currently only support line-wise sending in both visual and operator mode.
 local function get_lines(mode)
     local begin_mark = mode == 'operator' and "'[" or "'<"
@@ -129,6 +149,7 @@ M.send_motion_internal = function(_)
     local id = vim.v.prevcount == 0 and 1 or vim.v.prevcount
 
     if not repl_is_valid(id) then
+        vim.notify(string.format("REPL %d doesn't exist", id))
         return
     end
     local lines = get_lines 'operator'
@@ -136,11 +157,31 @@ M.send_motion_internal = function(_)
     fn.chansend(M.repls[id].term, lines)
 end
 
-M.send_motion = function()
-    vim.o.operatorfunc = [[v:lua.require'REPL'.send_motion_internal]]
-    -- Those magic letters 'ni' are coming from Vigemus/iron.nvim and I am not
-    -- quite understand the effect of those magic letters.
-    api.nvim_feedkeys('g@', 'ni', false)
+M.send_motion_internal_to_closet_repl = function(_)
+    local id = vim.v.prevcount == 0 and 1 or vim.v.prevcount
+    id = find_closest_repl_from_id_with_name(id, vim.b[0].closet_repl_name)
+
+    if not repl_is_valid(id) then
+        vim.notify(string.format("REPL %d doesn't exist", id))
+        return
+    end
+    local lines = get_lines 'operator'
+    lines = M.config.metas[M.repls[id].name].formatter(lines)
+    fn.chansend(M.repls[id].term, lines)
+end
+
+M.send_motion = function(closet_repl_name)
+    if closet_repl_name then
+        vim.b[0].closet_repl_name = closet_repl_name
+        vim.o.operatorfunc = [[v:lua.require'REPL'.send_motion_internal_to_closet_repl]]
+        api.nvim_feedkeys('g@', 'ni', false)
+    else
+        vim.b[0].closet_repl_name = nil
+        vim.o.operatorfunc = [[v:lua.require'REPL'.send_motion_internal]]
+        -- Those magic letters 'ni' are coming from Vigemus/iron.nvim and I am not
+        -- quite understand the effect of those magic letters.
+        api.nvim_feedkeys('g@', 'ni', false)
+    end
 end
 
 M.setup = function(opts)
@@ -167,17 +208,39 @@ api.nvim_create_user_command('REPLCleanup', function()
 end, { desc = 'clean invalid repls, and rearrange the repls order.' })
 
 api.nvim_create_user_command('REPLFocus', function(opts)
-    focus_repl(opts.count == 0 and 1 or opts.count)
-end, { count = true })
+    local id = opts.count == 0 and 1 or opts.count
+    if opts.args ~= '' then
+        id = find_closest_repl_from_id_with_name(id, opts.args)
+    end
+    focus_repl(id)
+end, {
+    count = true,
+    nargs = '?',
+    desc = [[Focus on the ith REPL. The first REPL is the default. If an
+optional argument is provided, the function will attempt to focus on the
+closest REPL with the specified name. For instance, `3REPLFocus ipython`
+will focus on the closest ipython REPL relative to id 3.]],
+})
 
 api.nvim_create_user_command('REPLClose', function(opts)
     local id = opts.count == 0 and 1 or opts.count
+    if opts.args ~= '' then
+        id = find_closest_repl_from_id_with_name(id, opts.args)
+    end
     if not repl_is_valid(id) then
+        vim.notify(string.format("REPL %d doesn't exist", id))
         return
     end
     fn.chansend(M.repls[id].term, string.char(4))
     repl_cleanup()
-end, { count = true })
+end, {
+    count = true,
+    nargs = '?',
+    desc = [[Close the ith REPL. The first REPL is the default. If an optional
+argument is provided, the function will attempt to close the closest REPL
+with the specified name. For instance, `3REPLClose ipython` will close the
+closest ipython REPL relative to id 3.]],
+})
 
 api.nvim_create_user_command('REPLSendVisual', function(opts)
     -- we must use `<ESC>` to clear those marks to mark '> and '> to be able to
@@ -187,22 +250,48 @@ api.nvim_create_user_command('REPLSendVisual', function(opts)
     api.nvim_feedkeys('\27', 'nx', false)
 
     local id = opts.count == 0 and 1 or opts.count
+    if opts.args ~= '' then
+        id = find_closest_repl_from_id_with_name(id, opts.args)
+    end
     if not repl_is_valid(id) then
+        vim.notify(string.format("REPL %d doesn't exist", id))
         return
     end
     local lines = get_lines 'visual'
     lines = M.config.metas[M.repls[id].name].formatter(lines)
     fn.chansend(M.repls[id].term, lines)
-end, { count = true })
+end, {
+    count = true,
+    nargs = '?',
+    desc = [[Send the visual range to the ith REPL. For example, use
+`REPLSendVisual` or `3REPLSendVisual` to specify the REPL number. If no
+number is given, the first REPL is the default. If an optional argument is
+provided, the function will attempt to send the visual range to the closest
+REPL with the specified name. For instance, `3REPLSendVisual ipython` will
+send the visual range to the closest ipython REPL relative to id 3.]],
+})
 
 api.nvim_create_user_command('REPLSendLine', function(opts)
     local id = opts.count == 0 and 1 or opts.count
+    if opts.args ~= '' then
+        id = find_closest_repl_from_id_with_name(id, opts.args)
+    end
     if not repl_is_valid(id) then
+        vim.notify(string.format("REPL %d doesn't exist", id))
         return
     end
     local line = api.nvim_get_current_line()
     local lines = M.config.metas[M.repls[id].name].formatter { line }
     fn.chansend(M.repls[id].term, lines)
-end, { count = true })
+end, {
+    count = true,
+    nargs = '?',
+    desc = [[Send current line to the ith REPL. For example, use `REPLSendLine`
+or `3REPLSendLine` to specify the REPL number. If no number is given, the
+first REPL is the default. If an optional argument is provided, the
+function will attempt to send the current line to the closest REPL with the
+specified name. For instance, `3REPLSendVisual ipython` will send the
+visual range to the closest ipython REPL relative to id 3.]],
+})
 
 return M
