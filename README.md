@@ -585,27 +585,20 @@ The following keymaps rely on [copilot.lua](https://github.com/zbirenbaum/copilo
 
 ## REPL keymaps
 
-The following keymaps rely on [iron.nvim](https://github.com/hkupty/iron.nvim)
+Note: with no numerical argument, the REPL is default for the first REPL.
 
-| Mode | LHS               | RHS/Functionality                       |
-| ---- | ----------------- | --------------------------------------- |
-| n    | `<LocalLeader>rs` | Start the REPL                          |
-| n    | `<LocalLeader>rr` | Restart the REPL                        |
-| n    | `<LocalLeader>rh` | Hide the REPL window                    |
-| n    | `<LocalLeader>rf` | Focus / open on the REPL window         |
-| n    | `<LocalLeader>rw` | Send file content to REPL after writing |
-| n    | `<LocalLeader>ra` | Attach current file to a specific REPL  |
-| n    | `<LocalLeader>ri` | Interrupt the REPL                      |
-| n    | `<LocalLeader>rq` | Exit the REPL                           |
-| n    | `<LocalLeader>rc` | Clear the REPL output                   |
+| Mode | LHS               | RHS/Functionality                                                                                                 |
+| ---- | ----------------- | ---------------------------------------------                                                                     |
+| n    | `<LocalLeader>rs` | Start the `ith` REPL, e.g. `<LocalLeader>rs` to start the first REPL and `3<LocalLeader>rs` to start the 3rd REPL |
+| n    | `<LocalLeader>rf` | Focus on / open the `ith` REPL window, e.g. `2<LocalLeader>rf`                                                   |
+| n    | `<LocalLeader>ra` | Start the `ith` REPL with another meta, e.g. `4<LocalLeader>ra`                                                   |
+| n    | `<LocalLeader>rq` | Exit the `ith` REPL, usage the same as above                                                                      |
+| n    | `<LocalLeader>rc` | Clear invalid REPLs                                                                                               |
 
-| Mode | LHS                  | RHS/Functionality                                     |
-| ---- | -------------------- | ----------------------------------------------------- |
-| nv   | `<LocalLeader>s`     | Send the motion / text object / selected text to REPL |
-| n    | `<LocalLeader>sf`    | Send the file to REPL                                 |
-| n    | `<LocalLeader>ss`    | Send current line to REPL                             |
-| n    | `<LocalLeader>sm`    | Send mark to REPL                                     |
-| n    | `<LocalLeader>s<cr>` | Send `<cr>` to REPL                                   |
+| Mode | LHS                  | RHS/Functionality                                                                                               |
+| ---- | -------------------- | -----------------------------------------------------                                                           |
+| nv   | `<LocalLeader>s`     | Send the motion / text object / selected text to the `ith` REPL, e.g. `<LocalLeader>sap` or `2<LocalLeader>sap` |
+| n    | `<LocalLeader>ss`    | Send current line to the `ith` REPL                                                                             |
 
 ## Treesitter keymaps
 
