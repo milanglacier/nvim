@@ -310,6 +310,9 @@ M.load.REPL = function()
             bufmap(0, 'n', '<LocalLeader>rc', '<CMD>REPLCleanup<CR>', {
                 desc = 'Clear REPLs.',
             })
+            bufmap(0, 'n', '<LocalLeader>rS', '<CMD>REPLSwap<CR>', {
+                desc = 'Swap REPLs.',
+            })
             bufmap(0, 'n', '<LocalLeader>ra', '', {
                 callback = function()
                     vim.api.nvim_feedkeys(':' .. vim.v.count1 .. 'REPLStart ', 'n', true)

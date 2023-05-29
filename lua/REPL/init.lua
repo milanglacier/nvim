@@ -50,6 +50,11 @@ local function repl_cleanup()
     M.repls = valid_repls
 
     for id, repl in pairs(M.repls) do
+        -- to avoid name conflict, we add a temp prefix
+        api.nvim_buf_set_name(repl.bufnr, string.format('#%s#temp#%d', repl.name, id))
+    end
+
+    for id, repl in pairs(M.repls) do
         api.nvim_buf_set_name(repl.bufnr, string.format('#%s#%d', repl.name, id))
     end
 end
@@ -118,6 +123,14 @@ local function find_closest_repl_from_id_with_name(id, name)
         end
     end
     return closest_id
+end
+
+local function repl_swap(id_1, id_2)
+    local repl_1 = M.repls[id_1]
+    local repl_2 = M.repls[id_2]
+    M.repls[id_1] = repl_2
+    M.repls[id_2] = repl_1
+    repl_cleanup()
 end
 
 -- currently only support line-wise sending in both visual and operator mode.
@@ -267,9 +280,9 @@ api.nvim_create_user_command('REPLHide', function(opts)
         return
     end
 
-    local win = vim.fn.bufwinid(M.repls[id].bufnr)
+    local win = fn.bufwinid(M.repls[id].bufnr)
     if win ~= -1 then
-        vim.api.nvim_set_current_win(win)
+        api.nvim_set_current_win(win)
         vim.cmd [[quit]]
     end
 end, {
@@ -299,6 +312,52 @@ end, {
 argument is provided, the function will attempt to close the closest REPL
 with the specified name. For instance, `3REPLClose ipython` will close the
 closest ipython REPL relative to id 3.]],
+})
+
+api.nvim_create_user_command('REPLSwap', function(opts)
+    local id_1 = tonumber(opts.fargs[1])
+    local id_2 = tonumber(opts.fargs[2])
+
+    local repl_ids = {}
+    for id, _ in pairs(M.repls) do
+        table.insert(repl_ids, id)
+    end
+
+    table.sort(repl_ids)
+
+    if id_1 == nil then
+        vim.ui.select(repl_ids, {
+            prompt = 'select first REPL',
+            format_item = function(item)
+                return item .. ' ' .. M.repls[item].name
+            end,
+        }, function(id1)
+            vim.ui.select(repl_ids, {
+                prompt = 'select second REPL',
+                format_item = function(item)
+                    return item .. ' ' .. M.repls[item].name
+                end,
+            }, function(id2)
+                repl_swap(id1, id2)
+            end)
+        end)
+    elseif id_2 == nil then
+        vim.ui.select(repl_ids, {
+            prompt = 'select second REPL',
+            format_item = function(item)
+                return item .. ' ' .. M.repls[item].name
+            end,
+        }, function(id2)
+            repl_swap(id_1, id2)
+        end)
+    else
+        repl_swap(id_1, id_2)
+    end
+end, {
+    desc = [[To swap two REPLs, if no REPL ID is provided, you will be prompted
+to select both REPLs. If one REPL ID is provided, you will be prompted to
+select the second REPL.]],
+    nargs = '*',
 })
 
 api.nvim_create_user_command('REPLSendVisual', function(opts)
