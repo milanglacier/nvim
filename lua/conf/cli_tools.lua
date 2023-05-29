@@ -378,11 +378,28 @@ M.load.REPL = function()
             })
             bufmap(0, 'n', '<LocalLeader>ra', '', {
                 callback = function()
-                    -- an expr mapping automatically takes vim.v.count into account
-                    return ':REPLStart '
+                    vim.api.nvim_feedkeys(':' .. vim.v.count1 .. 'REPLStart ', 'n', true)
+                end,
+                desc = 'Start an REPL with another meta',
+            })
+            bufmap(0, 'n', '<localleader>sc', '', {
+                desc = 'send a code chunk',
+                callback = function()
+                    local leader = vim.g.mapleader
+
+                    if vim.bo.filetype == 'r' or vim.bo.filetype == 'python' then
+                        vim.api.nvim_feedkeys('Vi' .. leader .. 'c', 'mti', true)
+                        -- \21 is <C-U>, \13 is <CR>
+                        vim.api.nvim_feedkeys(':\21' .. vim.v.count1 .. 'REPLSendVisual\13', 'mti', true)
+                    elseif vim.bo.filetype == 'rmd' or vim.bo.filetype == 'quarto' or vim.bo.filetype == 'markdown' then
+                        vim.api.nvim_feedkeys('Vic', 'mti', true)
+                        vim.api.nvim_feedkeys(':\21' .. vim.v.count1 .. 'REPLSendVisual\13', 'mti', true)
+                        -- Note: in an expression mapping, <LocalLeader>
+                        -- and <Leader> cannot be automatically mapped
+                        -- to the corresponding keys, you have to do the mapping manually
+                    end
                 end,
                 expr = true,
-                desc = 'Start an REPL with another meta',
             })
         end,
     })
