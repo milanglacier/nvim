@@ -157,9 +157,9 @@ M.send_motion_internal = function(_)
     fn.chansend(M.repls[id].term, lines)
 end
 
-M.send_motion_internal_to_closet_repl = function(_)
+M.send_motion_internal_to_closest_repl = function(_)
     local id = vim.v.prevcount == 0 and 1 or vim.v.prevcount
-    id = find_closest_repl_from_id_with_name(id, vim.b[0].closet_repl_name)
+    id = find_closest_repl_from_id_with_name(id, vim.b[0].closest_repl_name)
 
     if not repl_is_valid(id) then
         vim.notify(string.format("REPL %d doesn't exist", id))
@@ -170,13 +170,13 @@ M.send_motion_internal_to_closet_repl = function(_)
     fn.chansend(M.repls[id].term, lines)
 end
 
-M.send_motion = function(closet_repl_name)
-    if closet_repl_name then
-        vim.b[0].closet_repl_name = closet_repl_name
-        vim.o.operatorfunc = [[v:lua.require'REPL'.send_motion_internal_to_closet_repl]]
+M.send_motion = function(closest_repl_name)
+    if closest_repl_name then
+        vim.b[0].closest_repl_name = closest_repl_name
+        vim.o.operatorfunc = [[v:lua.require'REPL'.send_motion_internal_to_closest_repl]]
         api.nvim_feedkeys('g@', 'ni', false)
     else
-        vim.b[0].closet_repl_name = nil
+        vim.b[0].closest_repl_name = nil
         vim.o.operatorfunc = [[v:lua.require'REPL'.send_motion_internal]]
         -- Those magic letters 'ni' are coming from Vigemus/iron.nvim and I am not
         -- quite understand the effect of those magic letters.
