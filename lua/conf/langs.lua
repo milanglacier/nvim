@@ -95,14 +95,14 @@ autocmd('FileType', {
             end,
         })
 
-        local visual_a = [[:<C-U>lua require('conf.builtin_extend').textobj_code_chunk('a', '```{.+}', '^```$')<CR>]]
+        local visual_a = [[:<C-U>lua require('conf.langs').textobj_code_chunk('a', '```{.+}', '^```$')<CR>]]
 
         bufmap(0, 'x', 'ac', visual_a, {
             silent = true,
             desc = 'rmd/quarto code chunk text object a',
         })
 
-        local visual_i = [[:<C-U>lua require('conf.builtin_extend').textobj_code_chunk('i', '```{.+}', '^```$')<CR>]]
+        local visual_i = [[:<C-U>lua require('conf.langs').textobj_code_chunk('i', '```{.+}', '^```$')<CR>]]
 
         bufmap(0, 'x', 'ic', visual_i, {
             silent = true,
@@ -133,7 +133,7 @@ autocmd('FileType', {
         })
 
         local visual_a =
-            [[:<C-U>lua require('conf.builtin_extend').textobj_code_chunk('a', '^# ?%%%%.*', '^# ?%%%%$', true)<CR>]]
+            [[:<C-U>lua require('conf.langs').textobj_code_chunk('a', '^# ?%%%%.*', '^# ?%%%%$', true)<CR>]]
 
         bufmap(0, 'x', 'a<Leader>c', visual_a, {
             silent = true,
@@ -141,7 +141,7 @@ autocmd('FileType', {
         })
 
         local visual_i =
-            [[:<C-U>lua require('conf.builtin_extend').textobj_code_chunk('i', '^# ?%%%%.*', '^# ?%%%%$', true)<CR>]]
+            [[:<C-U>lua require('conf.langs').textobj_code_chunk('i', '^# ?%%%%.*', '^# ?%%%%$', true)<CR>]]
 
         bufmap(0, 'x', 'i<Leader>c', visual_i, {
             silent = true,
