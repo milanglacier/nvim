@@ -331,11 +331,64 @@ M.load.REPL = function()
     keymap('n', '<Leader>cc', '<CMD>REPLCleanup<CR>', {
         desc = 'Clear aichat REPLs.',
     })
+
+    local ft_to_repl = {
+        r = 'radian',
+        rmd = 'radian',
+        quarto = 'radian',
+        markdown = 'radian',
+        ['markdown.pandoc'] = 'radian',
+        python = 'ipython',
+    }
+
+    autocmd('FileType', {
+        pattern = { 'quarto', 'markdown', 'markdown.pandoc', 'rmd', 'python' },
+        group = my_augroup,
+        desc = 'set up REPL keymap',
+        callback = function()
+            local repl = ft_to_repl[vim.bo.filetype]
+            bufmap(0, 'n', '<LocalLeader>rs', '', {
+                callback = run_cmd_with_count('REPLStart ' .. repl),
+                desc = 'Start an REPL',
+            })
+            bufmap(0, 'n', '<LocalLeader>rf', '', {
+                callback = run_cmd_with_count 'REPLFocus',
+                desc = 'Focus on REPL',
+            })
+            bufmap(0, 'v', '<LocalLeader>s', '', {
+                callback = run_cmd_with_count 'REPLSendVisual',
+                desc = 'Send visual region to REPL',
+            })
+            bufmap(0, 'n', '<LocalLeader>ss', '', {
+                callback = run_cmd_with_count 'REPLSendLine',
+                desc = 'Send motion to REPL',
+            })
+            bufmap(0, 'n', '<LocalLeader>s', '', {
+                callback = require('REPL').send_motion,
+                desc = 'Send current line to REPL',
+            })
+            bufmap(0, 'n', '<LocalLeader>rq', '', {
+                callback = run_cmd_with_count 'REPLClose',
+                desc = 'Quit REPL',
+            })
+            bufmap(0, 'n', '<LocalLeader>rc', '<CMD>REPLCleanup<CR>', {
+                desc = 'Clear REPLs.',
+            })
+            bufmap(0, 'n', '<LocalLeader>ra', '', {
+                callback = function()
+                    -- an expr mapping automatically takes vim.v.count into account
+                    return ':REPLStart '
+                end,
+                expr = true,
+                desc = 'Start an REPL with another meta',
+            })
+        end,
+    })
 end
 
 M.load.diffview()
 M.load.gitsigns()
-M.load.iron()
+-- M.load.iron()
 M.load.mkdp()
 M.load.neogit()
 M.load.spectre()

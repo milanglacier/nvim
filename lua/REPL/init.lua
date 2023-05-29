@@ -137,7 +137,7 @@ M.send_motion_internal = function(_)
 end
 
 M.send_motion = function()
-    vim.o.operatorfunc = [[v:lua.require'aichat_repl'.send_motion_internal]]
+    vim.o.operatorfunc = [[v:lua.require'REPL'.send_motion_internal]]
     -- Those magic letters 'ni' are coming from Vigemus/iron.nvim and I am not
     -- quite understand the effect of those magic letters.
     api.nvim_feedkeys('g@', 'ni', false)
@@ -150,7 +150,17 @@ end
 api.nvim_create_user_command('REPLStart', function(opts)
     -- if calling the command without any count, we want count to become 1.
     create_repl(opts.count == 0 and 1 or opts.count, opts.args)
-end, { count = true, nargs = '?' })
+end, {
+    count = true,
+    nargs = '?',
+    complete = function()
+        local metas = {}
+        for name, _ in pairs(M.config.metas) do
+            table.insert(metas, name)
+        end
+        return metas
+    end,
+})
 
 api.nvim_create_user_command('REPLCleanup', function()
     repl_cleanup()
