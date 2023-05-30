@@ -230,7 +230,7 @@ M.load.REPL = function()
     require('REPL').setup {}
 
     keymap('n', '<Leader>cs', '', {
-        callback = run_cmd_with_count 'REPLStart',
+        callback = run_cmd_with_count 'REPLStart aichat',
         desc = 'Start an Aichat REPL',
     })
     keymap('n', '<Leader>cf', '', {
@@ -317,9 +317,7 @@ M.load.REPL = function()
                 desc = 'Swap REPLs.',
             })
             bufmap(0, 'n', '<LocalLeader>ra', '', {
-                callback = function()
-                    vim.api.nvim_feedkeys(':' .. vim.v.count1 .. 'REPLStart ', 'n', true)
-                end,
+                callback = run_cmd_with_count 'REPLStart',
                 desc = 'Start an REPL with another meta',
             })
             bufmap(0, 'n', '<localleader>sc', '', {

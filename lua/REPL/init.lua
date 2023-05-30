@@ -21,7 +21,6 @@ local default_config = function()
             -- bash.
             bash = { cmd = 'bash', formatter = M.formatter.trim_empty_lines },
         },
-        default_repl = 'aichat',
         close_on_exit = true,
     }
 end
@@ -77,7 +76,11 @@ end
 local function create_repl(id, repl)
     if repl_is_valid(id) then
         vim.notify(string.format('REPL %d already exists, no new REPL is created', id))
-        focus_repl(id)
+        return
+    end
+
+    if not M._config.metas[repl] then
+        vim.notify 'No REPL palatte is found'
         return
     end
 
@@ -102,9 +105,6 @@ local function create_repl(id, repl)
         end
     end
 
-    if repl == nil or repl == '' then
-        repl = M._config.default_repl
-    end
     local term = fn.termopen(M._config.metas[repl].cmd, opts)
     api.nvim_buf_set_name(bufnr, string.format('#%s#%d', repl, id))
     M._repls[id] = { bufnr = bufnr, term = term, name = repl }
@@ -243,7 +243,30 @@ end
 
 api.nvim_create_user_command('REPLStart', function(opts)
     -- if calling the command without any count, we want count to become 1.
-    create_repl(opts.count == 0 and 1 or opts.count, opts.args)
+    local repl = opts.args
+    local id = opts.count == 0 and 1 or opts.count
+
+    if repl == '' then
+        if M._repls[id] then
+            vim.notify(string.format('REPL %d already exists', id))
+            focus_repl(id)
+            return
+        end
+
+        local repls = {}
+        for name, _ in pairs(M._config.metas) do
+            table.insert(repls, name)
+        end
+
+        vim.ui.select(repls, {
+            prompt = 'Select REPL: ',
+        }, function(choice)
+            repl = choice
+            create_repl(id, repl)
+        end)
+    else
+        create_repl(id, repl)
+    end
 end, {
     count = true,
     nargs = '?',
@@ -254,6 +277,12 @@ end, {
         end
         return metas
     end,
+    desc = [[Create a REPL from the list of available REPLs. If a count is
+provided, the REPL will be created with that id. If an argument is
+provided, the REPL will be created with the specified name. If no argument
+is provided, the user will be prompted to select a REPL from the list of
+available REPLs. If the id is already in use, will focus on the REPL with
+that id.]],
 })
 
 api.nvim_create_user_command('REPLCleanup', function()
