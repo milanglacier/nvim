@@ -592,6 +592,7 @@ Note: with no numerical argument, the REPL is default for the first REPL.
 | n    | `<LocalLeader>rs` | Start the `ith` REPL, e.g. `<LocalLeader>rs` to start the first REPL and `3<LocalLeader>rs` to start the 3rd REPL |
 | n    | `<LocalLeader>rf` | Focus on `ith` REPL window, e.g. `2<LocalLeader>rf`                                                               |
 | n    | `<LocalLeader>rs` | Swap two REPLs.                                                                                                   |
+| n    | `<LocalLeader>rv` | View REPLs in telescope.                                                                                          |
 | n    | `<LocalLeader>rh` | Hide the `ith` REPL window, e.g. `2<LocalLeader>rf`                                                               |
 | n    | `<LocalLeader>ra` | Start the `ith` REPL with another meta, e.g. `4<LocalLeader>ra`                                                   |
 | n    | `<LocalLeader>rq` | Exit the `ith` REPL, usage the same as above                                                                      |

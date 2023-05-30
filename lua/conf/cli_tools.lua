@@ -287,6 +287,9 @@ M.load.REPL = function()
                 callback = run_cmd_with_count 'REPLFocus',
                 desc = 'Focus on REPL',
             })
+            bufmap(0, 'n', '<LocalLeader>rv', '<CMD>Telescope REPLShow<CR>', {
+                desc = 'View REPLs in telescope',
+            })
             bufmap(0, 'n', '<LocalLeader>rh', '', {
                 callback = run_cmd_with_count 'REPLHide',
                 desc = 'Hide REPL',
