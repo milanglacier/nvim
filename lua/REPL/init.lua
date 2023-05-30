@@ -339,7 +339,6 @@ api.nvim_create_user_command('REPLClose', function(opts)
         return
     end
     fn.chansend(M._repls[id].term, string.char(4))
-    repl_cleanup()
 end, {
     count = true,
     nargs = '?',
