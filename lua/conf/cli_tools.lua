@@ -327,13 +327,17 @@ M.load.REPL = function()
                 callback = function()
                     local leader = vim.g.mapleader
                     local localleader = vim.g.maplocalleader
+                    -- NOTE: in an expr mapping, <Leader> and <LocalLeader>
+                    -- cannot be translated. You must use their literal value
+                    -- in the returned string.
 
                     if vim.bo.filetype == 'r' or vim.bo.filetype == 'python' then
-                        vim.api.nvim_feedkeys(localleader .. 'si' .. leader .. 'c', '', true)
+                        return localleader .. 'si' .. leader .. 'c'
                     elseif vim.bo.filetype == 'rmd' or vim.bo.filetype == 'quarto' or vim.bo.filetype == 'markdown' then
-                        vim.api.nvim_feedkeys(localleader .. 'sic', '', true)
+                        return localleader .. 'sic'
                     end
                 end,
+                expr = true,
             })
         end,
     })
