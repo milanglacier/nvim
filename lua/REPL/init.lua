@@ -102,6 +102,7 @@ local function create_repl(id, repl)
             if api.nvim_buf_is_loaded(bufnr) then
                 api.nvim_buf_delete(bufnr, { force = true })
             end
+            repl_cleanup()
         end
     end
 
