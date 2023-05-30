@@ -326,17 +326,12 @@ M.load.REPL = function()
                 desc = 'send a code chunk',
                 callback = function()
                     local leader = vim.g.mapleader
+                    local localleader = vim.g.maplocalleader
 
                     if vim.bo.filetype == 'r' or vim.bo.filetype == 'python' then
-                        vim.api.nvim_feedkeys('Vi' .. leader .. 'c', 'mti', true)
-                        -- \21 is <C-U>, \13 is <CR>
-                        vim.api.nvim_feedkeys(':\21' .. vim.v.count1 .. 'REPLSendVisual\13', 'mti', true)
+                        vim.api.nvim_feedkeys(localleader .. 'si' .. leader .. 'c', '', true)
                     elseif vim.bo.filetype == 'rmd' or vim.bo.filetype == 'quarto' or vim.bo.filetype == 'markdown' then
-                        vim.api.nvim_feedkeys('Vic', 'mti', true)
-                        vim.api.nvim_feedkeys(':\21' .. vim.v.count1 .. 'REPLSendVisual\13', 'mti', true)
-                        -- Note: in an expression mapping, <LocalLeader>
-                        -- and <Leader> cannot be automatically mapped
-                        -- to the corresponding keys, you have to do the mapping manually
+                        vim.api.nvim_feedkeys(localleader .. 'sic', '', true)
                     end
                 end,
             })
