@@ -94,7 +94,11 @@ local function create_repl(id, repl)
                 api.nvim_win_close(bufwinid, true)
                 bufwinid = fn.bufwinid(bufnr)
             end
-            api.nvim_buf_delete(bufnr, { force = true })
+            -- It is possible that this buffer has already been deleted, before
+            -- the process is exit.
+            if api.nvim_buf_is_loaded(bufnr) then
+                api.nvim_buf_delete(bufnr, { force = true })
+            end
         end
     end
 
