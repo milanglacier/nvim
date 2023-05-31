@@ -222,23 +222,9 @@ M._send_motion_internal = function(motion)
     -- instance, to obtain 3 from `3y2ap`, use `vim.v.prevcount`.
     local id = vim.v.prevcount == 0 and 1 or vim.v.prevcount
 
-    if not repl_is_valid(id) then
-        vim.notify(string.format("REPL %d doesn't exist", id or -1))
-        return
+    if vim.b[0].closest_repl_name then
+        id = find_closest_repl_from_id_with_name(id, vim.b[0].closest_repl_name)
     end
-    local lines = get_lines 'operator'
-    lines = M._config.metas[M._repls[id].name].formatter(lines)
-    fn.chansend(M._repls[id].term, lines)
-end
-
-M._send_motion_internal_to_closest_repl = function(motion)
-    if motion == nil then
-        vim.go.operatorfunc = [[v:lua.require'REPL'._send_motion_internal_to_closest_repl]]
-        api.nvim_feedkeys('g@', 'ni', false)
-    end
-
-    local id = vim.v.prevcount == 0 and 1 or vim.v.prevcount
-    id = find_closest_repl_from_id_with_name(id, vim.b[0].closest_repl_name)
 
     if not repl_is_valid(id) then
         vim.notify(string.format("REPL %d doesn't exist", id or -1))
@@ -252,15 +238,13 @@ end
 M.send_motion = function(closest_repl_name)
     if closest_repl_name then
         vim.b[0].closest_repl_name = closest_repl_name
-        vim.go.operatorfunc = [[v:lua.require'REPL'._send_motion_internal_to_closest_repl]]
-        api.nvim_feedkeys('g@', 'ni', false)
     else
         vim.b[0].closest_repl_name = nil
-        vim.go.operatorfunc = [[v:lua.require'REPL'._send_motion_internal]]
-        -- Those magic letters 'ni' are coming from Vigemus/iron.nvim and I am not
-        -- quite understand the effect of those magic letters.
-        api.nvim_feedkeys('g@', 'ni', false)
     end
+    vim.go.operatorfunc = [[v:lua.require'REPL'._send_motion_internal]]
+    -- Those magic letters 'ni' are coming from Vigemus/iron.nvim and I am not
+    -- quite understand the effect of those magic letters.
+    api.nvim_feedkeys('g@', 'ni', false)
 end
 
 M.setup = function(opts)
