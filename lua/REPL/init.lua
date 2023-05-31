@@ -247,13 +247,13 @@ api.nvim_create_user_command('REPLStart', function(opts)
     local repl = opts.args
     local id = opts.count == 0 and 1 or opts.count
 
-    if repl == '' then
-        if M._repls[id] then
-            vim.notify(string.format('REPL %d already exists', id))
-            focus_repl(id)
-            return
-        end
+    if repl_is_valid(id) then
+        vim.notify(string.format('REPL %d already exists', id))
+        focus_repl(id)
+        return
+    end
 
+    if repl == '' then
         local repls = {}
         for name, _ in pairs(M._config.metas) do
             table.insert(repls, name)
