@@ -325,10 +325,11 @@ api.nvim_create_user_command('REPLHide', function(opts)
         return
     end
 
-    local win = fn.bufwinid(M._repls[id].bufnr)
-    if win ~= -1 then
-        api.nvim_set_current_win(win)
-        vim.cmd [[quit]]
+    local bufnr = M._repls[id].bufnr
+    local win = fn.bufwinid(bufnr)
+    while win ~= -1 do
+        api.nvim_win_close(win, true)
+        win = fn.bufwinid(bufnr)
     end
 end, {
     count = true,
