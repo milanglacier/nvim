@@ -111,9 +111,10 @@ are two ways to ask `vscode-neovim` to use the configuration from the
 `~/.config/vscode-neovim` folder as opposed to the default folder:
 
 1. Create a bash script like the following:
-```bash 
-#!bin/bash 
-NVIM_APPNAME=vscode-neovim nvim "$@" 
+
+```bash
+#!bin/bash
+NVIM_APPNAME=vscode-neovim nvim "$@"
 ```
 
 Then, in vscode, set `vscode-neovim.neovimExecutablePaths.darwin` to
@@ -121,9 +122,6 @@ Then, in vscode, set `vscode-neovim.neovimExecutablePaths.darwin` to
 
 2. If you use the dev version of `vscode-neovim`, change
    `vscode-neovim.NVIM_APPNAME` to `vscode-neovim`.
-
-
-
 
 ## Be Wild
 
@@ -527,15 +525,15 @@ The following keymaps rely on [vim-textobj-chainmember](https://github.com/D4KU/
 
 The following keymaps rely on [toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim)
 
-| Mode | LHS          | RHS/Functionality            |
-| ---- | ------------ | ---------------------------- |
-| n    | `<Leader>ot` | open the `n`th terminal      |
-| n    | `<Leader>ta` | Toggle all terminals         |
-| n    | `<Leader>te` | Terminate the `n`th terminal |
-| n    | `<Leader>t1` | Toggle the 1st terminal      |
-| n    | `<Leader>t2` | Toggle the 2nd terminal      |
-| n    | `<Leader>t3` | Toggle the 3rd terminal      |
-| n    | `<Leader>t4` | Toggle the 4th terminal      |
+| Mode | LHS          | RHS/Functionality                                        |
+| ---- | ------------ | -------------------------------------------------------- |
+| n    | `<Leader>ot` | open the `n`th terminal, e.g `<Leader>ot`, `2<Leader>ot` |
+| n    | `<Leader>t0` | Toggle all terminals                                     |
+| n    | `<Leader>t!` | Terminate the `n`th terminal                             |
+| n    | `<Leader>t1` | Toggle the 1st terminal                                  |
+| n    | `<Leader>t2` | Toggle the 2nd terminal                                  |
+| n    | `<Leader>t3` | Toggle the 3rd terminal                                  |
+| n    | `<Leader>t4` | Toggle the 4th terminal                                  |
 
 ### Git keymaps
 
@@ -588,7 +586,7 @@ The following keymaps rely on [copilot.lua](https://github.com/zbirenbaum/copilo
 Note: with no numerical argument, the REPL is default for the first REPL.
 
 | Mode | LHS               | RHS/Functionality                                                                                                 |
-| ---- | ----------------- | ---------------------------------------------                                                                     |
+| ---- | ----------------- | ----------------------------------------------------------------------------------------------------------------- |
 | n    | `<LocalLeader>rs` | Start the `ith` REPL, e.g. `<LocalLeader>rs` to start the first REPL and `3<LocalLeader>rs` to start the 3rd REPL |
 | n    | `<LocalLeader>rf` | Focus on `ith` REPL window, e.g. `2<LocalLeader>rf`                                                               |
 | n    | `<LocalLeader>rs` | Swap two REPLs.                                                                                                   |
@@ -598,10 +596,10 @@ Note: with no numerical argument, the REPL is default for the first REPL.
 | n    | `<LocalLeader>rq` | Exit the `ith` REPL, usage the same as above                                                                      |
 | n    | `<LocalLeader>rc` | Clear invalid REPLs                                                                                               |
 
-| Mode | LHS                  | RHS/Functionality                                                                                               |
-| ---- | -------------------- | -----------------------------------------------------                                                           |
-| nv   | `<LocalLeader>s`     | Send the motion / text object / selected text to the `ith` REPL, e.g. `<LocalLeader>sap` or `2<LocalLeader>sap` |
-| n    | `<LocalLeader>ss`    | Send current line to the `ith` REPL                                                                             |
+| Mode | LHS               | RHS/Functionality                                                                                               |
+| ---- | ----------------- | --------------------------------------------------------------------------------------------------------------- |
+| nv   | `<LocalLeader>s`  | Send the motion / text object / selected text to the `ith` REPL, e.g. `<LocalLeader>sap` or `2<LocalLeader>sap` |
+| n    | `<LocalLeader>ss` | Send current line to the `ith` REPL                                                                             |
 
 ## Treesitter keymaps
 

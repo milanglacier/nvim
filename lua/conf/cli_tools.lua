@@ -71,14 +71,14 @@ M.load.toggleterm = function()
         direction = 'horizontal',
         close_on_exit = true,
     }
-    keymap('n', '<Leader>ta', '<cmd>ToggleTermToggleAll<CR>', { silent = true })
-    keymap('n', '<Leader>t1', '<cmd>1ToggleTerm<CR>', { silent = true })
-    keymap('n', '<Leader>t2', '<cmd>2ToggleTerm<CR>', { silent = true })
-    keymap('n', '<Leader>t3', '<cmd>3ToggleTerm<CR>', { silent = true })
-    keymap('n', '<Leader>t4', '<cmd>4ToggleTerm<CR>', { silent = true })
+    keymap('n', '<Leader>t0', '<cmd>ToggleTermToggleAll<CR>', { desc = 'Toggle display all terminals' })
+    keymap('n', '<Leader>t1', '<cmd>1ToggleTerm<CR>', { desc = 'Toggle terminal with id 1' })
+    keymap('n', '<Leader>t2', '<cmd>2ToggleTerm<CR>', { desc = 'Toggle terminal with id 2' })
+    keymap('n', '<Leader>t3', '<cmd>3ToggleTerm<CR>', { desc = 'Toggle terminal with id 3' })
+    keymap('n', '<Leader>t4', '<cmd>4ToggleTerm<CR>', { desc = 'Toggle terminal with id 4' })
     keymap(
         'n',
-        '<Leader>te',
+        '<Leader>t!',
         [[<cmd>execute v:count . "TermExec cmd='exit;'"<CR>]],
         { silent = true, desc = 'quit terminal' }
     )
