@@ -373,6 +373,7 @@ to find all keymaps.
 | n    | `<Leader>mdu` | Set working dir up one level from current working dir  |
 | n    | `<Leader>mc`  | Pick a color scheme                                    |
 | n    | `<Leader>th`  | Toggle highlight serach (see `:h hlsearch`)            |
+| n    | `<Leader>tH`  | Toggle cmdheight between 0 or 1 (see `:h cmdheight`)   |
 | n    | `<Leader>tw`  | Toggle wrap (see `:h wrap`)                            |
 | n    | `<Leader>tc`  | set `conceallevel` between 0 and 2 (see `:h wrap`)     |
 
@@ -587,6 +588,7 @@ Note: with no numerical argument, the REPL is default for the first REPL.
 
 | Mode | LHS               | RHS/Functionality                                                                                                 |
 | ---- | ----------------- | ----------------------------------------------------------------------------------------------------------------- |
+| n    | `<Leader>tR`      | Toggle float win for REPL                                                                                         |
 | n    | `<LocalLeader>rs` | Start the `ith` REPL, e.g. `<LocalLeader>rs` to start the first REPL and `3<LocalLeader>rs` to start the 3rd REPL |
 | n    | `<LocalLeader>rf` | Focus on `ith` REPL window, e.g. `2<LocalLeader>rf`                                                               |
 | n    | `<LocalLeader>rs` | Swap two REPLs.                                                                                                   |

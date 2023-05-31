@@ -255,6 +255,10 @@ M.load.REPL = function()
         vim.g.REPL_use_floatwin = vim.g.REPL_use_floatwin == 1 and 0 or 1
     end, {})
 
+    keymap('n', '<Leader>tR', '<CMD>REPLToggleFloatWin<CR>', {
+        desc = 'Toggle float win for REPL',
+    })
+
     keymap('n', '<Leader>cs', '', {
         callback = run_cmd_with_count 'REPLStart aichat',
         desc = 'Start an Aichat REPL',
