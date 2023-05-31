@@ -9,6 +9,23 @@ local default_config = function()
         buflisted = true,
         scratch = true,
         ft = 'REPL',
+        -- can also be a function that takes the buffer number of the REPL
+        -- buffer and the name of the REPL as argument, an exmaple to open a
+        -- float window at the center of the screen is:
+        --
+        -- wincmd = function(bufnr, name)
+        --     vim.api.nvim_open_win(bufnr, true, {
+        --         relative = 'editor',
+        --         row = math.floor(vim.o.lines * 0.3),
+        --         col = math.floor(vim.o.columns * 0.3),
+        --         width = math.floor(vim.o.columns * 0.4),
+        --         height = math.floor(vim.o.lines * 0.4),
+        --         style = 'minimal',
+        --         title = name,
+        --         border = 'rounded',
+        --         title_pos = 'center',
+        --     })
+        -- end,
         wincmd = 'belowright 15 split',
         metas = {
             aichat = { cmd = 'aichat', formatter = M.formatter.bracketed_pasting },
@@ -68,8 +85,12 @@ local function focus_repl(id)
     if win ~= -1 then
         api.nvim_set_current_win(win)
     else
-        vim.cmd(M._config.wincmd)
-        api.nvim_set_current_buf(M._repls[id].bufnr)
+        if type(M._config.wincmd) == 'function' then
+            M._config.wincmd(M._repls[id].bufnr, M._repls[id].name)
+        else
+            vim.cmd(M._config.wincmd)
+            api.nvim_set_current_buf(M._repls[id].bufnr)
+        end
     end
 end
 
@@ -86,8 +107,13 @@ local function create_repl(id, repl)
 
     local bufnr = api.nvim_create_buf(M._config.buflisted, M._config.scratch)
     api.nvim_buf_set_option(bufnr, 'filetype', M._config.ft)
-    vim.cmd(M._config.wincmd)
-    api.nvim_set_current_buf(bufnr)
+
+    if type(M._config.wincmd) == 'function' then
+        M._config.wincmd(bufnr, repl)
+    else
+        vim.cmd(M._config.wincmd)
+        api.nvim_set_current_buf(bufnr)
+    end
 
     local opts = {}
     if M._config.close_on_exit then
