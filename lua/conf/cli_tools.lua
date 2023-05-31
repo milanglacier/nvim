@@ -6,6 +6,7 @@ local autocmd = vim.api.nvim_create_autocmd
 local my_augroup = require('conf.builtin_extend').my_augroup
 local bufcmd = vim.api.nvim_buf_create_user_command
 local bufmap = vim.api.nvim_buf_set_keymap
+local command = vim.api.nvim_create_user_command
 
 local lazy = require 'lazy'
 
@@ -227,7 +228,32 @@ M.load.REPL = function()
         end
     end
 
-    require('REPL').setup {}
+    vim.g.REPL_use_floatwin = 0
+
+    require('REPL').setup {
+        wincmd = function(bufnr, name)
+            if vim.g.REPL_use_floatwin == 1 then
+                vim.api.nvim_open_win(bufnr, true, {
+                    relative = 'editor',
+                    row = math.floor(vim.o.lines * 0.25),
+                    col = math.floor(vim.o.columns * 0.25),
+                    width = math.floor(vim.o.columns * 0.5),
+                    height = math.floor(vim.o.lines * 0.5),
+                    style = 'minimal',
+                    title = name,
+                    border = 'rounded',
+                    title_pos = 'center',
+                })
+            else
+                vim.cmd [[belowright 15 split]]
+                vim.api.nvim_set_current_buf(bufnr)
+            end
+        end,
+    }
+
+    command('REPLToggleFloatWin', function()
+        vim.g.REPL_use_floatwin = vim.g.REPL_use_floatwin == 1 and 0 or 1
+    end, {})
 
     keymap('n', '<Leader>cs', '', {
         callback = run_cmd_with_count 'REPLStart aichat',
