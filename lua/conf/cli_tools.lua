@@ -293,6 +293,18 @@ M.load.REPL = function()
         desc = 'Clear aichat REPLs.',
     })
 
+    for i = 1, 9 do
+        keymap('n', '<Leader>c' .. i .. 'r', '', {
+            callback = function()
+                require('REPL').send_motion('aichat', i)
+            end,
+            desc = string.format('Send motion to %dth Aichat', i),
+        })
+        keymap('v', '<Leader>c' .. i .. 'r', string.format('<CMD>%dREPLSendVisual aichat<CR>', i), {
+            desc = string.format('Send visual range to %dth Aichat', i),
+        })
+    end
+
     local ft_to_repl = {
         r = 'radian',
         rmd = 'radian',
@@ -350,9 +362,9 @@ M.load.REPL = function()
                 callback = run_cmd_with_count 'REPLStart',
                 desc = 'Start an REPL with another meta',
             })
-            bufmap(0, 'n', '<localleader>sc', '', {
-                desc = 'send a code chunk',
-                callback = function()
+
+            local function send_a_code_chunk(id)
+                return function()
                     local leader = vim.g.mapleader
                     local localleader = vim.g.maplocalleader
                     -- NOTE: in an expr mapping, <Leader> and <LocalLeader>
@@ -360,13 +372,36 @@ M.load.REPL = function()
                     -- in the returned string.
 
                     if vim.bo.filetype == 'r' or vim.bo.filetype == 'python' then
-                        return localleader .. 'si' .. leader .. 'c'
+                        return localleader .. (id or '') .. 'si' .. leader .. 'c'
                     elseif vim.bo.filetype == 'rmd' or vim.bo.filetype == 'quarto' or vim.bo.filetype == 'markdown' then
-                        return localleader .. 'sic'
+                        return localleader .. (id or '') .. 'sic'
                     end
-                end,
+                end
+            end
+
+            bufmap(0, 'n', '<localleader>sc', '', {
+                desc = 'send a code chunk',
+                callback = send_a_code_chunk(),
                 expr = true,
             })
+
+            for i = 1, 9 do
+                bufmap(0, 'n', '<LocalLeader>' .. i .. 's', '', {
+                    callback = function()
+                        require('REPL').send_motion(nil, i)
+                    end,
+                    desc = string.format('Send motion to %dth REPL', i),
+                })
+                bufmap(0, 'v', '<LocalLeader>' .. i .. 's', string.format('<CMD>%dREPLSendVisual<CR>', i), {
+                    desc = string.format('Send visual range to %dth REPL', i),
+                })
+                -- NOTE: Be cautious about the lexical scope of the closure here! (i.e. what on earth is the value of `i`).
+                bufmap(0, 'n', '<LocalLeader>' .. i .. 'sc', '', {
+                    callback = send_a_code_chunk(i),
+                    expr = true,
+                    desc = string.format('Send code bloack to %dth REPL', i),
+                })
+            end
         end,
     })
 end

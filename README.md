@@ -598,10 +598,22 @@ Note: with no numerical argument, the REPL is default for the first REPL.
 | n    | `<LocalLeader>rq` | Exit the `ith` REPL, usage the same as above                                                                      |
 | n    | `<LocalLeader>rc` | Clear invalid REPLs                                                                                               |
 
-| Mode | LHS               | RHS/Functionality                                                                                               |
-| ---- | ----------------- | --------------------------------------------------------------------------------------------------------------- |
-| nv   | `<LocalLeader>s`  | Send the motion / text object / selected text to the `ith` REPL, e.g. `<LocalLeader>sap` or `2<LocalLeader>sap` |
-| n    | `<LocalLeader>ss` | Send current line to the `ith` REPL                                                                             |
+| Mode | LHS               | RHS/Functionality                                                                 |
+| ---- | ----------------- | --------------------------------------------------------------------------------- |
+| nv   | `<LocalLeader>s`  | Send the motion / text object / selected text to the first REPL                   |
+| n    | `<LocalLeader>ss` | Send current line to the `ith` REPL, e.g. `<LocalLeader>ss` or `3<LocalLeader>ss` |
+| nv   | `<LocalLeader>1s` | Send the motion / text object / selected text to the 1st REPL                     |
+| nv   | `<LocalLeader>2s` | Send the motion / text object / selected text to the 2nd REPL                     |
+| nv   | `<LocalLeader>3s` | Send the motion / text object / selected text to the 3rd REPL                     |
+| nv   | `<LocalLeader>4s` | Send the motion / text object / selected text to the 4st REPL                     |
+| nv   | `<LocalLeader>5s` | Send the motion / text object / selected text to the 5st REPL                     |
+| nv   | `<LocalLeader>6s` | Send the motion / text object / selected text to the 6st REPL                     |
+| nv   | `<LocalLeader>7s` | Send the motion / text object / selected text to the 7st REPL                     |
+| nv   | `<LocalLeader>8s` | Send the motion / text object / selected text to the 8st REPL                     |
+| nv   | `<LocalLeader>9s` | Send the motion / text object / selected text to the 9st REPL                     |
+
+See [Other Notes 5.](#other-notes) for limitations about sending motions to REPLs with
+different ids.
 
 ## Treesitter keymaps
 
@@ -858,9 +870,18 @@ The following keymaps rely on [Nvim-R](https://github.com/jalvesaq/Nvim-R)
 
 The following keymaps rely on [iron.nvim](https://github.com/hkupty/iron.nvim)
 
-| Mode | LHS               | RHS/Functionality          |
-| ---- | ----------------- | -------------------------- |
-| n    | `<LocalLeader>sc` | Send code chunk to console |
+| Mode | LHS                | RHS/Functionality              |
+| ---- | ------------------ | ------------------------------ |
+| n    | `<LocalLeader>sc`  | Send code chunk to console     |
+| n    | `<LocalLeader>1sc` | Send code chunk to 1st console |
+| n    | `<LocalLeader>2sc` | Send code chunk to 2st console |
+| n    | `<LocalLeader>3sc` | Send code chunk to 3st console |
+| n    | `<LocalLeader>4sc` | Send code chunk to 4st console |
+| n    | `<LocalLeader>5sc` | Send code chunk to 5st console |
+| n    | `<LocalLeader>6sc` | Send code chunk to 6st console |
+| n    | `<LocalLeader>7sc` | Send code chunk to 7st console |
+| n    | `<LocalLeader>8sc` | Send code chunk to 8st console |
+| n    | `<LocalLeader>9sc` | Send code chunk to 9st console |
 
 ### Rmarkdown keymaps
 
@@ -950,3 +971,7 @@ The following keymaps rely on [vimtex](https://github.com/lervag/vimtex)
 
 4. `vim-matchup` will (intentionally) hide the status-line if the matched pair are spanned
    over entire screen to show the other side of the pair.
+
+5. Due to the limitations of vim, the `count` (refer to `:h v:count` or `:h
+   v:prevcount`) cannot accurately indicate the repl ID in a motion keymap.
+   Therefore, we must directly specify the repl ID within the keymap.

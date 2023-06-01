@@ -199,11 +199,20 @@ M._send_motion_internal = function(motion)
         api.nvim_feedkeys('g@', 'ni', false)
     end
 
-    -- The `vim.v.count` variable refers to the count of motions. For example,
-    -- in `y2ap`, `vim.v.count` would equal 2. To obtain the count of the
-    -- normal keymap, rather than the motion count, use `vim.v.prevcount`. For
-    -- instance, to obtain 3 from `3y2ap`, use `vim.v.prevcount`.
+    -- The `vim.v.count` variable represents the count of motions. For
+    -- example, in `y2ap`, `vim.v.count` would be 2. To obtain the count of the
+    -- normal keymap, as opposed to the motion count, use `vim.v.prevcount`. To
+    -- obtain 3 from `3y2ap`, use `vim.v.prevcount`.
     local id = vim.v.prevcount == 0 and 1 or vim.v.prevcount
+
+    -- However, when using a customized text object/motion, such as those
+    -- provided by nvim-treesitter-textobjects, neither vim.v.prevcount nor
+    -- vim.v.count can be relied upon. As a workaround, we can predefine the id
+    -- within the keymap itself and not use vim.v.prevcount or vim.v.count to
+    -- retrieve the id.
+    if vim.b[0].repl_id then
+        id = vim.b[0].repl_id
+    end
 
     if vim.b[0].closest_repl_name then
         id = find_closest_repl_from_id_with_name(id, vim.b[0].closest_repl_name)
@@ -220,12 +229,19 @@ M._send_motion_internal = function(motion)
     fn.chansend(repl.term, lines)
 end
 
-M.send_motion = function(closest_repl_name)
+M.send_motion = function(closest_repl_name, id)
     if closest_repl_name then
         vim.b[0].closest_repl_name = closest_repl_name
     else
         vim.b[0].closest_repl_name = nil
     end
+
+    if id then
+        vim.b[0].repl_id = id
+    else
+        vim.b[0].repl_id = nil
+    end
+
     vim.go.operatorfunc = [[v:lua.require'REPL'._send_motion_internal]]
     -- Those magic letters 'ni' are coming from Vigemus/iron.nvim and I am not
     -- quite understand the effect of those magic letters.
