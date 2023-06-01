@@ -9,23 +9,6 @@ local default_config = function()
         buflisted = true,
         scratch = true,
         ft = 'REPL',
-        -- can also be a function that takes the buffer number of the REPL
-        -- buffer and the name of the REPL as argument, an exmaple to open a
-        -- float window at the center of the screen is:
-        --
-        -- wincmd = function(bufnr, name)
-        --     vim.api.nvim_open_win(bufnr, true, {
-        --         relative = 'editor',
-        --         row = math.floor(vim.o.lines * 0.3),
-        --         col = math.floor(vim.o.columns * 0.3),
-        --         width = math.floor(vim.o.columns * 0.4),
-        --         height = math.floor(vim.o.lines * 0.4),
-        --         style = 'minimal',
-        --         title = name,
-        --         border = 'rounded',
-        --         title_pos = 'center',
-        --     })
-        -- end,
         wincmd = 'belowright 15 split',
         metas = {
             aichat = { cmd = 'aichat', formatter = M.formatter.bracketed_pasting },
@@ -44,16 +27,28 @@ end
 
 M._repls = {}
 
-local function repl_is_valid(id)
-    return M._repls[id] ~= nil and api.nvim_buf_is_loaded(M._repls[id].bufnr)
+local function repl_is_valid(repl)
+    return repl ~= nil and api.nvim_buf_is_loaded(repl.bufnr)
+end
+
+local function get_repl_id(repl)
+    if not repl then
+        return nil
+    end
+    for id, r in pairs(M._repls) do
+        if r.bufnr == repl.bufnr then
+            return id
+        end
+    end
+    return nil
 end
 
 -- rearrange repls such that there's no gap in the repls table.
 local function repl_cleanup()
     local valid_repls = {}
     local valid_repls_id = {}
-    for id, _ in pairs(M._repls) do
-        if repl_is_valid(id) then
+    for id, repl in pairs(M._repls) do
+        if repl_is_valid(repl) then
             table.insert(valid_repls_id, id)
         end
     end
@@ -75,32 +70,32 @@ local function repl_cleanup()
     end
 end
 
-local function focus_repl(id)
-    if not repl_is_valid(id) then
+local function focus_repl(repl)
+    if not repl_is_valid(repl) then
         -- if id is nil, print it as -1
-        vim.notify(string.format("REPL %d doesn't exist", id or -1))
+        vim.notify(string.format("REPL %d doesn't exist", get_repl_id(repl) or -1))
         return
     end
-    local win = fn.bufwinid(M._repls[id].bufnr)
+    local win = fn.bufwinid(repl.bufnr)
     if win ~= -1 then
         api.nvim_set_current_win(win)
     else
         if type(M._config.wincmd) == 'function' then
-            M._config.wincmd(M._repls[id].bufnr, M._repls[id].name)
+            M._config.wincmd(repl.bufnr, repl.name)
         else
             vim.cmd(M._config.wincmd)
-            api.nvim_set_current_buf(M._repls[id].bufnr)
+            api.nvim_set_current_buf(repl.bufnr)
         end
     end
 end
 
-local function create_repl(id, repl)
-    if repl_is_valid(id) then
+local function create_repl(id, repl_name)
+    if repl_is_valid(M._repls[id]) then
         vim.notify(string.format('REPL %d already exists, no new REPL is created', id))
         return
     end
 
-    if not M._config.metas[repl] then
+    if not M._config.metas[repl_name] then
         vim.notify 'No REPL palatte is found'
         return
     end
@@ -109,7 +104,7 @@ local function create_repl(id, repl)
     api.nvim_buf_set_option(bufnr, 'filetype', M._config.ft)
 
     if type(M._config.wincmd) == 'function' then
-        M._config.wincmd(bufnr, repl)
+        M._config.wincmd(bufnr, repl_name)
     else
         vim.cmd(M._config.wincmd)
         api.nvim_set_current_buf(bufnr)
@@ -132,9 +127,9 @@ local function create_repl(id, repl)
         end
     end
 
-    local term = fn.termopen(M._config.metas[repl].cmd, opts)
-    api.nvim_buf_set_name(bufnr, string.format('#%s#%d', repl, id))
-    M._repls[id] = { bufnr = bufnr, term = term, name = repl }
+    local term = fn.termopen(M._config.metas[repl_name].cmd, opts)
+    api.nvim_buf_set_name(bufnr, string.format('#%s#%d', repl_name, id))
+    M._repls[id] = { bufnr = bufnr, term = term, name = repl_name }
 end
 
 -- get the id of the closest repl whose name is `NAME` from the `ID`
@@ -226,13 +221,15 @@ M._send_motion_internal = function(motion)
         id = find_closest_repl_from_id_with_name(id, vim.b[0].closest_repl_name)
     end
 
-    if not repl_is_valid(id) then
-        vim.notify(string.format("REPL %d doesn't exist", id or -1))
+    local repl = M._repls[id]
+
+    if not repl_is_valid(repl) then
+        vim.notify(string.format("REPL %d doesn't exist", get_repl_id(repl) or -1))
         return
     end
     local lines = get_lines 'operator'
-    lines = M._config.metas[M._repls[id].name].formatter(lines)
-    fn.chansend(M._repls[id].term, lines)
+    lines = M._config.metas[repl.name].formatter(lines)
+    fn.chansend(repl.term, lines)
 end
 
 M.send_motion = function(closest_repl_name)
@@ -253,16 +250,17 @@ end
 
 api.nvim_create_user_command('REPLStart', function(opts)
     -- if calling the command without any count, we want count to become 1.
-    local repl = opts.args
+    local repl_name = opts.args
     local id = opts.count == 0 and 1 or opts.count
+    local repl = M._repls[id]
 
-    if repl_is_valid(id) then
-        vim.notify(string.format('REPL %d already exists', id))
-        focus_repl(id)
+    if repl_is_valid(repl) then
+        vim.notify(string.format('REPL %d already exists', get_repl_id(repl)))
+        focus_repl(repl)
         return
     end
 
-    if repl == '' then
+    if repl_name == '' then
         local repls = {}
         for name, _ in pairs(M._config.metas) do
             table.insert(repls, name)
@@ -271,11 +269,11 @@ api.nvim_create_user_command('REPLStart', function(opts)
         vim.ui.select(repls, {
             prompt = 'Select REPL: ',
         }, function(choice)
-            repl = choice
-            create_repl(id, repl)
+            repl_name = choice
+            create_repl(id, repl_name)
         end)
     else
-        create_repl(id, repl)
+        create_repl(id, repl_name)
     end
 end, {
     count = true,
@@ -304,7 +302,7 @@ api.nvim_create_user_command('REPLFocus', function(opts)
     if opts.args ~= '' then
         id = find_closest_repl_from_id_with_name(id, opts.args)
     end
-    focus_repl(id)
+    focus_repl(M._repls[id])
 end, {
     count = true,
     nargs = '?',
@@ -319,12 +317,14 @@ api.nvim_create_user_command('REPLHide', function(opts)
     if opts.args ~= '' then
         id = find_closest_repl_from_id_with_name(id, opts.args)
     end
-    if not repl_is_valid(id) then
-        vim.notify(string.format("REPL %d doesn't exist", id or -1))
+    local repl = M._repls[id]
+
+    if not repl_is_valid(repl) then
+        vim.notify(string.format("REPL %d doesn't exist", get_repl_id(repl) or -1))
         return
     end
 
-    local bufnr = M._repls[id].bufnr
+    local bufnr = repl.bufnr
     local win = fn.bufwinid(bufnr)
     while win ~= -1 do
         api.nvim_win_close(win, true)
@@ -344,11 +344,12 @@ api.nvim_create_user_command('REPLClose', function(opts)
     if opts.args ~= '' then
         id = find_closest_repl_from_id_with_name(id, opts.args)
     end
-    if not repl_is_valid(id) then
-        vim.notify(string.format("REPL %d doesn't exist", id or -1))
+    local repl = M._repls[id]
+    if not repl_is_valid(repl) then
+        vim.notify(string.format("REPL %d doesn't exist", get_repl_id(repl) or -1))
         return
     end
-    fn.chansend(M._repls[id].term, string.char(4))
+    fn.chansend(repl.term, string.char(4))
 end, {
     count = true,
     nargs = '?',
@@ -415,13 +416,15 @@ api.nvim_create_user_command('REPLSendVisual', function(opts)
     if opts.args ~= '' then
         id = find_closest_repl_from_id_with_name(id, opts.args)
     end
-    if not repl_is_valid(id) then
-        vim.notify(string.format("REPL %d doesn't exist", id or -1))
+    local repl = M._repls[id]
+
+    if not repl_is_valid(repl) then
+        vim.notify(string.format("REPL %d doesn't exist", get_repl_id(repl) or -1))
         return
     end
     local lines = get_lines 'visual'
-    lines = M._config.metas[M._repls[id].name].formatter(lines)
-    fn.chansend(M._repls[id].term, lines)
+    lines = M._config.metas[repl.name].formatter(lines)
+    fn.chansend(repl.term, lines)
 end, {
     count = true,
     nargs = '?',
@@ -438,13 +441,15 @@ api.nvim_create_user_command('REPLSendLine', function(opts)
     if opts.args ~= '' then
         id = find_closest_repl_from_id_with_name(id, opts.args)
     end
-    if not repl_is_valid(id) then
-        vim.notify(string.format("REPL %d doesn't exist", id or -1))
+    local repl = M._repls[id]
+
+    if not repl_is_valid(repl) then
+        vim.notify(string.format("REPL %d doesn't exist", get_repl_id(repl) or -1))
         return
     end
     local line = api.nvim_get_current_line()
-    local lines = M._config.metas[M._repls[id].name].formatter { line }
-    fn.chansend(M._repls[id].term, lines)
+    local lines = M._config.metas[repl.name].formatter { line }
+    fn.chansend(repl.term, lines)
 end, {
     count = true,
     nargs = '?',
