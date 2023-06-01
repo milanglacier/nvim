@@ -281,12 +281,15 @@ end, {
         end
         return metas
     end,
-    desc = [[Create a REPL from the list of available REPLs. If a count is
-provided, the REPL will be created with that id. If an argument is
-provided, the REPL will be created with the specified name. If no argument
-is provided, the user will be prompted to select a REPL from the list of
-available REPLs. If the id is already in use, will focus on the REPL with
-that id.]],
+    desc = [[
+Create REPL `i` from the list of available REPLs. If a count is provided, the
+REPL will be created with that id, for example `3REPLStart` will create REPL
+with id `3`. If no count is provided, the REPL 1 will be created. If an
+argument is provided, the REPL will be created with the specified name. If no
+argument is provided, the user will be prompted to select a REPL from the list
+of available REPLs. If the id is already in use, will focus on the REPL with
+that id.
+]],
 })
 
 api.nvim_create_user_command('REPLCleanup', function()
@@ -302,10 +305,12 @@ api.nvim_create_user_command('REPLFocus', function(opts)
 end, {
     count = true,
     nargs = '?',
-    desc = [[Focus on the ith REPL. The first REPL is the default. If an
-optional argument is provided, the function will attempt to focus on the
-closest REPL with the specified name. For instance, `3REPLFocus ipython`
-will focus on the closest ipython REPL relative to id 3.]],
+    desc = [[
+Focus on REPL `i`. The first REPL is the default. If an optional argument is
+provided, the function will attempt to focus on the closest REPL with the
+specified name. For instance, `3REPLFocus ipython` will focus on the closest
+ipython REPL relative to id 3.
+]],
 })
 
 api.nvim_create_user_command('REPLHide', function(opts)
@@ -329,10 +334,10 @@ api.nvim_create_user_command('REPLHide', function(opts)
 end, {
     count = true,
     nargs = '?',
-    desc = [[Hide the ith REPL. The first REPL is the default. If an
-optional argument is provided, the function will attempt to hide on the
-closest REPL with the specified name. For instance, `3REPLHide ipython`
-will hide on the closest ipython REPL relative to id 3.]],
+    desc = [[Hide REPL `i`. The first REPL is the default. If an optional
+argument is provided, the function will attempt to hide on the closest REPL
+with the specified name. For instance, `3REPLHide ipython` will hide on the
+closest ipython REPL relative to id 3.]],
 })
 
 api.nvim_create_user_command('REPLClose', function(opts)
@@ -349,10 +354,12 @@ api.nvim_create_user_command('REPLClose', function(opts)
 end, {
     count = true,
     nargs = '?',
-    desc = [[Close the ith REPL. The first REPL is the default. If an optional
-argument is provided, the function will attempt to close the closest REPL
-with the specified name. For instance, `3REPLClose ipython` will close the
-closest ipython REPL relative to id 3.]],
+    desc = [[
+Close REPL `i`. The first REPL is the default. If an optional argument is
+provided, the function will attempt to close the closest REPL with the
+specified name. For instance, `3REPLClose ipython` will close the
+closest ipython REPL relative to id 3.
+]],
 })
 
 api.nvim_create_user_command('REPLSwap', function(opts)
@@ -424,12 +431,14 @@ api.nvim_create_user_command('REPLSendVisual', function(opts)
 end, {
     count = true,
     nargs = '?',
-    desc = [[Send the visual range to the ith REPL. For example, use
-`REPLSendVisual` or `3REPLSendVisual` to specify the REPL number. If no
-number is given, the first REPL is the default. If an optional argument is
-provided, the function will attempt to send the visual range to the closest
-REPL with the specified name. For instance, `3REPLSendVisual ipython` will
-send the visual range to the closest ipython REPL relative to id 3.]],
+    desc = [[
+Send the visual range to REPL `i`. For example, use `REPLSendVisual` or
+`3REPLSendVisual` to specify the REPL number. If no number is given, the REPL 1
+is the default. If an optional argument is provided, the function will attempt
+to send the visual range to the closest REPL with the specified name. For
+instance, `3REPLSendVisual ipython` will send the visual range to the closest
+ipython REPL relative to id 3.
+]],
 })
 
 api.nvim_create_user_command('REPLSendLine', function(opts)
@@ -449,12 +458,14 @@ api.nvim_create_user_command('REPLSendLine', function(opts)
 end, {
     count = true,
     nargs = '?',
-    desc = [[Send current line to the ith REPL. For example, use `REPLSendLine`
-or `3REPLSendLine` to specify the REPL number. If no number is given, the
-first REPL is the default. If an optional argument is provided, the
-function will attempt to send the current line to the closest REPL with the
-specified name. For instance, `3REPLSendVisual ipython` will send the
-visual range to the closest ipython REPL relative to id 3.]],
+    desc = [[
+Send current line to the REPL `i`. For example, use `REPLSendLine` or
+`3REPLSendLine` to specify the REPL number. If no number is given, REPL 1 is
+the default. If an optional argument is provided, the function will attempt to
+send the current line to the closest REPL with the specified name. For
+instance, `3REPLSendVisual ipython` will send the visual range to the closest
+ipython REPL relative to id 3.
+]],
 })
 
 return M
