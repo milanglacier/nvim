@@ -429,8 +429,6 @@ M.load.nvimr = function()
     vim.g.R_rmdchunk = 0
     vim.g.R_filetypes = { 'r', 'rmd', 'rrst', 'rnoweb', 'rhelp' }
     -- don't use quarto with nvimr
-    -- only manually invoke nvimr's omni completion,
-    -- do not auto trigger it
 
     lazy.load { plugins = { 'Nvim-R' } }
 

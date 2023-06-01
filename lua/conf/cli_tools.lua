@@ -313,10 +313,11 @@ M.load.REPL = function()
         ['markdown.pandoc'] = 'radian',
         python = 'ipython',
         sh = 'bash',
+        REPL = '',
     }
 
     autocmd('FileType', {
-        pattern = { 'quarto', 'markdown', 'markdown.pandoc', 'rmd', 'python', 'sh' },
+        pattern = { 'quarto', 'markdown', 'markdown.pandoc', 'rmd', 'python', 'sh', 'REPL' },
         group = my_augroup,
         desc = 'set up REPL keymap',
         callback = function()
@@ -342,7 +343,7 @@ M.load.REPL = function()
             })
             bufmap(0, 'n', '<LocalLeader>ss', '', {
                 callback = run_cmd_with_count 'REPLSendLine',
-                desc = 'Send motion to REPL',
+                desc = 'Send line to REPL',
             })
             bufmap(0, 'n', '<LocalLeader>s', '', {
                 callback = require('REPL').send_motion,
@@ -393,13 +394,13 @@ M.load.REPL = function()
                     desc = string.format('Send motion to %dth REPL', i),
                 })
                 bufmap(0, 'v', '<LocalLeader>' .. i .. 's', string.format('<CMD>%dREPLSendVisual<CR>', i), {
-                    desc = string.format('Send visual range to %dth REPL', i),
+                    desc = string.format('Send visual range to REPL %d', i),
                 })
                 -- NOTE: Be cautious about the lexical scope of the closure here! (i.e. what on earth is the value of `i`).
                 bufmap(0, 'n', '<LocalLeader>' .. i .. 'sc', '', {
                     callback = send_a_code_chunk(i),
                     expr = true,
-                    desc = string.format('Send code bloack to %dth REPL', i),
+                    desc = string.format('Send code bloack to REPL %d', i),
                 })
             end
         end,

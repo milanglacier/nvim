@@ -331,31 +331,11 @@ M.load.which_key = function()
         ['<Leader>g'] = { name = '+git' },
         ['<Leader>x'] = { name = '+quickfixlist' },
         ['<Leader>c'] = { name = '+chatgpt' },
-        ['<Leader>c1'] = { name = '+1st REPL' },
-        ['<Leader>c2'] = { name = '+2nd REPL' },
-        ['<Leader>c3'] = { name = '+3th REPL' },
-        ['<Leader>c4'] = { name = '+4th REPL' },
-        ['<Leader>c5'] = { name = '+5th REPL' },
-        ['<Leader>c6'] = { name = '+6th REPL' },
-        ['<Leader>c7'] = { name = '+7th REPL' },
-        ['<Leader>c8'] = { name = '+8th REPL' },
-        ['<Leader>c9'] = { name = '+9th REPL' },
         ['<Leader><Tab>'] = { name = '+tab' },
         ['<Leader><space>'] = { name = '+local leader' },
         ['<Leader>m'] = { name = '+misc' },
         ['<Leader>mm'] = { name = '+markdown' },
         ['<Leader>md'] = { name = '+change directory' },
-        ['<Leader><Space>r'] = { name = '+REPL' },
-        ['<Leader><Space>s'] = { name = '+send to REPL(motion)' },
-        ['<Leader><Space>1'] = { name = '+1st REPL' },
-        ['<Leader><Space>2'] = { name = '+2nd REPL' },
-        ['<Leader><Space>3'] = { name = '+3th REPL' },
-        ['<Leader><Space>4'] = { name = '+4th REPL' },
-        ['<Leader><Space>5'] = { name = '+5th REPL' },
-        ['<Leader><Space>6'] = { name = '+6th REPL' },
-        ['<Leader><Space>7'] = { name = '+7th REPL' },
-        ['<Leader><Space>8'] = { name = '+8th REPL' },
-        ['<Leader><Space>9'] = { name = '+9th REPL' },
         [']<Space>'] = { name = '+Additional motions' },
         [']<Space>l'] = { name = '+latex motions' },
         ['[<Space>'] = { name = '+Additional motions' },
@@ -365,28 +345,23 @@ M.load.which_key = function()
     which_key.register({
         ['<Leader>l'] = { name = '+language server' },
         ['<Leader>c'] = { name = '+chatgpt' },
-        ['<Leader>c1'] = { name = '+1st REPL' },
-        ['<Leader>c2'] = { name = '+2nd REPL' },
-        ['<Leader>c3'] = { name = '+3th REPL' },
-        ['<Leader>c4'] = { name = '+4th REPL' },
-        ['<Leader>c5'] = { name = '+5th REPL' },
-        ['<Leader>c6'] = { name = '+6th REPL' },
-        ['<Leader>c7'] = { name = '+7th REPL' },
-        ['<Leader>c8'] = { name = '+8th REPL' },
-        ['<Leader>c9'] = { name = '+9th REPL' },
         ['<Leader>m'] = { name = '+misc' },
         ['<Leader>f'] = { name = '+find everything' },
         ['<Leader><space>'] = { name = '+local leader' },
-        ['<Leader><Space>1'] = { name = '+1st REPL' },
-        ['<Leader><Space>2'] = { name = '+2nd REPL' },
-        ['<Leader><Space>3'] = { name = '+3th REPL' },
-        ['<Leader><Space>4'] = { name = '+4th REPL' },
-        ['<Leader><Space>5'] = { name = '+5th REPL' },
-        ['<Leader><Space>6'] = { name = '+6th REPL' },
-        ['<Leader><Space>7'] = { name = '+7th REPL' },
-        ['<Leader><Space>8'] = { name = '+8th REPL' },
-        ['<Leader><Space>9'] = { name = '+9th REPL' },
     }, { mode = 'v' })
+
+    local keymap_for_chatgpt = {}
+    local keymap_for_repl = {}
+
+    for i = 1, 9 do
+        keymap_for_chatgpt['<Leader>c' .. i] = { name = '+REPL ' .. i }
+        keymap_for_repl['<Leader><Space>' .. i] = { name = '+REPL ' .. i, buffer = 0 }
+    end
+
+    keymap_for_repl['<Leader><Space>r'] = { name = '+REPL', buffer = 0 }
+    keymap_for_repl['<Leader><Space>s'] = { name = '+send to REPL(motion)', buffer = 0 }
+
+    which_key.register(keymap_for_chatgpt, { mode = { 'n', 'v' } })
 
     autocmd('FileType', {
         group = my_augroup,
@@ -402,13 +377,15 @@ M.load.which_key = function()
 
     autocmd('FileType', {
         group = my_augroup,
-        pattern = { 'r', 'rmd', 'quarto' },
+        pattern = { 'r', 'rmd' },
         desc = 'add which key description for r, rmd, quarto',
         callback = function()
-            which_key.register {
+            which_key.register({
                 ['<Leader><Space>d'] = { name = '+data frame', buffer = 0 },
                 ['<Leader><Space>o'] = { name = '+object', buffer = 0 },
-            }
+                ['<Leader><Space>r'] = { name = '+REPL', buffer = 0 },
+                ['<Leader><Space>s'] = { name = '+send to REPL(motion)', buffer = 0 },
+            }, { mode = { 'n', 'v' } })
         end,
     })
 
@@ -417,17 +394,21 @@ M.load.which_key = function()
         pattern = 'tex',
         desc = 'add which key description for tex',
         callback = function()
-            which_key.register {
+            which_key.register({
                 ['<Leader><Space>l'] = { name = '+vimtex', buffer = 0 },
                 ['<Leader><Space>s'] = { name = '+vimtex surround', buffer = 0 },
                 ['<Leader><Space>t'] = { name = '+vimtex toggle', buffer = 0 },
                 ['<Leader><Space>c'] = { name = 'vimtex create cmd', buffer = 0 },
-            }
-            which_key.register({
-                ['<Leader><Space>s'] = { name = '+vimtex surround', buffer = 0 },
-                ['<Leader><Space>t'] = { name = '+vimtex toggle', buffer = 0 },
-                ['<Leader><Space>c'] = { name = 'vimtex create cmd', buffer = 0 },
-            }, { mode = 'v' })
+            }, { mode = { 'n', 'v' } })
+        end,
+    })
+
+    autocmd('FileType', {
+        pattern = { 'quarto', 'markdown', 'markdown.pandoc', 'rmd', 'python', 'sh', 'REPL' },
+        group = my_augroup,
+        desc = 'Add which key description for REPL',
+        callback = function()
+            which_key.register(keymap_for_repl, { mode = { 'n', 'v' } })
         end,
     })
 end
