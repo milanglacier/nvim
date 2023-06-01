@@ -31,18 +31,6 @@ local function repl_is_valid(repl)
     return repl ~= nil and api.nvim_buf_is_loaded(repl.bufnr)
 end
 
-local function get_repl_id(repl)
-    if not repl then
-        return nil
-    end
-    for id, r in pairs(M._repls) do
-        if r.bufnr == repl.bufnr then
-            return id
-        end
-    end
-    return nil
-end
-
 -- rearrange repls such that there's no gap in the repls table.
 local function repl_cleanup()
     local valid_repls = {}
@@ -73,7 +61,7 @@ end
 local function focus_repl(repl)
     if not repl_is_valid(repl) then
         -- if id is nil, print it as -1
-        vim.notify(string.format("REPL %d doesn't exist", get_repl_id(repl) or -1))
+        vim.notify [[REPL doesn't exist!]]
         return
     end
     local win = fn.bufwinid(repl.bufnr)
@@ -224,7 +212,7 @@ M._send_motion_internal = function(motion)
     local repl = M._repls[id]
 
     if not repl_is_valid(repl) then
-        vim.notify(string.format("REPL %d doesn't exist", get_repl_id(repl) or -1))
+        vim.notify [[REPL doesn't exist!]]
         return
     end
     local lines = get_lines 'operator'
@@ -255,7 +243,7 @@ api.nvim_create_user_command('REPLStart', function(opts)
     local repl = M._repls[id]
 
     if repl_is_valid(repl) then
-        vim.notify(string.format('REPL %d already exists', get_repl_id(repl)))
+        vim.notify(string.format('REPL %d already exists', id))
         focus_repl(repl)
         return
     end
@@ -320,7 +308,7 @@ api.nvim_create_user_command('REPLHide', function(opts)
     local repl = M._repls[id]
 
     if not repl_is_valid(repl) then
-        vim.notify(string.format("REPL %d doesn't exist", get_repl_id(repl) or -1))
+        vim.notify [[REPL doesn't exist!]]
         return
     end
 
@@ -346,7 +334,7 @@ api.nvim_create_user_command('REPLClose', function(opts)
     end
     local repl = M._repls[id]
     if not repl_is_valid(repl) then
-        vim.notify(string.format("REPL %d doesn't exist", get_repl_id(repl) or -1))
+        vim.notify [[REPL doesn't exist!]]
         return
     end
     fn.chansend(repl.term, string.char(4))
@@ -419,7 +407,7 @@ api.nvim_create_user_command('REPLSendVisual', function(opts)
     local repl = M._repls[id]
 
     if not repl_is_valid(repl) then
-        vim.notify(string.format("REPL %d doesn't exist", get_repl_id(repl) or -1))
+        vim.notify [[REPL doesn't exist!]]
         return
     end
     local lines = get_lines 'visual'
@@ -444,7 +432,7 @@ api.nvim_create_user_command('REPLSendLine', function(opts)
     local repl = M._repls[id]
 
     if not repl_is_valid(repl) then
-        vim.notify(string.format("REPL %d doesn't exist", get_repl_id(repl) or -1))
+        vim.notify [[REPL doesn't exist!]]
         return
     end
     local line = api.nvim_get_current_line()
