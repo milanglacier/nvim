@@ -249,7 +249,6 @@ end
 
 M.setup = function(opts)
     M._config = vim.tbl_deep_extend('force', default_config(), opts or {})
-    M._config.metas = vim.tbl_deep_extend('force', M._config.metas, M._config.additional_metas or {})
 end
 
 api.nvim_create_user_command('REPLStart', function(opts)
