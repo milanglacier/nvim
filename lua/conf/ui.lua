@@ -319,8 +319,8 @@ M.load.which_key = function()
     }
 
     which_key.register {
-        ['<Leader>f'] = { name = '+find everything' },
-        ['<Leader>l'] = { name = '+language server' },
+        ['<Leader>f'] = { name = '+find everything', mode = { 'n', 'v' } },
+        ['<Leader>l'] = { name = '+language server', mode = { 'n', 'v' } },
         ['<Leader>d'] = { name = '+debugger' },
         ['<Leader>b'] = { name = '+buffer' },
         ['<Leader>w'] = { name = '+window' },
@@ -330,10 +330,10 @@ M.load.which_key = function()
         ['<Leader>ol'] = { name = '+open/links' },
         ['<Leader>g'] = { name = '+git' },
         ['<Leader>x'] = { name = '+quickfixlist' },
-        ['<Leader>c'] = { name = '+chatgpt' },
+        ['<Leader>c'] = { name = '+chatgpt', mode = { 'n', 'v' } },
         ['<Leader><Tab>'] = { name = '+tab' },
         ['<Leader><space>'] = { name = '+local leader' },
-        ['<Leader>m'] = { name = '+misc' },
+        ['<Leader>m'] = { name = '+misc', mode = { 'n', 'v' } },
         ['<Leader>mm'] = { name = '+markdown' },
         ['<Leader>md'] = { name = '+change directory' },
         [']<Space>'] = { name = '+Additional motions' },
@@ -342,26 +342,18 @@ M.load.which_key = function()
         ['[<Space>l'] = { name = '+latex motions' },
     }
 
-    which_key.register({
-        ['<Leader>l'] = { name = '+language server' },
-        ['<Leader>c'] = { name = '+chatgpt' },
-        ['<Leader>m'] = { name = '+misc' },
-        ['<Leader>f'] = { name = '+find everything' },
-        ['<Leader><space>'] = { name = '+local leader' },
-    }, { mode = 'v' })
-
     local keymap_for_chatgpt = {}
     local keymap_for_repl = {}
 
     for i = 1, 9 do
-        keymap_for_chatgpt['<Leader>c' .. i] = { name = '+REPL ' .. i }
-        keymap_for_repl['<Leader><Space>' .. i] = { name = '+REPL ' .. i, buffer = 0 }
+        keymap_for_chatgpt['<Leader>c' .. i] = { name = '+REPL ' .. i, mode = { 'n', 'v' } }
+        keymap_for_repl['<Leader><Space>' .. i] = { name = '+REPL ' .. i, buffer = 0, mode = { 'n', 'v' } }
     end
 
     keymap_for_repl['<Leader><Space>r'] = { name = '+REPL', buffer = 0 }
-    keymap_for_repl['<Leader><Space>s'] = { name = '+send to REPL(motion)', buffer = 0 }
+    keymap_for_repl['<Leader><Space>s'] = { name = '+send to REPL(motion)', buffer = 0, mode = { 'n', 'v' } }
 
-    which_key.register(keymap_for_chatgpt, { mode = { 'n', 'v' } })
+    which_key.register(keymap_for_chatgpt)
 
     autocmd('FileType', {
         group = my_augroup,
@@ -380,12 +372,12 @@ M.load.which_key = function()
         pattern = { 'r', 'rmd' },
         desc = 'add which key description for r, rmd, quarto',
         callback = function()
-            which_key.register({
+            which_key.register {
                 ['<Leader><Space>d'] = { name = '+data frame', buffer = 0 },
                 ['<Leader><Space>o'] = { name = '+object', buffer = 0 },
                 ['<Leader><Space>r'] = { name = '+REPL', buffer = 0 },
-                ['<Leader><Space>s'] = { name = '+send to REPL(motion)', buffer = 0 },
-            }, { mode = { 'n', 'v' } })
+                ['<Leader><Space>s'] = { name = '+send to REPL(motion)', buffer = 0, mode = { 'n', 'v' } },
+            }
         end,
     })
 
@@ -394,12 +386,12 @@ M.load.which_key = function()
         pattern = 'tex',
         desc = 'add which key description for tex',
         callback = function()
-            which_key.register({
+            which_key.register {
                 ['<Leader><Space>l'] = { name = '+vimtex', buffer = 0 },
                 ['<Leader><Space>s'] = { name = '+vimtex surround', buffer = 0 },
                 ['<Leader><Space>t'] = { name = '+vimtex toggle', buffer = 0 },
                 ['<Leader><Space>c'] = { name = 'vimtex create cmd', buffer = 0 },
-            }, { mode = { 'n', 'v' } })
+            }
         end,
     })
 
@@ -408,7 +400,7 @@ M.load.which_key = function()
         group = my_augroup,
         desc = 'Add which key description for REPL',
         callback = function()
-            which_key.register(keymap_for_repl, { mode = { 'n', 'v' } })
+            which_key.register(keymap_for_repl)
         end,
     })
 end
