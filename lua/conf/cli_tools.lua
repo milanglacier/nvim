@@ -365,24 +365,22 @@ M.load.REPL = function()
             })
 
             local function send_a_code_chunk(id)
-                return function()
-                    local leader = vim.g.mapleader
-                    local localleader = vim.g.maplocalleader
-                    -- NOTE: in an expr mapping, <Leader> and <LocalLeader>
-                    -- cannot be translated. You must use their literal value
-                    -- in the returned string.
+                local leader = vim.g.mapleader
+                local localleader = vim.g.maplocalleader
+                -- NOTE: in an expr mapping, <Leader> and <LocalLeader>
+                -- cannot be translated. You must use their literal value
+                -- in the returned string.
 
-                    if vim.bo.filetype == 'r' or vim.bo.filetype == 'python' then
-                        return localleader .. (id or '') .. 'si' .. leader .. 'c'
-                    elseif vim.bo.filetype == 'rmd' or vim.bo.filetype == 'quarto' or vim.bo.filetype == 'markdown' then
-                        return localleader .. (id or '') .. 'sic'
-                    end
+                if vim.bo.filetype == 'r' or vim.bo.filetype == 'python' then
+                    return localleader .. (id or '') .. 'si' .. leader .. 'c'
+                elseif vim.bo.filetype == 'rmd' or vim.bo.filetype == 'quarto' or vim.bo.filetype == 'markdown' then
+                    return localleader .. (id or '') .. 'sic'
                 end
             end
 
             bufmap(0, 'n', '<localleader>sc', '', {
                 desc = 'send a code chunk',
-                callback = send_a_code_chunk(),
+                callback = send_a_code_chunk,
                 expr = true,
             })
 
@@ -396,9 +394,10 @@ M.load.REPL = function()
                 bufmap(0, 'v', '<LocalLeader>' .. i .. 's', string.format('<CMD>%dREPLSendVisual<CR>', i), {
                     desc = string.format('Send visual range to REPL %d', i),
                 })
-                -- NOTE: Be cautious about the lexical scope of the closure here! (i.e. what on earth is the value of `i`).
                 bufmap(0, 'n', '<LocalLeader>' .. i .. 'sc', '', {
-                    callback = send_a_code_chunk(i),
+                    callback = function()
+                        return send_a_code_chunk(i)
+                    end,
                     expr = true,
                     desc = string.format('Send code bloack to REPL %d', i),
                 })
