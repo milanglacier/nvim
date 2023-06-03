@@ -230,7 +230,7 @@ M.load.REPL = function()
 
     vim.g.REPL_use_floatwin = 0
 
-    require('REPL').setup {
+    require('yarepl').setup {
         wincmd = function(bufnr, name)
             if vim.g.REPL_use_floatwin == 1 then
                 vim.api.nvim_open_win(bufnr, true, {

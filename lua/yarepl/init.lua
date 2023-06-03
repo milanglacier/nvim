@@ -227,7 +227,7 @@ end
 M._send_motion_internal = function(motion)
     -- hack: allow dot-repeat
     if motion == nil then
-        vim.go.operatorfunc = [[v:lua.require'REPL'._send_motion_internal]]
+        vim.go.operatorfunc = [[v:lua.require'yarepl'._send_motion_internal]]
         api.nvim_feedkeys('g@', 'ni', false)
     end
     local repl
@@ -603,7 +603,7 @@ api.nvim_create_user_command('REPLSendMotion', function(opts)
         vim.b[0].repl_id = nil
     end
 
-    vim.go.operatorfunc = [[v:lua.require'REPL'._send_motion_internal]]
+    vim.go.operatorfunc = [[v:lua.require'yarepl'._send_motion_internal]]
     -- Those magic letters 'ni' are coming from Vigemus/iron.nvim and I am not
     -- quite understand the effect of those magic letters.
     api.nvim_feedkeys('g@', 'ni', false)
