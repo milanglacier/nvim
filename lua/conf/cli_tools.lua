@@ -280,9 +280,7 @@ M.load.REPL = function()
         desc = 'Send motion to Aichat',
     })
     keymap('n', '<Leader>cr', '', {
-        callback = function()
-            require('REPL').send_motion 'aichat'
-        end,
+        callback = run_cmd_with_count 'REPLSendMotion aichat',
         desc = 'Send current line to Aichat',
     })
     keymap('n', '<Leader>cq', '', {
@@ -294,10 +292,7 @@ M.load.REPL = function()
     })
 
     for i = 1, 9 do
-        keymap('n', '<Leader>c' .. i .. 'r', '', {
-            callback = function()
-                require('REPL').send_motion('aichat', i)
-            end,
+        keymap('n', '<Leader>c' .. i .. 'r', string.format('<CMD>%dREPLSendMotion aichat<CR>', i), {
             desc = string.format('Send motion to %dth Aichat', i),
         })
         keymap('v', '<Leader>c' .. i .. 'r', string.format('<CMD>%dREPLSendVisual aichat<CR>', i), {
@@ -346,7 +341,7 @@ M.load.REPL = function()
                 desc = 'Send line to REPL',
             })
             bufmap(0, 'n', '<LocalLeader>s', '', {
-                callback = require('REPL').send_motion,
+                callback = run_cmd_with_count 'REPLSendMotion',
                 desc = 'Send current line to REPL',
             })
             bufmap(0, 'n', '<LocalLeader>rq', '', {
@@ -391,10 +386,7 @@ M.load.REPL = function()
             })
 
             for i = 1, 9 do
-                bufmap(0, 'n', '<LocalLeader>' .. i .. 's', '', {
-                    callback = function()
-                        require('REPL').send_motion(nil, i)
-                    end,
+                bufmap(0, 'n', '<LocalLeader>' .. i .. 's', string.format('<CMD>%dREPLSendMotion aichat<CR>', i), {
                     desc = string.format('Send motion to %dth REPL', i),
                 })
                 bufmap(0, 'v', '<LocalLeader>' .. i .. 's', string.format('<CMD>%dREPLSendVisual<CR>', i), {

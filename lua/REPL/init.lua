@@ -265,25 +265,6 @@ M._send_motion_internal = function(motion)
     fn.chansend(repl.term, lines)
 end
 
-M.send_motion = function(closest_repl_name, id)
-    if closest_repl_name then
-        vim.b[0].closest_repl_name = closest_repl_name
-    else
-        vim.b[0].closest_repl_name = nil
-    end
-
-    if id then
-        vim.b[0].repl_id = id
-    else
-        vim.b[0].repl_id = nil
-    end
-
-    vim.go.operatorfunc = [[v:lua.require'REPL'._send_motion_internal]]
-    -- Those magic letters 'ni' are coming from Vigemus/iron.nvim and I am not
-    -- quite understand the effect of those magic letters.
-    api.nvim_feedkeys('g@', 'ni', false)
-end
-
 M.setup = function(opts)
     M._config = vim.tbl_deep_extend('force', default_config(), opts or {})
 end
@@ -718,6 +699,53 @@ attached to, if current buffer is not attached to any REPL, will use the REPL
 relative to the id `i`.
 
 4. `3REPLSendLine ipython` will send current line to the closest ipython REPL
+relative to the id `3`.
+]],
+})
+
+api.nvim_create_user_command('REPLSendMotion', function(opts)
+    local repl_name = opts.args
+    local id = opts.count
+
+    if repl_name ~= '' then
+        vim.b[0].closest_repl_name = repl_name
+    else
+        vim.b[0].closest_repl_name = nil
+    end
+
+    if id ~= 0 then
+        vim.b[0].repl_id = id
+    else
+        vim.b[0].repl_id = nil
+    end
+
+    vim.go.operatorfunc = [[v:lua.require'REPL'._send_motion_internal]]
+    -- Those magic letters 'ni' are coming from Vigemus/iron.nvim and I am not
+    -- quite understand the effect of those magic letters.
+    api.nvim_feedkeys('g@', 'ni', false)
+end, {
+    count = true,
+    nargs = '?',
+    desc = [[
+Send motion to REPL `i` or the REPL that current buffer is attached to.
+
+If an optional argument is provided, the function will attempt to send motion
+to the closest REPL with the specified name. If no count is supplied, will try
+to send motion to the REPL that current buffer is attached to, if current
+buffer is not attached to any REPL, will use the REPL `1`. If a count `i` is
+supplied, will send to the REPL `i`.
+
+Example usage:
+
+1. `REPLSendMotion` will send motion to the REPL that current buffer is attached
+to, if current buffer is not attached to any REPL, will use the REPL `1`.
+
+2. `3REPLSendMotion` will send motion to the REPL `3`.
+
+3. `REPLSendMotion ipython` will send motion to the closest ipython REPL relative
+to the id `i`.
+
+4. `3REPLSendMotion ipython` will send motion to the closest ipython REPL
 relative to the id `3`.
 ]],
 })
