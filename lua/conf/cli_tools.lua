@@ -224,7 +224,7 @@ end
 M.load.REPL = function()
     local function run_cmd_with_count(cmd)
         return function()
-            vim.cmd(string.format('%d%s', vim.v.count1, cmd))
+            vim.cmd(string.format('%d%s', vim.v.count, cmd))
         end
     end
 
@@ -359,9 +359,15 @@ M.load.REPL = function()
             bufmap(0, 'n', '<LocalLeader>rS', '<CMD>REPLSwap<CR>', {
                 desc = 'Swap REPLs.',
             })
-            bufmap(0, 'n', '<LocalLeader>ra', '', {
+            bufmap(0, 'n', '<LocalLeader>r?', '', {
                 callback = run_cmd_with_count 'REPLStart',
-                desc = 'Start an REPL with another meta',
+                desc = 'Start an REPL from available REPL metas',
+            })
+            bufmap(0, 'n', '<LocalLeader>ra', '<CMD>REPLAttachBufferToREPL<CR>', {
+                desc = 'Attach current buffer to a REPL',
+            })
+            bufmap(0, 'n', '<LocalLeader>rd', '<CMD>REPLDetachBufferToREPL<CR>', {
+                desc = 'Detach current buffer to any REPL',
             })
 
             local function send_a_code_chunk(id)

@@ -586,31 +586,32 @@ The following keymaps rely on [copilot.lua](https://github.com/zbirenbaum/copilo
 
 Note: with no numerical argument, the REPL is default for the first REPL.
 
-| Mode | LHS               | RHS/Functionality                                                                                                 |
-| ---- | ----------------- | ----------------------------------------------------------------------------------------------------------------- |
-| n    | `<Leader>tR`      | Toggle float win for REPL                                                                                         |
-| n    | `<LocalLeader>rs` | Start REPL `i`, e.g. `<LocalLeader>rs` to start REPL 1 and `3<LocalLeader>rs` to start REPL 3                     |
-| n    | `<LocalLeader>rf` | Focus on the window of REPL `i`, e.g. `2<LocalLeader>rf`                                                          |
-| n    | `<LocalLeader>rs` | Swap two REPLs.                                                                                                   |
-| n    | `<LocalLeader>rv` | View REPLs in telescope.                                                                                          |
-| n    | `<LocalLeader>rh` | Hide the window of REPL `i`, e.g. `2<LocalLeader>rf`                                                              |
-| n    | `<LocalLeader>ra` | Start the REPL `i` with another meta, e.g. `4<LocalLeader>ra`                                                     |
-| n    | `<LocalLeader>rq` | Exit REPL `i`, usage the same as above                                                                            |
-| n    | `<LocalLeader>rc` | Clear invalid REPLs                                                                                               |
+| Mode | LHS               | RHS/Functionality                                                                               |
+| ---- | ----------------- | -------------------------------------------------------------------------------                 |
+| n    | `<Leader>tR`      | Toggle float win for REPL                                                                       |
+| n    | `<LocalLeader>rs` | Start REPL `i`, e.g. `<LocalLeader>rs` to start REPL 1 and `3<LocalLeader>rs` to start REPL `3` |
+| n    | `<LocalLeader>rf` | Focus on the window of REPL attached or REPL `i`, e.g. `<LocalLeader>rf`, `2<LocalLeader>rf`    |
+| n    | `<LocalLeader>rs` | Swap two REPLs.                                                                                 |
+| n    | `<LocalLeader>rv` | View REPLs in telescope.                                                                        |
+| n    | `<LocalLeader>rh` | Hide the window of REPL attached or REPL `i`,  e.g. `<LocalLeader>rf`, `2<LocalLeader>rf`       |
+| n    | `<LocalLeader>ra` | Attach current buffer to a REPL                                                                 |
+| n    | `<LocalLeader>rd` | Detach current buffer to any REPL                                                               |
+| n    | `<LocalLeader>rq` | Exit REPL attached or REPL `i`, usage the same as above                                         |
+| n    | `<LocalLeader>rc` | Clear invalid REPLs                                                                             |
 
-| Mode | LHS               | RHS/Functionality                                                                 |
-| ---- | ----------------- | --------------------------------------------------------------------------------- |
-| nv   | `<LocalLeader>s`  | Send the motion / text object / selected text to the REPL 1                       |
-| n    | `<LocalLeader>ss` | Send current line to the REPL `i`, e.g. `<LocalLeader>ss` or `3<LocalLeader>ss`   |
-| nv   | `<LocalLeader>1s` | Send the motion / text object / selected text to the REPL 1                       |
-| nv   | `<LocalLeader>2s` | Send the motion / text object / selected text to the REPL 2                       |
-| nv   | `<LocalLeader>3s` | Send the motion / text object / selected text to the REPL 3                       |
-| nv   | `<LocalLeader>4s` | Send the motion / text object / selected text to the REPL 4                       |
-| nv   | `<LocalLeader>5s` | Send the motion / text object / selected text to the REPL 5                       |
-| nv   | `<LocalLeader>6s` | Send the motion / text object / selected text to the REPL 6                       |
-| nv   | `<LocalLeader>7s` | Send the motion / text object / selected text to the REPL 7                       |
-| nv   | `<LocalLeader>8s` | Send the motion / text object / selected text to the REPL 8                       |
-| nv   | `<LocalLeader>9s` | Send the motion / text object / selected text to the REPL 9                       |
+| Mode | LHS               | RHS/Functionality                                                                                |
+| ---- | ----------------- | ---------------------------------------------------------------------------------                |
+| nv   | `<LocalLeader>s`  | Send the motion / text object / selected text to the REPL attached                               |
+| n    | `<LocalLeader>ss` | Send current line to the REPL attached or REPL `i`, e.g. `<LocalLeader>ss` or `3<LocalLeader>ss` |
+| nv   | `<LocalLeader>1s` | Send the motion / text object / selected text to the REPL 1                                      |
+| nv   | `<LocalLeader>2s` | Send the motion / text object / selected text to the REPL 2                                      |
+| nv   | `<LocalLeader>3s` | Send the motion / text object / selected text to the REPL 3                                      |
+| nv   | `<LocalLeader>4s` | Send the motion / text object / selected text to the REPL 4                                      |
+| nv   | `<LocalLeader>5s` | Send the motion / text object / selected text to the REPL 5                                      |
+| nv   | `<LocalLeader>6s` | Send the motion / text object / selected text to the REPL 6                                      |
+| nv   | `<LocalLeader>7s` | Send the motion / text object / selected text to the REPL 7                                      |
+| nv   | `<LocalLeader>8s` | Send the motion / text object / selected text to the REPL 8                                      |
+| nv   | `<LocalLeader>9s` | Send the motion / text object / selected text to the REPL 9                                      |
 
 See [Other Notes 5.](#other-notes) for limitations about sending motions to REPLs with
 different ids.
