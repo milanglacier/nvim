@@ -1,4 +1,4 @@
-require('lazy').setup({
+local lazy_plugins = {
     { 'folke/lazy.nvim' },
 
     -- colorschemes
@@ -142,7 +142,21 @@ require('lazy').setup({
     { 'rcarriga/nvim-dap-ui' },
     { 'nvim-telescope/telescope-dap.nvim' },
     { 'theHamsta/nvim-dap-virtual-text' },
-}, {
+}
+
+local my_plugins = {
+    { os.getenv 'HOME' .. '/Desktop/personal-projects/yarepl.nvim', 'milanglacier/yarepl.nvim' },
+}
+
+for _, plugin in ipairs(my_plugins) do
+    if vim.loop.fs_stat(plugin[1]) then
+        table.insert(lazy_plugins, { dir = plugin[1] })
+    else
+        table.insert(lazy_plugins, { plugin[2] })
+    end
+end
+
+require('lazy').setup(lazy_plugins, {
     defaults = {
         lazy = true,
     },
