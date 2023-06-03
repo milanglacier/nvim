@@ -489,13 +489,6 @@ end, {
     count = true,
     nargs = '?',
     bang = true,
-    -- Close REPL `i`. The first REPL is the default. If an optional argument is
-    -- provided, the function will attempt to close the closest REPL with the
-    -- specified name. For instance, `3REPLClose ipython` will close the
-    -- closest ipython REPL relative to id 3. If a trailing `!` is provided, will try
-    -- to close the REPL to which the current buffer is attached. When the trailing
-    -- `!` is supplied, the count is ignored and the REPL name will be ignored, e.g.
-    -- `3REPLClose ipython!`, `REPLClose!`, and `5REPLClose!` will do the same thing.
     desc = [[
 Close REPL `i` or the REPL that current buffer is attached to.
 
