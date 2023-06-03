@@ -342,18 +342,10 @@ M.load.which_key = function()
         ['[<Space>l'] = { name = '+latex motions' },
     }
 
-    local keymap_for_chatgpt = {}
     local keymap_for_repl = {}
-
-    for i = 1, 9 do
-        keymap_for_chatgpt['<Leader>c' .. i] = { name = '+REPL ' .. i, mode = { 'n', 'v' } }
-        keymap_for_repl['<Leader><Space>' .. i] = { name = '+REPL ' .. i, buffer = 0, mode = { 'n', 'v' } }
-    end
 
     keymap_for_repl['<Leader><Space>r'] = { name = '+REPL', buffer = 0 }
     keymap_for_repl['<Leader><Space>s'] = { name = '+send to REPL(motion)', buffer = 0, mode = { 'n', 'v' } }
-
-    which_key.register(keymap_for_chatgpt)
 
     autocmd('FileType', {
         group = my_augroup,

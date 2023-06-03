@@ -232,11 +232,6 @@ M._send_motion_internal = function(motion)
     end
     local repl
 
-    -- NOTE: when using a customized text object/motion, such as those provided
-    -- by nvim-treesitter-textobjects, neither vim.v.prevcount nor vim.v.count
-    -- is reliable for retrieving the repl id. As a workaround, we can
-    -- predefine the id within the keymap itself and not use vim.v.prevcount or
-    -- vim.v.count to retrieve the id.
     local id = vim.b[0].repl_id
     local current_bufnr = api.nvim_get_current_buf()
 

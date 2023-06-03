@@ -291,15 +291,6 @@ M.load.REPL = function()
         desc = 'Clear aichat REPLs.',
     })
 
-    for i = 1, 9 do
-        keymap('n', '<Leader>c' .. i .. 'r', string.format('<CMD>%dREPLSendMotion aichat<CR>', i), {
-            desc = string.format('Send motion to %dth Aichat', i),
-        })
-        keymap('v', '<Leader>c' .. i .. 'r', string.format('<CMD>%dREPLSendVisual aichat<CR>', i), {
-            desc = string.format('Send visual range to %dth Aichat', i),
-        })
-    end
-
     local ft_to_repl = {
         r = 'radian',
         rmd = 'radian',
@@ -365,7 +356,7 @@ M.load.REPL = function()
                 desc = 'Detach current buffer to any REPL',
             })
 
-            local function send_a_code_chunk(id)
+            local function send_a_code_chunk()
                 local leader = vim.g.mapleader
                 local localleader = vim.g.maplocalleader
                 -- NOTE: in an expr mapping, <Leader> and <LocalLeader>
@@ -373,9 +364,9 @@ M.load.REPL = function()
                 -- in the returned string.
 
                 if vim.bo.filetype == 'r' or vim.bo.filetype == 'python' then
-                    return localleader .. (id or '') .. 'si' .. leader .. 'c'
+                    return localleader .. 'si' .. leader .. 'c'
                 elseif vim.bo.filetype == 'rmd' or vim.bo.filetype == 'quarto' or vim.bo.filetype == 'markdown' then
-                    return localleader .. (id or '') .. 'sic'
+                    return localleader .. 'sic'
                 end
             end
 
@@ -384,22 +375,6 @@ M.load.REPL = function()
                 callback = send_a_code_chunk,
                 expr = true,
             })
-
-            for i = 1, 9 do
-                bufmap(0, 'n', '<LocalLeader>' .. i .. 's', string.format('<CMD>%dREPLSendMotion aichat<CR>', i), {
-                    desc = string.format('Send motion to %dth REPL', i),
-                })
-                bufmap(0, 'v', '<LocalLeader>' .. i .. 's', string.format('<CMD>%dREPLSendVisual<CR>', i), {
-                    desc = string.format('Send visual range to REPL %d', i),
-                })
-                bufmap(0, 'n', '<LocalLeader>' .. i .. 'sc', '', {
-                    callback = function()
-                        return send_a_code_chunk(i)
-                    end,
-                    expr = true,
-                    desc = string.format('Send code bloack to REPL %d', i),
-                })
-            end
         end,
     })
 end
