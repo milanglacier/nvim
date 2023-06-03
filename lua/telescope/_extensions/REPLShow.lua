@@ -6,7 +6,7 @@ local conf = require('telescope.config').values
 local function REPLShow(opts)
     vim.cmd.REPLCleanup()
 
-    local repls = require('REPL')._repls
+    local repls = require('yarepl')._repls
     local buffers = {}
     for _, repl in ipairs(repls) do
         table.insert(buffers, { bufnr = repl.bufnr, name = vim.api.nvim_buf_get_name(repl.bufnr) })
