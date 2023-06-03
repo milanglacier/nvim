@@ -488,7 +488,6 @@ api.nvim_create_user_command('REPLClose', function(opts)
 end, {
     count = true,
     nargs = '?',
-    bang = true,
     desc = [[
 Close REPL `i` or the REPL that current buffer is attached to.
 
@@ -603,7 +602,6 @@ api.nvim_create_user_command('REPLDetachBufferToREPL', function()
     M._bufnrs_to_repls[current_buffer] = nil
 end, {
     count = true,
-    bang = true,
     desc = [[Detach current buffer to any REPL.]],
 })
 
@@ -642,7 +640,6 @@ api.nvim_create_user_command('REPLSendVisual', function(opts)
     fn.chansend(repl.term, lines)
 end, {
     count = true,
-    bang = true,
     nargs = '?',
     desc = [[
 Send visual range to REPL `i` or the REPL that current buffer is attached to.
@@ -699,7 +696,6 @@ api.nvim_create_user_command('REPLSendLine', function(opts)
     fn.chansend(repl.term, lines)
 end, {
     count = true,
-    bang = true,
     nargs = '?',
     desc = [[
 Send current line to REPL `i` or the REPL that current buffer is attached to.
