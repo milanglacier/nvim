@@ -311,15 +311,6 @@ end, {
     end,
     desc = [[
 Create REPL `i` from the list of available REPLs.
-
-If a count is provided, the REPL will be created with that id, for example
-`3REPLStart` will create REPL with id `3`. If no count is provided, the REPL 1
-will be created. If an argument is provided, the REPL will be created with the
-specified name. If no argument is provided, the user will be prompted to select
-a REPL from the list of available REPLs. If the id is already in use, will
-focus on the REPL with that id. With a trailing `!`, current buffer will be
-attached to the REPL just created, e.g. `REPLStart!` or `3REPLStart!`. Note
-that attaching only happens when a new REPL is created.
 ]],
 })
 
@@ -355,25 +346,6 @@ end, {
     nargs = '?',
     desc = [[
 Focus on REPL `i` or the REPL that current buffer is attached to.
-
-If an optional argument is provided, the function will attempt to focus on the
-closest REPL with the specified name. When no count is supplied, will try to
-focus on the REPL that current buffer is attached to, if current buffer is not
-attached to any REPL, will use the REPL `1`. If a count `i` is supplied, will
-focus on the REPL `i`.
-
-Example usage:
-
-1. `REPLFocus` will try to focus on the REPL that current buffer is attached to,
-if current buffer is not attached to any REPL, will use the REPL `1`.
-
-2. `REPLFocus ipython` will try to focus on the closest REPL with the name ipython
-with REPL id `1`.
-
-3. `3REPLFocus` will focus on the REPL `3`.
-
-4. `3REPLFocus ipython` will try to focus on the closest REPL with the name
-ipython from id `3`.
 ]],
 })
 
@@ -413,25 +385,6 @@ end, {
     nargs = '?',
     desc = [[
 Hide REPL `i` or the REPL that current buffer is attached to.
-
-If an optional argument is provided, the function will attempt to hide on the
-closest REPL with the specified name. When no count is supplied, will try to
-hide on the REPL that current buffer is attached to, if current buffer is not
-attached to any REPL, will use the REPL `1`. If a count `i` is supplied, will
-hide on the REPL `i`.
-
-Example usage:
-
-1. `REPLHide` will try to hide on the REPL that current buffer is attached to,
-if current buffer is not attached to any REPL, will use the REPL `1`.
-
-2. `REPLHide ipython` will try to hide on the closest REPL with the name ipython
-with REPL id `1`.
-
-3. `3REPLHide` will hide on the REPL `3`.
-
-4. `3REPLHide ipython` will try to hide on the closest REPL with the name
-ipython from id `3`.
 ]],
 })
 
@@ -466,25 +419,6 @@ end, {
     nargs = '?',
     desc = [[
 Close REPL `i` or the REPL that current buffer is attached to.
-
-If an optional argument is provided, the function will attempt to close the
-closest REPL with the specified name. If no count is supplied, will try to
-close the REPL that current buffer is attached to, if current buffer is not
-attached to any REPL, will use the REPL `1`. If a count `i` is supplied, will
-close the REPL `i`.
-
-Example usage:
-
-1. `REPLClose` will try to close the REPL that current buffer is attached to,
-if current buffer is not attached to any REPL, will use the REPL `1`.
-
-2. `REPLClose ipython` will try to close the closest REPL with the name ipython
-with REPL id `1`.
-
-3. `3REPLClose` will close the REPL `3`.
-
-4. `3REPLClose ipython` will try to close the closest REPL with the name
-ipython from id `3`.
 ]],
 })
 
@@ -528,9 +462,7 @@ api.nvim_create_user_command('REPLSwap', function(opts)
         repl_swap(id_1, id_2)
     end
 end, {
-    desc = [[To swap two REPLs, if no REPL ID is provided, you will be prompted
-to select both REPLs. If one REPL ID is provided, you will be prompted to
-select the second REPL.]],
+    desc = [[Swap two REPLs]],
     nargs = '*',
 })
 
@@ -566,10 +498,7 @@ end, {
     count = true,
     bang = true,
     desc = [[
-Attach current buffer to REPL `i`, e.g. `3REPLAttachBufferToREPL` will attach
-the current buffer to REPL 3. If no count is provided, you will be prompted to
-select the REPL to which you want to attach the current buffer. If a trailing `!`
-is provided, will try to detach current buffer to any REPL.
+Attach current buffer to REPL `i`
 ]],
 })
 
@@ -619,26 +548,6 @@ end, {
     nargs = '?',
     desc = [[
 Send visual range to REPL `i` or the REPL that current buffer is attached to.
-
-If an optional argument is provided, the function will attempt to send visual
-range to the closest REPL with the specified name.If no count is supplied, will
-try to send visual range to the REPL that current buffer is attached to, if
-current buffer is not attached to any REPL, will use the REPL `1`. If a count
-`i` is supplied, will send to the REPL `i`.
-
-Example usage:
-
-1. `REPLSendVisual` will send visual range to the REPL that current buffer is
-attached to, if current buffer is not attached to any REPL, will use the REPL
-`1`.
-
-2. `3REPLSendVisual` will send visual range to the REPL `3`.
-
-3. `REPLSendVisual ipython` will send visual range to the closest ipython REPL
-relative to the id `i`.
-
-4. `3REPLSendVisual ipython` will send visual range to the closest ipython REPL
-relative to the id `3`.
 ]],
 })
 
@@ -675,26 +584,6 @@ end, {
     nargs = '?',
     desc = [[
 Send current line to REPL `i` or the REPL that current buffer is attached to.
-
-If an optional argument is provided, the function will attempt to send current
-line to the closest REPL with the specified name. If no count is supplied, will
-try to send current line to the REPL that current buffer is attached to, if
-current buffer is not attached to any REPL, will use the REPL `1`. If a count
-`i` is supplied, will send to the REPL `i`.
-
-Example usage:
-
-1. `REPLSendLine` will send current line to the REPL that current buffer is
-attached to, if current buffer is not attached to any REPL, will use the REPL
-`1`.
-
-2. `3REPLSendLine` will send current line to the REPL `3`.
-
-3. `REPLSendLine ipython` will send current line to the closest ipython REPL
-relative to the id `i`.
-
-4. `3REPLSendLine ipython` will send current line to the closest ipython REPL
-relative to the id `3`.
 ]],
 })
 
@@ -723,25 +612,6 @@ end, {
     nargs = '?',
     desc = [[
 Send motion to REPL `i` or the REPL that current buffer is attached to.
-
-If an optional argument is provided, the function will attempt to send motion
-to the closest REPL with the specified name. If no count is supplied, will try
-to send motion to the REPL that current buffer is attached to, if current
-buffer is not attached to any REPL, will use the REPL `1`. If a count `i` is
-supplied, will send to the REPL `i`.
-
-Example usage:
-
-1. `REPLSendMotion` will send motion to the REPL that current buffer is attached
-to, if current buffer is not attached to any REPL, will use the REPL `1`.
-
-2. `3REPLSendMotion` will send motion to the REPL `3`.
-
-3. `REPLSendMotion ipython` will send motion to the closest ipython REPL relative
-to the id `i`.
-
-4. `3REPLSendMotion ipython` will send motion to the closest ipython REPL
-relative to the id `3`.
 ]],
 })
 
