@@ -120,6 +120,7 @@ local lazy_plugins = {
     { 'jalvesaq/Nvim-R' },
     { 'akinsho/toggleterm.nvim' },
     { 'goerz/jupytext.vim' },
+    { 'milanglacier/yarepl.nvim' },
 
     -- Git
     { 'lewis6991/gitsigns.nvim' },
@@ -144,19 +145,12 @@ local lazy_plugins = {
     { 'theHamsta/nvim-dap-virtual-text' },
 }
 
-local my_plugins = {
-    { os.getenv 'HOME' .. '/Desktop/personal-projects/yarepl.nvim', 'milanglacier/yarepl.nvim' },
-}
-
-for _, plugin in ipairs(my_plugins) do
-    if vim.loop.fs_stat(plugin[1]) then
-        table.insert(lazy_plugins, { dir = plugin[1] })
-    else
-        table.insert(lazy_plugins, { plugin[2] })
-    end
-end
-
 require('lazy').setup(lazy_plugins, {
+    dev = {
+        path = vim.env.HOME .. '/Desktop/personal-projects',
+        patterns = { 'milanglacier' },
+        fallback = true,
+    },
     defaults = {
         lazy = true,
     },
