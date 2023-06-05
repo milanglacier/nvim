@@ -13,7 +13,7 @@ local lazy = require 'lazy'
 M.load.gitsigns = function()
     require('gitsigns').setup {
         current_line_blame = true,
-        current_line_blame_formatter = '<author>, <author_time:%R> - <summary>',
+        current_line_blame_formatter = '<author>, <author_time:%R> - <summary> - <abbrev_sha>',
     }
 
     keymap('n', '<Leader>gp', '<cmd>Gitsigns preview_hunk<CR>', { noremap = true })
