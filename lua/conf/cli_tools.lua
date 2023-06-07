@@ -303,7 +303,7 @@ M.load.REPL = function()
     }
 
     autocmd('FileType', {
-        pattern = { 'quarto', 'markdown', 'markdown.pandoc', 'rmd', 'python', 'sh', 'REPL' },
+        pattern = { 'quarto', 'markdown', 'markdown.pandoc', 'rmd', 'python', 'sh', 'REPL', 'r' },
         group = my_augroup,
         desc = 'set up REPL keymap',
         callback = function()

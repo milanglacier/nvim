@@ -101,7 +101,7 @@ local lazy_plugins = {
             { 'quangnguyen30192/cmp-nvim-tags' },
             { 'petertriho/cmp-git' },
             { 'rafamadriz/friendly-snippets' },
-            { 'jalvesaq/cmp-nvim-r' },
+            -- { 'jalvesaq/cmp-nvim-r' },
         },
     },
 
@@ -117,7 +117,7 @@ local lazy_plugins = {
     -- programs
 
     -- REPL
-    { 'jalvesaq/Nvim-R' },
+    -- { 'jalvesaq/Nvim-R' },
     { 'akinsho/toggleterm.nvim' },
     { 'goerz/jupytext.vim' },
     { 'milanglacier/yarepl.nvim' },

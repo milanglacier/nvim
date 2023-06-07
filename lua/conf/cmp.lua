@@ -162,7 +162,7 @@ local function load_cmp()
             { name = 'luasnip' },
             { name = 'tags' },
         }, {
-            { name = 'cmp_nvim_r' },
+            -- { name = 'cmp_nvim_r' },
             { name = 'buffer' },
             { name = 'path' },
         }),

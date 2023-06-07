@@ -487,7 +487,7 @@ end
 
 M.load.vimtex()
 M.load.pandoc()
-M.load.nvimr()
+-- M.load.nvimr()
 M.load.quarto()
 
 return M
