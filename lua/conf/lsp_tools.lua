@@ -149,7 +149,6 @@ M.load.nullls = function()
         fallback_severity = vim.diagnostic.severity.INFO,
         sources = {
             source_wrapper { null_ls.builtins.formatting.stylua, { '.stylua.toml' } },
-            source_wrapper { null_ls.builtins.diagnostics.selene, { 'selene.toml' } },
             null_ls.builtins.code_actions.gitsigns,
             null_ls.builtins.code_actions.refactoring,
             source_wrapper {
