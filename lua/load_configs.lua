@@ -26,3 +26,5 @@ require 'conf.lsp_tools'
 require 'conf.dap'
 
 require 'conf.org'
+
+require 'conf.platform'

@@ -44,7 +44,7 @@ local gui_font = {
     'SF_Mono_Regular:h15',
     'Space_Mono_Nerd_Font_Complete:h15',
     'Monego_Nerd_Font_Fix:h15',
-    'CaskaydiaCove_Nerd_Font:h15',
+    'CaskaydiaCove_Nerd_Font_Mono:h15',
 }
 
 local gui_cursor = {
