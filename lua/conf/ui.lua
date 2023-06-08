@@ -26,7 +26,12 @@ M.load.lualine = function()
     --
     ---@return string project_name
     local project_name = function()
-        return ' ' .. vim.fn.fnamemodify('%', ':p:h:t')
+        if vim.fn.expand('%:p'):find(vim.fn.getcwd()) then
+            -- if the absolute path of current file is a sub directory of cwd
+            return ' ' .. vim.fn.fnamemodify('%', ':p:h:t')
+        else
+            return ''
+        end
     end
 
     local file_status_symbol = {
