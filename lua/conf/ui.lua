@@ -250,7 +250,7 @@ M.get_workspace_diff = function()
     local cwd = vim.fn.getcwd()
     if vim.fn.expand('%:p'):find(cwd) then
         -- if the absolute path of current file is a sub directory of cwd
-        return M.git_workspace_diff[cwd]
+        return M.git_workspace_diff[cwd] or ''
     else
         return ''
     end
