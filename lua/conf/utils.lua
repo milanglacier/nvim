@@ -2,7 +2,6 @@ local M = {}
 
 M.load = {}
 local keymap = vim.api.nvim_set_keymap
-local bufmap = vim.api.nvim_buf_set_keymap
 
 M.load.project_nvim = function()
     require('project_nvim').setup {
@@ -15,23 +14,7 @@ M.load.project_nvim = function()
 end
 
 M.load.nvim_tree = function()
-    --
-    -- This function has been generated from your
-    --   view.mappings.list
-    --   view.mappings.custom_only
-    --   remove_keymaps
-    --
-    -- You should add this function to your configuration and set on_attach = on_attach in the nvim-tree setup call.
-    --
-    -- Although care was taken to ensure correctness and completeness, your review is required.
-    --
-    -- Please check for the following issues in auto generated content:
-    --   "Mappings removed" is as you expect
-    --   "Mappings migrated" are correct
-    --
-    -- Please see https://github.com/nvim-tree/nvim-tree.lua/wiki/Migrating-To-on_attach for assistance in migrating.
-    --
-
+    -- this function is generated from `NvimTreeGenerateOnAttach`
     local function on_attach(bufnr)
         local api = require 'nvim-tree.api'
 
@@ -96,11 +79,9 @@ M.load.nvim_tree = function()
         vim.keymap.set('n', '<2-RightMouse>', api.tree.change_root_to_node, opts 'CD')
         -- END_DEFAULT_ON_ATTACH
 
-        -- Mappings migrated from view.mappings.list
-        --
-        -- You will need to insert "your code goes here" for any mappings with a custom action_cb
         vim.keymap.set('n', '?', api.tree.toggle_help, opts 'Help')
     end
+
     require('nvim-tree').setup {
         on_attach = on_attach,
         -- this makes nvim-tree opens in project root when switching between projects,
@@ -116,8 +97,6 @@ M.load.nvim_tree = function()
         },
     }
 
-    local keymap = vim.api.nvim_set_keymap
-
     keymap('n', '<leader>et', '<cmd>NvimTreeToggle<CR>', { noremap = true, silent = true })
     keymap('n', '<leader>ef', '<cmd>NvimTreeFindFileToggle<CR>', { noremap = true, silent = true })
     keymap('n', '<leader>er', '<cmd>NvimTreeRefresh<CR>', { noremap = true, silent = true })
@@ -125,7 +104,6 @@ end
 
 M.load.winshift = function()
     require('winshift').setup {}
-    local keymap = vim.api.nvim_set_keymap
     keymap('n', '<Leader>wm', '<cmd>WinShift<CR>', { noremap = true, silent = true })
 end
 
