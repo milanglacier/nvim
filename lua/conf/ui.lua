@@ -185,22 +185,27 @@ M.git_workspace_diff_setup = function()
         vim.fn.jobstart([[git diff --stat | tail -n 1]], {
             stdout_buffered = true,
             on_stdout = function(_, data, _)
-                local changes = data[1]
-                changes = string.sub(changes, 1, -2) -- the last character is \n, remove it
-                changes = vim.split(changes, ',')
+                local changes_raw = data[1]
+                changes_raw = string.sub(changes_raw, 1, -2) -- the last character is \n, remove it
+                changes_raw = vim.split(changes_raw, ',')
 
-                local change_add_del = {}
-                for _, i in pairs(changes) do
+                local changes = ''
+
+                for _, i in pairs(changes_raw) do
                     if i:find 'change' then
-                        change_add_del.file_changed = i:match '(%d+)'
+                        changes = changes .. ' ' .. i:match '(%d+)'
                     elseif i:find 'insertion' then
-                        change_add_del.added = i:match '(%d+)'
+                        changes = changes .. ' +' .. i:match '(%d+)'
                     elseif i:find 'deletion' then
-                        change_add_del.removed = i:match '(%d+)'
+                        changes = changes .. ' -' .. i:match '(%d+)'
                     end
                 end
 
-                M.git_workspace_diff[cwd] = change_add_del
+                if changes ~= '' then
+                    changes = ' ' .. changes
+                end
+
+                M.git_workspace_diff[cwd] = changes
             end,
         })
     end
@@ -242,28 +247,10 @@ M.git_workspace_diff_setup = function()
 end
 
 M.get_workspace_diff = function()
-    if vim.fn.expand('%:p'):find(vim.fn.getcwd()) then
+    local cwd = vim.fn.getcwd()
+    if vim.fn.expand('%:p'):find(cwd) then
         -- if the absolute path of current file is a sub directory of cwd
-        local current_diff = M.git_workspace_diff[vim.fn.getcwd()]
-        if current_diff == nil then
-            return ''
-        end
-
-        if current_diff ~= nil and vim.tbl_count(current_diff) > 0 then
-            local diff_string = ' '
-            if current_diff.file_changed ~= nil then
-                diff_string = diff_string .. ' ' .. current_diff.file_changed
-            end
-            if current_diff.added ~= nil then
-                diff_string = diff_string .. ' +' .. current_diff.added
-            end
-            if current_diff.removed ~= nil then
-                diff_string = diff_string .. ' -' .. current_diff.removed
-            end
-            return diff_string
-        end
-
-        return ''
+        return M.git_workspace_diff[cwd]
     else
         return ''
     end
