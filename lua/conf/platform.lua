@@ -1,3 +1,5 @@
+local keymap = vim.api.nvim_set_keymap
+
 if vim.g.neovide then
     vim.g.neovide_padding_top = 0
     vim.g.neovide_padding_bottom = 0
@@ -15,36 +17,30 @@ if vim.g.neovide then
             [[-e 'end tell']],
         }
 
+        local toggle_fullscreen_command = table.concat(toggle_fullscreen_command_list, ' ')
+
         local function neovide_toggle_fullscreen()
-            local toggle_fullscreen_command = table.concat(toggle_fullscreen_command_list, ' ')
             vim.fn.system(string.format(toggle_fullscreen_command, tostring(not neovide_is_fullscreen)))
             neovide_is_fullscreen = not neovide_is_fullscreen
         end
 
         -- HACK: neovide doesn't respect some common native keymap in macos, we want to emulate them.
-        vim.api.nvim_set_keymap('', '<D-v>', '<CMD>normal! P<CR>', { desc = 'macos paste' })
-        vim.api.nvim_set_keymap('!', '<D-v>', '<CMD>normal! P<CR>', { desc = 'macos paste' })
-        vim.api.nvim_set_keymap(
-            '!',
-            '<C-D-f>',
-            '',
-            { callback = neovide_toggle_fullscreen, desc = 'macos toggle fullscreen' }
-        )
-        vim.api.nvim_set_keymap(
-            '',
-            '<C-D-f>',
-            '',
-            { callback = neovide_toggle_fullscreen, desc = 'macos toggle fullscreen' }
-        )
+        keymap('', '<D-v>', '<CMD>normal! P<CR>', { desc = 'macos paste' })
+        keymap('i', '<D-v>', '<CMD>normal! P<CR>', { desc = 'macos paste' })
+        keymap('c', '<D-v>', '<C-R>"', { desc = 'macos paste' })
+        keymap('!', '<C-D-f>', '', { callback = neovide_toggle_fullscreen, desc = 'macos toggle fullscreen' })
+        keymap('', '<C-D-f>', '', { callback = neovide_toggle_fullscreen, desc = 'macos toggle fullscreen' })
 
         -- HACK: As neovide started as a login shell, it's unable to inherit
         -- the $PATH from zshrc. Therefore, we need to obtain the PATH from the
         -- interactive shell instead.
-        vim.fn.jobstart('source "$HOME/.zshrc" && echo "$PATH"', {
-            on_stdout = function(_, data, _)
-                vim.env.PATH = data[1]
-            end,
-            stdout_buffered = true,
-        })
+        if vim.o.shell:find 'zsh' then
+            vim.fn.jobstart([[[ -f "$HOME/.zshrc" ] && source "$HOME/.zshrc" && echo "$PATH"]], {
+                on_stdout = function(_, data, _)
+                    vim.env.PATH = data[1]
+                end,
+                stdout_buffered = true,
+            })
+        end
     end
 end
