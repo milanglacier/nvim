@@ -13,13 +13,7 @@ M.load.mini_pairs = function()
 end
 
 M.load.mini_comment = function()
-    require('mini.comment').setup {
-        hooks = {
-            pre = function()
-                require('ts_context_commentstring.internal').update_commentstring()
-            end,
-        },
-    }
+    require('mini.comment').setup {}
 end
 
 M.load.dsf = function()

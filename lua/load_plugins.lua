@@ -56,7 +56,6 @@ local lazy_plugins = {
             { 'mfussenegger/nvim-treehopper' },
             { 'mizlan/iswap.nvim' },
             { 'romgrk/nvim-treesitter-context' },
-            { 'JoosepAlviste/nvim-ts-context-commentstring' },
             { 'cshuaimin/ssr.nvim' },
         },
     },
