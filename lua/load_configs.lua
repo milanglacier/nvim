@@ -4,7 +4,6 @@ require 'conf.move_tabs'
 require 'conf.colorscheme'
 
 require 'conf.ui'
-require 'conf.mini'
 
 require 'conf.text_edit'
 require 'conf.cli_tools'
