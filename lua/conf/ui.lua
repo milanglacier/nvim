@@ -173,89 +173,6 @@ M.load.lualine = function()
     }
 end
 
-M.git_workspace_diff = {}
-
-M.git_workspace_diff_setup = function()
-    local function is_a_git_dir()
-        local is_git = vim.fn.system 'git rev-parse --is-inside-work-tree' == 'true\n'
-        return is_git
-    end
-
-    local function compute_workspace_diff(cwd)
-        vim.fn.jobstart([[git diff --stat | tail -n 1]], {
-            stdout_buffered = true,
-            on_stdout = function(_, data, _)
-                local changes_raw = data[1]
-                changes_raw = string.sub(changes_raw, 1, -2) -- the last character is \n, remove it
-                changes_raw = vim.split(changes_raw, ',')
-
-                local changes = ''
-
-                for _, i in pairs(changes_raw) do
-                    if i:find 'change' then
-                        changes = changes .. ' ' .. i:match '(%d+)'
-                    elseif i:find 'insertion' then
-                        changes = changes .. ' +' .. i:match '(%d+)'
-                    elseif i:find 'deletion' then
-                        changes = changes .. ' -' .. i:match '(%d+)'
-                    end
-                end
-
-                if changes ~= '' then
-                    changes = ' ' .. changes
-                end
-
-                M.git_workspace_diff[cwd] = changes
-            end,
-        })
-    end
-
-    local function init_workspace_diff()
-        local cwd = vim.fn.getcwd()
-
-        if M.git_workspace_diff[cwd] == nil and is_a_git_dir() then
-            compute_workspace_diff(cwd)
-        end
-    end
-
-    local function update_workspace_diff()
-        local cwd = vim.fn.getcwd()
-        if M.git_workspace_diff[cwd] ~= nil then
-            compute_workspace_diff(cwd)
-        end
-    end
-
-    autocmd('BufEnter', {
-        group = my_augroup,
-        desc = 'Init the git diff',
-        callback = function()
-            vim.defer_fn(function()
-                init_workspace_diff()
-                -- defer this function because project root need to be updated.
-            end, 100)
-        end,
-    })
-    autocmd('BufWritePost', {
-        group = my_augroup,
-        desc = 'Update the git diff',
-        callback = function()
-            vim.defer_fn(function()
-                update_workspace_diff()
-            end, 100)
-        end,
-    })
-end
-
-M.get_workspace_diff = function()
-    local cwd = vim.fn.getcwd()
-    if vim.fn.expand('%:p'):find(cwd) then
-        -- if the absolute path of current file is a sub directory of cwd
-        return M.git_workspace_diff[cwd] or ''
-    else
-        return ''
-    end
-end
-
 M.load.notify = function()
     vim.notify = require 'notify'
 
@@ -430,6 +347,89 @@ M.winbar_symbol = function()
     end
 
     return ts_status
+end
+
+M.git_workspace_diff = {}
+
+M.git_workspace_diff_setup = function()
+    local function is_a_git_dir()
+        local is_git = vim.fn.system 'git rev-parse --is-inside-work-tree' == 'true\n'
+        return is_git
+    end
+
+    local function compute_workspace_diff(cwd)
+        vim.fn.jobstart([[git diff --stat | tail -n 1]], {
+            stdout_buffered = true,
+            on_stdout = function(_, data, _)
+                local changes_raw = data[1]
+                changes_raw = string.sub(changes_raw, 1, -2) -- the last character is \n, remove it
+                changes_raw = vim.split(changes_raw, ',')
+
+                local changes = ''
+
+                for _, i in pairs(changes_raw) do
+                    if i:find 'change' then
+                        changes = changes .. ' ' .. i:match '(%d+)'
+                    elseif i:find 'insertion' then
+                        changes = changes .. ' +' .. i:match '(%d+)'
+                    elseif i:find 'deletion' then
+                        changes = changes .. ' -' .. i:match '(%d+)'
+                    end
+                end
+
+                if changes ~= '' then
+                    changes = ' ' .. changes
+                end
+
+                M.git_workspace_diff[cwd] = changes
+            end,
+        })
+    end
+
+    local function init_workspace_diff()
+        local cwd = vim.fn.getcwd()
+
+        if M.git_workspace_diff[cwd] == nil and is_a_git_dir() then
+            compute_workspace_diff(cwd)
+        end
+    end
+
+    local function update_workspace_diff()
+        local cwd = vim.fn.getcwd()
+        if M.git_workspace_diff[cwd] ~= nil then
+            compute_workspace_diff(cwd)
+        end
+    end
+
+    autocmd('BufEnter', {
+        group = my_augroup,
+        desc = 'Init the git diff',
+        callback = function()
+            vim.defer_fn(function()
+                init_workspace_diff()
+                -- defer this function because project root need to be updated.
+            end, 100)
+        end,
+    })
+    autocmd('BufWritePost', {
+        group = my_augroup,
+        desc = 'Update the git diff',
+        callback = function()
+            vim.defer_fn(function()
+                update_workspace_diff()
+            end, 100)
+        end,
+    })
+end
+
+M.get_workspace_diff = function()
+    local cwd = vim.fn.getcwd()
+    if vim.fn.expand('%:p'):find(cwd) then
+        -- if the absolute path of current file is a sub directory of cwd
+        return M.git_workspace_diff[cwd] or ''
+    else
+        return ''
+    end
 end
 
 M.reopen_qflist_by_trouble = function()
