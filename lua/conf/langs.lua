@@ -15,7 +15,19 @@ local function opts_desc(opts)
     }
 end
 
-function M.textobj_code_chunk(ai, start_pattern, end_pattern, has_same_start_end_pattern)
+function M.textobj_code_chunk(
+    around_or_inner,
+    start_pattern,
+    end_pattern,
+    has_same_start_end_pattern,
+    is_in_visual_mode
+)
+    -- send `<ESC>` key to clear visual marks such that we can update the
+    -- visual range.
+    if is_in_visual_mode then
+        vim.api.nvim_feedkeys('\27', 'nx', false)
+    end
+
     local row = vim.api.nvim_win_get_cursor(0)[1]
     local max_row = vim.api.nvim_buf_line_count(0)
 
@@ -57,7 +69,7 @@ function M.textobj_code_chunk(ai, start_pattern, end_pattern, has_same_start_end
     end
 
     if chunk_start and chunk_end then
-        if ai == 'i' then
+        if around_or_inner == 'i' then
             vim.api.nvim_win_set_cursor(0, { chunk_start + 1, 0 })
             local internal_length = chunk_end - chunk_start - 2
             if internal_length == 0 then
@@ -67,7 +79,7 @@ function M.textobj_code_chunk(ai, start_pattern, end_pattern, has_same_start_end
             end
         end
 
-        if ai == 'a' then
+        if around_or_inner == 'a' then
             vim.api.nvim_win_set_cursor(0, { chunk_start, 0 })
             local chunk_length = chunk_end - chunk_start
             vim.cmd.normal { 'V' .. chunk_length .. 'j', bang = true }
@@ -95,18 +107,20 @@ autocmd('FileType', {
             end,
         })
 
-        local visual_a = [[:<C-U>lua require('conf.langs').textobj_code_chunk('a', '```{.+}', '^```$')<CR>]]
-
-        bufmap(0, 'x', 'ac', visual_a, {
+        bufmap(0, 'x', 'ac', '', {
             silent = true,
             desc = 'rmd/quarto code chunk text object a',
+            callback = function()
+                M.textobj_code_chunk('a', '```{.+}', '^```$', false, true)
+            end,
         })
 
-        local visual_i = [[:<C-U>lua require('conf.langs').textobj_code_chunk('i', '```{.+}', '^```$')<CR>]]
-
-        bufmap(0, 'x', 'ic', visual_i, {
+        bufmap(0, 'x', 'ic', '', {
             silent = true,
             desc = 'rmd/quarto code chunk text object i',
+            callback = function()
+                M.textobj_code_chunk('i', '```{.+}', '^```$', false, true)
+            end,
         })
     end,
 })
@@ -132,20 +146,20 @@ autocmd('FileType', {
             end,
         })
 
-        local visual_a =
-            [[:<C-U>lua require('conf.langs').textobj_code_chunk('a', '^# ?%%%%.*', '^# ?%%%%$', true)<CR>]]
-
-        bufmap(0, 'x', 'a<Leader>c', visual_a, {
+        bufmap(0, 'x', 'a<Leader>c', '', {
             silent = true,
             desc = 'code chunk text object a',
+            callback = function()
+                M.textobj_code_chunk('a', '^# ?%%%%.*', '^# ?%%%%$', true, true)
+            end,
         })
 
-        local visual_i =
-            [[:<C-U>lua require('conf.langs').textobj_code_chunk('i', '^# ?%%%%.*', '^# ?%%%%$', true)<CR>]]
-
-        bufmap(0, 'x', 'i<Leader>c', visual_i, {
+        bufmap(0, 'x', 'i<Leader>c', '', {
             silent = true,
             desc = 'code chunk text object i',
+            callback = function()
+                M.textobj_code_chunk('i', '^# ?%%%%.*', '^# ?%%%%$', true, true)
+            end,
         })
     end,
 })
