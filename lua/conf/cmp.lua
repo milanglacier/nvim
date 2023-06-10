@@ -59,7 +59,13 @@ local function load_cmp_and_luasnip()
         sources = cmp.config.sources({
             { name = 'nvim_lsp' },
             { name = 'luasnip' },
-            { name = 'tags' },
+            {
+                name = 'tags',
+                option = {
+                    exact_match = true,
+                    current_buffer_only = true,
+                },
+            },
         }, {
             { name = 'buffer' },
             { name = 'path' },
