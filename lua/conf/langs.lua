@@ -161,7 +161,7 @@ autocmd('FileType', {
 
 command('CondaActivateEnv', function(options)
     if vim.fn.executable 'conda' == 0 then
-        print 'conda not found'
+        vim.notify 'conda not found'
         return
     end
 
@@ -207,13 +207,13 @@ end, {
 
 command('CondaDeactivate', function(_)
     if vim.fn.executable 'conda' == 0 then
-        print 'conda not found'
+        vim.notify 'conda not found'
         return
     end
 
     local conda_info = vim.json.decode(vim.fn.system 'conda info --json')
 
-    if not M.current_env_path then
+    if not M.conda_current_env_path then
         M.conda_current_env_path = conda_info.root_prefix
     end
 
