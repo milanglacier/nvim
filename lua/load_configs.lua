@@ -16,7 +16,6 @@ require 'conf.utils'
 
 require 'conf.telescope'
 
-require 'conf.snippets'
 require 'conf.cmp'
 
 require 'conf.lspconfig'

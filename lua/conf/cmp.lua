@@ -2,7 +2,10 @@ local did_load_cmp = false
 local autocmd = vim.api.nvim_create_autocmd
 local my_augroup = require('conf.builtin_extend').my_augroup
 
-local function load_cmp()
+local function load_cmp_and_luasnip()
+    require('luasnip.loaders.from_vscode').lazy_load()
+    require('luasnip.loaders.from_vscode').lazy_load { paths = { vim.fn.stdpath 'config' .. '/snippets' } }
+
     local cmp = require 'cmp'
     local types = require 'cmp.types'
     local lspkind = require 'lspkind'
@@ -175,7 +178,7 @@ autocmd({ 'InsertEnter', 'CmdlineEnter' }, {
     once = true,
     callback = function()
         if not did_load_cmp then
-            load_cmp()
+            load_cmp_and_luasnip()
             did_load_cmp = true
         end
     end,
