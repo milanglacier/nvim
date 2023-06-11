@@ -26,7 +26,8 @@ M.load.lualine = function()
     --
     ---@return string project_name
     local project_name = function()
-        if vim.fn.expand('%:p'):find(vim.fn.getcwd()) then
+        -- don't use pattern matching, just plain match
+        if vim.fn.expand('%:p'):find(vim.fn.getcwd(), nil, true) then
             -- if the absolute path of current file is a sub directory of cwd
             return ' ' .. vim.fn.fnamemodify('%', ':p:h:t')
         else
@@ -524,7 +525,8 @@ end
 
 M.get_workspace_diff = function()
     local cwd = vim.fn.getcwd()
-    if vim.fn.expand('%:p'):find(cwd) then
+    -- don't use pattern matching
+    if vim.fn.expand('%:p'):find(cwd, nil, true) then
         -- if the absolute path of current file is a sub directory of cwd
         return M.git_workspace_diff[cwd] or ''
     else
