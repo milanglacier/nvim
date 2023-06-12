@@ -38,15 +38,6 @@ vim.o.mouse = 'a'
 vim.env.NVIM_TUI_ENABLE_TRUE_COLOR = 1
 vim.o.termguicolors = true
 
-local gui_font = {
-    'Sauce_Code_Pro_Nerd_Font_Complete:h15',
-    'Monaco_Nerd_Font_Complete:h15',
-    'SF_Mono_Regular:h15',
-    'Space_Mono_Nerd_Font_Complete:h15',
-    'Monego_Nerd_Font_Fix:h15',
-    'CaskaydiaCove_Nerd_Font_Mono:h15',
-}
-
 local gui_cursor = {
     'n-v-c:block',
     'i-ci-ve:ver70',
@@ -56,5 +47,11 @@ local gui_cursor = {
     'sm:block-blinkwait175-blinkoff150-blinkon175',
 }
 
-vim.o.guifont = gui_font[6]
+-- 'Sauce_Code_Pro_Nerd_Font_Complete:h15',
+-- 'IntoneMono_Nerd_Font_Mono:h16',
+-- 'SF_Mono_Regular:h15',
+-- 'Space_Mono_Nerd_Font_Complete:h15',
+-- 'Monego_Nerd_Font_Fix:h15',
+-- 'CaskaydiaCove_Nerd_Font_Mono:h15',
+vim.o.guifont = 'CaskaydiaCove_Nerd_Font_Mono:h15'
 vim.o.guicursor = table.concat(gui_cursor, ',')
