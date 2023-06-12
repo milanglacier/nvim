@@ -228,6 +228,14 @@ M.load.REPL = function()
         end
     end
 
+    local function partial_cmd_with_count_expr(cmd)
+        return function()
+            -- <C-U> is equivalent to \21, we want to clear the range before
+            -- next input to ensure the count is recognized correctly.
+            return ':\21' .. vim.v.count .. cmd
+        end
+    end
+
     vim.g.REPL_use_floatwin = 0
 
     require('yarepl').setup {
@@ -283,6 +291,11 @@ M.load.REPL = function()
         callback = run_cmd_with_count 'REPLSendMotion aichat',
         desc = 'Send current line to Aichat',
     })
+    keymap('n', '<Leader>ce', '', {
+        callback = partial_cmd_with_count_expr 'REPLExec $aichat ',
+        desc = 'Execute command in aichat',
+        expr = true,
+    })
     keymap('n', '<Leader>cq', '', {
         callback = run_cmd_with_count 'REPLClose aichat',
         desc = 'Quit Aichat',
@@ -334,6 +347,11 @@ M.load.REPL = function()
             bufmap(0, 'n', '<LocalLeader>s', '', {
                 callback = run_cmd_with_count 'REPLSendMotion',
                 desc = 'Send current line to REPL',
+            })
+            bufmap(0, 'n', '<LocalLeader>re', '', {
+                callback = partial_cmd_with_count_expr 'REPLExec ',
+                desc = 'Execute command in REPL',
+                expr = true,
             })
             bufmap(0, 'n', '<LocalLeader>rq', '', {
                 callback = run_cmd_with_count 'REPLClose',
