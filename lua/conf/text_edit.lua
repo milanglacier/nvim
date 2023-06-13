@@ -63,6 +63,12 @@ end
 
 M.load.mini_ai = function()
     require('mini.ai').setup {
+        custom_textobjects = {
+            -- See `echasnovski/mini.nvim #366`. Mini.ai does not handle quotes
+            -- worse than vim's default.
+            ['"'] = false,
+            ["'"] = false,
+        },
         mappings = {
             -- Next/last variants
             around_next = 'an',
