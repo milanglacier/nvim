@@ -63,7 +63,6 @@ end
 
 M.load.mini_ai = function()
     require('mini.ai').setup {
-        search_method = 'cover',
         mappings = {
             -- Next/last variants
             around_next = 'an',
