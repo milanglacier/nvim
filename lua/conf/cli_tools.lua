@@ -306,6 +306,7 @@ M.load.REPL = function()
 
     local ft_to_repl = {
         r = 'radian',
+        R = 'radian',
         rmd = 'radian',
         quarto = 'radian',
         markdown = 'radian',
