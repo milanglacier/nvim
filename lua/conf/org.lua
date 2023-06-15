@@ -47,7 +47,7 @@ require('orgmode').setup {
         ew = {
             description = 'quick fill with word and sentence under point',
             target = org_dir .. '/capture/english.org',
-            template = '* %(return vim.fn.getreg "w")\n%(return vim.fn.getreg "s")\n%a\n:explanation:\n%?\n:END:',
+            template = '* %(return vim.fn.getreg "w")\n%(return vim.fn.getreg "s")\n\n%a\n:explanation:\n%?\n:END:',
             -- make sure call GetWordAndSentenceUnderPoint before fill with this template
         },
     },
