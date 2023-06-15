@@ -200,28 +200,4 @@ end
 command('GetWordAndSentenceUnderPoint', M.get_word_and_sentence_under_point, {})
 command('GetVisualRegionAndSentenceUnderPoint', M.get_visual_region_and_sentenec_under_point, {})
 
--- Format the paragraph under the cursor as an org table
--- then transform it into a markdown table.
-function M.format_paragraph_as_md_table_using_org()
-    -- yank current paragraph
-    vim.cmd 'normal yip'
-    local current_buffer = vim.api.nvim_get_current_buf()
-    local temp_buffer = vim.api.nvim_create_buf(true, true)
-    vim.api.nvim_set_current_buf(temp_buffer)
-    vim.bo.ft = 'org'
-    -- paste the paragraph then format
-    -- gqgq is the org keymap for formatting table
-    vim.cmd [[normal pgqgq]]
-    -- org use +|+ as column separator
-    -- while markdown use -|- as column separator
-    vim.cmd '%s/-+-/-|-/ge'
-    vim.cmd 'normal yip'
-    vim.api.nvim_set_current_buf(current_buffer)
-    vim.cmd [[normal vipp]]
-    vim.cmd 'nohlsearch'
-    vim.api.nvim_buf_delete(temp_buffer, { force = true })
-end
-
-command('FormatParagraphAsMdTable', M.format_paragraph_as_md_table_using_org, {})
-
 return M
