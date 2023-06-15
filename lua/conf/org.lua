@@ -4,6 +4,16 @@ require('orgmode').setup_ts_grammar()
 
 local org_dir = '~/Desktop/orgmode'
 
+local bubble_tea_template = function(opts)
+    local template = '|%U|%?|'
+    return {
+        target = org_dir .. '/capture/bubble-tea.org',
+        template = opts.template or template,
+        description = opts.description,
+        headline = opts.headline,
+    }
+end
+
 require('orgmode').setup {
     org_agenda_files = {
         org_dir .. '/*.org',
@@ -49,6 +59,56 @@ require('orgmode').setup {
             target = org_dir .. '/capture/english.org',
             template = '* %(return vim.fn.getreg "w")\n%(return vim.fn.getreg "s")\n\n%a\n:explanation:\n%?\n:END:',
             -- make sure call GetWordAndSentenceUnderPoint before fill with this template
+        },
+
+        b = 'bubble tea',
+        bf = bubble_tea_template {
+            description = 'feed food',
+            headline = 'feed food',
+            template = '|%U|Taste%?|||||',
+        },
+        bp = bubble_tea_template {
+            description = 'poop',
+            headline = 'poop',
+            template = '|%U|Indoor%?|||||',
+        },
+        bP = bubble_tea_template {
+            description = 'play',
+            headline = 'play',
+            template = '|%U|Street Walk%?|||||',
+        },
+        be = bubble_tea_template {
+            description = 'eye mucus',
+            headline = 'eye mucus',
+        },
+        bE = bubble_tea_template {
+            description = 'ear clean',
+            headline = 'ear clean',
+        },
+        bb = bubble_tea_template {
+            description = 'bath',
+            headline = 'bath',
+        },
+        bt = bubble_tea_template {
+            description = 'trim coat',
+            headline = 'trim coat',
+        },
+        bg = bubble_tea_template {
+            description = 'grooming',
+            headline = 'grooming',
+        },
+        bn = bubble_tea_template {
+            description = 'nailing',
+            headline = 'nailing',
+        },
+        bB = bubble_tea_template {
+            description = 'brushing teeth',
+            headline = 'brushing teeth',
+        },
+        bs = bubble_tea_template {
+            description = 'symptom',
+            headline = 'symptom',
+            template = '|%U|Vomit%?|||',
         },
     },
 
