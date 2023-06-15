@@ -47,9 +47,7 @@ local lazy_plugins = {
     -- Tree sitter for enhanced text obj and syntax capturality
     {
         'nvim-treesitter/nvim-treesitter',
-        build = function()
-            require('nvim-treesitter.install').update { sync = true }
-        end,
+        build = ':TSUpdate',
         dependencies = {
             { 'nvim-treesitter/nvim-treesitter-textobjects' },
             { 'HiPhish/nvim-ts-rainbow2' },
