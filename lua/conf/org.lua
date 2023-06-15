@@ -129,8 +129,14 @@ require('orgmode').setup {
 
         org = {
             org_todo = '<LocalLeader>t',
+            org_change_date = '<LocalLeader>d',
             org_toggle_checkbox = '<LocalLeader>x',
             org_cycle = '<Localleader><Tab>',
+            org_todo_prev = false,
+            org_todo = false,
+            org_priority_up = '<LocalLeader>+',
+            org_priority_down = '<LocalLeader>-',
+            org_priority = '<LocalLeader>!',
         },
 
         text_objects = {
@@ -149,12 +155,24 @@ require('orgmode').setup {
 local my_augroup = require('conf.builtin_extend').my_augroup
 local autocmd = vim.api.nvim_create_autocmd
 local command = vim.api.nvim_create_user_command
+local bufmap = vim.api.nvim_buf_set_keymap
 
 autocmd('FileType', {
     pattern = 'org',
     desc = 'set cursorline for org filetype',
     group = my_augroup,
     command = 'setlocal cursorline',
+})
+
+autocmd('FileType', {
+    pattern = 'org',
+    desc = 'Set org mode keymap',
+    group = my_augroup,
+    callback = function()
+        -- The backslash key is easier to type than the vertical bar
+        bufmap(0, 'n', ']\\', 'f|', { noremap = true })
+        bufmap(0, 'n', '[\\', 'F|', { noremap = true })
+    end,
 })
 
 -- yank word under point into register "w".
