@@ -59,7 +59,6 @@
   "quarto-vim": { "branch": "master", "commit": "216247339470794e74a5fda5e5515008d6dc1057" },
   "refactoring.nvim": { "branch": "master", "commit": "08bcc40638cd4debd5184f934971858e1c5acff4" },
   "rose-pine": { "branch": "main", "commit": "34f68e871527fb8d7d193e04dafedcf7005304c1" },
-  "smartim": { "branch": "master", "commit": "4fa324928b6d1fed08706c48bdb3a30daa9a6dbf" },
   "sqls.nvim": { "branch": "main", "commit": "4b1274b5b44c48ce784aac23747192f5d9d26207" },
   "ssr.nvim": { "branch": "main", "commit": "e5768511518a397fa712f26389ba30d0404990de" },
   "substitute.nvim": { "branch": "main", "commit": "46a78e02b5b009d22df7566cbc25f4ef565c5731" },
