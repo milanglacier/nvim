@@ -14,7 +14,6 @@ local lazy_plugins = {
     -- Fix bugs and Utilities
     { 'ahmedkhalf/project.nvim' },
     { 'kyazdani42/nvim-tree.lua' }, -- file explorer
-    { 'milanglacier/smartim' }, -- automatically switch input method when switch mode
     { 'sindrets/winshift.nvim' },
 
     -- UI
