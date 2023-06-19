@@ -192,7 +192,7 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- Copied from lspconfig/server_configurations/pylsp.lua
 
-local enabled_lsps = { 'r', 'python', 'bash', 'cpp', 'vim', 'nvim', 'pinyin', 'sql', 'latex', 'go' }
+local enabled_lsps = { 'r', 'python', 'bash', 'cpp', 'vim', 'nvim', 'pinyin', 'sql', 'latex', 'go', 'rust' }
 
 local lsp_configs = {}
 
@@ -305,7 +305,19 @@ lsp_configs.pinyin = function()
 end
 
 lsp_configs.go = function()
-    require('lspconfig').gopls.setup {}
+    require('lspconfig').gopls.setup {
+        capabilities = capabilities,
+    }
+end
+
+lsp_configs.rust = function()
+    local rust_capabilities = vim.deepcopy(capabilities)
+    rust_capabilities.experimental = {
+        serverStatusNotification = true,
+    }
+    require('lspconfig').rust_analyzer.setup {
+        capabilities = rust_capabilities,
+    }
 end
 
 for _, lsp in pairs(enabled_lsps) do
