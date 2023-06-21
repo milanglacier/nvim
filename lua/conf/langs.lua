@@ -134,7 +134,7 @@ autocmd('FileType', {
             silent = true,
             desc = 'code chunk text object a',
             callback = function()
-                M.textobj_code_chunk('a', '^# ?%%%%.*', '^# ?%%%%$', true)
+                M.textobj_code_chunk('a', '^# ?%%%%.*', '^# ?%%%%.*', true)
                 -- # %%xxxxx or #%%xxxx
             end,
         })
@@ -142,7 +142,7 @@ autocmd('FileType', {
             silent = true,
             desc = 'code chunk text object i',
             callback = function()
-                M.textobj_code_chunk('i', '^# ?%%%%.*', '^# ?%%%%$', true)
+                M.textobj_code_chunk('i', '^# ?%%%%.*', '^# ?%%%%.*', true)
             end,
         })
 
@@ -150,7 +150,7 @@ autocmd('FileType', {
             silent = true,
             desc = 'code chunk text object a',
             callback = function()
-                M.textobj_code_chunk('a', '^# ?%%%%.*', '^# ?%%%%$', true, true)
+                M.textobj_code_chunk('a', '^# ?%%%%.*', '^# ?%%%%.*', true, true)
             end,
         })
 
@@ -158,7 +158,7 @@ autocmd('FileType', {
             silent = true,
             desc = 'code chunk text object i',
             callback = function()
-                M.textobj_code_chunk('i', '^# ?%%%%.*', '^# ?%%%%$', true, true)
+                M.textobj_code_chunk('i', '^# ?%%%%.*', '^# ?%%%%.*', true, true)
             end,
         })
     end,
