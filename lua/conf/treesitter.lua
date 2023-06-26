@@ -33,14 +33,7 @@ require('nvim-treesitter.configs').setup {
 
     highlight = {
         enable = true,
-        -- `false` will disable the whole extension
-        -- list of language that will be disabled
-        -- disable = { "c", "rust" },
-
-        -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-        -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-        -- using this option may slow down your editor, and you may see some duplicate highlights.
-        -- Instead of true it can also be a list of languages
+        disable = { 'sql' },
         additional_vim_regex_highlighting = { 'org', 'latex', 'markdown' },
     },
 
@@ -55,7 +48,7 @@ require('nvim-treesitter.configs').setup {
 
     indent = {
         enable = true,
-        disable = { 'python', 'org', 'tex' },
+        disable = { 'python', 'org', 'tex', 'sql' },
     },
 
     incremental_selection = {
