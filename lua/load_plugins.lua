@@ -124,7 +124,7 @@ local lazy_plugins = {
 
     -- Git
     { 'lewis6991/gitsigns.nvim' },
-    { 'TimUntersberger/neogit', cmd = 'Neogit' },
+    { 'NeogitOrg/neogit', cmd = 'Neogit' },
     { 'sindrets/diffview.nvim', cmd = { 'DiffviewOpen', 'DiffviewFileHistory' } },
 
     -- Other cli tools, ripgrep, hover, markdown, etc
