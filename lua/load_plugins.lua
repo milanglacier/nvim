@@ -76,7 +76,6 @@ local lazy_plugins = {
     { 'stevearc/aerial.nvim' },
     { 'onsails/lspkind-nvim' },
     { 'ray-x/lsp_signature.nvim' },
-    { 'jose-elias-alvarez/null-ls.nvim' },
     { 'ThePrimeagen/refactoring.nvim' },
     { 'SmiteshP/nvim-navic' },
 

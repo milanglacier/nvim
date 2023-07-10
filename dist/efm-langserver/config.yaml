@@ -1,0 +1,78 @@
+version: 2
+root-markers:
+    - .git/
+    - .svn/
+    - .git
+
+tools:
+    vale: &vale
+        lint-command:
+            'vale --output ~/.config/vale/output/line-with-severity.tmpl
+            "${INPUT}"'
+        lint-stdin: false
+        lint-ignore-exit-code: true
+        lint-formats:
+            - "%f:%l:%c:%trror:%m"
+            - "%f:%l:%c:%tarning:%m"
+        root-markers:
+            - .vale.ini
+
+    stylua: &stylua
+        format-command: "stylua -"
+        format-stdin: true
+        root-markers:
+            - stylua.toml
+            - .stylua.toml
+
+    prettierd: &prettierd
+        format-command: 'prettierd "${INPUT}"'
+        format-stdin: true
+
+    yapf: &yapf
+        format-command: "yapf"
+        format-stdin: true
+        root-markers:
+            - .style.yapf
+            - pyproject.toml
+
+    sql-formatter: &sql-formatter
+        format-command:
+            "sql-formatter --config ~/.config/sql_formatter/sql_formatter.json"
+            # NOTE: make sure you put the sql_formatter.json config file under this directory!
+        format-stdin: true
+
+languages:
+    markdown:
+        - <<: *vale
+        - <<: *prettierd
+
+    markdown.pandoc:
+        - <<: *vale
+        - <<: *prettierd
+
+    rmd:
+        - <<: *prettierd
+
+    quarto:
+        - <<: *prettierd
+
+    org:
+        - <<: *vale
+
+    text:
+        - <<: *vale
+
+    json:
+        - <<: *prettierd
+
+    yaml:
+        - <<: *prettierd
+
+    lua:
+        - <<: *stylua
+
+    python:
+        - <<: *yapf
+
+    sql:
+        - <<: *sql-formatter

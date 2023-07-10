@@ -17,6 +17,7 @@ M.load.gitsigns = function()
     }
 
     keymap('n', '<Leader>gp', '<cmd>Gitsigns preview_hunk<CR>', { noremap = true })
+    keymap('n', '<Leader>ga', '<cmd>Gitsigns<CR>', { noremap = true })
     keymap('n', '<Leader>gr', '<cmd>Gitsigns reset_hunk<CR>', { noremap = true })
     keymap('n', '<Leader>gs', '<cmd>Gitsigns stage_hunk<CR>', { noremap = true })
     keymap('n', '<Leader>gq', '<cmd>Gitsigns setqflist<CR>', { noremap = true })

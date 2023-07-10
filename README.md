@@ -144,8 +144,7 @@ and wild!
 - This screenshot showcases writing Lua code with smart autocompletion through
   both language server (LSP) and universal-ctags (ctags). This combination
   seamlessly blends old-school and modern tools. The bottom window shows the
-  occurrence of referenced symbols that you specify (via `lsp find
-  references`), while the right window shows the symbol outline of the current
+  occurrence of referenced symbols that you specify (via `lsp find references`), while the right window shows the symbol outline of the current
   file (via `lsp document symbols`).
 
 ![literate-programming](./assets/literate-programming.png)
@@ -177,13 +176,19 @@ within neovim, enter `:Mason` in the prompt, and a popup window will appear
 with the intuitive interface of `Mason`. From there, you can easily install
 packages.
 
+This configuration relies on an external tool called `efm-langserver`, which
+can be installed via `mason`. However, it needs to be separately configured
+outside of neovim. An example configuration for `efm` is provided in the `dist`
+folder. To use this example configuration, simply copy the folder to
+`~/.config/`.
+
 ## python deps
 
 1. `python`.
 2. `debugpy`: this module should be included by the `python` at the top of your `$PATH`.
 3. `ipython`
 4. `yapf*`
-5. `flake8*`
+5. `efm-langserver*`
 6. `pyright*`
 
 ## r deps
@@ -196,6 +201,7 @@ packages.
 1. `lua-language-server*`
 2. `stylua*`
 3. `selene*`
+4. `efm-langserver*`
 
 ## vimscript deps
 
@@ -205,6 +211,7 @@ packages.
 
 1. `prettierd*`
 2. `vale*`
+3. `efm-langserver*`
 
 ## sql deps
 
@@ -543,6 +550,7 @@ The following keymaps rely on [gitsigns.nvim](https://github.com/lewis6991/gitsi
 | Mode | LHS          | RHS/Functionality             |
 | ---- | ------------ | ----------------------------- |
 | n    | `<Leader>gp` | Preview current git diff hunk |
+| n    | `<Leader>ga` | Git actions                   |
 | n    | `<Leader>gs` | Stage current git diff hunk   |
 | n    | `<Leader>gr` | Reset current git diff hunk   |
 | n    | `<Leader>gq` | Send git diff hunks to qflist |
@@ -587,20 +595,20 @@ The following keymaps rely on [copilot.lua](https://github.com/zbirenbaum/copilo
 Note: with no numerical argument, the REPL is default for the first REPL.
 
 | Mode | LHS               | RHS/Functionality                                                                               |
-| ---- | ----------------- | -------------------------------------------------------------------------------                 |
+| ---- | ----------------- | ----------------------------------------------------------------------------------------------- |
 | n    | `<Leader>tR`      | Toggle float win for REPL                                                                       |
 | n    | `<LocalLeader>rs` | Start REPL `i`, e.g. `<LocalLeader>rs` to start REPL 1 and `3<LocalLeader>rs` to start REPL `3` |
 | n    | `<LocalLeader>rf` | Focus on the window of REPL attached or REPL `i`, e.g. `<LocalLeader>rf`, `2<LocalLeader>rf`    |
 | n    | `<LocalLeader>rs` | Swap two REPLs.                                                                                 |
 | n    | `<LocalLeader>rv` | View REPLs in telescope.                                                                        |
-| n    | `<LocalLeader>rh` | Hide the window of REPL attached or REPL `i`,  e.g. `<LocalLeader>rf`, `2<LocalLeader>rf`       |
+| n    | `<LocalLeader>rh` | Hide the window of REPL attached or REPL `i`, e.g. `<LocalLeader>rf`, `2<LocalLeader>rf`        |
 | n    | `<LocalLeader>ra` | Attach current buffer to a REPL                                                                 |
 | n    | `<LocalLeader>rd` | Detach current buffer to any REPL                                                               |
 | n    | `<LocalLeader>rq` | Exit REPL attached or REPL `i`, usage the same as above                                         |
 | n    | `<LocalLeader>rc` | Clear invalid REPLs                                                                             |
 
 | Mode | LHS               | RHS/Functionality                                                                                                             |
-| ---- | ----------------- | ---------------------------------------------------------------------------------                                             |
+| ---- | ----------------- | ----------------------------------------------------------------------------------------------------------------------------- |
 | nv   | `<LocalLeader>s`  | Send the motion / text object / selected text to the REPL attached or repl `i`, e.g. `<LocalLeader>sap` or `3<LocalLeader>ap` |
 | n    | `<LocalLeader>ss` | Send current line to the REPL attached or REPL `i`, e.g. `<LocalLeader>ss` or `3<LocalLeader>ss`                              |
 

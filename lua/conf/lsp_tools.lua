@@ -180,7 +180,6 @@ M.load.aerial()
 M.load.lspkind()
 M.load.lspsaga()
 M.load.refactor()
-M.load.nullls()
 M.load.signature()
 
 return M

@@ -192,7 +192,7 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- Copied from lspconfig/server_configurations/pylsp.lua
 
-local enabled_lsps = { 'r', 'python', 'bash', 'cpp', 'vim', 'nvim', 'pinyin', 'sql', 'latex', 'go', 'rust' }
+local enabled_lsps = { 'r', 'python', 'bash', 'cpp', 'vim', 'nvim', 'pinyin', 'sql', 'latex', 'go', 'rust', 'efm' }
 
 local lsp_configs = {}
 
@@ -317,6 +317,12 @@ lsp_configs.rust = function()
     }
     require('lspconfig').rust_analyzer.setup {
         capabilities = rust_capabilities,
+    }
+end
+
+lsp_configs.efm = function ()
+    require('lspconfig').efm.setup {
+        filetypes = {'python', 'lua', 'markdown', 'markdown.pandoc', 'lua', 'org', 'sql', 'rmd', 'quarto', 'json', 'yaml'},
     }
 end
 
