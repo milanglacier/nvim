@@ -49,13 +49,14 @@ local lazy_plugins = {
         build = ':TSUpdate',
         dependencies = {
             { 'nvim-treesitter/nvim-treesitter-textobjects' },
-            { 'HiPhish/nvim-ts-rainbow2' },
             { 'mfussenegger/nvim-treehopper' },
             { 'mizlan/iswap.nvim' },
             { 'romgrk/nvim-treesitter-context' },
             { 'cshuaimin/ssr.nvim' },
         },
     },
+
+    { 'HiPhish/rainbow-delimiters.nvim' },
 
     -- Set markdown/rmd/quarto syntax highlighting
     { 'vim-pandoc/vim-pandoc-syntax' },

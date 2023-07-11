@@ -37,15 +37,6 @@ require('nvim-treesitter.configs').setup {
         additional_vim_regex_highlighting = { 'org', 'latex', 'markdown' },
     },
 
-    rainbow = {
-        enable = true,
-        query = {
-            'rainbow-parens',
-            html = 'rainbow-tags',
-            latex = 'rainbow-blocks',
-        },
-    },
-
     indent = {
         enable = true,
         disable = { 'python', 'org', 'tex', 'sql' },
@@ -175,6 +166,14 @@ require('treesitter-context').setup {
     enable = true,
     throttle = true,
 }
+
+vim.g.rainbow_delimiters = {
+    query = {
+        latex = 'rainbow-blocks',
+    },
+}
+
+require 'rainbow-delimiters'
 
 vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
 
