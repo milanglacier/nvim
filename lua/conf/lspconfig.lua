@@ -320,9 +320,27 @@ lsp_configs.rust = function()
     }
 end
 
-lsp_configs.efm = function ()
+lsp_configs.efm = function()
     require('lspconfig').efm.setup {
-        filetypes = {'python', 'lua', 'markdown', 'markdown.pandoc', 'lua', 'org', 'sql', 'rmd', 'quarto', 'json', 'yaml'},
+        filetypes = {
+            'python',
+            'lua',
+            'markdown',
+            'markdown.pandoc',
+            'lua',
+            'org',
+            'sql',
+            'rmd',
+            'quarto',
+            'json',
+            'yaml',
+        },
+        init_options = {
+            documentFormatting = true,
+            documentRangeFormatting = true,
+            hover = true,
+            codeAction = true,
+        },
     }
 end
 
