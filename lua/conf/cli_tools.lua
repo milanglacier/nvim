@@ -26,6 +26,7 @@ M.load.gitsigns = function()
 end
 
 M.load.neogit = function()
+    require('neogit').setup {}
     keymap('n', '<Leader>gg', '<cmd>Neogit<CR>', { noremap = true, desc = 'Neogit' })
 end
 
