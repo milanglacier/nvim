@@ -121,7 +121,7 @@ Then, in vscode, set `vscode-neovim.neovimExecutablePaths.darwin` to
 `your_path/to_the/bash_script`, changing darwin to match your system.
 
 2. If you use the dev version of `vscode-neovim`, change
-   `vscode-neovim.NVIM_APPNAME` to `vscode-neovim`.
+   `vscode-neovim.NVIM_APPNAME` to `vscode-neovim` in vscode settings.
 
 ## Be Wild
 
