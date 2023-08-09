@@ -44,6 +44,9 @@ telescope.setup {
             },
         },
         cache_picker = { num_pickers = 2, limit_entries = 100 },
+        preview = {
+            filesize_limit = 2,
+        },
         -- wrap_results = true,
     },
     extensions = {
