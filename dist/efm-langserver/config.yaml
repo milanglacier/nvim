@@ -4,6 +4,12 @@ root-markers:
     - .svn/
     - .git
 
+commands:
+  - command: wslview
+    arguments:
+      - ${INPUT}
+    title: wslview
+
 tools:
     vale: &vale
         lint-command:
@@ -33,6 +39,12 @@ tools:
         format-stdin: true
         root-markers:
             - .style.yapf
+            - pyproject.toml
+      
+    black: &black
+        format-command: "black --quiet -"
+        format-stdin: true
+        root-markers:
             - pyproject.toml
 
     sql-formatter: &sql-formatter
@@ -72,7 +84,7 @@ languages:
         - <<: *stylua
 
     python:
-        - <<: *yapf
+        - <<: *black
 
     sql:
         - <<: *sql-formatter

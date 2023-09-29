@@ -187,7 +187,7 @@ folder. To use this example configuration, simply copy the folder to
 1. `python`.
 2. `debugpy`: this module should be included by the `python` at the top of your `$PATH`.
 3. `ipython`
-4. `yapf*`
+4. `black*`
 5. `efm-langserver*`
 6. `pyright*`
 
