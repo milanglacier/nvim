@@ -311,12 +311,29 @@ M.load.which_key = function()
 end
 
 M.load.indent_blankline = function()
-    require('indent_blankline').setup {
-        char = '┆',
-        context_char = '┆',
-        show_current_context = true,
+    require('ibl').setup {
+        indent = {
+            char = '┆',
+        },
+        scope = {
+            show_start = false,
+            show_end = false,
+            priority = 1,
+            highlight = { 'Type' },
+            include = {
+                node_type = {
+                    ['*'] = { 'if_statement', 'for_statement', 'while_statement' },
+                    -- TODO: Honestly, I only care about CURRENT INDENTATION
+                    -- LEVEL. I have no idea why the author reimplemented
+                    -- everything. the concept of "scope" is particularly
+                    -- baffling. it brings nothing but leads to a lot of
+                    -- annoyoing things. Thus, I need to add more nodes to be
+                    -- considered as scope to mimic "CURRENT INDENTATION LEVEL"
+                    -- behavior.
+                },
+            },
+        },
     }
-    set_hl(0, 'IndentBlanklineContextChar', { link = 'Type' })
 end
 
 M.load.mini_starter = function()
