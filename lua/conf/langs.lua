@@ -198,6 +198,9 @@ command('CondaActivateEnv', function(options)
     vim.env.CONDA_PREFIX = M.conda_current_env_path
     vim.env.CONDA_DEFAULT_ENV = vim.fn.fnamemodify(M.conda_current_env_path, ':t')
     vim.env.CONDA_SHLVL = 1
+    vim.env.CONDA_PROMPT_MODIFIER = '(' .. vim.env.CONDA_DEFAULT_ENV .. ') '
+
+    vim.notify 'conda env activated'
 end, {
     nargs = '?',
     complete = function(_, _, _)
@@ -241,7 +244,10 @@ command('CondaDeactivate', function(_)
     vim.env.CONDA_PREFIX = nil
     vim.env.CONDA_DEFAULT_ENV = nil
     vim.env.CONDA_SHLVL = 0
+    vim.env.CONDA_PROMPT_MODIFIER = nil
     M.conda_current_env_path = nil
+
+    vim.notify 'conda env deactivated'
 end, {
     desc = [[This command deactivates a conda environment. Note that after the
 execution, the conda env will be completely cleared (i.e. without base
