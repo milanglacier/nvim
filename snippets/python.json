@@ -3,7 +3,19 @@
         "prefix": "rc",
         "body": [
             "# %%",
+            "",
+            "$0"
+        ],
+        "description": "create python code chunk"
+    },
+
+    "create python full code chunk": {
+        "prefix": "rc2",
+        "body": [
+            "# %%",
+            "",
             "$0",
+            "",
             "# %%"
         ],
         "description": "create python code chunk"
@@ -13,10 +25,36 @@
         "prefix": "mc",
         "body": [
             "# %% [markdown]",
-            "$0",
-            "# %%"
+            "# $0"
         ],
-        "description": "create python code chunk"
+        "description": "create markdown code chunk"
+    },
+
+    "create databricks source": {
+        "prefix": "dbs",
+        "body": [
+            "# Databricks notebook source",
+            "$0"
+        ],
+        "description": "create databricks notebook source"
+    },
+
+    "create databricks code chunk": {
+        "prefix": "dbc",
+        "body": [
+            "# COMMAND ----------",
+            "",
+            "$0"
+        ],
+        "description": "create databricks code chunk"
+    },
+
+    "create databricks magic chunk": {
+        "prefix": "dbm",
+        "body": [
+            "# MAGIC $0"
+        ],
+        "description": "create databricks magic chunk"
     }
 
 }
