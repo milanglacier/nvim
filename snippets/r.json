@@ -1,12 +1,22 @@
 {
-    "create r code chunk": {
-        "prefix": "rc",
+    "create r full code chunk": {
+        "prefix": "rc2",
         "body": [
             "# %%",
             "",
             "$0",
             "",
             "# %%"
+        ],
+        "description": "create R full code chunk"
+    },
+
+    "create r code chunk": {
+        "prefix": "rc",
+        "body": [
+            "# %%",
+            "",
+            "$0"
         ],
         "description": "create R code chunk"
     },
