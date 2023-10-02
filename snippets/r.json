@@ -73,7 +73,8 @@
         "body": [
             "# COMMAND ----------",
             "",
-            "$0"
+            "$0",
+            "\n"
         ],
         "description": "create databricks code chunk"
     },
