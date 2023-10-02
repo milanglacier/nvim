@@ -32,6 +32,10 @@
             {
                 "language": "plaintex",
                 "path": "./tex.json"
+            },
+            {
+                "language": "sql",
+                "path": "./sql.json"
             }
         ]
     }
