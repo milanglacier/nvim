@@ -161,9 +161,77 @@ autocmd('FileType', {
                 M.textobj_code_chunk('i', '^# ?%%%%.*', '^# ?%%%%.*', true, true)
             end,
         })
+
+        bufmap(0, 'o', 'am', '', {
+            silent = true,
+            desc = 'databricks code chunk text object a',
+            callback = function()
+                M.textobj_code_chunk('a', '# COMMAND ----------', '# COMMAND ----------', true)
+            end,
+        })
+        bufmap(0, 'o', 'im', '', {
+            silent = true,
+            desc = 'databricks code chunk text object i',
+            callback = function()
+                M.textobj_code_chunk('i', '# COMMAND ----------', '# COMMAND ----------', true)
+            end,
+        })
+
+        bufmap(0, 'x', 'am', '', {
+            silent = true,
+            desc = 'databricks code chunk text object a',
+            callback = function()
+                M.textobj_code_chunk('a', '# COMMAND ----------', '# COMMAND ----------', true, true)
+            end,
+        })
+
+        bufmap(0, 'x', 'im', '', {
+            silent = true,
+            desc = 'databricks code chunk text object i',
+            callback = function()
+                M.textobj_code_chunk('i', '# COMMAND ----------', '# COMMAND ----------', true, true)
+            end,
+        })
     end,
 })
 
+autocmd('FileType', {
+    pattern = { 'sql' },
+    group = my_augroup,
+    desc = 'set sql code chunk textobj',
+    callback = function()
+        bufmap(0, 'o', 'am', '', {
+            silent = true,
+            desc = 'databricks code chunk text object a',
+            callback = function()
+                M.textobj_code_chunk('a', '-- COMMAND ----------', '-- COMMAND ----------', true)
+            end,
+        })
+        bufmap(0, 'o', 'im', '', {
+            silent = true,
+            desc = 'databricks code chunk text object i',
+            callback = function()
+                M.textobj_code_chunk('i', '-- COMMAND ----------', '-- COMMAND ----------', true)
+            end,
+        })
+
+        bufmap(0, 'x', 'am', '', {
+            silent = true,
+            desc = 'databricks code chunk text object a',
+            callback = function()
+                M.textobj_code_chunk('a', '-- COMMAND ----------', '-- COMMAND ----------', true, true)
+            end,
+        })
+
+        bufmap(0, 'x', 'im', '', {
+            silent = true,
+            desc = 'databricks code chunk text object i',
+            callback = function()
+                M.textobj_code_chunk('i', '-- COMMAND ----------', '-- COMMAND ----------', true, true)
+            end,
+        })
+    end,
+})
 autocmd('FileType', {
     group = my_augroup,
     pattern = { 'r', 'rmd', 'quarto' },
