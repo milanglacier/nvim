@@ -338,7 +338,6 @@ lsp_configs.efm = function()
         init_options = {
             documentFormatting = true,
             documentRangeFormatting = true,
-            hover = true,
             codeAction = true,
         },
     }
