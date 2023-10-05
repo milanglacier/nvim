@@ -87,8 +87,8 @@ keymap('n', '<Leader>ff', notify 'workbench.action.quickOpen', opts) -- find fil
 -- toggle UI components keymaps
 keymap('n', '<Leader>tp', notify 'workbench.action.togglePanel', opts)
 keymap('n', '<Leader>ts', notify 'workbench.action.toggleSidebarVisibility', opts)
-keymap('n', '<Leader>th', notify 'workbench.action.toggleAuxiliaryBar', opts) -- toggle docview (help page)
-keymap('n', '<Leader>tw', notify 'workbench.action.terminal.toggleTerminal', opts) -- terminal window
+keymap('n', '<Leader>ta', notify 'workbench.action.toggleAuxiliaryBar', opts)
+keymap('n', '<Leader>tt', notify 'workbench.action.terminal.toggleTerminal', opts)
 
 -- switch focus keymaps
 keymap('n', '<Leader>ss', notify 'workbench.action.focusSideBar', opts) -- switch to sidebar
