@@ -107,9 +107,11 @@ and in vscode, we suggest creating two folders in `~/.config` or your specified
 `$XDG_CONFIG` path. One is `~/.config/nvim`, which uses the default
 configuration in the `master` branch, and the other is
 `~/.config/vscode-neovim`, which uses the configuration in the `windows/vscode`
-branch. This takes advantage of the `NVIM_APPNAME` feature in `nvim 0.9`. There
-are two ways to ask `vscode-neovim` to use the configuration from the
-`~/.config/vscode-neovim` folder as opposed to the default folder:
+branch. This takes advantage of the `NVIM_APPNAME` feature in `nvim 0.9`.
+
+There are two ways to ask `vscode-neovim` to use the configuration from the
+`~/.config/vscode-neovim` folder as opposed to the default folder. Select the
+method that suits your preference best:
 
 1. Create a bash script like the following:
 

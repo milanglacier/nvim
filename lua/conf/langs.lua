@@ -232,6 +232,7 @@ autocmd('FileType', {
         })
     end,
 })
+
 autocmd('FileType', {
     group = my_augroup,
     pattern = { 'r', 'rmd', 'quarto' },
