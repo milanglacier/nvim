@@ -79,7 +79,7 @@ end
 
 autocmd('FileType', {
     pattern = { 'rmd', 'quarto' },
-    group = M.my_augroup,
+    group = my_augroup,
     desc = 'set rmarkdown code chunk textobj',
     callback = function()
         bufmap(0, 'o', 'ac', '', {
@@ -97,32 +97,34 @@ autocmd('FileType', {
             end,
         })
 
-        local visual_a = [[:<C-U>lua require('conf.builtin_extend').textobj_code_chunk('a', '```{.+}', '^```$')<CR>]]
-
-        bufmap(0, 'x', 'ac', visual_a, {
+        bufmap(0, 'x', 'ac', '', {
             silent = true,
             desc = 'rmd/quarto code chunk text object a',
+            callback = function()
+                M.textobj_code_chunk('a', '```{.+}', '^```$', false, true)
+            end,
         })
 
-        local visual_i = [[:<C-U>lua require('conf.builtin_extend').textobj_code_chunk('i', '```{.+}', '^```$')<CR>]]
-
-        bufmap(0, 'x', 'ic', visual_i, {
+        bufmap(0, 'x', 'ic', '', {
             silent = true,
             desc = 'rmd/quarto code chunk text object i',
+            callback = function()
+                M.textobj_code_chunk('i', '```{.+}', '^```$', false, true)
+            end,
         })
     end,
 })
 
 autocmd('FileType', {
     pattern = { 'r', 'python' },
-    group = M.my_augroup,
+    group = my_augroup,
     desc = 'set r, python code chunk textobj',
     callback = function()
         bufmap(0, 'o', 'a<Leader>c', '', {
             silent = true,
             desc = 'code chunk text object a',
             callback = function()
-                M.textobj_code_chunk('a', '^# ?%%%%.*', '^# ?%%%%$', true)
+                M.textobj_code_chunk('a', '^# ?%%%%.*', '^# ?%%%%.*', true)
                 -- # %%xxxxx or #%%xxxx
             end,
         })
@@ -130,30 +132,99 @@ autocmd('FileType', {
             silent = true,
             desc = 'code chunk text object i',
             callback = function()
-                M.textobj_code_chunk('i', '^# ?%%%%.*', '^# ?%%%%$', true)
+                M.textobj_code_chunk('i', '^# ?%%%%.*', '^# ?%%%%.*', true)
             end,
         })
 
-        local visual_a =
-            [[:<C-U>lua require('conf.builtin_extend').textobj_code_chunk('a', '^# ?%%%%.*', '^# ?%%%%$', true)<CR>]]
-
-        bufmap(0, 'x', 'a<Leader>c', visual_a, {
+        bufmap(0, 'x', 'a<Leader>c', '', {
             silent = true,
             desc = 'code chunk text object a',
+            callback = function()
+                M.textobj_code_chunk('a', '^# ?%%%%.*', '^# ?%%%%.*', true, true)
+            end,
         })
 
-        local visual_i =
-            [[:<C-U>lua require('conf.builtin_extend').textobj_code_chunk('i', '^# ?%%%%.*', '^# ?%%%%$', true)<CR>]]
-
-        bufmap(0, 'x', 'i<Leader>c', visual_i, {
+        bufmap(0, 'x', 'i<Leader>c', '', {
             silent = true,
             desc = 'code chunk text object i',
+            callback = function()
+                M.textobj_code_chunk('i', '^# ?%%%%.*', '^# ?%%%%.*', true, true)
+            end,
+        })
+
+        bufmap(0, 'o', 'am', '', {
+            silent = true,
+            desc = 'databricks code chunk text object a',
+            callback = function()
+                M.textobj_code_chunk('a', '# COMMAND ----------', '# COMMAND ----------', true)
+            end,
+        })
+        bufmap(0, 'o', 'im', '', {
+            silent = true,
+            desc = 'databricks code chunk text object i',
+            callback = function()
+                M.textobj_code_chunk('i', '# COMMAND ----------', '# COMMAND ----------', true)
+            end,
+        })
+
+        bufmap(0, 'x', 'am', '', {
+            silent = true,
+            desc = 'databricks code chunk text object a',
+            callback = function()
+                M.textobj_code_chunk('a', '# COMMAND ----------', '# COMMAND ----------', true, true)
+            end,
+        })
+
+        bufmap(0, 'x', 'im', '', {
+            silent = true,
+            desc = 'databricks code chunk text object i',
+            callback = function()
+                M.textobj_code_chunk('i', '# COMMAND ----------', '# COMMAND ----------', true, true)
+            end,
         })
     end,
 })
 
 autocmd('FileType', {
-    group = M.my_augroup,
+    pattern = { 'sql' },
+    group = my_augroup,
+    desc = 'set sql code chunk textobj',
+    callback = function()
+        bufmap(0, 'o', 'am', '', {
+            silent = true,
+            desc = 'databricks code chunk text object a',
+            callback = function()
+                M.textobj_code_chunk('a', '-- COMMAND ----------', '-- COMMAND ----------', true)
+            end,
+        })
+        bufmap(0, 'o', 'im', '', {
+            silent = true,
+            desc = 'databricks code chunk text object i',
+            callback = function()
+                M.textobj_code_chunk('i', '-- COMMAND ----------', '-- COMMAND ----------', true)
+            end,
+        })
+
+        bufmap(0, 'x', 'am', '', {
+            silent = true,
+            desc = 'databricks code chunk text object a',
+            callback = function()
+                M.textobj_code_chunk('a', '-- COMMAND ----------', '-- COMMAND ----------', true, true)
+            end,
+        })
+
+        bufmap(0, 'x', 'im', '', {
+            silent = true,
+            desc = 'databricks code chunk text object i',
+            callback = function()
+                M.textobj_code_chunk('i', '-- COMMAND ----------', '-- COMMAND ----------', true, true)
+            end,
+        })
+    end,
+})
+
+autocmd('FileType', {
+    group = my_augroup,
     pattern = { 'r', 'rmd', 'quarto' },
     desc = 'set r, rmd, and quarto keyword pattern to include .',
     callback = function()
