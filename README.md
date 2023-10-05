@@ -69,6 +69,7 @@
     - [Markdown keymaps](#markdown-keymaps)
     - [Latex keymaps](#latex-keymaps)
 - [Other Notes](#other-notes)
+- [Discussion](#discussion)
 
 # Features
 
@@ -120,8 +121,7 @@ NVIM_APPNAME=vscode-neovim nvim "$@"
 Then, in vscode, set `vscode-neovim.neovimExecutablePaths.darwin` to
 `your_path/to_the/bash_script`, changing darwin to match your system.
 
-2. If you use the dev version of `vscode-neovim`, change
-   `vscode-neovim.NVIM_APPNAME` to `vscode-neovim` in vscode settings.
+2. Set `vscode-neovim.NVIM_APPNAME` to `vscode-neovim` in vscode settings.
 
 ## Be Wild
 
@@ -968,3 +968,8 @@ The following keymaps rely on [vimtex](https://github.com/lervag/vimtex)
 
 4. `vim-matchup` will (intentionally) hide the status-line if the matched pair are spanned
    over entire screen to show the other side of the pair.
+
+# Discussion
+
+1. It is recommended to use the mailing list `~northyear/nvim-devel@lists.sr.ht`.
+2. Alternatively, you are also welcome to open a Github issue.
