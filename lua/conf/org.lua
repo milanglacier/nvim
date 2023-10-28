@@ -30,6 +30,7 @@ require('orgmode').setup {
     org_hide_emphasis_markers = true,
     org_indent_mode = 'noindent',
     org_tags_column = 0,
+    org_startup_folded = 'inherit', -- use global foldlevel
 
     org_src_window_setup = 'belowright 40 new',
 
