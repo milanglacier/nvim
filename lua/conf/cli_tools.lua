@@ -288,10 +288,10 @@ M.load.REPL = function()
     })
     keymap('n', '<Leader>crr', '', {
         callback = run_cmd_with_count 'REPLSendLine aichat',
-        desc = 'Send motion to Aichat',
+        desc = 'Send lines to Aichat',
     })
     keymap('n', '<Leader>cr', '', {
-        callback = run_cmd_with_count 'REPLSendMotion aichat',
+        callback = run_cmd_with_count 'REPLSendOperator aichat',
         desc = 'Send current line to Aichat',
     })
     keymap('n', '<Leader>ce', '', {
@@ -349,7 +349,7 @@ M.load.REPL = function()
                 desc = 'Send line to REPL',
             })
             bufmap(0, 'n', '<LocalLeader>s', '', {
-                callback = run_cmd_with_count 'REPLSendMotion',
+                callback = run_cmd_with_count 'REPLSendOperator',
                 desc = 'Send current line to REPL',
             })
             bufmap(0, 'n', '<LocalLeader>re', '', {
