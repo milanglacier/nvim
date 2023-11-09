@@ -174,14 +174,17 @@ M.load.copilot = function()
         once = true,
         desc = 'load copilot',
         callback = function()
-            require('copilot').setup {
+            local copilot_enabled = false
+            local copilot_is_setup = false
+
+            local copilot_config = {
                 panel = {
                     enabled = false,
                 },
                 suggestion = {
                     enabled = true,
-                    auto_trigger = false,
-                    debounce = 75,
+                    auto_trigger = true,
+                    debounce = 150,
                     keymap = {
                         accept = '<M-Y>',
                         next = '<M-]>',
@@ -193,7 +196,21 @@ M.load.copilot = function()
 
             keymap('n', '<Leader>tg', '', {
                 noremap = true,
-                callback = require('copilot.suggestion').toggle_auto_trigger,
+                callback = function()
+                    if not copilot_is_setup then
+                        require('copilot').setup(copilot_config)
+                        copilot_is_setup = true
+                        copilot_enabled = true
+                        vim.notify 'Copilot enable'
+                        return
+                    end
+
+                    copilot_enabled = not copilot_enabled
+                    copilot_subcmd = copilot_enabled and 'enable' or 'disable'
+
+                    vim.cmd(string.format('Copilot %s', copilot_subcmd))
+                    vim.notify(string.format('Copilot %s', copilot_subcmd))
+                end,
                 desc = 'toggle copilot',
             })
 
