@@ -1,3 +1,4 @@
+- [Setup Neovim in Termux](#setup-neovim-in-termux)
 - [Features](#features)
   - [Modern Devtools Integration](#modern-devtools-integration)
   - [Powerful Text Edit Plugins](#powerful-text-edit-plugins)
@@ -70,6 +71,17 @@
     - [Latex keymaps](#latex-keymaps)
 - [Other Notes](#other-notes)
 - [Discussion](#discussion)
+
+# Setup Neovim in Termux
+
+1. Mason does not support `lua-Language-server` on termux. Install
+   `lua-language-server` via `pkg install lua-language-server`.
+2. Mason does not support `stylua` on termux. Install `stylua` via  `pkg
+   install stylua`.
+2. Due to an exsiting issue of golang, you cannot use the official build of
+   `efm-langserver`. You must manually compile the `efm-langserver` from
+   source. You do not need to compile this program on termux. Instead you can
+   cross compile the binary in any platform by `GOOS=android go build`.
 
 # Features
 
