@@ -160,8 +160,9 @@ local function pick_colorscheme(bg, id)
     end
 end
 
-local day_to_night = 23
-local night_to_day = 7
+-- we want to always use light theme on android termux.
+local day_to_night = 25
+local night_to_day = -1
 
 function M.pick_randomly()
     math.randomseed(os.time()) -- random initialize
@@ -257,7 +258,7 @@ autocmd('ColorScheme', {
     desc = 'set cursor highlight to reverse',
 })
 
-M.switch_colorscheme_with_day_night()
+M.pick_randomly()
 
 -- the color scheme at start up is loaded, next will
 -- change the state to indicate when loading a new theme
