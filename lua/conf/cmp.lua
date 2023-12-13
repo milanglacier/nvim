@@ -15,7 +15,6 @@ local function load_cmp_and_luasnip()
         ['<C-b>'] = cmp.mapping.scroll_docs(-4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
         ['<A-Space>'] = cmp.mapping.complete(),
-        ['<CR>'] = cmp.mapping.confirm { select = true },
         ['<C-n>'] = cmp.mapping.select_next_item { behavior = types.cmp.SelectBehavior.Insert },
         ['<C-p>'] = cmp.mapping.select_prev_item { behavior = types.cmp.SelectBehavior.Insert },
         ['<Tab>'] = cmp.mapping(function(fallback)
