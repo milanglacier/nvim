@@ -56,6 +56,7 @@ local function load_cmp_and_luasnip()
             documentation = cmp.config.window.bordered(border_opts),
         },
         sources = cmp.config.sources({
+            { name = 'codeium' },
             { name = 'nvim_lsp' },
             { name = 'luasnip' },
             {
@@ -85,6 +86,7 @@ local function load_cmp_and_luasnip()
                     cmdline = '󰘳',
                     latex_symbols = '',
                     cmp_nvim_r = '󰟔',
+                    codeium = '󰩂',
                 },
             },
         },
@@ -154,6 +156,7 @@ local function load_cmp_and_luasnip()
 
     cmp.setup.filetype('quarto', {
         sources = cmp.config.sources({
+            { name = 'codeium' },
             { name = 'otter' },
             { name = 'nvim_lsp' },
             { name = 'luasnip' },
@@ -166,6 +169,7 @@ local function load_cmp_and_luasnip()
 
     cmp.setup.filetype({ 'r', 'rmd' }, {
         sources = cmp.config.sources({
+            { name = 'codeium' },
             { name = 'nvim_lsp' },
             { name = 'luasnip' },
             { name = 'tags' },

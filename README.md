@@ -580,17 +580,13 @@ The following keymaps rely on [nvim-spectre](https://github.com/nvim-pack/nvim-s
 | ---- | ------------ | ------------------------------------------------------------------------------------------------------ |
 | nv   | `<Leader>fR` | Open ripgrep search panel (to show searched results of selected text if on visual mode) in the project |
 
-### Copilot keymaps
+### Codeium keymaps
 
-The following keymaps rely on [copilot.lua](https://github.com/zbirenbaum/copilot.lua)
+The following keymaps rely on [codeium](https://github.com/Exafunction/codeium.nvim)
 
 | Mode | LHS          | RHS/Functionality                     |
 | ---- | ------------ | ------------------------------------- |
-| n    | `<Leader>tg` | Toggle auto-suggestion for copilot    |
-| i    | `<M-Y>`      | Accept the whole suggestion           |
-| i    | `<M-y>`      | Accept suggestion of current line     |
-| i    | `<M-[>`      | Show previous suggestion from copilot |
-| i    | `<M-]>`      | Show next suggestion from copilot     |
+| n    | `<Leader>tg` | Toggle auto-suggestion for codeium    |
 
 ## REPL keymaps
 

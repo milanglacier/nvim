@@ -134,7 +134,7 @@ local lazy_plugins = {
     { 'nvim-orgmode/orgmode' },
     { 'lervag/vimtex' },
     { 'jmbuhr/otter.nvim' },
-    { 'zbirenbaum/copilot.lua' },
+    { 'Exafunction/codeium.nvim' },
 
     -- Debugger
     { 'mfussenegger/nvim-dap' },

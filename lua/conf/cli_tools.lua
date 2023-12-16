@@ -168,57 +168,13 @@ M.load.gutentags = function()
     lazy.load { plugins = { 'vim-gutentags' } }
 end
 
-M.load.copilot = function()
+function M.load.codeium()
     autocmd('InsertEnter', {
         group = my_augroup,
         once = true,
-        desc = 'load copilot',
+        desc = 'load codeium',
         callback = function()
-            local copilot_enabled = false
-            local copilot_is_setup = false
-
-            local copilot_config = {
-                panel = {
-                    enabled = false,
-                },
-                suggestion = {
-                    enabled = true,
-                    auto_trigger = true,
-                    debounce = 150,
-                    keymap = {
-                        accept = '<M-Y>',
-                        next = '<M-]>',
-                        prev = '<M-[>',
-                        dismiss = '<M-q>',
-                    },
-                },
-            }
-
-            keymap('n', '<Leader>tg', '', {
-                noremap = true,
-                callback = function()
-                    if not copilot_is_setup then
-                        require('copilot').setup(copilot_config)
-                        copilot_is_setup = true
-                        copilot_enabled = true
-                        vim.notify 'Copilot enable'
-                        return
-                    end
-
-                    copilot_enabled = not copilot_enabled
-                    copilot_subcmd = copilot_enabled and 'enable' or 'disable'
-
-                    vim.cmd(string.format('Copilot %s', copilot_subcmd))
-                    vim.notify(string.format('Copilot %s', copilot_subcmd))
-                end,
-                desc = 'toggle copilot',
-            })
-
-            keymap('i', '<M-y>', '', {
-                noremap = true,
-                callback = require('copilot.suggestion').accept_line,
-                desc = '[copilot] accept line',
-            })
+            require('codeium').setup {}
         end,
     })
 end
@@ -425,9 +381,9 @@ M.load.neogit()
 M.load.spectre()
 M.load.toggleterm()
 M.load.gutentags()
-M.load.copilot()
 M.load.jupytext()
 M.load.mason()
 M.load.REPL()
+M.load.codeium()
 
 return M
