@@ -43,7 +43,7 @@
     - [Terminal emulator keymaps](#terminal-emulator-keymaps)
     - [Git keymaps](#git-keymaps)
     - [Ripgrep keymaps](#ripgrep-keymaps)
-    - [Copilot keymaps](#copilot-keymaps)
+    - [Codeium keymaps](#codeium-keymaps)
   - [REPL keymaps](#repl-keymaps)
   - [Treesitter keymaps](#treesitter-keymaps)
     - [Syntax based text objects keymaps](#syntax-based-text-objects-keymaps)
@@ -584,9 +584,9 @@ The following keymaps rely on [nvim-spectre](https://github.com/nvim-pack/nvim-s
 
 The following keymaps rely on [codeium](https://github.com/Exafunction/codeium.nvim)
 
-| Mode | LHS          | RHS/Functionality                     |
-| ---- | ------------ | ------------------------------------- |
-| n    | `<Leader>tg` | Toggle auto-suggestion for codeium    |
+| Mode | LHS          | RHS/Functionality                  |
+| ---- | ------------ | ---------------------------------- |
+| n    | `<Leader>tg` | Toggle auto-suggestion for codeium |
 
 ## REPL keymaps
 
@@ -772,6 +772,7 @@ The following keymaps rely on [nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
 | `i`  | `<C-p>`   | Select previous candidate                                              |
 | `i`  | `<A-i>`   | Manually invoke the completion                                         |
 | `i`  | `<Tab>`   | Select the candidate / expand the snippet / go to next slot in snippet |
+| `i`  | `<CR>`    | Select the candidate                                                   |
 | `i`  | `<S-Tab>` | Select previous candidate / go to previous slot in snippet             |
 | `i`  | `<ESC>`   | Abort the completion                                                   |
 
