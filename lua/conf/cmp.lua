@@ -115,7 +115,7 @@ local function load_cmp_and_luasnip()
                     end
                 end,
             },
-            ['<A-Space>'] = { c = cmp.mapping.complete() },
+            ['<A-i>'] = { c = cmp.mapping.complete() },
         },
         sources = {
             { name = 'buffer' },
@@ -134,7 +134,7 @@ local function load_cmp_and_luasnip()
                     end
                 end,
             },
-            ['<A-Space>'] = { c = cmp.mapping.complete() },
+            ['<A-i>'] = { c = cmp.mapping.complete() },
         },
         sources = cmp.config.sources({
             { name = 'path' },
