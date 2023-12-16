@@ -768,17 +768,16 @@ The following keymaps rely on [aerial.nvim](https://github.com/stevearc/aerial.n
 
 The following keymaps rely on [nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
 
-| Mode | LHS         | RHS/Functionality                                                      |
-| ---- | ----------- | ---------------------------------------------------------------------- |
-| `i`  | `<C-b>`     | Scoll up the documentation                                             |
-| `i`  | `<C-f>`     | Scoll down the documentation                                           |
-| `i`  | `<C-n>`     | Select next candidate                                                  |
-| `i`  | `<C-p>`     | Select previous candidate                                              |
-| `i`  | `<A-Space>` | Manually invoke the completion                                         |
-| `i`  | `<CR>`      | Select the candidate and complete the completion                       |
-| `i`  | `<Tab>`     | Select the candidate / expand the snippet / go to next slot in snippet |
-| `i`  | `<S-Tab>`   | Select previous candidate / go to previous slot in snippet             |
-| `i`  | `<ESC>`     | Abort the completion                                                   |
+| Mode | LHS       | RHS/Functionality                                                      |
+| ---- | --------- | ---------------------------------------------------------------------- |
+| `i`  | `<C-b>`   | Scoll up the documentation                                             |
+| `i`  | `<C-f>`   | Scoll down the documentation                                           |
+| `i`  | `<C-n>`   | Select next candidate                                                  |
+| `i`  | `<C-p>`   | Select previous candidate                                              |
+| `i`  | `<A-i>`   | Manually invoke the completion                                         |
+| `i`  | `<Tab>`   | Select the candidate / expand the snippet / go to next slot in snippet |
+| `i`  | `<S-Tab>` | Select previous candidate / go to previous slot in snippet             |
+| `i`  | `<ESC>`   | Abort the completion                                                   |
 
 ## Debugger Adapter Protocol keymaps
 
