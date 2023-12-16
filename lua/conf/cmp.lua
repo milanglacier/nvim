@@ -2,6 +2,55 @@ local did_load_cmp = false
 local autocmd = vim.api.nvim_create_autocmd
 local my_augroup = require('conf.builtin_extend').my_augroup
 
+local M = {}
+
+M.sources = {
+    global = {
+        {
+            { name = 'codeium' },
+            { name = 'nvim_lsp' },
+            { name = 'luasnip' },
+            {
+                name = 'tags',
+                option = {
+                    exact_match = true,
+                    current_buffer_only = true,
+                },
+            },
+        },
+        {
+            { name = 'buffer' },
+            { name = 'path' },
+        },
+    },
+    quarto = {
+        {
+            { name = 'codeium' },
+            { name = 'otter' },
+            { name = 'nvim_lsp' },
+            { name = 'luasnip' },
+            { name = 'tags' },
+        },
+        {
+            { name = 'buffer' },
+            { name = 'path' },
+        },
+    },
+    r_rmd = {
+        {
+            { name = 'codeium' },
+            { name = 'nvim_lsp' },
+            { name = 'luasnip' },
+            { name = 'tags' },
+        },
+        {
+            -- { name = 'cmp_nvim_r' },
+            { name = 'buffer' },
+            { name = 'path' },
+        },
+    },
+}
+
 local function load_cmp_and_luasnip()
     require('luasnip.loaders.from_vscode').lazy_load()
     require('luasnip.loaders.from_vscode').lazy_load { paths = { vim.fn.stdpath 'config' .. '/snippets' } }
@@ -55,21 +104,7 @@ local function load_cmp_and_luasnip()
             completion = cmp.config.window.bordered(border_opts),
             documentation = cmp.config.window.bordered(border_opts),
         },
-        sources = cmp.config.sources({
-            { name = 'codeium' },
-            { name = 'nvim_lsp' },
-            { name = 'luasnip' },
-            {
-                name = 'tags',
-                option = {
-                    exact_match = true,
-                    current_buffer_only = true,
-                },
-            },
-        }, {
-            { name = 'buffer' },
-            { name = 'path' },
-        }),
+        sources = cmp.config.sources(unpack(M.sources.global)),
         formatting = {
             format = lspkind.cmp_format {
                 mode = 'symbol_text',
@@ -87,6 +122,9 @@ local function load_cmp_and_luasnip()
                     latex_symbols = '',
                     cmp_nvim_r = '󰟔',
                     codeium = '󰩂',
+                },
+                symbol_map = {
+                    Codeium = '󰩂',
                 },
             },
         },
@@ -155,29 +193,11 @@ local function load_cmp_and_luasnip()
     })
 
     cmp.setup.filetype('quarto', {
-        sources = cmp.config.sources({
-            { name = 'codeium' },
-            { name = 'otter' },
-            { name = 'nvim_lsp' },
-            { name = 'luasnip' },
-            { name = 'tags' },
-        }, {
-            { name = 'buffer' },
-            { name = 'path' },
-        }),
+        sources = cmp.config.sources(unpack(M.sources.quarto)),
     })
 
     cmp.setup.filetype({ 'r', 'rmd' }, {
-        sources = cmp.config.sources({
-            { name = 'codeium' },
-            { name = 'nvim_lsp' },
-            { name = 'luasnip' },
-            { name = 'tags' },
-        }, {
-            -- { name = 'cmp_nvim_r' },
-            { name = 'buffer' },
-            { name = 'path' },
-        }),
+        sources = cmp.config.sources(unpack(M.sources.r_rmd)),
     })
 end
 
@@ -192,3 +212,5 @@ autocmd({ 'InsertEnter', 'CmdlineEnter' }, {
         end
     end,
 })
+
+return M

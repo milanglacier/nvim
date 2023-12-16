@@ -169,6 +169,8 @@ M.load.gutentags = function()
 end
 
 function M.load.codeium()
+    local codeium_is_enabled = true
+
     autocmd('InsertEnter', {
         group = my_augroup,
         once = true,
@@ -176,6 +178,52 @@ function M.load.codeium()
         callback = function()
             require('codeium').setup {}
         end,
+    })
+    -- toggle codeium
+    keymap('n', '<Leader>tg', '', {
+        callback = function()
+            local cmp = require 'cmp'
+            local sources = vim.deepcopy(require('conf.cmp').sources)
+
+            if codeium_is_enabled then
+                for _, source in pairs(sources) do
+                    table.remove(source[1], 1)
+                end
+
+                require('cmp').setup {
+                    sources = cmp.setup {
+                        sources = cmp.config.sources(unpack(sources.global)),
+                    },
+                }
+                cmp.setup.filetype('quarto', {
+                    sources = cmp.config.sources(unpack(sources.quarto)),
+                })
+
+                cmp.setup.filetype({ 'r', 'rmd' }, {
+                    sources = cmp.config.sources(unpack(sources.r_rmd)),
+                })
+
+                codeium_is_enabled = false
+                vim.notify 'codeium is disabled'
+            else
+                require('cmp').setup {
+                    sources = cmp.setup {
+                        sources = cmp.config.sources(unpack(sources.global)),
+                    },
+                }
+                cmp.setup.filetype('quarto', {
+                    sources = cmp.config.sources(unpack(sources.quarto)),
+                })
+
+                cmp.setup.filetype({ 'r', 'rmd' }, {
+                    sources = cmp.config.sources(unpack(sources.r_rmd)),
+                })
+
+                codeium_is_enabled = true
+                vim.notify 'codeium is enabled'
+            end
+        end,
+        desc = 'toggle codeium',
     })
 end
 
