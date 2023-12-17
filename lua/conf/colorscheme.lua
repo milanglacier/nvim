@@ -233,7 +233,12 @@ local function select_colorscheme_based_on_bg(bg)
             return theme_options_at_time[item][1]
         end,
     }, function(theme_id)
-        pick_colorscheme(bg, theme_id)
+        -- when no value is selected, it will be nil. This is a breaking change
+        -- behavior as previously `vim.ui.select` will be silently aborted
+        -- rather than passing `nil` as an argument
+        if theme_id then
+            pick_colorscheme(bg, theme_id)
+        end
     end)
 end
 
@@ -248,7 +253,9 @@ function M.pick_quickly()
             end
         end,
     }, function(bg)
-        select_colorscheme_based_on_bg(bg)
+        if bg then
+            select_colorscheme_based_on_bg(bg)
+        end
     end)
 end
 
