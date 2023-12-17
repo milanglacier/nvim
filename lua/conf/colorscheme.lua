@@ -170,16 +170,23 @@ function M.pick_randomly()
     _ = math.random() -- warming up
 
     local time = os.date '*t'
-    local bg = 1
-    local scheme_id = 0
+    local bg
+    local scheme_id
+    local current_background
 
-    if (time.hour <= night_to_day) or (time.hour >= day_to_night) then
-        bg = 1
-        scheme_id = math.random(1, #scheme_options.night)
+    if vim.env.CURRENT_BACKGROUND == 'night' or vim.env.CURRENT_BACKGROUND == 'day' then
+        current_background = vim.env.CURRENT_BACKGROUND
     else
-        bg = 2
-        scheme_id = math.random(1, #scheme_options.day)
+        if (time.hour <= night_to_day) or (time.hour >= day_to_night) then
+            current_background = 'night'
+        else
+            current_background = 'day'
+        end
     end
+
+    scheme_id = math.random(1, #scheme_options[current_background])
+
+    bg = current_background == 'night' and 1 or 2
 
     pick_colorscheme(bg, scheme_id)
 end
