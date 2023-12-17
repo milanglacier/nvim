@@ -504,61 +504,6 @@ autocmd('FileType', {
     end,
 })
 
-M.load.nvimr = function()
-    vim.g.R_assign = 0
-    vim.g.R_app = 'radian'
-    vim.g.R_cmd = 'R'
-    vim.g.R_args = {}
-    vim.g.R_user_maps_only = 1
-    vim.g.R_hl_term = 0
-    vim.g.R_esc_term = 0
-    vim.g.R_buffer_opts = 'buflisted' -- nvimr prevents repl window to be automatically resized, reenable it
-    vim.g.R_objbr_place = 'console,right' -- show object browser at the right of the console
-    vim.g.R_nvim_wd = 1
-    vim.g.R_rmdchunk = 0
-    vim.g.R_filetypes = { 'r', 'rmd', 'rrst', 'rnoweb', 'rhelp' }
-    -- don't use quarto with nvimr
-
-    lazy.load { plugins = { 'Nvim-R' } }
-
-    autocmd('FileType', {
-        pattern = { 'r', 'rmd' },
-        group = my_augroup,
-        desc = 'set nvim-r keymap',
-        callback = function()
-            bufmap(0, 'n', '<Localleader>rs', '<Plug>RStart', opts_desc { 'R Start' })
-            bufmap(0, 'n', '<Localleader>rq', '<Plug>RStop', opts_desc { 'R Stop' })
-            bufmap(0, 'n', '<Localleader>rc', '<Plug>RClearConsole', opts_desc { 'R Clear' })
-            bufmap(0, 'n', '<Localleader>rr', '<nop>', {})
-            bufmap(0, 'n', '<Localleader>rh', '<nop>', {})
-            bufmap(0, 'n', '<Localleader>rf', '<nop>', {})
-            bufmap(0, 'n', '<Localleader>rw', '<nop>', {})
-            bufmap(0, 'n', '<Localleader>ra', '<nop>', {})
-
-            bufmap(0, 'n', '<Localleader>ss', '<Plug>RSendLine', opts_desc { 'R Send Current Line' })
-            bufmap(0, 'n', '<Localleader>sm', '<Plug>RSendMBlock', opts_desc { 'R Send Between Two Marks' })
-            bufmap(0, 'n', '<Localleader>sf', '<Plug>RSendFile', opts_desc { 'R Send Files' })
-            bufmap(0, 'n', '<Localleader>s', '<Plug>RSendMotion', opts_desc { 'R Send Motion' })
-            bufmap(0, 'n', '<Localleader>s<CR>', '<nop>', {})
-            bufmap(0, 'v', '<Localleader>s', '<Plug>RSendSelection', opts_desc { 'R Send Selected Lines' })
-
-            bufmap(0, 'n', '<Localleader>oh', '<Plug>RHelp', opts_desc { 'R object Help' })
-            bufmap(0, 'n', '<Localleader>op', '<Plug>RObjectPr', opts_desc { 'R object Print' })
-            bufmap(0, 'n', '<Localleader>os', '<Plug>RObjectStr', opts_desc { 'R object str' })
-            bufmap(0, 'n', '<Localleader>oS', '<Plug>RSummary', opts_desc { 'R object summary' })
-            bufmap(0, 'n', '<Localleader>on', '<Plug>RObjectNames', opts_desc { 'R object names' })
-            bufmap(0, 'n', '<Localleader>oo', '<Plug>RUpdateObjBrowser', opts_desc { 'R object viewer open' })
-            bufmap(0, 'n', '<Localleader>or', '<Plug>ROpenLists', opts_desc { 'R object open all lists' })
-            bufmap(0, 'n', '<Localleader>om', '<Plug>RCloseLists', opts_desc { 'R object close all lists' })
-
-            bufmap(0, 'n', '<Localleader>dt', '<Plug>RViewDF', opts_desc { 'R dataframe new tab' })
-            bufmap(0, 'n', '<Localleader>ds', '<Plug>RViewDFs', opts_desc { 'R dataframe hsplit' })
-            bufmap(0, 'n', '<Localleader>dh', '<Plug>RViewDFa', opts_desc { 'R dataframe head' })
-            bufmap(0, 'n', '<Localleader>dv', '<Plug>RViewDFv', opts_desc { 'R dataframe vsplit' })
-        end,
-    })
-end
-
 M.load.quarto = function()
     autocmd('FileType', {
         pattern = 'quarto',
@@ -576,7 +521,6 @@ end
 
 M.load.vimtex()
 M.load.pandoc()
--- M.load.nvimr()
 M.load.quarto()
 
 return M
