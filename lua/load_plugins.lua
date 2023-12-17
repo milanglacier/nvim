@@ -129,7 +129,11 @@ local lazy_plugins = {
 
     -- Other cli tools, ripgrep, hover, markdown, etc
     { 'nvim-pack/nvim-spectre' },
-    { 'iamcco/markdown-preview.nvim', build = 'cd app && npm install' },
+    {
+        'iamcco/markdown-preview.nvim',
+        build = 'cd app && npm install',
+        ft = { 'markdown.pandoc', 'markdown', 'rmd', 'quarto' },
+    },
     { 'ludovicchabant/vim-gutentags' },
     { 'nvim-orgmode/orgmode' },
     { 'lervag/vimtex' },

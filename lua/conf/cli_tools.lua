@@ -51,7 +51,6 @@ M.load.mkdp = function()
     keymap('n', '<Leader>mmp', '<cmd>MarkdownPreview<cr>', { noremap = true, desc = 'Misc Markdown Preview' })
     keymap('n', '<Leader>mmq', '<cmd>MarkdownPreviewStop<cr>', { noremap = true, desc = 'Misc Markdown Preview Stop' })
 
-    lazy.load { plugins = { 'markdown-preview.nvim' } }
 end
 
 M.load.toggleterm = function()
