@@ -10,6 +10,8 @@ if vim.g.neovide then
 
     local neovide_is_fullscreen = false
 
+    -- you need to allow neovide for `Accesssibility` in `System Preferences` -> `Private`
+    -- to make the following command work
     local toggle_fullscreen_command_list = {
         [[osascript -e 'tell application "System Events" to tell process "Neovide"']],
         [[-e 'set value of attribute "AXFullScreen" of window 1 to %s']],
