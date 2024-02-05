@@ -41,7 +41,7 @@ vim.opt.tags:append '.tags;'  -- ; means upper search parent directory with .tag
 
 local gui_cursor = {
     'n-v-c:block',
-    'i-ci-ve:ver70',
+    'i-ci-ve:ver10',
     'r-cr:hor20',
     'o:hor50',
     'a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor',
