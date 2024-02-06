@@ -274,20 +274,6 @@ M.load.which_key = function()
 
     autocmd('FileType', {
         group = my_augroup,
-        pattern = { 'r', 'rmd' },
-        desc = 'add which key description for r, rmd, quarto',
-        callback = function()
-            which_key.register {
-                ['<Leader><Space>d'] = { name = '+data frame', buffer = 0 },
-                ['<Leader><Space>o'] = { name = '+object', buffer = 0 },
-                ['<Leader><Space>r'] = { name = '+REPL', buffer = 0 },
-                ['<Leader><Space>s'] = { name = '+send to REPL(motion)', buffer = 0, mode = { 'n', 'v' } },
-            }
-        end,
-    })
-
-    autocmd('FileType', {
-        group = my_augroup,
         pattern = 'tex',
         desc = 'add which key description for tex',
         callback = function()
@@ -301,7 +287,7 @@ M.load.which_key = function()
     })
 
     autocmd('FileType', {
-        pattern = { 'quarto', 'markdown', 'markdown.pandoc', 'rmd', 'python', 'sh', 'REPL' },
+        pattern = { 'quarto', 'markdown', 'markdown.pandoc', 'rmd', 'python', 'r', 'sh', 'REPL' },
         group = my_augroup,
         desc = 'Add which key description for REPL',
         callback = function()
