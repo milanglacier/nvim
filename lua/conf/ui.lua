@@ -233,7 +233,6 @@ M.load.which_key = function()
 
     which_key.register {
         ['<Leader>f'] = { name = '+find everything', mode = { 'n', 'v' } },
-        ['<Leader>l'] = { name = '+language server', mode = { 'n', 'v' } },
         ['<Leader>d'] = { name = '+debugger' },
         ['<Leader>b'] = { name = '+buffer' },
         ['<Leader>w'] = { name = '+window' },
@@ -245,7 +244,6 @@ M.load.which_key = function()
         ['<Leader>x'] = { name = '+quickfixlist' },
         ['<Leader>c'] = { name = '+chatgpt', mode = { 'n', 'v' } },
         ['<Leader><Tab>'] = { name = '+tab' },
-        ['<Leader><space>'] = { name = '+local leader' },
         ['<Leader>m'] = { name = '+misc', mode = { 'n', 'v' } },
         ['<Leader>mm'] = { name = '+markdown' },
         ['<Leader>md'] = { name = '+change directory' },
@@ -257,6 +255,7 @@ M.load.which_key = function()
 
     local keymap_for_repl = {}
 
+    keymap_for_repl['<Leader><Space>'] = { name = '+localleader', buffer = 0 }
     keymap_for_repl['<Leader><Space>r'] = { name = '+REPL', buffer = 0 }
     keymap_for_repl['<Leader><Space>s'] = { name = '+send to REPL(motion)', buffer = 0, mode = { 'n', 'v' } }
 
@@ -266,6 +265,7 @@ M.load.which_key = function()
         desc = 'add which key description for org',
         callback = function()
             which_key.register {
+                ['<Leader><Space>'] = { name = '+localleader', buffer = 0 },
                 ['<Leader>oi'] = { name = '+org insert', buffer = 0 },
                 ['<Leader>ox'] = { name = '+org clock', buffer = 0 },
             }
