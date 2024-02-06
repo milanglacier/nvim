@@ -33,7 +33,7 @@ require('nvim-treesitter.configs').setup {
 
     highlight = {
         enable = true,
-        disable = { 'sql' },
+        disable = { 'sql', 'vimdoc' },
         additional_vim_regex_highlighting = { 'org', 'latex', 'markdown' },
     },
 
