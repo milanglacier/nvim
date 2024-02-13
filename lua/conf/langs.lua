@@ -8,13 +8,6 @@ local bufmap = vim.api.nvim_buf_set_keymap
 
 local lazy = require 'lazy'
 
-local function opts_desc(opts)
-    return {
-        desc = opts[1],
-        callback = opts[2],
-    }
-end
-
 function M.textobj_code_chunk(
     around_or_inner,
     start_pattern,
@@ -321,6 +314,45 @@ end, {
     desc = [[This command deactivates a conda environment. Note that after the
 execution, the conda env will be completely cleared (i.e. without base
 environment activated).]],
+})
+
+command('PoetryEnvActivate', function()
+    local poetry_envs
+
+    vim.fn.jobstart('poetry env list --full-path', {
+        stdout_buffered = true,
+        on_stdout = function(_, out, _)
+            poetry_envs = vim.tbl_filter(function(x)
+                return x ~= ''
+            end, out)
+        end,
+        on_exit = function(_, success, _)
+            if success == 0 then
+                vim.ui.select(poetry_envs, {
+                    prompt = 'select a poetry env',
+                    format_item = function(x)
+                        return vim.fn.fnamemodify(x, ':t')
+                    end,
+                }, function(choice)
+                    if choice ~= nil then
+                        choice = string.gsub(choice, ' %(Activated%)$', '')
+                        james = choice
+                        vim.cmd.PyVenvActivate { args = { choice } }
+                    end
+                end)
+            else
+                vim.notify 'current project is not a poetry project or poetry is not installed!'
+            end
+        end,
+    })
+end, {
+    desc = [[This command finds the current poetry venvs by using `poetry env list` command and activate the env selected by the user.]],
+})
+
+command('PoetryEnvDeactivate', function()
+    vim.cmd.PyVenvDeactivate()
+end, {
+    desc = [[This command finds the current poetry venvs by using `poetry env list` command and activate the env selected by the user.]],
 })
 
 command('PyVenvActivate', function(options)
