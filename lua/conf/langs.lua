@@ -363,7 +363,6 @@ command('PyVenvActivate', function(options)
     vim.env.VIRTUAL_ENV = path
     path = path .. '/bin'
     -- remove the trailing `/` in the string.
-    M.pyvenv_current_env_path = path
     vim.env.PATH = path .. ':' .. vim.env.PATH
 end, {
     nargs = 1,
@@ -372,18 +371,17 @@ end, {
 })
 
 command('PyVenvDeactivate', function(_)
-    if not M.pyvenv_current_env_path then
+    if vim.env.VIRTUAL_ENV == nil or vim.env.VIRTUAL_ENV == '' then
         return
     end
     local env_split = vim.split(vim.env.PATH, ':')
     for idx, path in ipairs(env_split) do
-        if path == M.pyvenv_current_env_path then
+        if path == vim.env.VIRTUAL_ENV .. '/bin' then
             table.remove(env_split, idx)
         end
     end
     vim.env.PATH = table.concat(env_split, ':')
     vim.env.VIRTUAL_ENV = nil
-    M.pyvenv_current_env_path = nil
 end, {
     desc = 'This command deactivates a python venv.',
 })
