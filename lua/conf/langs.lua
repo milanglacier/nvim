@@ -246,19 +246,21 @@ command('CondaActivateEnv', function(options)
     local conda_info = vim.json.decode(vim.fn.system 'conda info --json')
     M.conda_info = conda_info
 
-    if options.args ~= '' then
-        M.conda_current_env_path = options.args
+    local conda_current_env_path
+
+    if options.args ~= nil and options.args ~= '' then
+        conda_current_env_path = options.args
     else
-        M.conda_current_env_path = conda_info.root_prefix
+        conda_current_env_path = conda_info.root_prefix
     end
 
     -- if conda_current_env_path is found in $PATH, do nothing, else prepend it to $PATH
-    if not string.find(vim.env.PATH, M.conda_current_env_path .. '/bin') then
-        vim.env.PATH = M.conda_current_env_path .. '/bin:' .. vim.env.PATH
+    if not string.find(vim.env.PATH, conda_current_env_path .. '/bin') then
+        vim.env.PATH = conda_current_env_path .. '/bin:' .. vim.env.PATH
     end
 
-    vim.env.CONDA_PREFIX = M.conda_current_env_path
-    vim.env.CONDA_DEFAULT_ENV = vim.fn.fnamemodify(M.conda_current_env_path, ':t')
+    vim.env.CONDA_PREFIX = conda_current_env_path
+    vim.env.CONDA_DEFAULT_ENV = vim.fn.fnamemodify(conda_current_env_path, ':t')
     vim.env.CONDA_SHLVL = 1
     vim.env.CONDA_PROMPT_MODIFIER = '(' .. vim.env.CONDA_DEFAULT_ENV .. ') '
 
@@ -291,14 +293,11 @@ command('CondaDeactivate', function(_)
     end
 
     local conda_info = vim.json.decode(vim.fn.system 'conda info --json')
-
-    if not M.conda_current_env_path then
-        M.conda_current_env_path = conda_info.root_prefix
-    end
+    local conda_current_env_path = conda_info.default_prefix
 
     local env_split = vim.split(vim.env.PATH, ':')
     for idx, path in ipairs(env_split) do
-        if path == M.conda_current_env_path .. '/bin' then
+        if path == conda_current_env_path .. '/bin' then
             table.remove(env_split, idx)
         end
     end
@@ -307,7 +306,6 @@ command('CondaDeactivate', function(_)
     vim.env.CONDA_DEFAULT_ENV = nil
     vim.env.CONDA_SHLVL = 0
     vim.env.CONDA_PROMPT_MODIFIER = nil
-    M.conda_current_env_path = nil
 
     vim.notify 'conda env deactivated'
 end, {
