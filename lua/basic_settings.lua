@@ -7,7 +7,7 @@ vim.o.backup = false
 
 vim.g.skip_defaults_vim = 1
 
-vim.o.exrc = 1
+vim.o.exrc = true
 
 vim.o.number = true
 vim.o.autoindent = true
