@@ -144,7 +144,7 @@ local lazy_plugins = {
     { 'mfussenegger/nvim-dap' },
     { 'mfussenegger/nvim-dap-python' },
     { 'leoluz/nvim-dap-go' },
-    { 'rcarriga/nvim-dap-ui' },
+    { 'rcarriga/nvim-dap-ui', dependencies = { 'nvim-neotest/nvim-nio' } },
     { 'nvim-telescope/telescope-dap.nvim' },
     { 'theHamsta/nvim-dap-virtual-text' },
 }
