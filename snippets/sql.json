@@ -25,6 +25,14 @@
             "-- MAGIC $0"
         ],
         "description": "create databricks magic chunk"
+    },
+    "toggle sql formatter": {
+        "prefix": "fmt",
+        "body": [
+            "/* sql-formatter-disable */",
+            "$0",
+            "/* sql-formatter-enable */"
+        ],
+        "description": "toggle sql formatter"
     }
-
 }
