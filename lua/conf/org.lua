@@ -1,7 +1,5 @@
 local M = {}
 
-require('orgmode').setup_ts_grammar()
-
 local org_dir = '~/Desktop/orgmode'
 
 local bubble_tea_template = function(opts)
@@ -28,7 +26,8 @@ require('orgmode').setup {
     win_split_mode = 'tabnew',
     org_hide_leading_stars = true,
     org_hide_emphasis_markers = true,
-    org_startup_indented = false,
+    org_startup_indented = true,
+    org_adapt_indentation = false,
     org_tags_column = 0,
     org_startup_folded = 'inherit', -- use global foldlevel
 

@@ -18,7 +18,6 @@ require('nvim-treesitter.configs').setup {
         'javascript',
         'regex',
         'latex',
-        'org',
         'markdown',
         'go',
         'sql',
@@ -34,12 +33,12 @@ require('nvim-treesitter.configs').setup {
     highlight = {
         enable = true,
         disable = { 'sql', 'vimdoc' },
-        additional_vim_regex_highlighting = { 'org', 'latex', 'markdown' },
+        additional_vim_regex_highlighting = { 'latex', 'markdown' },
     },
 
     indent = {
         enable = true,
-        disable = { 'python', 'org', 'tex', 'sql' },
+        disable = { 'python', 'tex', 'sql' },
     },
 
     incremental_selection = {
