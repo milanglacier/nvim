@@ -13,12 +13,14 @@ local autocmd = vim.api.nvim_create_autocmd
 local bufcmd = vim.api.nvim_buf_create_user_command
 local command = vim.api.nvim_create_user_command
 
-local attach_keymaps = function()
-    bufmap(0, 'n', '<Leader>lt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts { 'lsp type definition' })
+local attach_keymaps = function(args)
+    bufnr = args.buf
+
+    bufmap(bufnr, 'n', '<Leader>lt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts { 'lsp type definition' })
 
     -- reference
     bufmap(
-        0,
+        bufnr,
         'n',
         'gr',
         '',
@@ -33,14 +35,14 @@ local attach_keymaps = function()
         }
     )
 
-    bufmap(0, 'n', '<Leader>lF', '<cmd>Lspsaga lsp_finder<CR>', opts { 'lspsaga finder' })
+    bufmap(bufnr, 'n', '<Leader>lF', '<cmd>Lspsaga lsp_finder<CR>', opts { 'lspsaga finder' })
 
     -- code action
     -- bufmap(bufnr, 'n', '<Leader>ca', "<cmd>lua require('lspsaga.codeaction').code_action()<CR>", opts {})
     -- bufmap(bufnr, 'v', '<Leader>ca', ":lua require('lspsaga.codeaction').range_code_action()<CR>", opts {})
-    bufmap(0, 'n', '<Leader>la', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts { 'lsp code action' })
+    bufmap(bufnr, 'n', '<Leader>la', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts { 'lsp code action' })
     bufmap(
-        0,
+        bufnr,
         'x',
         '<Leader>la',
         ':<C-U>lua vim.lsp.buf.code_action()<CR>',
@@ -50,19 +52,19 @@ local attach_keymaps = function()
     )
 
     -- hover
-    bufmap(0, 'n', 'gh', '', opts { 'lsp hover', vim.lsp.buf.hover })
+    bufmap(bufnr, 'n', 'gh', '', opts { 'lsp hover', vim.lsp.buf.hover })
 
-    bufmap(0, 'n', 'K', '', opts { 'lsp hover', vim.lsp.buf.hover })
+    bufmap(bufnr, 'n', 'K', '', opts { 'lsp hover', vim.lsp.buf.hover })
 
     -- signaturehelp
-    bufmap(0, 'n', '<Leader>ls', '', opts { 'signature help', vim.lsp.buf.signature_help })
+    bufmap(bufnr, 'n', '<Leader>ls', '', opts { 'signature help', vim.lsp.buf.signature_help })
 
     -- rename
-    bufmap(0, 'n', '<Leader>ln', '<cmd>Lspsaga rename<CR>', opts { 'lspsaga rename' })
+    bufmap(bufnr, 'n', '<Leader>ln', '<cmd>Lspsaga rename<CR>', opts { 'lspsaga rename' })
 
     -- go to definition, implementation
     bufmap(
-        0,
+        bufnr,
         'n',
         'gd',
         '',
@@ -78,7 +80,7 @@ local attach_keymaps = function()
     )
 
     bufmap(
-        0,
+        bufnr,
         'n',
         '<Leader>li',
         '',
@@ -94,7 +96,7 @@ local attach_keymaps = function()
     )
 
     bufmap(
-        0,
+        bufnr,
         'n',
         '<Leader>lci',
         '',
@@ -104,7 +106,7 @@ local attach_keymaps = function()
         }
     )
     bufmap(
-        0,
+        bufnr,
         'n',
         '<Leader>lco',
         '',
@@ -114,11 +116,17 @@ local attach_keymaps = function()
         }
     )
 
-    bufmap(0, 'n', '<Leader>lp', '<cmd>Lspsaga peek_definition<CR>', opts { 'lspsaga preview definition' })
-    bufmap(0, 'n', '<Leader>lT', '<cmd>Lspsaga peek_type_definition<CR>', opts { 'lspsaga preview type definition' })
+    bufmap(bufnr, 'n', '<Leader>lp', '<cmd>Lspsaga peek_definition<CR>', opts { 'lspsaga preview definition' })
+    bufmap(
+        bufnr,
+        'n',
+        '<Leader>lT',
+        '<cmd>Lspsaga peek_type_definition<CR>',
+        opts { 'lspsaga preview type definition' }
+    )
 
     -- workspace
-    bufcmd(0, 'LspWorkspace', function(options)
+    bufcmd(bufnr, 'LspWorkspace', function(options)
         if options.args == 'add' then
             vim.lsp.buf.add_workspace_folder()
         elseif options.args == 'remove' then
@@ -134,24 +142,30 @@ local attach_keymaps = function()
     })
 
     -- format
-    bufmap(0, 'n', '<Leader>lf', '<cmd>lua vim.lsp.buf.format { async = true }<CR>', opts { 'lsp format' })
-    bufmap(0, 'v', '<Leader>lf', '<cmd>lua vim.lsp.buf.format { async = true }<CR>', opts { 'lsp range format' })
+    bufmap(bufnr, 'n', '<Leader>lf', '<cmd>lua vim.lsp.buf.format { async = true }<CR>', opts { 'lsp format' })
+    bufmap(bufnr, 'v', '<Leader>lf', '<cmd>lua vim.lsp.buf.format { async = true }<CR>', opts { 'lsp range format' })
 
     -- diagnostic
-    bufmap(0, 'n', '<Leader>ld', '<cmd>Telescope diagnostics bufnr=0<CR>', opts { 'lsp file diagnostics by telescope' })
     bufmap(
-        0,
+        bufnr,
+        'n',
+        '<Leader>ld',
+        '<cmd>Telescope diagnostics bufnr=0<CR>',
+        opts { 'lsp file diagnostics by telescope' }
+    )
+    bufmap(
+        bufnr,
         'n',
         '<Leader>lw',
         '<cmd>Telescope diagnostics root_dir=true<CR>',
         opts { 'lsp workspace diagnostics by telescope' }
     )
-    bufmap(0, 'n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts { 'lspsaga prev diagnostic' })
-    bufmap(0, 'n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts { 'lspsaga next diagnostic' })
+    bufmap(bufnr, 'n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts { 'lspsaga prev diagnostic' })
+    bufmap(bufnr, 'n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts { 'lspsaga next diagnostic' })
     -- diagnostic show in line or in cursor
-    bufmap(0, 'n', '<Leader>ll', '<cmd>Lspsaga show_line_diagnostics<CR>', opts { 'lspsaga line diagnostic' })
+    bufmap(bufnr, 'n', '<Leader>ll', '<cmd>Lspsaga show_line_diagnostics<CR>', opts { 'lspsaga line diagnostic' })
 
-    bufmap(0, 'n', '<leader>lo', '<cmd>AerialToggle!<CR>', opts { 'lsp symbol outline' })
+    bufmap(bufnr, 'n', '<leader>lo', '<cmd>AerialToggle!<CR>', opts { 'lsp symbol outline' })
 end
 
 autocmd('LspAttach', {
