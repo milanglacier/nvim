@@ -49,7 +49,7 @@ M.load.lualine = function()
     diagnostics_sources.get_diagnostics_in_current_root_dir = function()
         local buffers = vim.api.nvim_list_bufs()
         local severity = vim.diagnostic.severity
-        local cwd = vim.loop.cwd()
+        local cwd = vim.uv.cwd()
 
         local function dir_is_parent_of_buf(buf, dir)
             local filename = vim.api.nvim_buf_get_name(buf)
