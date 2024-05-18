@@ -103,6 +103,7 @@ local lazy_plugins = {
             { 'petertriho/cmp-git' },
             -- { 'jalvesaq/cmp-nvim-r' },
         },
+        event = { 'InsertEnter', 'CmdLineEnter' },
     },
 
     -- language development
