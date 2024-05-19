@@ -60,7 +60,7 @@ local attach_keymaps = function(args)
     bufmap(bufnr, 'n', '<Leader>ls', '', opts { 'signature help', vim.lsp.buf.signature_help })
 
     -- rename
-    bufmap(bufnr, 'n', '<Leader>ln', '<cmd>Lspsaga rename<CR>', opts { 'lspsaga rename' })
+    bufmap(bufnr, 'n', '<Leader>ln', '<cmd>lua vim.lsp.buf.rename()<CR>', opts { 'lspsaga rename' })
 
     -- go to definition, implementation
     bufmap(
@@ -211,21 +211,8 @@ local enabled_lsps = { 'r', 'python', 'bash', 'cpp', 'vim', 'nvim', 'pinyin', 's
 local lsp_configs = {}
 
 lsp_configs.python = function()
-    local function python_root_dir(fname)
-        local util = require 'lspconfig.util'
-        local root_files = {
-            'pyproject.toml',
-            'setup.py',
-            'setup.cfg',
-            'requirements.txt',
-            'Pipfile',
-        }
-        return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)
-    end
-
-    require('lspconfig').pyright.setup {
+    require('lspconfig').basedpyright.setup {
         capabilities = capabilities,
-        root_dir = python_root_dir,
     }
 end
 

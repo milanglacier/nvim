@@ -191,7 +191,7 @@ folder. To use this example configuration, simply copy the folder to
 3. `ipython`
 4. `black*`
 5. `efm-langserver*`
-6. `pyright*`
+6. `basedpyright*`
 
 ## r deps
 
