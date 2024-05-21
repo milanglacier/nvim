@@ -26,7 +26,7 @@ M.load.gitsigns = function()
 end
 
 M.load.neogit = function()
-    require('neogit').setup {}
+    require('neogit').setup { console_timeout = 4000 }
     keymap('n', '<Leader>gg', '<cmd>Neogit<CR>', { noremap = true, desc = 'Neogit' })
 end
 
@@ -50,7 +50,6 @@ M.load.mkdp = function()
 
     keymap('n', '<Leader>mmp', '<cmd>MarkdownPreview<cr>', { noremap = true, desc = 'Misc Markdown Preview' })
     keymap('n', '<Leader>mmq', '<cmd>MarkdownPreviewStop<cr>', { noremap = true, desc = 'Misc Markdown Preview Stop' })
-
 end
 
 M.load.toggleterm = function()
