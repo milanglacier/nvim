@@ -65,8 +65,12 @@ local function load_cmp_and_luasnip()
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
         ['<A-i>'] = cmp.mapping.complete(),
         ['<CR>'] = cmp.mapping.confirm { select = true },
+        -- Select the candidates in nvim-cmp window and also insert the text into the buffer
         ['<C-n>'] = cmp.mapping.select_next_item { behavior = types.cmp.SelectBehavior.Insert },
         ['<C-p>'] = cmp.mapping.select_prev_item { behavior = types.cmp.SelectBehavior.Insert },
+        -- Select the candidates in nvim-cmp window but don't insert the text into the buffer
+        ['<C-j>'] = cmp.mapping.select_next_item { behavior = types.cmp.SelectBehavior.Select },
+        ['<C-k>'] = cmp.mapping.select_prev_item { behavior = types.cmp.SelectBehavior.Select },
         ['<Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.confirm { select = true }
