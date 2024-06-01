@@ -192,37 +192,18 @@ M.load.devicons = function()
 end
 
 M.load.trouble = function()
-    require('trouble').setup {
-        mode = 'quickfix',
-        action_keys = {
-            close = 'q', -- close the list
-            cancel = { '<esc>', '<c-e>' }, -- cancel the preview and get back to your last window / buffer / cursor
-            refresh = 'r', -- manually refresh
-            jump = { '<cr>', '<tab>' }, -- jump to the diagnostic or open / close folds
-            open_split = { '<c-x>', '<c-s>' }, -- open buffer in new split
-            open_vsplit = { '<c-v>' }, -- open buffer in new vsplit
-            open_tab = { '<c-t>' }, -- open buffer in new tab
-            jump_close = { 'o' }, -- jump to the diagnostic and close the list
-            toggle_mode = 'm', -- toggle between "workspace" and "document" diagnostics mode
-            toggle_preview = 'P', -- toggle auto_preview
-            hover = { 'K', 'gh' }, -- opens a small popup with the full multiline message
-            preview = 'p', -- preview the diagnostic location
-            close_folds = { 'zM', 'zm' }, -- close all folds
-            open_folds = { 'zR', 'zr' }, -- open all folds
-            toggle_fold = { 'zA', 'za' }, -- toggle fold of current file
-            previous = 'k', -- preview item
-            next = 'j', -- next item
-        },
-    }
-
+    require('trouble').setup {}
     local keymap = vim.api.nvim_set_keymap
-    local opts = { noremap = true, silent = true }
 
-    keymap('n', '<leader>xw', '<cmd>TroubleToggle workspace_diagnostics<cr>', opts)
-    keymap('n', '<leader>xd', '<cmd>TroubleToggle document_diagnostics<cr>', opts)
-    keymap('n', '<leader>xl', '<cmd>TroubleToggle loclist<cr>', opts)
-    keymap('n', '<leader>xq', [[<cmd>lua require 'conf.ui'.reopen_qflist_by_trouble()<cr>]], opts)
-    keymap('n', '<leader>xr', '<cmd>TroubleToggle lsp_references<cr>', opts)
+    local function opts(desc)
+        return { silent = true, desc = desc, noremap = true }
+    end
+
+    keymap('n', '<leader>xw', '<cmd>Trouble diagnostics toggle<cr>', opts 'Workspace dianostics')
+    keymap('n', '<leader>xd', '<cmd>Trouble diagnostics toggle filter.buf=0<cr>', opts 'Document Diagnostics')
+    keymap('n', '<leader>xl', '<cmd>TroubleToggle loclist<cr>', opts 'Open loclist')
+    keymap('n', '<leader>xq', [[<cmd>lua require 'conf.ui'.reopen_qflist_by_trouble()<cr>]], opts 'Open quickfix')
+    keymap('n', '<leader>xr', '<cmd>Trouble lsp toggle focus=false win.position=bottom<cr>', opts 'Lsp reference')
 end
 
 M.load.which_key = function()
