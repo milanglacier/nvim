@@ -734,19 +734,12 @@ The following keymaps rely on [telescope.nvim](https://github.com/nvim-telescope
 | n    | `<Leader>li` | Show implementations of current symbol |
 | n    | `<Leader>ld` | Show diagnostics of current project    |
 
-The following keymaps rely on [lspsaga.nvim](https://github.com/glepnir/lspsaga.nvim)
-
 | Mode | LHS          | RHS/Functionality                            |
 | ---- | ------------ | -------------------------------------------- |
-| n    | `<Leader>lD` | Preview definition of current symbol         |
-| n    | `<Leader>lF` | A fancy previewer (finder) of current symbol |
 | n    | `<Leader>ln` | Rename current symbol                        |
-| n    | `<Leader>ll` | Show details of diagnostics in current line  |
 | n    | `gh`         | Hover (show documentation of) current symbol |
 | n    | `[d`         | Go to previous diagnostics location          |
 | n    | `]d`         | Go to previous diagnostics location          |
-| `i`  | `<C-b`       | Scoll up the hover window (documentation)    |
-| `i`  | `<C-f`       | Scoll down the hover window (documentation)  |
 
 The following keymaps rely on [lsp_signature.nvim](https://github.com/ray-x/lsp_signature.nvim)
 

@@ -58,45 +58,6 @@ M.load.aerial = function()
     }
 end
 
-M.load.lspsaga = function()
-    local saga = require 'lspsaga'
-    saga.setup {
-        lightbulb = {
-            sign = false,
-            virtual_text = false,
-        },
-        finder = {
-            open = { 'o', '<cr>' },
-            vsplit = 'v',
-            split = 's',
-            quit = { 'q', '<ESC>' },
-            scroll_down = '<C-f>',
-            scroll_up = '<C-b>',
-        },
-        code_action = {
-            keys = {
-                quit = '<ESC>',
-                exec = '<CR>',
-            },
-        },
-        rename = {
-            quit = '<ESC>',
-            in_select = false,
-        },
-        diagnostic = {
-            keys = {
-                exec_action = '<CR>',
-            },
-        },
-        ui = {
-            border = 'rounded',
-        },
-        symbol_in_winbar = {
-            enable = false,
-        },
-    }
-end
-
 M.load.refactor = function()
     autocmd('FileType', {
         pattern = { 'go', 'python', 'lua' },
@@ -178,7 +139,6 @@ end
 
 M.load.aerial()
 M.load.lspkind()
-M.load.lspsaga()
 M.load.refactor()
 M.load.signature()
 

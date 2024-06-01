@@ -35,11 +35,8 @@ local attach_keymaps = function(args)
         }
     )
 
-    bufmap(bufnr, 'n', '<Leader>lF', '<cmd>Lspsaga lsp_finder<CR>', opts { 'lspsaga finder' })
 
     -- code action
-    -- bufmap(bufnr, 'n', '<Leader>ca', "<cmd>lua require('lspsaga.codeaction').code_action()<CR>", opts {})
-    -- bufmap(bufnr, 'v', '<Leader>ca', ":lua require('lspsaga.codeaction').range_code_action()<CR>", opts {})
     bufmap(bufnr, 'n', '<Leader>la', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts { 'lsp code action' })
     bufmap(
         bufnr,
@@ -60,7 +57,7 @@ local attach_keymaps = function(args)
     bufmap(bufnr, 'n', '<Leader>ls', '', opts { 'signature help', vim.lsp.buf.signature_help })
 
     -- rename
-    bufmap(bufnr, 'n', '<Leader>ln', '<cmd>lua vim.lsp.buf.rename()<CR>', opts { 'lspsaga rename' })
+    bufmap(bufnr, 'n', '<Leader>ln', '<cmd>lua vim.lsp.buf.rename()<CR>', opts { 'lsp rename' })
 
     -- go to definition, implementation
     bufmap(
@@ -116,15 +113,6 @@ local attach_keymaps = function(args)
         }
     )
 
-    bufmap(bufnr, 'n', '<Leader>lp', '<cmd>Lspsaga peek_definition<CR>', opts { 'lspsaga preview definition' })
-    bufmap(
-        bufnr,
-        'n',
-        '<Leader>lT',
-        '<cmd>Lspsaga peek_type_definition<CR>',
-        opts { 'lspsaga preview type definition' }
-    )
-
     -- workspace
     bufcmd(bufnr, 'LspWorkspace', function(options)
         if options.args == 'add' then
@@ -160,10 +148,8 @@ local attach_keymaps = function(args)
         '<cmd>Telescope diagnostics root_dir=true<CR>',
         opts { 'lsp workspace diagnostics by telescope' }
     )
-    bufmap(bufnr, 'n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts { 'lspsaga prev diagnostic' })
-    bufmap(bufnr, 'n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts { 'lspsaga next diagnostic' })
-    -- diagnostic show in line or in cursor
-    bufmap(bufnr, 'n', '<Leader>ll', '<cmd>Lspsaga show_line_diagnostics<CR>', opts { 'lspsaga line diagnostic' })
+    bufmap(bufnr, 'n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts { 'prev diagnostic' })
+    bufmap(bufnr, 'n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts { 'next diagnostic' })
 
     bufmap(bufnr, 'n', '<leader>lo', '<cmd>AerialToggle!<CR>', opts { 'lsp symbol outline' })
 end

@@ -73,7 +73,6 @@ local lazy_plugins = {
     { 'neovim/nvim-lspconfig' },
 
     -- lsp related tools, including lsp symbols, symbol outline, etc.
-    { 'glepnir/lspsaga.nvim' },
     { 'stevearc/aerial.nvim' },
     { 'onsails/lspkind-nvim' },
     { 'ray-x/lsp_signature.nvim' },
