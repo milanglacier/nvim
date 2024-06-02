@@ -14,7 +14,7 @@ local bufcmd = vim.api.nvim_buf_create_user_command
 local command = vim.api.nvim_create_user_command
 
 local attach_keymaps = function(args)
-    bufnr = args.buf
+    local bufnr = args.buf
 
     bufmap(bufnr, 'n', '<Leader>lt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts { 'lsp type definition' })
 

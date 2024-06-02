@@ -334,7 +334,6 @@ command('PoetryEnvActivate', function()
                 }, function(choice)
                     if choice ~= nil then
                         choice = string.gsub(choice, ' %(Activated%)$', '')
-                        james = choice
                         vim.cmd.PyVenvActivate { args = { choice } }
                     end
                 end)
