@@ -106,7 +106,7 @@ local lazy_plugins = {
     },
 
     -- language development
-    { 'folke/neodev.nvim' },
+    { 'folke/lazydev.nvim' },
     { 'nanotee/sqls.nvim' },
 
     -- cli tools

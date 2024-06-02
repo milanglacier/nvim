@@ -35,7 +35,6 @@ local attach_keymaps = function(args)
         }
     )
 
-
     -- code action
     bufmap(bufnr, 'n', '<Leader>la', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts { 'lsp code action' })
     bufmap(
@@ -230,7 +229,15 @@ lsp_configs.cpp = function()
 end
 
 lsp_configs.nvim = function()
-    require('neodev').setup {}
+    autocmd('FileType', {
+        group = my_augroup,
+        desc = 'enable lazydev',
+        pattern = { 'lua' },
+        once = true,
+        callback = function()
+            require('lazydev').setup {}
+        end,
+    })
 
     require('lspconfig').lua_ls.setup {
         on_attach = function(client, _)
