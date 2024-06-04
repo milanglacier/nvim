@@ -177,6 +177,15 @@ autocmd('LspAttach', {
 autocmd('LspAttach', {
     group = my_augroup,
     callback = function(args)
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        client.server_capabilities.semanticTokensProvider = nil
+    end,
+    desc = 'Disable semantic highlight',
+})
+
+autocmd('LspAttach', {
+    group = my_augroup,
+    callback = function(args)
         local bufnr = args.buf
         local client = vim.lsp.get_client_by_id(args.data.client_id)
         if client.server_capabilities.documentSymbolProvider then
