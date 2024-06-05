@@ -167,12 +167,12 @@ autocmd('LspAttach', {
 -- to nil, but the LSP could re-register it later. So that you may need a
 -- "brute force way" to ask neovim will always fallback to the default tag
 -- search method immediately.
-TAGFUNC_ALWAYS_EMPTY = function()
+TAGFUNC_FALLBACK_IMMEDIATELY = function()
     return vim.NIL
 end
 
 -- if tagfunc is already registered, nvim lsp will not try to set tagfunc as vim.lsp.tagfunc.
-vim.o.tagfunc = "v:lua.TAGFUNC_ALWAYS_EMPTY"
+vim.o.tagfunc = "v:lua.TAGFUNC_FALLBACK_IMMEDIATELY"
 
 autocmd('LspAttach', {
     group = my_augroup,
