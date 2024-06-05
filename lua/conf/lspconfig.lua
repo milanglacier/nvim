@@ -159,20 +159,20 @@ autocmd('LspAttach', {
     desc = 'Attach lsp keymaps',
 })
 
-autocmd('LspAttach', {
-    group = my_augroup,
-    callback = function()
-        -- HACK: in nvim 0.9+, lspconfig will set &tagfunc to vim.lsp.tagfunc
-        -- automatically. For lsp that does not support workspace symbol, this
-        -- function may cause conflict because `cmp-nvim-tags` which uses tags
-        -- to search workspace symbol, leading to an error when
-        -- `vim.lsp.tagfunc` is called. To prevent this behavior, we disable
-        -- it. Besides, vim.lsp.tagfunc also has performance issue if you want
-        -- to use it in completion.
-        vim.bo.tagfunc = nil
-    end,
-    desc = 'Do not use lsp as tagfunc.',
-})
+-- HACK: in nvim 0.9+, lspconfig will set &tagfunc to vim.lsp.tagfunc
+-- automatically. For lsp that does not support workspace symbol, this function
+-- may cause conflict because `cmp-nvim-tags` which uses tags
+
+-- Occasionally, due to potential execution order issues: you might set tagfunc
+-- to nil, but the LSP could re-register it later. So that you may need a
+-- "brute force way" to ask neovim will always fallback to the default tag
+-- search method immediately.
+TAGFUNC_ALWAYS_EMPTY = function()
+    return vim.NIL
+end
+
+-- if tagfunc is already registered, nvim lsp will not try to set tagfunc as vim.lsp.tagfunc.
+vim.o.tagfunc = "v:lua.TAGFUNC_ALWAYS_EMPTY"
 
 autocmd('LspAttach', {
     group = my_augroup,
