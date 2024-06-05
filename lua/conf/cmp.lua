@@ -54,8 +54,11 @@ local cmp_formatting = function(entry, vim_item)
         codeium = '󰩂',
     }
 
-    vim_item.kind = string.format('%s %s', symbol_map[vim_item.kind], vim_item.kind)
-    vim_item.menu = source_map[entry.source.name]
+    local symbol_fallback = ''
+    local source_fallback = '󰜚'
+
+    vim_item.kind = string.format('%s %s', symbol_map[vim_item.kind] or symbol_fallback, vim_item.kind)
+    vim_item.menu = source_map[entry.source.name] or source_fallback
 
     return vim_item
 end
