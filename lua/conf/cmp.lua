@@ -4,6 +4,62 @@ local my_augroup = require('conf.builtin_extend').my_augroup
 
 local M = {}
 
+local cmp_formatting = function(entry, vim_item)
+    local symbol_map = {
+        Number = '󰎠',
+        Array = '',
+        Variable = '',
+        Method = 'ƒ',
+        Property = '',
+        Boolean = '⊨',
+        Namespace = '',
+        Package = '',
+        Text = '󰉿',
+        Function = '󰊕',
+        Constructor = '',
+        Field = '󰜢',
+        Class = '󰠱',
+        Interface = '',
+        Module = '',
+        Unit = '󰑭',
+        Value = '󰎠',
+        Enum = '',
+        Keyword = '󰌋',
+        Snippet = '',
+        Color = '󰏘',
+        File = '󰈙',
+        Reference = '󰈇',
+        Folder = '󰉋',
+        EnumMember = '',
+        Constant = '󰏿',
+        Struct = '󰙅',
+        Event = '',
+        Operator = '󰆕',
+        TypeParameter = '',
+        Codeium = '󰩂',
+    }
+
+    local source_map = {
+        orgmode = '',
+        otter = '󰼁',
+        nvim_lsp = '',
+        buffer = '',
+        luasnip = '',
+        path = '',
+        git = '',
+        tags = '',
+        cmdline = '󰘳',
+        latex_symbols = '',
+        cmp_nvim_r = '󰟔',
+        codeium = '󰩂',
+    }
+
+    vim_item.kind = string.format('%s %s', symbol_map[vim_item.kind], vim_item.kind)
+    vim_item.menu = source_map[entry.source.name]
+
+    return vim_item
+end
+
 M.sources = {
     global = {
         {
@@ -57,7 +113,6 @@ local function load_cmp_and_luasnip()
 
     local cmp = require 'cmp'
     local types = require 'cmp.types'
-    local lspkind = require 'lspkind'
     local luasnip = require 'luasnip'
 
     local my_mappings = {
@@ -111,27 +166,7 @@ local function load_cmp_and_luasnip()
         },
         sources = cmp.config.sources(unpack(M.sources.global)),
         formatting = {
-            format = lspkind.cmp_format {
-                mode = 'symbol_text',
-                maxwidth = 60,
-                menu = {
-                    orgmode = '',
-                    otter = '󰼁',
-                    nvim_lsp = '',
-                    buffer = '',
-                    luasnip = '',
-                    path = '',
-                    git = '',
-                    tags = '',
-                    cmdline = '󰘳',
-                    latex_symbols = '',
-                    cmp_nvim_r = '󰟔',
-                    codeium = '󰩂',
-                },
-                symbol_map = {
-                    Codeium = '󰩂',
-                },
-            },
+            format = cmp_formatting,
         },
         completion = { keyword_length = 2 },
     }

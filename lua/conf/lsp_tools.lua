@@ -4,23 +4,6 @@ local bufmap = vim.api.nvim_buf_set_keymap
 local autocmd = vim.api.nvim_create_autocmd
 local my_augroup = require('conf.builtin_extend').my_augroup
 
-M.load.lspkind = function()
-    require('lspkind').init {
-        mode = 'symbol_text',
-        symbol_map = {
-            Number = '󰎠',
-            Array = '',
-            Variable = '',
-            Method = 'ƒ',
-            Function = '',
-            Property = '',
-            Boolean = '⊨',
-            Namespace = '',
-            Package = '',
-        },
-    }
-end
-
 M.load.signature = function()
     autocmd('LspAttach', {
         group = my_augroup,
@@ -138,7 +121,6 @@ M.load.nullls = function()
 end
 
 M.load.aerial()
-M.load.lspkind()
 M.load.refactor()
 M.load.signature()
 

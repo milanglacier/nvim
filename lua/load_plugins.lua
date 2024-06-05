@@ -74,7 +74,6 @@ local lazy_plugins = {
 
     -- lsp related tools, including lsp symbols, symbol outline, etc.
     { 'stevearc/aerial.nvim' },
-    { 'onsails/lspkind-nvim' },
     { 'ray-x/lsp_signature.nvim' },
     { 'ThePrimeagen/refactoring.nvim' },
     { 'SmiteshP/nvim-navic' },
