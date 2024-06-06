@@ -205,7 +205,7 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- Copied from lspconfig/server_configurations/pylsp.lua
 
-local enabled_lsps = { 'r', 'python', 'nvim', 'efm' }
+local enabled_lsps = { 'r', 'python', 'bash', 'cpp', 'vim', 'nvim', 'pinyin', 'sql', 'latex', 'go', 'rust', 'efm' }
 
 local lsp_configs = {}
 
