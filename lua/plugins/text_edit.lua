@@ -195,19 +195,4 @@ return {
             }
         end,
     },
-    -- text editing tools only for nvim
-    {
-        'norcalli/nvim-colorizer.lua',
-        event = 'VeryLazy',
-        config = function()
-            require('colorizer').setup()
-        end,
-    },
-    {
-        'folke/todo-comments.nvim',
-        event = 'VeryLazy',
-        config = function()
-            require('todo-comments').setup {}
-        end,
-    },
 }

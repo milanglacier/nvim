@@ -11,18 +11,7 @@ return {
         build = ':TSUpdate',
         lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
         dependencies = {
-            {
-                'nvim-treesitter/nvim-treesitter-textobjects',
-            },
-            {
-                'romgrk/nvim-treesitter-context',
-                config = function()
-                    require('treesitter-context').setup {
-                        enable = true,
-                        throttle = true,
-                    }
-                end,
-            },
+            { 'nvim-treesitter/nvim-treesitter-textobjects' },
         },
         config = function()
             require('nvim-treesitter.configs').setup {
@@ -54,9 +43,7 @@ return {
                 -- ignore_install = { "javascript" },
 
                 highlight = {
-                    enable = true,
-                    disable = { 'sql', 'vimdoc' },
-                    additional_vim_regex_highlighting = { 'latex', 'markdown' },
+                    enable = false,
                 },
 
                 indent = {
@@ -168,43 +155,6 @@ return {
                     -- disable = { "c", "ruby" },  -- optional, list of language that will be disabled
                 },
             }
-
-            autocmd('FileType', {
-                pattern = {
-                    'python',
-                    'c',
-                    'cpp',
-                    'go',
-                    'html',
-                    'javascript',
-                    'json',
-                    'tex',
-                    'markdown',
-                    'markdown.pandoc',
-                    'lua',
-                    'query',
-                    'vim',
-                    'toml',
-                    'yaml',
-                },
-                group = my_augroup,
-                desc = 'Use treesitter fold',
-                command = 'setlocal foldmethod=expr',
-            })
-        end,
-    },
-
-    {
-        'HiPhish/rainbow-delimiters.nvim',
-        event = 'LazyFile',
-        config = function()
-            vim.g.rainbow_delimiters = {
-                query = {
-                    latex = 'rainbow-blocks',
-                },
-            }
-
-            require 'rainbow-delimiters'
         end,
     },
 }
