@@ -215,17 +215,27 @@ SETUP_STARTER = function()
 
     vim.api.nvim_buf_set_lines(buf_id, 0, -1, false, H.starter_content())
 
-    vim.fn.matchadd('StarterVerse', '^ \\+\\([^"]\\+\\)$')
-    vim.fn.matchadd('StarterQuote', '^ \\+\\(.\\+\\)$')
-    vim.fn.matchadd('StarterItem', '^ \\+\\(.\\+\\)$')
-    vim.fn.matchadd('StarterKey', '\\[.\\]', 20)
+    local verse_hl = vim.fn.matchadd('StarterVerse', '^ \\+\\([^"]\\+\\)$')
+    local quote_hl = vim.fn.matchadd('StarterQuote', '^ \\+\\(.\\+\\)$')
+    local item_hl = vim.fn.matchadd('StarterItem', '^ \\+\\(.\\+\\)$')
+    local key_hl = vim.fn.matchadd('StarterKey', '\\[.\\]', 20)
+
+    autocmd('BufWinLeave', {
+        group = starter_group,
+        buffer = buf_id,
+        callback = function()
+            vim.fn.matchdelete(verse_hl)
+            vim.fn.matchdelete(quote_hl)
+            vim.fn.matchdelete(item_hl)
+            vim.fn.matchdelete(key_hl)
+        end,
+        desc = 'clear all highlight',
+    })
 
     for _, item in ipairs(H.items) do
         if type(item.action) == 'string' then
-            vim.keymap.set('n', get_key(item.name), '<CMD>' .. item.action .. '<CR>', { buffer = buf_id })
             vim.keymap.set('n', get_key(item.name):lower(), '<CMD>' .. item.action .. '<CR>', { buffer = buf_id })
         else
-            vim.keymap.set('n', get_key(item.name), item.action, { buffer = buf_id })
             vim.keymap.set('n', get_key(item.name):lower(), item.action, { buffer = buf_id })
         end
     end
