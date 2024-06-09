@@ -337,9 +337,6 @@ return {
         end,
         event = 'VeryLazy',
     },
-    { 'nvim-orgmode/orgmode' },
-    { 'lervag/vimtex' },
-    { 'jmbuhr/otter.nvim' },
     {
         'Exafunction/codeium.nvim',
         init = function()
