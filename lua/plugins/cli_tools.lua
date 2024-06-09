@@ -342,14 +342,14 @@ return {
     {
         'Exafunction/codeium.nvim',
         init = function()
+            CODEIUM_IS_ENABLED = true
+
             keymap('n', '<Leader>tg', '', {
                 callback = function()
-                    local codeium_is_enabled = true
-
                     local cmp = require 'cmp'
                     local sources = vim.deepcopy(require('conf.cmp').sources)
 
-                    if codeium_is_enabled then
+                    if CODEIUM_IS_ENABLED then
                         for _, source in pairs(sources) do
                             table.remove(source[1], 1)
                         end
@@ -367,7 +367,7 @@ return {
                             sources = cmp.config.sources(unpack(sources.r_rmd)),
                         })
 
-                        codeium_is_enabled = false
+                        CODEIUM_IS_ENABLED = false
                         vim.notify 'codeium is disabled'
                     else
                         require('cmp').setup {
@@ -383,7 +383,7 @@ return {
                             sources = cmp.config.sources(unpack(sources.r_rmd)),
                         })
 
-                        codeium_is_enabled = true
+                        CODEIUM_IS_ENABLED = true
                         vim.notify 'codeium is enabled'
                     end
                 end,
