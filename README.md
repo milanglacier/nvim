@@ -614,22 +614,21 @@ Note: with no numerical argument, the REPL is default for the first REPL.
 
 ### Syntax based text objects keymaps
 
-| Mode | LHS          | RHS/Functionality                                |
-| ---- | ------------ | ------------------------------------------------ |
-| ov   | af           | Text object: around a function definition        |
-| ov   | if           | Text object: inner of a function definition      |
-| ov   | aC           | Text object: around a class definition           |
-| ov   | iC           | Text object: inner of a class definition         |
-| ov   | ak           | Text object: the same as `aC`                    |
-| ov   | ik           | Text object: the same as `iC`                    |
-| ov   | al           | Text object: around a loop                       |
-| ov   | il           | Text object: inner of a loop                     |
-| ov   | ac           | Text object: around if-else conditions           |
-| ov   | ic           | Text object: inner of if-else conditions         |
-| ov   | ae           | Text object: around a function call              |
-| ov   | `a<Leader>a` | Text object: around a parameter(argument)        |
-| ov   | `i<Leader>a` | Text object: inner of a parameter(argument)      |
-| ov   | `<Leader>T`  | Text object: around the selected treesitter node |
+| Mode | LHS          | RHS/Functionality                           |
+| ---- | ------------ | ------------------------------------------- |
+| ov   | af           | Text object: around a function definition   |
+| ov   | if           | Text object: inner of a function definition |
+| ov   | aC           | Text object: around a class definition      |
+| ov   | iC           | Text object: inner of a class definition    |
+| ov   | ak           | Text object: the same as `aC`               |
+| ov   | ik           | Text object: the same as `iC`               |
+| ov   | al           | Text object: around a loop                  |
+| ov   | il           | Text object: inner of a loop                |
+| ov   | ac           | Text object: around if-else conditions      |
+| ov   | ic           | Text object: inner of if-else conditions    |
+| ov   | ae           | Text object: around a function call         |
+| ov   | `a<Leader>a` | Text object: around a parameter(argument)   |
+| ov   | `i<Leader>a` | Text object: inner of a parameter(argument) |
 
 ### Syntaxa based navigations keymaps
 
@@ -675,14 +674,12 @@ Note: with no numerical argument, the REPL is default for the first REPL.
 
 ### Miscellenous
 
-| Mode | LHS          | RHS/Functionality                                                     |
-| ---- | ------------ | --------------------------------------------------------------------- |
-| n    | `<Leader>ms` | Swap two selected treesitter nodes                                    |
-| n    | `<Leader>mS` | Swap current node with selected treesitter node                       |
-| n    | `<CR><CR>`   | Start incremental selection (expand region) based on treesitter nodes |
-| v    | `<CR>`       | Expand the region based on scope                                      |
-| v    | `<Tab>`      | Expand the region based on treesitter node                            |
-| v    | `<S-Tab>`    | Shrink the region based on treesitter node                            |
+| Mode | LHS        | RHS/Functionality                                                     |
+| ---- | ---------- | --------------------------------------------------------------------- |
+| n    | `<CR><CR>` | Start incremental selection (expand region) based on treesitter nodes |
+| v    | `<CR>`     | Expand the region based on scope                                      |
+| v    | `<Tab>`    | Expand the region based on treesitter node                            |
+| v    | `<S-Tab>`  | Shrink the region based on treesitter node                            |
 
 ## Searcher keymaps
 
