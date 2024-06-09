@@ -48,7 +48,8 @@ return {
     },
     {
         'goerz/jupytext.vim',
-        event = 'VeryLazy',
+        event = { 'VeryLazy', 'LazyFile' },
+        lazy = vim.fn.argc(-1) == 0, -- load jupytext early when opening a file from the cmdline
         init = function()
             vim.g.jupytext_enabled = 1
             -- the jupytext_fmt is not flexible enough to support fetch the format
