@@ -86,6 +86,10 @@ M.get_workspace_diff = function()
 end
 
 M.winbar_symbol = function()
+    if not vim.lsp.buf_is_attached(0) then
+        return ''
+    end
+
     local navic = require 'nvim-navic'
 
     if navic.is_available() then
