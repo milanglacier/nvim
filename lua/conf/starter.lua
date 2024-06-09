@@ -3,9 +3,9 @@ local set_hl = vim.api.nvim_set_hl
 local api = vim.api
 local starter_group = api.nvim_create_augroup('Starter', {})
 
-set_hl(0, 'StarterVerse', { link = 'Title', italic = true })
-set_hl(0, 'StarterQuote', { link = 'Character' })
-set_hl(0, 'StarterItem', { link = 'Normal' })
+set_hl(0, 'StarterVerse', { link = 'Title' })
+set_hl(0, 'StarterQuote', { link = 'SpecialChar' })
+set_hl(0, 'StarterItem', { link = 'String' })
 set_hl(0, 'StarterKey', { link = 'Delimiter' })
 
 autocmd('ColorScheme', {
@@ -14,8 +14,8 @@ autocmd('ColorScheme', {
         -- when colorscheme is changed, the highlight will be cleared. We want
         -- to reattach those linked highlight.
         set_hl(0, 'StarterVerse', { link = 'Title' })
-        set_hl(0, 'StarterQuote', { link = 'Character' })
-        set_hl(0, 'StarterItem', { link = 'Normal' })
+        set_hl(0, 'StarterQuote', { link = 'SpecialChar' })
+        set_hl(0, 'StarterItem', { link = 'String' })
         set_hl(0, 'StarterKey', { link = 'Delimiter' })
     end,
     desc = 'set highlight for starter',
