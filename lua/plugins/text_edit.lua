@@ -5,6 +5,7 @@ local keymap = vim.api.nvim_set_keymap
 return {
     {
         'echasnovski/mini.nvim',
+        event = 'LazyFile',
         init = function()
             keymap('n', 'ys', '<Plug>(mini-surround-add)', {})
             keymap('n', 'yss', '^ys$', {})
