@@ -15,7 +15,4 @@ vim.loader.enable()
 
 require 'basic_settings'
 require 'load_plugins'
-
-if not need_bootstrap then
-    require 'load_configs'
-end
+require 'conf'

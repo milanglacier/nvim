@@ -164,7 +164,7 @@ autocmd('LspAttach', {
 -- may cause conflict because `cmp-nvim-tags` which uses tags to search
 -- workspace symbol, leading to an error when `vim.lsp.tagfunc` is called. To
 -- prevent this behavior, we disable it.
--- 
+--
 -- Besides, vim.lsp.tagfunc also has performance issue if you want to use it in
 -- auto completion.
 
@@ -177,7 +177,7 @@ TAGFUNC_FALLBACK_IMMEDIATELY = function()
 end
 
 -- if tagfunc is already registered, nvim lsp will not try to set tagfunc as vim.lsp.tagfunc.
-vim.o.tagfunc = "v:lua.TAGFUNC_FALLBACK_IMMEDIATELY"
+vim.o.tagfunc = 'v:lua.TAGFUNC_FALLBACK_IMMEDIATELY'
 
 autocmd('LspAttach', {
     group = my_augroup,
@@ -188,22 +188,9 @@ autocmd('LspAttach', {
     desc = 'Disable semantic highlight',
 })
 
-autocmd('LspAttach', {
-    group = my_augroup,
-    callback = function(args)
-        local bufnr = args.buf
-        local client = vim.lsp.get_client_by_id(args.data.client_id)
-        if client.server_capabilities.documentSymbolProvider then
-            require('nvim-navic').attach(client, bufnr)
-        end
-    end,
-    desc = 'Attach navic',
-})
-
--- Setup lspconfig.
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
--- Copied from lspconfig/server_configurations/pylsp.lua
+-- use nvim-cmp capabilities. Define the capabilities here which will be
+-- fetched from cmp-nvim-lsp when lspconfig is loaded
+local capabilities
 
 local enabled_lsps = { 'r', 'python', 'bash', 'cpp', 'vim', 'nvim', 'pinyin', 'sql', 'latex', 'go', 'rust', 'efm' }
 
@@ -351,10 +338,6 @@ lsp_configs.efm = function()
     }
 end
 
-for _, lsp in pairs(enabled_lsps) do
-    lsp_configs[lsp]()
-end
-
 vim.fn.sign_define('DiagnosticSignError', { text = '✗', texthl = 'DiagnosticSignError' })
 vim.fn.sign_define('DiagnosticSignWarn', { text = '!', texthl = 'DiagnosticSignWarn' })
 vim.fn.sign_define('DiagnosticSignInformation', { text = '󰋽', texthl = 'DiagnosticSignInfo' })
@@ -379,3 +362,111 @@ command('DiagnosticInlineToggle', function()
     vim.cmd.DiagnosticUnderlineToggle()
     vim.cmd.DiagnosticVirtualTextToggle()
 end, {})
+
+return {
+    -- LSP config
+    {
+        'neovim/nvim-lspconfig',
+        event = 'LazyFile',
+        dependencies = {
+            { 'folke/lazydev.nvim' },
+            { 'nanotee/sqls.nvim' },
+        },
+        config = function()
+            capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+            for _, lsp in pairs(enabled_lsps) do
+                lsp_configs[lsp]()
+            end
+        end,
+    },
+
+    -- lsp related tools, including lsp symbols, symbol outline, etc.
+    {
+        'stevearc/aerial.nvim',
+        cmd = 'AerialToggle',
+        config = function()
+            require('aerial').setup {
+                backends = { 'lsp', 'treesitter', 'markdown' },
+                close_automatic_events = { 'unsupported' },
+                filter_kind = false,
+                show_guides = true,
+            }
+        end,
+    },
+    {
+        'ray-x/lsp_signature.nvim',
+        init = function()
+            autocmd('LspAttach', {
+                group = my_augroup,
+                desc = 'Attach signature',
+                callback = function(args)
+                    local bufnr = args.buf
+                    local client = vim.lsp.get_client_by_id(args.data.client_id)
+                    if client.server_capabilities.signatureHelpProvider then
+                        require('lsp_signature').on_attach({
+                            bind = true, -- This is mandatory, otherwise border config won't get registered.
+                            handler_opts = {
+                                border = 'double',
+                            },
+                            floating_window = false,
+                            toggle_key = '<A-s>',
+                            select_signature_key = '<A-S>',
+                            floating_window_off_x = 15, -- adjust float windows x position.
+                            floating_window_off_y = 15,
+                            hint_enable = false,
+                            -- hint_prefix = "",
+                            -- doc_lines = 5,
+                            time_interval = 100,
+                        }, bufnr)
+                    end
+                end,
+            })
+        end,
+    },
+    {
+        'ThePrimeagen/refactoring.nvim',
+        init = function()
+            autocmd('FileType', {
+                pattern = { 'go', 'python', 'lua' },
+                once = true,
+                desc = 'Load refactoring.nvim',
+                callback = function()
+                    bufmap(
+                        0,
+                        'n',
+                        '<Leader>lr',
+                        '<CMD>lua require("refactoring").select_refactor()<CR>',
+                        { desc = 'refactoring' }
+                    )
+                    bufmap(
+                        0,
+                        'v',
+                        '<Leader>lr',
+                        ':lua require("refactoring").select_refactor()<CR>',
+                        { desc = 'refactoring' }
+                    )
+                end,
+            })
+        end,
+        config = function()
+            require('refactoring').setup {}
+        end,
+    },
+    {
+        'SmiteshP/nvim-navic',
+        init = function()
+            autocmd('LspAttach', {
+                group = my_augroup,
+                callback = function(args)
+                    local bufnr = args.buf
+                    local client = vim.lsp.get_client_by_id(args.data.client_id)
+                    if client.server_capabilities.documentSymbolProvider then
+                        require('nvim-navic').attach(client, bufnr)
+                    end
+                end,
+                desc = 'Attach navic',
+            })
+        end,
+    },
+}
