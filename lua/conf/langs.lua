@@ -234,6 +234,25 @@ autocmd('FileType', {
     end,
 })
 
+autocmd('FileType', {
+    group = my_augroup,
+    pattern = 'go',
+    desc = 'set buffer opts for go',
+    callback = function()
+        vim.bo.expandtab = false
+        -- go uses tab instead of spaces.
+    end,
+})
+
+autocmd('FileType', {
+    group = my_augroup,
+    pattern = 'sql',
+    desc = 'set commentstring for sql',
+    callback = function()
+        vim.bo.commentstring = '-- %s'
+    end,
+})
+
 command('CondaActivateEnv', function(options)
     if vim.fn.executable 'conda' == 0 then
         vim.notify 'conda not found'
