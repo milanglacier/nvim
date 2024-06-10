@@ -95,7 +95,7 @@ local function get_key(str)
     return string.match(str, '.*%[(.)%].')
 end
 
-local function refresh()
+local function new_verse()
     local buf_id = api.nvim_get_current_buf()
 
     local content = H.starter_content()
@@ -110,18 +110,17 @@ local top_lines_padding = 3
 -- leftward skew.
 local left_skewed_columns = 15
 
+local new_theme = require('conf.colorscheme').pick_randomly
+
 H.items = {
-    {
-        action = require('conf.colorscheme').pick_randomly,
-        name = 'New [T]heme    ',
-    },
-    { action = refresh, name = 'New [V]erses   ' },
-    { action = 'Lazy profile', name = 'Neovim [I]nfo  ' },
-    { action = 'Telescope projects', name = 'Open [P]rojects' },
-    { action = 'Telescope oldfiles', name = '[R]ecent File  ' },
-    { action = 'Telescope find_files', name = 'Open [F]ile    ' },
-    { action = 'enew', name = 'New [B]uffer   ' },
-    { action = 'qall!', name = '[Q]uit Neovim  ' },
+    { name = 'New [T]heme    ', action = new_theme },
+    { name = 'New [V]erses   ', action = new_verse },
+    { name = 'Neovim [I]nfo  ', action = 'Lazy profile' },
+    { name = 'Open [P]rojects', action = 'Telescope projects' },
+    { name = '[R]ecent File  ', action = 'Telescope oldfiles' },
+    { name = 'Open [F]ile    ', action = 'Telescope find_files' },
+    { name = 'New [B]uffer   ', action = 'enew' },
+    { name = '[Q]uit Neovim  ', action = 'qall!' },
 }
 
 local function center_a_line(str)
