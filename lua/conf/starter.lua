@@ -275,7 +275,7 @@ autocmd('VimEnter', {
         if H.is_something_shown() then
             return
         end
-        vim.cmd 'lua SETUP_STARTER()'
+        vim.cmd 'noautocmd lua SETUP_STARTER()'
     end,
 })
 
