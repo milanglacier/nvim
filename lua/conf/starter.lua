@@ -215,19 +215,16 @@ SETUP_STARTER = function()
 
     vim.api.nvim_buf_set_lines(buf_id, 0, -1, false, H.starter_content())
 
-    local verse_hl = vim.fn.matchadd('StarterVerse', '^ \\+\\([^"]\\+\\)$')
-    local quote_hl = vim.fn.matchadd('StarterQuote', '^ \\+\\(.\\+\\)$')
-    local item_hl = vim.fn.matchadd('StarterItem', '^ \\+\\(.\\+\\)$')
-    local key_hl = vim.fn.matchadd('StarterKey', '\\[.\\]', 20)
+    vim.fn.matchadd('StarterVerse', '^ \\+\\([^"]\\+\\)$')
+    vim.fn.matchadd('StarterQuote', '^ \\+\\(.\\+\\)$')
+    vim.fn.matchadd('StarterItem', '^ \\+\\(.\\+\\)$')
+    vim.fn.matchadd('StarterKey', '\\[.\\]', 20)
 
     autocmd('BufWinLeave', {
         group = starter_group,
         buffer = buf_id,
         callback = function()
-            vim.fn.matchdelete(verse_hl)
-            vim.fn.matchdelete(quote_hl)
-            vim.fn.matchdelete(item_hl)
-            vim.fn.matchdelete(key_hl)
+            vim.fn.clearmatches()
         end,
         desc = 'clear all highlight',
     })
