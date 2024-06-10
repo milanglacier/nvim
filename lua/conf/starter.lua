@@ -218,7 +218,7 @@ SETUP_STARTER = function()
     vim.cmd [[syntax match StarterVerse '^ \+\([^"]\+\)$']]
     vim.cmd [[syntax match StarterQuote '^ \+\(.\+\)$']]
     vim.cmd [[syntax match StarterItem '^ \+\(.\+\)$']]
-    vim.cmd [[syntax match StarterKey '\[.\]']]
+    vim.cmd [[syntax match StarterKey '\[.\]' containedin=StarterItem]]
 
     for _, item in ipairs(H.items) do
         if type(item.action) == 'string' then
