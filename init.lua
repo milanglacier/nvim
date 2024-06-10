@@ -14,5 +14,5 @@ vim.opt.rtp:prepend(lazypath)
 vim.loader.enable()
 
 require 'basic_settings'
-require 'load_plugins'
+require 'plugin_manager'
 require 'conf'
