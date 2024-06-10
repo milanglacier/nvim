@@ -215,19 +215,10 @@ SETUP_STARTER = function()
 
     vim.api.nvim_buf_set_lines(buf_id, 0, -1, false, H.starter_content())
 
-    vim.fn.matchadd('StarterVerse', '^ \\+\\([^"]\\+\\)$')
-    vim.fn.matchadd('StarterQuote', '^ \\+\\(.\\+\\)$')
-    vim.fn.matchadd('StarterItem', '^ \\+\\(.\\+\\)$')
-    vim.fn.matchadd('StarterKey', '\\[.\\]', 20)
-
-    autocmd('BufWinLeave', {
-        group = starter_group,
-        buffer = buf_id,
-        callback = function()
-            vim.fn.clearmatches()
-        end,
-        desc = 'clear all highlight',
-    })
+    vim.cmd [[syntax match StarterVerse '^ \+\([^"]\+\)$']]
+    vim.cmd [[syntax match StarterQuote '^ \+\(.\+\)$']]
+    vim.cmd [[syntax match StarterItem '^ \+\(.\+\)$']]
+    vim.cmd [[syntax match StarterKey '\[.\]']]
 
     for _, item in ipairs(H.items) do
         if type(item.action) == 'string' then
@@ -285,7 +276,7 @@ autocmd('VimEnter', {
         if H.is_something_shown() then
             return
         end
-        vim.cmd 'noautocmd lua SETUP_STARTER()'
+        vim.cmd 'lua SETUP_STARTER()'
     end,
 })
 
