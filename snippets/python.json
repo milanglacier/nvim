@@ -69,7 +69,7 @@
     },
 
     "pd pipe series shortcut": {
-        "prefix": "gbs",
+        "prefix": "pps",
         "body": [
             "pipe(lambda x: pd.Series({",
             "$0",
