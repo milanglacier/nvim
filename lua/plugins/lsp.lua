@@ -16,7 +16,21 @@ local command = vim.api.nvim_create_user_command
 local attach_keymaps = function(args)
     local bufnr = args.buf
 
-    bufmap(bufnr, 'n', '<Leader>lt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts { 'lsp type definition' })
+    bufmap(
+        bufnr,
+        'n',
+        '<Leader>lt',
+        '',
+        opts {
+            'lsp type definition',
+            callback = function()
+                require('telescope.builtin').lsp_type_definitions {
+                    layout_strategies = 'vertical',
+                    jump_type = 'tab',
+                }
+            end,
+        }
+    )
 
     -- reference
     bufmap(
