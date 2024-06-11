@@ -194,11 +194,11 @@ return {
             require('trouble').setup {}
         end,
         init = function()
-            local function opt(desc)
-                return { silent = true, desc = desc, noremap = true }
+            local function opt(desc, callback)
+                return { silent = true, desc = desc, noremap = true, callback = callback }
             end
 
-            keymap('n', '<leader>xw', '<cmd>Trouble diagnostics toggle<cr>', opt 'Workspace dianostics')
+            keymap('n', '<leader>xw', '', opt('Workspace dianostics', require('conf.ui').trouble_workspace_diagnostics))
             keymap('n', '<leader>xd', '<cmd>Trouble diagnostics toggle filter.buf=0<cr>', opt 'Document Diagnostics')
             keymap('n', '<leader>xl', '<cmd>TroubleToggle loclist<cr>', opt 'Open loclist')
             keymap(

@@ -135,6 +135,17 @@ M.reopen_qflist_by_trouble = function()
     require('trouble').toggle 'quickfix'
 end
 
+M.trouble_workspace_diagnostics = function()
+    require('trouble').toggle {
+        mode = 'diagnostics',
+        filter = function(items)
+            return vim.tbl_filter(function(item)
+                return item.dirname:find(vim.uv.cwd(), 1, true)
+            end, items)
+        end,
+    }
+end
+
 git_workspace_diff_setup()
 
 return M
