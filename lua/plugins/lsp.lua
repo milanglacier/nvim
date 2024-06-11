@@ -482,5 +482,12 @@ return {
                 desc = 'Attach navic',
             })
         end,
+        config = function()
+            require('nvim-navic').setup {
+                -- don't update winbar symbols on CursorMoved event to improve
+                -- performance.
+                lazy_update_context = true,
+            }
+        end,
     },
 }

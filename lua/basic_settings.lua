@@ -31,6 +31,10 @@ vim.o.foldmethod = 'indent'
 vim.o.foldlevel = 99
 vim.o.foldlevelstart = 99
 
+-- increase the frequency of CursorHold events trigger. Which is useful for
+-- nvim-navic (winbar lsp symbol)
+vim.o.updatetime = 2000
+
 vim.g.mapleader = ' '
 vim.g.maplocalleader = [[  ]]
 
