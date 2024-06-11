@@ -112,8 +112,10 @@ local function left_skewed_columns()
 
     if width < 100 then
         return 0
-    else
+    elseif width < 200 then
         return 10
+    else
+        return 15
     end
 end
 
@@ -125,7 +127,7 @@ local function top_lines_padding()
     elseif height < 50 then
         return 8
     else
-        return 15
+        return 12
     end
 end
 
