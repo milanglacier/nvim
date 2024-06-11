@@ -61,11 +61,20 @@
     "pd groupby apply series shortcut": {
         "prefix": "gbs",
         "body": [
-            ".apply(lambda x: pd.Series({",
+            "groupby($1).apply(lambda x: pd.Series({",
             "$0",
             "}), include_group=False)"
         ],
         "description": "pd groupby apply series shortcut"
-    }
+    },
 
+    "pd pipe series shortcut": {
+        "prefix": "gbs",
+        "body": [
+            "pipe(lambda x: pd.Series({",
+            "$0",
+            "}), include_group=False)"
+        ],
+        "description": "pd pipe series shortcut"
+    }
 }
