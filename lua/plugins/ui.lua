@@ -71,21 +71,17 @@ return {
                     return vim.tbl_count(count)
                 end
 
-                local diagnostics_of_error = 0
-                local diagnostics_of_warn = 0
-                local diagnostics_of_info = 0
-                local diagnostics_of_hint = 0
+                local n_diagnostics = { ERROR = 0, WARN = 0, INFO = 0, HINT = 0 }
 
                 for _, buf in ipairs(buffers) do
                     if dir_is_parent_of_buf(buf, cwd) then
-                        diagnostics_of_error = diagnostics_of_error + get_num_of_diags_in_buf(severity.ERROR, buf)
-                        diagnostics_of_warn = diagnostics_of_warn + get_num_of_diags_in_buf(severity.WARN, buf)
-                        diagnostics_of_info = diagnostics_of_info + get_num_of_diags_in_buf(severity.INFO, buf)
-                        diagnostics_of_hint = diagnostics_of_hint + get_num_of_diags_in_buf(severity.HINT, buf)
+                        for _, level in ipairs { 'ERROR', 'WARN', 'INFO', 'HINT' } do
+                            n_diagnostics[level] = n_diagnostics[level] + get_num_of_diags_in_buf(severity[level], buf)
+                        end
                     end
                 end
 
-                return diagnostics_of_error, diagnostics_of_warn, diagnostics_of_info, diagnostics_of_hint
+                return n_diagnostics.ERROR, n_diagnostics.WARN, n_diagnostics.INFO, n_diagnostics.HINT
             end
 
             lualine.setup {
