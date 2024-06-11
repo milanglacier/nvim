@@ -104,11 +104,42 @@ local function new_verse()
 end
 
 local item_sign = ' '
-local lines_between_sections = 8
-local top_lines_padding = 3
+
 -- The absolute symmetry is in fact less aesthetically pleasing than a slight
 -- leftward skew.
-local left_skewed_columns = 15
+local function left_skewed_columns()
+    local width = api.nvim_win_get_width(0)
+
+    if width < 100 then
+        return 0
+    else
+        return 10
+    end
+end
+
+local function top_lines_padding()
+    local height = api.nvim_win_get_height(0)
+
+    if height < 30 then
+        return 0
+    elseif height < 50 then
+        return 8
+    else
+        return 15
+    end
+end
+
+local function lines_between_sections()
+    local height = api.nvim_win_get_height(0)
+
+    if height < 30 then
+        return 3
+    elseif height < 50 then
+        return 8
+    else
+        return 10
+    end
+end
 
 local new_theme = require('conf.colorscheme').pick_randomly
 
@@ -126,7 +157,7 @@ H.items = {
 local function center_a_line(str)
     -- The absolute symmetry is in fact less aesthetically pleasing than a
     -- slight leftward skew.
-    local width = api.nvim_win_get_width(0) - left_skewed_columns
+    local width = api.nvim_win_get_width(0) - left_skewed_columns()
     local spaces = math.floor((width - vim.fn.strdisplaywidth(str)) / 2)
     local padding = string.rep(' ', spaces)
     return padding .. str
@@ -146,7 +177,7 @@ function H.starter_content()
 
     local content = {}
 
-    for _ = 1, top_lines_padding do
+    for _ = 1, top_lines_padding() do
         table.insert(content, '')
     end
 
@@ -154,7 +185,7 @@ function H.starter_content()
         table.insert(content, center_a_line(line))
     end
 
-    for _ = 1, lines_between_sections do
+    for _ = 1, lines_between_sections() do
         table.insert(content, '')
     end
 
@@ -162,7 +193,7 @@ function H.starter_content()
         table.insert(content, center_a_line(item_sign .. item.name))
     end
 
-    for _ = 1, lines_between_sections do
+    for _ = 1, lines_between_sections() do
         table.insert(content, '')
     end
 
