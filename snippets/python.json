@@ -56,6 +56,16 @@
             "# MAGIC $0"
         ],
         "description": "create databricks magic chunk"
+    },
+
+    "pd groupby apply series shortcut": {
+        "prefix": "gbs",
+        "body": [
+            ".apply(lambda x: pd.Series({",
+            "$0",
+            "}), include_group=False)"
+        ],
+        "description": "pd groupby apply series shortcut"
     }
 
 }
