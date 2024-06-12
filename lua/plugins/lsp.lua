@@ -255,16 +255,6 @@ lsp_configs.cpp = function()
 end
 
 lsp_configs.nvim = function()
-    autocmd('FileType', {
-        group = my_augroup,
-        desc = 'enable lazydev',
-        pattern = { 'lua' },
-        once = true,
-        callback = function()
-            require('lazydev').setup {}
-        end,
-    })
-
     require('lspconfig').lua_ls.setup {
         on_attach = function(client, _)
             client.server_capabilities.documentFormattingProvider = false
@@ -393,10 +383,6 @@ return {
     {
         'neovim/nvim-lspconfig',
         event = 'LazyFile',
-        dependencies = {
-            { 'folke/lazydev.nvim' },
-            { 'nanotee/sqls.nvim' },
-        },
         config = function()
             capabilities = require('cmp_nvim_lsp').default_capabilities()
 
@@ -471,4 +457,13 @@ return {
             }
         end,
     },
+
+    {
+        'folke/lazydev.nvim',
+        ft = 'lua',
+        config = function()
+            require('lazydev').setup {}
+        end,
+    },
+    { 'nanotee/sqls.nvim' },
 }
