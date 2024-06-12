@@ -63,11 +63,12 @@ local attach_keymaps = function(args)
 
     -- hover
     bufmap(bufnr, 'n', 'gh', '', opts { 'lsp hover', vim.lsp.buf.hover })
-
     bufmap(bufnr, 'n', 'K', '', opts { 'lsp hover', vim.lsp.buf.hover })
+    bufmap(bufnr, 'i', '<A-h>', '', opts { 'lsp hover', vim.lsp.buf.hover })
 
     -- signaturehelp
     bufmap(bufnr, 'n', '<Leader>ls', '', opts { 'signature help', vim.lsp.buf.signature_help })
+    bufmap(bufnr, 'i', '<A-s>', '', opts { 'signature help', vim.lsp.buf.signature_help })
 
     -- rename
     bufmap(bufnr, 'n', '<Leader>ln', '<cmd>lua vim.lsp.buf.rename()<CR>', opts { 'lsp rename' })
@@ -192,6 +193,16 @@ end
 
 -- if tagfunc is already registered, nvim lsp will not try to set tagfunc as vim.lsp.tagfunc.
 vim.o.tagfunc = 'v:lua.TAGFUNC_FALLBACK_IMMEDIATELY'
+
+autocmd('LspAttach', {
+    group = my_augroup,
+    once = true,
+    callback = function()
+        vim.lsp.handlers['textDocument/signatureHelp'] =
+            vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'rounded', max_height = 30, max_width = 80 })
+    end,
+    desc = 'Set the UI for signature help',
+})
 
 autocmd('LspAttach', {
     group = my_augroup,
@@ -406,36 +417,6 @@ return {
                 filter_kind = false,
                 show_guides = true,
             }
-        end,
-    },
-    {
-        'ray-x/lsp_signature.nvim',
-        init = function()
-            autocmd('LspAttach', {
-                group = my_augroup,
-                desc = 'Attach signature',
-                callback = function(args)
-                    local bufnr = args.buf
-                    local client = vim.lsp.get_client_by_id(args.data.client_id)
-                    if client.server_capabilities.signatureHelpProvider then
-                        require('lsp_signature').on_attach({
-                            bind = true, -- This is mandatory, otherwise border config won't get registered.
-                            handler_opts = {
-                                border = 'double',
-                            },
-                            floating_window = false,
-                            toggle_key = '<A-s>',
-                            select_signature_key = '<A-S>',
-                            floating_window_off_x = 15, -- adjust float windows x position.
-                            floating_window_off_y = 15,
-                            hint_enable = false,
-                            -- hint_prefix = "",
-                            -- doc_lines = 5,
-                            time_interval = 100,
-                        }, bufnr)
-                    end
-                end,
-            })
         end,
     },
     {
