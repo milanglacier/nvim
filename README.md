@@ -708,7 +708,6 @@ The following keymaps rely on [nvim-lspconfig](https://github.com/neovim/nvim-ls
 | n    | `<Leader>lf` | Format document                             |
 | n    | `K`          | Hover (Show doc of symbol under the cursor) |
 
-The following keymaps rely on [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)
 
 | Mode | LHS          | RHS/Functionality                      |
 | ---- | ------------ | -------------------------------------- |
@@ -724,11 +723,10 @@ The following keymaps rely on [telescope.nvim](https://github.com/nvim-telescope
 | n    | `[d`         | Go to previous diagnostics location          |
 | n    | `]d`         | Go to previous diagnostics location          |
 
-The following keymaps rely on [lsp_signature.nvim](https://github.com/ray-x/lsp_signature.nvim)
-
-| Mode | LHS     | RHS/Functionality                       |
-| ---- | ------- | --------------------------------------- |
-| i    | `<A-x>` | Show signature help of current function |
+| Mode | LHS     | RHS/Functionality   |
+| ---- | ------- | ------------------- |
+| i    | `<A-s>` | Show signature help |
+| i    | `<A-h>` | Hover               |
 
 The following keymaps rely on [aerial.nvim](https://github.com/stevearc/aerial.nvim)
 
