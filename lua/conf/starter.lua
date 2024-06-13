@@ -134,7 +134,7 @@ end
 local function lines_between_sections()
     local height = api.nvim_win_get_height(0)
 
-    if height < 30 then
+    if height < 40 then
         return 3
     elseif height < 50 then
         return 8
