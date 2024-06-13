@@ -189,7 +189,7 @@ return {
                 },
                 group = my_augroup,
                 desc = 'Use treesitter fold',
-                command = 'setlocal foldmethod=expr',
+                command = 'setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr()',
             })
         end,
     },
