@@ -63,7 +63,7 @@
         "body": [
             "groupby($1).apply(lambda x: pd.Series({",
             "$0",
-            "}), include_group=False)"
+            "}), include_groups=False)"
         ],
         "description": "pd groupby apply series shortcut"
     },
@@ -73,7 +73,7 @@
         "body": [
             "pipe(lambda x: pd.Series({",
             "$0",
-            "}), include_group=False)"
+            "}))"
         ],
         "description": "pd pipe series shortcut"
     }
