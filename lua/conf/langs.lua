@@ -1,6 +1,7 @@
 local M = {}
 M.load = {}
 
+local api = vim.api
 local autocmd = vim.api.nvim_create_autocmd
 local my_augroup = require('conf.builtin_extend').my_augroup
 local command = vim.api.nvim_create_user_command
@@ -464,6 +465,127 @@ autocmd('FileType', {
             vim.api.nvim_set_current_win(winid)
         end, {
             nargs = '?', -- 0 or 1 arg
+        })
+    end,
+})
+
+local wincmd = function(buf, orig_buf)
+    local filename = vim.fn.fnamemodify(api.nvim_buf_get_name(orig_buf), ':t')
+    local ft = api.nvim_get_option_value('filetype', { buf = buf })
+    if ft == nil or ft == '' then
+        ft = 'editsrc'
+    end
+
+    vim.api.nvim_open_win(buf, true, {
+        relative = 'editor',
+        row = math.floor(vim.o.lines * 0.2),
+        col = math.floor(vim.o.columns * 0.2),
+        width = math.floor(vim.o.columns * 0.6),
+        height = math.floor(vim.o.lines * 0.6),
+        style = 'minimal',
+        title = filename .. ':' .. ft,
+        border = 'rounded',
+        title_pos = 'center',
+        zindex = 10, -- low priority
+    })
+end
+
+local edit_src_guess_ft_functions = {
+    function(content)
+        if content:find '^%s*--sql' then
+            return 'sql'
+        elseif content:find '^%s*--SQL' then
+            return 'sql'
+        elseif content:find '^%s*/\\*.*sql.*\\*/' then
+            return 'sql'
+        elseif content:find '^%s*/\\*.*SQL.*\\*/' then
+            return 'sql'
+        else
+            return nil
+        end
+    end,
+    function(content)
+        if content:find '^%s*# python' then
+            return 'python'
+        else
+            return nil
+        end
+    end,
+}
+
+local function edit_src_commit_change(bufnr, orig_buf, start_row, start_col, end_row, end_col)
+    local lines = api.nvim_buf_get_lines(bufnr, 0, -1, false)
+    vim.schedule(function()
+        api.nvim_buf_set_text(orig_buf, start_row, start_col, end_row, end_col, lines)
+    end)
+    vim.cmd('bwipeout! ' .. bufnr)
+end
+
+local function edit_src_in_dedicated_buffer()
+    local node = vim.treesitter.get_node()
+    if not node then
+        vim.notify 'not a valid treesitter node'
+        return
+    end
+
+    if node:type() ~= 'string_content' then
+        vim.notify 'not a string node'
+        return
+    end
+
+    local orig_buf = api.nvim_get_current_buf()
+    local content = vim.treesitter.get_node_text(node, 0)
+
+    local start_row, start_col, end_row, end_col = node:range()
+    local ft
+
+    for _, func in ipairs(edit_src_guess_ft_functions) do
+        ft = func(content)
+        if ft then
+            break
+        end
+    end
+
+    -- NOTE: setting the buffer as non-scratch is to ensure lsp can be
+    -- activated in the temp buffer, since lsp will not activate on scratch
+    -- buffer.
+    local buf = api.nvim_create_buf(true, false)
+    if ft then
+        api.nvim_set_option_value('filetype', ft, { buf = buf })
+    end
+    -- Setting buftype to nofile is to prevent from LSP complaining about it
+    -- cannot find a file corresponding to the buffer.
+    api.nvim_set_option_value('buftype', 'nofile', { buf = buf })
+    -- when the window is closed, destroy the temporary buffer
+    -- automatically.
+    api.nvim_set_option_value('bufhidden', 'wipe', { buf = buf })
+
+    api.nvim_buf_set_lines(buf, 0, -1, false, vim.split(content, '\n'))
+
+    local window_name = string.format('%s:%s', filename, ft or 'editsrc')
+
+    wincmd(buf, orig_buf)
+
+    bufmap(buf, 'n', '<LocalLeader>c', '', {
+        desc = 'commit change to original file',
+        callback = function()
+            edit_src_commit_change(buf, orig_buf, start_row, start_col, end_row, end_col)
+        end,
+    })
+
+    bufmap(buf, 'n', '<LocalLeader>k', '<cmd>bwipeout<cr>', {
+        desc = 'discard change',
+    })
+end
+
+autocmd('FileType', {
+    pattern = 'python',
+    group = my_augroup,
+    desc = 'Add edit src keymap to python',
+    callback = function()
+        bufmap(0, 'n', "<LocalLeader>'", '', {
+            desc = 'edit src under cursor in a dedicated buffer',
+            callback = edit_src_in_dedicated_buffer,
         })
     end,
 })
