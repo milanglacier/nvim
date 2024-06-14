@@ -60,7 +60,8 @@
       - [REPL keymaps for R](#repl-keymaps-for-r)
     - [Python keymaps](#python-keymaps)
       - [Builtin keymaps for Python](#builtin-keymaps-for-python)
-    - [REPL keymaps for Python](#repl-keymaps-for-python)
+      - [REPL keymaps for Python](#repl-keymaps-for-python)
+    - [Edit string codeblock](#edit-string-codeblock)
     - [Rmarkdown keymaps](#rmarkdown-keymaps)
       - [Builtin keymaps for Rmarkdown](#builtin-keymaps-for-rmarkdown)
       - [Text objects keymaps for Rmarkdown](#text-objects-keymaps-for-rmarkdown)
@@ -708,7 +709,6 @@ The following keymaps rely on [nvim-lspconfig](https://github.com/neovim/nvim-ls
 | n    | `<Leader>lf` | Format document                             |
 | n    | `K`          | Hover (Show doc of symbol under the cursor) |
 
-
 | Mode | LHS          | RHS/Functionality                      |
 | ---- | ------------ | -------------------------------------- |
 | n    | `gr`         | Show references of current symbol      |
@@ -792,39 +792,18 @@ The following keymaps rely on [nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
 
 #### REPL keymaps for R
 
-The following keymaps rely on [Nvim-R](https://github.com/jalvesaq/Nvim-R)
+The following keymaps rely on [yarepl.nvim](https://github.com/milanglacier/yarepl.nvim)
 
-| Mode | LHS               | RHS/Functionality           |
-| ---- | ----------------- | --------------------------- |
-| n    | `<LocalLeader>rs` | Start the R REPL            |
-| n    | `<LocalLeader>rq` | Stop the R REPL             |
-| n    | `<LocalLeader>rc` | Clear the R console content |
+| Mode | LHS               | RHS/Functionality |
+| ---- | ----------------- | ----------------- |
+| n    | `<LocalLeader>rs` | Start the R REPL  |
+| n    | `<LocalLeader>rq` | Stop the R REPL   |
 
 | Mode | LHS               | RHS/Functionality                                    |
 | ---- | ----------------- | ---------------------------------------------------- |
 | n    | `<LocalLeader>ss` | Send current line to console                         |
-| n    | `<LocalLeader>sf` | Send whole file to console                           |
-| n    | `<LocalLeader>sm` | Send marked block to console                         |
 | nv   | `<LocalLeader>s`  | Send motion / text object / selected text to console |
 | nv   | `<LocalLeader>sc` | Send code chunk to console                           |
-
-| Mode | LHS               | RHS/Functionality                              |
-| ---- | ----------------- | ---------------------------------------------- |
-| n    | `<LocalLeader>oo` | Toggle the outline view of workspace variables |
-| n    | `<LocalLeader>or` | Expand all variables in the outline view       |
-| n    | `<LocalLeader>om` | Collapse all variables in the outline view     |
-| n    | `<LocalLeader>oh` | Show help of symbol under cursor               |
-| n    | `<LocalLeader>oh` | Call `print()` for symbol under cursor         |
-| n    | `<LocalLeader>os` | Call `str()` for symbol under cursor           |
-| n    | `<LocalLeader>oS` | Call `summary()` for symbol under cursor       |
-| n    | `<LocalLeader>on` | Call `names()` for symbol under cursor         |
-
-| Mode | LHS               | RHS/Functionality                                |
-| ---- | ----------------- | ------------------------------------------------ |
-| n    | `<LocalLeader>dt` | View the data frame in a new tab                 |
-| n    | `<LocalLeader>ds` | View the data frame in a horizontal split window |
-| n    | `<LocalLeader>dv` | View the data frame in a vertical split window   |
-| n    | `<LocalLeader>dh` | View the `head()` of a data frame                |
 
 ### Python keymaps
 
@@ -835,9 +814,14 @@ The following keymaps rely on [Nvim-R](https://github.com/jalvesaq/Nvim-R)
 | ov   | `a<Leader>c` | Text objects: a code chunk     |
 | ov   | `i<Leader>c` | Text objects: inner code chunk |
 
-### REPL keymaps for Python
+#### REPL keymaps for Python
 
-The following keymaps rely on [iron.nvim](https://github.com/hkupty/iron.nvim)
+The following keymaps rely on [yarepl.nvim](https://github.com/milanglacier/yarepl.nvim)
+
+| Mode | LHS               | RHS/Functionality     |
+| ---- | ----------------- | --------------------- |
+| n    | `<LocalLeader>rs` | Start the python REPL |
+| n    | `<LocalLeader>rq` | Stop the python REPL  |
 
 | Mode | LHS                | RHS/Functionality            |
 | ---- | ------------------ | ---------------------------- |
@@ -851,6 +835,17 @@ The following keymaps rely on [iron.nvim](https://github.com/hkupty/iron.nvim)
 | n    | `<LocalLeader>7sc` | Send code chunk to console 7 |
 | n    | `<LocalLeader>8sc` | Send code chunk to console 8 |
 | n    | `<LocalLeader>9sc` | Send code chunk to console 9 |
+
+### Edit string codeblock
+
+The following keymaps is useful for working on embedded languages. For example
+the embedded SQL code in python string.
+
+| Mode | LHS              | RHS/Functionality                                  |
+| ---- | ---------------- | -------------------------------------------------- |
+| n    | `<LocalLeader>'` | Open a temp buffer to edit the string              |
+| n    | `<LocalLeader>c` | write the change in temp buffer to original file   |
+| n    | `<LocalLeader>k` | discard the temp buffer and don't write the change |
 
 ### Rmarkdown keymaps
 
