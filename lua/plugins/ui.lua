@@ -265,6 +265,16 @@ return {
                 end,
             })
 
+            autocmd('LSPAttach', {
+                group = my_augroup,
+                desc = 'add which key description for lsp',
+                callback = function(args)
+                    which_key.register {
+                        ['<Leader>l'] = { name = '+lsp', buffer = args.buf },
+                    }
+                end,
+            })
+
             autocmd('FileType', {
                 group = my_augroup,
                 pattern = 'tex',
