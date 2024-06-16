@@ -119,16 +119,12 @@ local function left_skewed_columns()
     end
 end
 
-local function top_lines_padding()
+local function top_lines_padding(content_length)
     local height = api.nvim_win_get_height(0)
+    local padding = math.ceil((height - content_length) * 0.5)
+    padding = math.max(padding, 0)
 
-    if height < 30 then
-        return 0
-    elseif height < 50 then
-        return 8
-    else
-        return 12
-    end
+    return padding
 end
 
 local function lines_between_sections()
@@ -176,10 +172,13 @@ function H.starter_content()
     warmup()
     local header = H.header_verse[math.random(1, #H.header_verse)]
     local footer = H.foot_verse[math.random(1, #H.foot_verse)]
+    local lines_between_sections = lines_between_sections()
+
+    local content_length = #header + #footer + #H.items + lines_between_sections * 2
 
     local content = {}
 
-    for _ = 1, top_lines_padding() do
+    for _ = 1, top_lines_padding(content_length) do
         table.insert(content, '')
     end
 
@@ -187,7 +186,7 @@ function H.starter_content()
         table.insert(content, center_a_line(line))
     end
 
-    for _ = 1, lines_between_sections() do
+    for _ = 1, lines_between_sections do
         table.insert(content, '')
     end
 
@@ -195,7 +194,7 @@ function H.starter_content()
         table.insert(content, center_a_line(item_sign .. item.name))
     end
 
-    for _ = 1, lines_between_sections() do
+    for _ = 1, lines_between_sections do
         table.insert(content, '')
     end
 
