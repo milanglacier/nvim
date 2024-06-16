@@ -246,9 +246,9 @@ SETUP_STARTER = function()
 
     vim.api.nvim_buf_set_lines(buf_id, 0, -1, false, H.starter_content())
 
-    vim.cmd [[syntax match StarterVerse '^ \+\([^"]\+\)$']]
-    vim.cmd [[syntax match StarterQuote '^ \+\(.\+\)$']]
-    vim.cmd [[syntax match StarterItem '^ \+\(.\+\)$']]
+    vim.cmd [[syntax match StarterVerse '^ *\([^"]\+\)$']]
+    vim.cmd [[syntax match StarterQuote '^ *\(.\+\)$']]
+    vim.cmd [[syntax match StarterItem '^ *\(.\+\)$']]
     vim.cmd [[syntax match StarterKey '\[.\]' containedin=StarterItem]]
 
     for _, item in ipairs(H.items) do
