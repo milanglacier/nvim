@@ -78,7 +78,7 @@ return {
     },
     {
         'junegunn/vim-easy-align',
-        event = 'VeryLazy',
+        keys = { '<Plug>(EasyAlign)' },
         init = function()
             keymap('x', 'ga', '<Plug>(EasyAlign)', {})
             keymap('n', 'ga', '<Plug>(EasyAlign)', {})
@@ -113,7 +113,6 @@ return {
     },
     {
         'gbprod/substitute.nvim',
-        event = 'VeryLazy',
         init = function()
             keymap('n', 'gs', "<cmd>lua require('substitute').operator()<cr>", { noremap = true })
             keymap('n', 'gss', "<cmd>lua require('substitute').line()<cr>", { noremap = true })
@@ -160,7 +159,7 @@ return {
     },
     {
         'monaqa/dial.nvim',
-        event = 'VeryLazy',
+        keys = { '<Plug>(dial-increment)', '<Plug>(dial-decrement)' },
         init = function()
             keymap('n', '<C-a>', '<Plug>(dial-increment)', { desc = 'increment' })
             keymap('n', '<C-x>', '<Plug>(dial-decrement)', { desc = 'decrement' })
@@ -198,14 +197,14 @@ return {
     -- text editing tools only for nvim
     {
         'norcalli/nvim-colorizer.lua',
-        event = 'VeryLazy',
+        event = 'LazyFile',
         config = function()
             require('colorizer').setup()
         end,
     },
     {
         'folke/todo-comments.nvim',
-        event = 'VeryLazy',
+        event = 'LazyFile',
         config = function()
             require('todo-comments').setup {}
         end,
