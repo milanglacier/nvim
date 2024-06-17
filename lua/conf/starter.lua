@@ -169,7 +169,6 @@ local function warmup()
 end
 
 function H.starter_content()
-    warmup()
     local header = H.header_verse[math.random(1, #H.header_verse)]
     local footer = H.foot_verse[math.random(1, #H.foot_verse)]
     local lines_between_sections = lines_between_sections()
@@ -206,6 +205,7 @@ function H.starter_content()
 end
 
 SETUP_STARTER = function()
+    warmup()
     -- copied from mini.starter
     local buf_id = api.nvim_get_current_buf()
 
