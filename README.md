@@ -369,6 +369,7 @@ to find all keymaps.
 | n    | `<Leader>mdu` | Set working dir up one level from current working dir  |
 | n    | `<Leader>mc`  | Pick a color scheme                                    |
 | n    | `<Leader>th`  | Toggle highlight serach (see `:h hlsearch`)            |
+| n    | `<Leader>tn`  | Toggle display line number                             |
 | n    | `<Leader>tH`  | Toggle cmdheight between 0 or 1 (see `:h cmdheight`)   |
 | n    | `<Leader>tw`  | Toggle wrap (see `:h wrap`)                            |
 | n    | `<Leader>tc`  | set `conceallevel` between 0 and 2 (see `:h wrap`)     |

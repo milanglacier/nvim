@@ -72,6 +72,7 @@ keymap('n', '<Leader>bn', [[:bnext<CR>]], opts_desc 'buffer previous')
 
 keymap('n', '<Leader>th', '<cmd>nohlsearch<CR>', opts_desc 'toggle hlsearch')
 keymap('n', '<Leader>tw', '<cmd>lua vim.wo.wrap = not vim.wo.wrap<CR>', opts_desc 'toggle wrap')
+keymap('n', '<Leader>tn', '<cmd>lua vim.wo.number = not vim.wo.number<CR>', opts_desc 'toggle display linenumber')
 keymap(
     'n',
     '<Leader>tc',
