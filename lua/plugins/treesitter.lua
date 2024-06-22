@@ -33,6 +33,7 @@ return {
                     'cpp',
                     'lua',
                     'vim',
+                    'vimdoc',
                     'yaml',
                     'toml',
                     'json',
