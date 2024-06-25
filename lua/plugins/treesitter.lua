@@ -41,7 +41,6 @@ return {
                     'css',
                     'javascript',
                     'regex',
-                    'latex',
                     'markdown',
                     'go',
                     'sql',

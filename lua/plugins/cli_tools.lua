@@ -305,6 +305,7 @@ return {
     },
     {
         'iamcco/markdown-preview.nvim',
+        enabled = false,
         build = 'cd app && npm install',
         ft = { 'markdown.pandoc', 'markdown', 'rmd', 'quarto' },
         init = function()
@@ -339,6 +340,7 @@ return {
     },
     {
         'Exafunction/codeium.nvim',
+        enabled = false,
         init = function()
             CODEIUM_IS_ENABLED = true
 
