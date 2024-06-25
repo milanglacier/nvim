@@ -217,7 +217,7 @@ autocmd('LspAttach', {
 -- fetched from cmp-nvim-lsp when lspconfig is loaded
 local capabilities
 
-local enabled_lsps = { 'r', 'python', 'bash', 'cpp', 'vim', 'nvim', 'pinyin', 'sql', 'latex', 'go', 'rust', 'efm' }
+local enabled_lsps = {}
 
 local lsp_configs = {}
 
