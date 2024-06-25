@@ -21,16 +21,12 @@ local git_workspace_diff_setup = function()
 
                 for _, i in pairs(changes_raw) do
                     if i:find 'change' then
-                        changes = changes .. ' ' .. i:match '(%d+)'
+                        changes = changes .. 'Φ ' .. i:match '(%d+)'
                     elseif i:find 'insertion' then
                         changes = changes .. ' +' .. i:match '(%d+)'
                     elseif i:find 'deletion' then
                         changes = changes .. ' -' .. i:match '(%d+)'
                     end
-                end
-
-                if changes ~= '' then
-                    changes = ' ' .. changes
                 end
 
                 M.git_workspace_diff[cwd] = changes
@@ -109,7 +105,7 @@ M.winbar_symbol = function()
 
         ts_status = require('nvim-treesitter').statusline {
             indicator_size = size,
-            separator = '  ',
+            separator = ' | ',
         } or ''
 
         if ts_status ~= nil and ts_status ~= '' then

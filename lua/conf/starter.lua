@@ -26,68 +26,68 @@ local H = {}
 H.header_verse = {
     {
         [[Bright star, would I were steadfast as thee art!]],
-        [[ John Keats]],
+        [[◈ John Keats]],
     },
     {
         [[For Clattering Parrots to launch their fleet at sunrise]],
         [[For April to ignite the African violet]],
-        [[ Derek Walcott]],
+        [[◈ Derek Walcott]],
     },
     {
         [[In these poinsettia meadows of her tides,—]],
         [[Adagios of islands, O my Prodigal]],
         [[Complete the dark confessions her veins spell.]],
-        [[ Hart Crane]],
+        [[◈ Hart Crane]],
     },
     {
         [[帝子降兮北渚，目眇眇兮愁予，]],
         [[袅袅兮秋风，洞庭波兮木叶下。]],
-        [[ 《湘夫人》]],
+        [[◈ 《湘夫人》]],
     },
     {
         [[美人迈兮音尘阙，隔千里兮共明月。]],
         [[临风叹兮将焉歇，川路长兮不可越！]],
-        [[ 《月赋》]],
+        [[◈ 《月赋》]],
     },
     {
         [[浴兰汤兮沐芳，华采衣兮若英。]],
         [[灵连蜷兮既留，烂昭昭兮未央。]],
         [[蹇将憺兮寿宫，与日月兮齐光。]],
-        [[ 《云中君》]],
+        [[◈ 《云中君》]],
     },
 }
 
 H.foot_verse = {
     {
         [[Whispers antiphonal in the azure swing...]],
-        [[ Hart Crane]],
+        [[◈ Hart Crane]],
     },
     {
         [[In the drumming world that dampens your tired eyes]],
         [[Behind two clouding lenses, sunrise, sunset,]],
         [[The quiet ravage of diabetes.]],
-        [[ Derek Walcott]],
+        [[◈ Derek Walcott]],
     },
     {
         [[What words]],
         [[Can strangle this deaf moonlight? For we]],
         [[Are overtaken.]],
-        [[ Hart Crane]],
+        [[◈ Hart Crane]],
     },
     {
         [[搴汀洲兮杜若，将以遗兮远者。]],
         [[时不可兮骤得，聊逍遥兮容与！]],
-        [[ 《湘夫人》]],
+        [[◈ 《湘夫人》]],
     },
     {
         [[月既没兮露欲晞，岁方晏兮无与归。]],
         [[佳期可以还，微霜沾人衣。]],
-        [[ 《月赋》]],
+        [[◈ 《月赋》]],
     },
     {
         [[雷填填兮雨冥冥，猨啾啾兮狖夜鸣。]],
         [[风飒飒兮木萧萧，思公子兮徒离忧。]],
-        [[ 《山鬼》]],
+        [[◈ 《山鬼》]],
     },
 }
 
@@ -103,7 +103,7 @@ local function new_verse()
     vim.api.nvim_buf_set_lines(buf_id, 0, -1, false, content)
 end
 
-local item_sign = ' '
+local item_sign = '⦾ '
 
 -- The absolute symmetry is in fact less aesthetically pleasing than a slight
 -- leftward skew.
@@ -246,9 +246,9 @@ SETUP_STARTER = function()
 
     vim.api.nvim_buf_set_lines(buf_id, 0, -1, false, H.starter_content())
 
-    vim.cmd [[syntax match StarterVerse '^ *\([^"]\+\)$']]
-    vim.cmd [[syntax match StarterQuote '^ *\(.\+\)$']]
-    vim.cmd [[syntax match StarterItem '^ *\(.\+\)$']]
+    vim.cmd [[syntax match StarterVerse '^ *\([^"◈⦾]\+\)$']]
+    vim.cmd [[syntax match StarterQuote '^ *\(◈.\+\)$']]
+    vim.cmd [[syntax match StarterItem '^ *\(⦾.\+\)$']]
     vim.cmd [[syntax match StarterKey '\[.\]' containedin=StarterItem]]
 
     for _, item in ipairs(H.items) do

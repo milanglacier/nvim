@@ -15,9 +15,6 @@ return {
 
             local fileformat = function()
                 local ret, _ = vim.bo.fileformat:gsub('^unix$', '')
-                if ret == 'dos' then
-                    ret = ''
-                end
                 return ret
             end
 
@@ -30,17 +27,17 @@ return {
                 -- don't use pattern matching, just plain match
                 if vim.fn.expand('%:p'):find(vim.fn.getcwd(), nil, true) then
                     -- if the absolute path of current file is a sub directory of cwd
-                    return ' ' .. vim.fn.fnamemodify('%', ':p:h:t')
+                    return '[P] ' .. vim.fn.fnamemodify('%', ':p:h:t')
                 else
                     return ''
                 end
             end
 
             local file_status_symbol = {
-                modified = '',
-                readonly = '',
-                new = '',
-                unnamed = '󰽤',
+                modified = '[*]',
+                readonly = '[X]',
+                new = '[+]',
+                unnamed = '[%]',
             }
 
             local lualine = require 'lualine'
@@ -86,10 +83,10 @@ return {
 
             lualine.setup {
                 options = {
-                    icons_enabled = true,
+                    icons_enabled = false,
                     theme = 'auto',
                     component_separators = { left = '', right = '' },
-                    section_separators = { left = '', right = '' },
+                    section_separators = { left = '|', right = '|' },
                     always_divide_middle = false,
                     disabled_filetypes = {
                         winbar = {
@@ -125,9 +122,6 @@ return {
                     lualine_z = { 'location' },
                 },
                 tabline = {
-                    lualine_a = {
-                        { 'filetype', icon_only = true },
-                    },
                     lualine_b = {
                         { 'tabs', mode = 2, max_length = vim.o.columns },
                         {
@@ -143,7 +137,6 @@ return {
                 },
                 winbar = {
                     lualine_a = {
-                        { 'filetype', icon_only = true },
                         { 'filename', path = 0, symbols = file_status_symbol },
                     },
                     lualine_c = { require('conf.ui').winbar_symbol },
@@ -159,7 +152,6 @@ return {
                 },
                 inactive_winbar = {
                     lualine_a = {
-                        { 'filetype', icon_only = true },
                         { 'filename', path = 0, symbols = file_status_symbol },
                     },
                     lualine_x = {
@@ -330,6 +322,7 @@ return {
     },
     {
         'kyazdani42/nvim-web-devicons',
+        enabled = false,
         config = function()
             return require('nvim-web-devicons').setup {}
         end,
