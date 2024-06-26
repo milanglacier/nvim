@@ -78,7 +78,7 @@ return {
     },
     {
         'junegunn/vim-easy-align',
-        keys = { '<Plug>(EasyAlign)' },
+        keys = { { '<Plug>(EasyAlign)', mode = { 'n', 'v' } } },
         init = function()
             keymap('x', 'ga', '<Plug>(EasyAlign)', {})
             keymap('n', 'ga', '<Plug>(EasyAlign)', {})
@@ -159,7 +159,7 @@ return {
     },
     {
         'monaqa/dial.nvim',
-        keys = { '<Plug>(dial-increment)', '<Plug>(dial-decrement)' },
+        keys = { { '<Plug>(dial-increment)', mode = { 'n', 'v' } }, { '<Plug>(dial-decrement)', mode = { 'n', 'v' } } },
         init = function()
             keymap('n', '<C-a>', '<Plug>(dial-increment)', { desc = 'increment' })
             keymap('n', '<C-x>', '<Plug>(dial-decrement)', { desc = 'decrement' })
