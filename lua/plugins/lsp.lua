@@ -355,8 +355,8 @@ end
 
 vim.fn.sign_define('DiagnosticSignError', { text = '✗', texthl = 'DiagnosticSignError' })
 vim.fn.sign_define('DiagnosticSignWarn', { text = '!', texthl = 'DiagnosticSignWarn' })
-vim.fn.sign_define('DiagnosticSignInformation', { text = '󰋽', texthl = 'DiagnosticSignInfo' })
-vim.fn.sign_define('DiagnosticSignHint', { text = '', texthl = 'DiagnosticSignHint' })
+vim.fn.sign_define('DiagnosticSignInformation', { text = 'I', texthl = 'DiagnosticSignInfo' })
+vim.fn.sign_define('DiagnosticSignHint', { text = 'H', texthl = 'DiagnosticSignHint' })
 
 local has_virtual_text = false
 local has_underline = false
