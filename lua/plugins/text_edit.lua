@@ -206,7 +206,8 @@ return {
         'folke/todo-comments.nvim',
         event = 'LazyFile',
         config = function()
-            require('todo-comments').setup {}
+            -- don't show icons at status column
+            require('todo-comments').setup { signs = false }
         end,
     },
 }
