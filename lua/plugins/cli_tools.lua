@@ -64,7 +64,7 @@ return {
     },
     {
         'milanglacier/yarepl.nvim',
-        cmd = { 'REPLStart' },
+        event = 'VeryLazy',
         config = function()
             require('yarepl').setup {
                 wincmd = function(bufnr, name)
@@ -86,25 +86,9 @@ return {
                     end
                 end,
             }
-
-            require('telescope').load_extension 'REPLShow'
         end,
         init = function()
             vim.g.REPL_use_floatwin = 0
-
-            local function run_cmd_with_count(cmd)
-                return function()
-                    vim.cmd(string.format('%d%s', vim.v.count, cmd))
-                end
-            end
-
-            local function partial_cmd_with_count_expr(cmd)
-                return function()
-                    -- <C-U> is equivalent to \21, we want to clear the range before
-                    -- next input to ensure the count is recognized correctly.
-                    return ':\21' .. vim.v.count .. cmd
-                end
-            end
 
             command('REPLToggleFloatWin', function()
                 vim.g.REPL_use_floatwin = vim.g.REPL_use_floatwin == 1 and 0 or 1
@@ -114,37 +98,28 @@ return {
                 desc = 'Toggle float win for REPL',
             })
 
-            keymap('n', '<Leader>cs', '', {
-                callback = run_cmd_with_count 'REPLStart aichat',
+            keymap('n', '<Leader>cs', '<Plug>(REPLStart-aichat)', {
                 desc = 'Start an Aichat REPL',
             })
-            keymap('n', '<Leader>cf', '', {
-                callback = run_cmd_with_count 'REPLFocus aichat',
+            keymap('n', '<Leader>cf', '<Plug>(REPLFocus-aichat)', {
                 desc = 'Focus on Aichat REPL',
             })
-            keymap('n', '<Leader>ch', '', {
-                callback = run_cmd_with_count 'REPLHide aichat',
+            keymap('n', '<Leader>ch', '<Plug>(REPLHide-aichat)', {
                 desc = 'Hide Aichat REPL',
             })
-            keymap('v', '<Leader>cr', '', {
-                callback = run_cmd_with_count 'REPLSendVisual aichat',
+            keymap('v', '<Leader>cr', '<Plug>(REPLSendVisual-aichat)', {
                 desc = 'Send visual region to Aichat',
             })
-            keymap('n', '<Leader>crr', '', {
-                callback = run_cmd_with_count 'REPLSendLine aichat',
+            keymap('n', '<Leader>crr', '<Plug>(REPLSendLine-aichat)', {
                 desc = 'Send lines to Aichat',
             })
-            keymap('n', '<Leader>cr', '', {
-                callback = run_cmd_with_count 'REPLSendOperator aichat',
-                desc = 'Send current line to Aichat',
+            keymap('n', '<Leader>cr', '<Plug>(REPLSendOperator-aichat)', {
+                desc = 'Send Operator to Aichat',
             })
-            keymap('n', '<Leader>ce', '', {
-                callback = partial_cmd_with_count_expr 'REPLExec $aichat ',
+            keymap('n', '<Leader>ce', '<Plug>(REPLExec-aichat)', {
                 desc = 'Execute command in aichat',
-                expr = true,
             })
-            keymap('n', '<Leader>cq', '', {
-                callback = run_cmd_with_count 'REPLClose aichat',
+            keymap('n', '<Leader>cq', '<Plug>(REPLClose-aichat)', {
                 desc = 'Quit Aichat',
             })
             keymap('n', '<Leader>cc', '<CMD>REPLCleanup<CR>', {
@@ -160,7 +135,6 @@ return {
                 ['markdown.pandoc'] = 'radian',
                 python = 'ipython',
                 sh = 'bash',
-                REPL = '',
             }
 
             autocmd('FileType', {
@@ -169,40 +143,34 @@ return {
                 desc = 'set up REPL keymap',
                 callback = function()
                     local repl = ft_to_repl[vim.bo.filetype]
-                    bufmap(0, 'n', '<LocalLeader>rs', '', {
-                        callback = run_cmd_with_count('REPLStart ' .. repl),
+                    repl = repl and ('-' .. repl) or ''
+
+                    bufmap(0, 'n', '<LocalLeader>rs', string.format('<Plug>(REPLStart%s)', repl), {
                         desc = 'Start an REPL',
                     })
-                    bufmap(0, 'n', '<LocalLeader>rf', '', {
-                        callback = run_cmd_with_count 'REPLFocus',
+                    bufmap(0, 'n', '<LocalLeader>rf', '<Plug>(REPLFocus)', {
                         desc = 'Focus on REPL',
                     })
                     bufmap(0, 'n', '<LocalLeader>rv', '<CMD>Telescope REPLShow<CR>', {
                         desc = 'View REPLs in telescope',
                     })
-                    bufmap(0, 'n', '<LocalLeader>rh', '', {
-                        callback = run_cmd_with_count 'REPLHide',
+                    bufmap(0, 'n', '<LocalLeader>rh', '<Plug>(REPLHide)', {
                         desc = 'Hide REPL',
                     })
-                    bufmap(0, 'v', '<LocalLeader>s', '', {
-                        callback = run_cmd_with_count 'REPLSendVisual',
+                    bufmap(0, 'v', '<LocalLeader>s', '<Plug>(REPLSendVisual)', {
                         desc = 'Send visual region to REPL',
                     })
-                    bufmap(0, 'n', '<LocalLeader>ss', '', {
-                        callback = run_cmd_with_count 'REPLSendLine',
+                    bufmap(0, 'n', '<LocalLeader>ss', '<Plug>(REPLSendLine)', {
                         desc = 'Send line to REPL',
                     })
-                    bufmap(0, 'n', '<LocalLeader>s', '', {
-                        callback = run_cmd_with_count 'REPLSendOperator',
+                    bufmap(0, 'n', '<LocalLeader>s', '<Plug>(REPLSendOperator)', {
                         desc = 'Send current line to REPL',
                     })
-                    bufmap(0, 'n', '<LocalLeader>re', '', {
-                        callback = partial_cmd_with_count_expr 'REPLExec ',
+                    bufmap(0, 'n', '<LocalLeader>re', '<Plug>(REPLExec)', {
                         desc = 'Execute command in REPL',
                         expr = true,
                     })
-                    bufmap(0, 'n', '<LocalLeader>rq', '', {
-                        callback = run_cmd_with_count 'REPLClose',
+                    bufmap(0, 'n', '<LocalLeader>rq', '<Plug>(REPLClose)', {
                         desc = 'Quit REPL',
                     })
                     bufmap(0, 'n', '<LocalLeader>rc', '<CMD>REPLCleanup<CR>', {
@@ -211,8 +179,7 @@ return {
                     bufmap(0, 'n', '<LocalLeader>rS', '<CMD>REPLSwap<CR>', {
                         desc = 'Swap REPLs.',
                     })
-                    bufmap(0, 'n', '<LocalLeader>r?', '', {
-                        callback = run_cmd_with_count 'REPLStart',
+                    bufmap(0, 'n', '<LocalLeader>r?', '<Plug>(REPLStart)', {
                         desc = 'Start an REPL from available REPL metas',
                     })
                     bufmap(0, 'n', '<LocalLeader>ra', '<CMD>REPLAttachBufferToREPL<CR>', {
