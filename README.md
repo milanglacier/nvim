@@ -43,7 +43,7 @@
     - [Terminal emulator keymaps](#terminal-emulator-keymaps)
     - [Git keymaps](#git-keymaps)
     - [Ripgrep keymaps](#ripgrep-keymaps)
-    - [Codeium keymaps](#codeium-keymaps)
+    - [Minuet keymaps](#minuet-keymaps)
   - [REPL keymaps](#repl-keymaps)
   - [Treesitter keymaps](#treesitter-keymaps)
     - [Syntax based text objects keymaps](#syntax-based-text-objects-keymaps)
@@ -568,13 +568,13 @@ The following keymaps rely on [nvim-spectre](https://github.com/nvim-pack/nvim-s
 | ---- | ------------ | ------------------------------------------------------------------------------------------------------ |
 | nv   | `<Leader>fR` | Open ripgrep search panel (to show searched results of selected text if on visual mode) in the project |
 
-### Codeium keymaps
+### Minuet keymaps
 
-The following keymaps rely on [codeium](https://github.com/Exafunction/codeium.nvim)
+The following keymaps rely on `Minuet`, an LLM-powered completion source.
 
-| Mode | LHS          | RHS/Functionality                  |
-| ---- | ------------ | ---------------------------------- |
-| n    | `<Leader>tg` | Toggle auto-suggestion for codeium |
+| Mode | LHS     | RHS/Functionality          |
+| ---- | ------- | -------------------------- |
+| n    | `<M-y>` | Invoke `minuet` completion |
 
 ## REPL keymaps
 
