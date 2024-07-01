@@ -1,22 +1,4 @@
-local M = {
-    provider = 'codestral',
-    context_window = 12800, -- the maximum total characters of the context before and after cursor
-    context_ratio = 0.6,
-    -- when the total characters exceed the context window, the ratio of
-    -- context before cursor and after cursor, the larger the ratio the more
-    -- context before cursor will be used.
-    throttle = 1000, -- only send the request every x milliseconds, use 0 to disable throttle.
-    notify = true, -- show notification when request is sent
-    provider_options = {
-        codestral = {
-            model = 'codestral-latest',
-            max_tokens = 128,
-            n_completions = 1, -- the number of completions request to send
-            stop = { '\n\n' }, -- the identifier to stop the completion generation
-        },
-        openai = {
-            model = 'gpt-4o',
-            system = [[
+local default_prompt = [[
 You are the backend of an AI-powered code completion engine. Your task is to
 provide code suggestions based on the user's input. The user' s code will be
 enclosed in markers:
@@ -65,7 +47,33 @@ Example output:
 "    return a"
 ]
 ]
-]],
+]]
+
+local M = {
+    provider = 'claude',
+    context_window = 12800, -- the maximum total characters of the context before and after cursor
+    context_ratio = 0.6,
+    -- when the total characters exceed the context window, the ratio of
+    -- context before cursor and after cursor, the larger the ratio the more
+    -- context before cursor will be used.
+    throttle = 1000, -- only send the request every x milliseconds, use 0 to disable throttle.
+    notify = true, -- show notification when request is sent
+    provider_options = {
+        codestral = {
+            model = 'codestral-latest',
+            max_tokens = 128,
+            n_completions = 1, -- the number of completions request to send
+            stop = { '\n\n' }, -- the identifier to stop the completion generation
+        },
+        openai = {
+            model = 'gpt-4o',
+            system = default_prompt,
+        },
+        claude = {
+            max_tokens = 1024,
+            model = 'claude-3-5-sonnet-20240620',
+            system = default_prompt,
+            stop = nil,
         },
     },
 }
