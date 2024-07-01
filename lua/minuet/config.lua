@@ -70,7 +70,7 @@ local M = {
             system = default_prompt,
         },
         claude = {
-            max_tokens = 1024,
+            max_tokens = 512,
             model = 'claude-3-5-sonnet-20240620',
             system = default_prompt,
             stop = nil,
