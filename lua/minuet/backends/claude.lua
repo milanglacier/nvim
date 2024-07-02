@@ -56,6 +56,8 @@ M.complete = function(context_before_cursor, context_after_cursor, callback)
             'x-api-key: ' .. vim.env.ANTHROPIC_API_KEY,
             '-H',
             'anthropic-version: 2023-06-01',
+            '--max-time',
+            config.request_timeout,
             '-d',
             '@' .. data_file,
         },

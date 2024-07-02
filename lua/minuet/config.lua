@@ -63,7 +63,7 @@ local claude_guidelines =
     string.format('%s\n%s', default_guidelines, '6. Keep each completion option concise, limiting it to several lines.')
 
 local M = {
-    provider = 'openai',
+    provider = 'codestral',
     context_window = 12800, -- the maximum total characters of the context before and after cursor
     context_ratio = 0.6,
     -- when the total characters exceed the context window, the ratio of
@@ -71,6 +71,7 @@ local M = {
     -- context before cursor will be used.
     throttle = 1000, -- only send the request every x milliseconds, use 0 to disable throttle.
     notify = true, -- show notification when request is sent
+    request_timeout = 3, -- the timeout of the request in seconds
     provider_options = {
         codestral = {
             model = 'codestral-latest',

@@ -49,6 +49,8 @@ M.complete = function(context_before_cursor, context_after_cursor, callback)
                 'Accept: application/json',
                 '-H',
                 'Authorization: Bearer ' .. vim.env.CODESTRAL_API_KEY,
+                '--max-time',
+                config.request_timeout,
                 '-d',
                 '@' .. data_file,
             },
