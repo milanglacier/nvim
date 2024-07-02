@@ -34,10 +34,19 @@ M.complete = function(context_before_cursor, context_after_cursor, callback)
         return
     end
 
-    local request_send = 0
     local items = {}
+    local request_complete = 0
+    local n_completions = config.provider_options.codestral.n_completions
+    local has_called_back = false
 
-    for _ = 1, config.provider_options.codestral.n_completions do
+    local function check_and_callback()
+        if request_complete >= n_completions and not has_called_back then
+            has_called_back = true
+            callback(items)
+        end
+    end
+
+    for _ = 1, n_completions do
         job:new({
             command = 'curl',
             args = {
@@ -56,14 +65,15 @@ M.complete = function(context_before_cursor, context_after_cursor, callback)
             },
             on_exit = vim.schedule_wrap(function(response, exit_code)
                 -- Increment the request_send counter
-                request_send = request_send + 1
+                request_complete = request_complete + 1
 
                 os.remove(data_file)
+
                 if exit_code ~= 0 then
                     if config.notify then
                         vim.notify('An error occurred when sending request', vim.log.levels.INFO)
                     end
-                    callback()
+                    check_and_callback()
                     return
                 end
 
@@ -73,7 +83,7 @@ M.complete = function(context_before_cursor, context_after_cursor, callback)
                     if config.notify then
                         vim.notify('Failed to parse Codestral API response', vim.log.levels.INFO)
                     end
-                    callback()
+                    check_and_callback()
                     return
                 end
 
@@ -81,7 +91,7 @@ M.complete = function(context_before_cursor, context_after_cursor, callback)
                     if config.notify then
                         vim.notify('No response from Codestral API', vim.log.levels.INFO)
                     end
-                    callback()
+                    check_and_callback()
                     return
                 end
 
@@ -91,15 +101,13 @@ M.complete = function(context_before_cursor, context_after_cursor, callback)
                     if config.notify then
                         vim.notify('Failed to parse Codestral response at choices.message.content', vim.log.levels.INFO)
                     end
-                    callback()
+                    check_and_callback()
                     return
                 end
 
                 table.insert(items, result)
 
-                if request_send >= config.provider_options.codestral.n_completions then
-                    callback(items)
-                end
+                check_and_callback()
             end),
         }):start()
     end
