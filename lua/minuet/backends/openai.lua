@@ -62,7 +62,7 @@ M.complete = function(context_before_cursor, context_after_cursor, callback)
             os.remove(data_file)
             if exit_code ~= 0 then
                 if config.notify then
-                    vim.notify('An error occurred when sending request', vim.log.levels.INFO)
+                    vim.notify(string.format('Request failed with exit code %d', exit_code), vim.log.levels.ERROR)
                 end
                 callback()
                 return
