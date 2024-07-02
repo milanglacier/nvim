@@ -91,13 +91,7 @@ return {
             require('minuet').setup {}
 
             local my_mappings = {
-                ['<A-y>'] = cmp.mapping(cmp.mapping.complete {
-                    config = {
-                        sources = cmp.config.sources {
-                            { name = 'minuet' },
-                        },
-                    },
-                }),
+                ['<A-y>'] = require('minuet').make_cmp_map(),
                 ['<C-b>'] = cmp.mapping.scroll_docs(-4),
                 ['<C-f>'] = cmp.mapping.scroll_docs(4),
                 ['<A-i>'] = cmp.mapping.complete(),
