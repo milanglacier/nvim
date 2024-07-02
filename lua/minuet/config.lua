@@ -25,6 +25,7 @@ local default_example = [[
 
 
 Example input:
+```
 <beginCode>
 # language: python
 def fib(n):
@@ -32,8 +33,10 @@ def fib(n):
 
 fib(5)
 <endCode>
+```
 
 Example output:
+```
 [
 [
 "    '''",
@@ -53,13 +56,14 @@ Example output:
 "    return a"
 ]
 ]
+```
 ]]
 
 local claude_guidelines =
     string.format('%s\n%s', default_guidelines, '6. Keep each completion option concise, limiting it to several lines.')
 
 local M = {
-    provider = 'claude',
+    provider = 'openai',
     context_window = 12800, -- the maximum total characters of the context before and after cursor
     context_ratio = 0.6,
     -- when the total characters exceed the context window, the ratio of
