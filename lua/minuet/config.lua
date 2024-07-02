@@ -7,6 +7,9 @@ enclosed in markers:
 - `<cursorPosition>`: Current cursor location
 - `<endCode>`: End of the code context
 
+]]
+
+local default_guidelines = [[
 Guidelines:
 1. Offer completions after the `<cursorPosition>` marker.
 2. Make sure you have maintained the user's existing whitespace and indentation. This is REALLY IMPORTANT!
@@ -16,7 +19,10 @@ representing a single completion option. Make sure it is a plain list without
 keys.
 5. The returned message will be further parsed and processed. Do not
    include additional comments or markdown code block fences. Return the json
-   result directly.
+   result directly.]]
+
+local default_example = [[
+
 
 Example input:
 <beginCode>
@@ -49,6 +55,9 @@ Example output:
 ]
 ]]
 
+local claude_guidelines =
+    string.format('%s\n%s', default_guidelines, '6. Keep each completion option concise, limiting it to several lines.')
+
 local M = {
     provider = 'claude',
     context_window = 12800, -- the maximum total characters of the context before and after cursor
@@ -67,12 +76,12 @@ local M = {
         },
         openai = {
             model = 'gpt-4o',
-            system = default_prompt,
+            system = default_prompt .. default_guidelines .. default_example,
         },
         claude = {
             max_tokens = 512,
             model = 'claude-3-5-sonnet-20240620',
-            system = default_prompt,
+            system = default_prompt .. claude_guidelines .. default_example,
             stop = nil,
         },
     },
