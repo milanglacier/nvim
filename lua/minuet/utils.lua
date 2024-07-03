@@ -41,20 +41,25 @@ function M.add_tab_comment()
         return ''
     end
 
+    local tab_comment
+
     if vim.bo.expandtab and vim.bo.softtabstop > 0 then
+        tab_comment = 'indentation: use ' .. vim.bo.softtabstop .. ' spaces for a tab'
+
         if vim.bo.commentstring == nil or vim.bo.commentstring == '' then
-            return '# tab width: ' .. vim.bo.expandtab .. 'spaces'
+            return '# ' .. tab_comment
         end
 
-        return string.format(vim.bo.commentstring, 'tab width ' .. vim.bo.softtabstop .. ' spaces')
+        return string.format(vim.bo.commentstring, tab_comment)
     end
 
     if not vim.bo.expandtab then
+        tab_comment = 'indentation: use \t for a tab'
         if vim.bo.commentstring == nil or vim.bo.commentstring == '' then
-            return '# use \t for a tab'
+            return '# ' .. tab_comment
         end
 
-        return string.format(vim.bo.commentstring, 'use \t for a tab')
+        return string.format(vim.bo.commentstring, tab_comment)
     end
 
     return ''

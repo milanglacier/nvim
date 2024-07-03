@@ -18,7 +18,8 @@ end
 
 M.complete = function(context_before_cursor, context_after_cursor, callback)
     local language = utils.add_language_comment()
-    context_before_cursor = language .. '\n' .. context_before_cursor
+    local tab = utils.add_tab_comment()
+    context_before_cursor = language .. '\n' .. tab .. '\n' .. context_before_cursor
 
     local data = {
         model = config.provider_options.codestral.model,
