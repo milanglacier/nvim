@@ -102,11 +102,7 @@ function M.get_context(cmp_context)
             lines_after = vim.fn.strcharpart(lines_after, 0, config.context_window - n_chars_before)
         elseif n_chars_after < config.context_window * 0.5 then
             -- at the very end of the file
-            if n_chars_before < config.context_window then
-                lines_before = vim.fn.strcharpart(lines_before, config.context_window - n_chars_before)
-            else
-                lines_before = vim.fn.strcharpart(lines_before, n_chars_before - config.context_window)
-            end
+            lines_before = vim.fn.strcharpart(lines_before, n_chars_before + n_chars_after - config.context_window)
         else
             -- at the middle of the file, use the context_ratio to determine the allocation
             lines_after =
