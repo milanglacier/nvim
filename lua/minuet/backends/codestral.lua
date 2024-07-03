@@ -42,7 +42,7 @@ M.complete = function(context_before_cursor, context_after_cursor, callback)
     local function check_and_callback()
         if request_complete >= n_completions and not has_called_back then
             has_called_back = true
-            callback(items)
+            callback(utils.list_dedup(items))
         end
     end
 
@@ -59,7 +59,7 @@ M.complete = function(context_before_cursor, context_after_cursor, callback)
                 '-H',
                 'Authorization: Bearer ' .. vim.env.CODESTRAL_API_KEY,
                 '--max-time',
-                config.request_timeout,
+                tostring(config.request_timeout),
                 '-d',
                 '@' .. data_file,
             },
