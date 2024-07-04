@@ -1,10 +1,10 @@
 {
-  "dial.nvim": { "branch": "master", "commit": "7af2daaaf933b0617ded0f78b49f4d5fc45f9f64" },
+  "dial.nvim": { "branch": "master", "commit": "750f802879c90ea51f92b68c35fa562ee575804a" },
   "dsf.vim": { "branch": "master", "commit": "ed09c22ed61d84881ea0a6599005bc52193a7d38" },
-  "lazy.nvim": { "branch": "main", "commit": "eb4957442e3182f051b0ae11da32e06d22c190e3" },
+  "lazy.nvim": { "branch": "main", "commit": "851b12034d1eb77acda84537805740923af3fab4" },
   "mason.nvim": { "branch": "main", "commit": "0950b15060067f752fde13a779a994f59516ce3d" },
-  "mini.nvim": { "branch": "main", "commit": "f1dd64cf2ac1b348bd440e59446abf680c7188d6" },
-  "nvim-treesitter": { "branch": "master", "commit": "9ebc589329083522f9594f408fc2652090b41139" },
+  "mini.nvim": { "branch": "main", "commit": "fc99446b05a83c5939d18789b60284fd1ed8e1e7" },
+  "nvim-treesitter": { "branch": "master", "commit": "173515a5d2be6e98c2996189f77ee5993620e2aa" },
   "nvim-treesitter-textobjects": { "branch": "master", "commit": "34867c69838078df7d6919b130c0541c0b400c47" },
   "plenary.nvim": { "branch": "master", "commit": "a3e3bc82a3f95c5ed0d7201546d5d2c19b20d683" },
   "substitute.nvim": { "branch": "main", "commit": "8b93e792747520b6490237b5b32963e256fbde24" },
@@ -17,5 +17,5 @@
   "vim-textobj-between": { "branch": "master", "commit": "fa7723c08b1f2d55e1a30ba720d2fd4db27cb1e8" },
   "vim-textobj-chainmember": { "branch": "main", "commit": "f14a151c42a14e18a298aec7d943a3c7f43161dc" },
   "vim-textobj-user": { "branch": "master", "commit": "41a675ddbeefd6a93664a4dc52f302fe3086a933" },
-  "yarepl.nvim": { "branch": "main", "commit": "5064c72d37533aa365c3da88694eed91e43e69da" }
+  "yarepl.nvim": { "branch": "main", "commit": "a027662f62676a0efde30a0f42a88b0a42881265" }
 }

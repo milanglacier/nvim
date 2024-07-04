@@ -21,7 +21,7 @@ vim.o.smartcase = true
 vim.o.linebreak = true
 vim.o.hidden = true
 vim.o.laststatus = 3
-vim.o.cmdheight = 1
+vim.o.cmdheight = 0
 
 vim.o.clipboard = 'unnamedplus'
 vim.o.completeopt = 'menu,menuone,noselect'
@@ -30,6 +30,10 @@ vim.o.completeopt = 'menu,menuone,noselect'
 vim.o.foldmethod = 'indent'
 vim.o.foldlevel = 99
 vim.o.foldlevelstart = 99
+
+-- increase the frequency of CursorHold events trigger. Which is useful for
+-- nvim-navic (winbar lsp symbol)
+vim.o.updatetime = 2000
 
 vim.g.mapleader = ' '
 vim.g.maplocalleader = [[  ]]

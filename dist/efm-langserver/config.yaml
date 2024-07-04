@@ -58,10 +58,6 @@ languages:
         - <<: *vale
         - <<: *prettierd
 
-    markdown.pandoc:
-        - <<: *vale
-        - <<: *prettierd
-
     rmd:
         - <<: *prettierd
 

@@ -16,6 +16,12 @@ require('lazy').setup {
     defaults = {
         lazy = true,
     },
+    pkg = {
+        -- I don't use plugins that need complex build system, especially
+        -- luarocks. The recent updates of lazy.nvim will build luarocks
+        -- automatically if the plugin has luarocks spec.
+        enabled = false,
+    },
     performance = {
         rtp = {
             disabled_plugins = {
