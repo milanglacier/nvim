@@ -72,11 +72,15 @@ local M = {
     throttle = 1000, -- only send the request every x milliseconds, use 0 to disable throttle.
     notify = true, -- show notification when request is sent
     request_timeout = 3, -- the timeout of the request in seconds
+    -- if completion item has multiple lines, create another completion item only containing its first line.
+    add_single_line_entry = true,
     provider_options = {
         codestral = {
             model = 'codestral-latest',
             max_tokens = 128,
-            n_completions = 1, -- the number of completions request to send
+            -- the number of completions request to send. Note that when
+            -- add_single_line_entry is true, there can be more items returned.
+            n_completions = 1,
             stop = { '\n\n' }, -- the identifier to stop the completion generation
         },
         openai = {

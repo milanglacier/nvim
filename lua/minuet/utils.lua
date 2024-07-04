@@ -121,6 +121,20 @@ function M.get_context(cmp_context)
     }
 end
 
+M.add_single_line_entry = function(list)
+    local newlist = {}
+
+    for _, item in ipairs(list) do
+        if type(item) == 'string' then
+            -- single line completion item should be preferred.
+            table.insert(newlist, item)
+            table.insert(newlist, 1, vim.split(item, '\n')[1])
+        end
+    end
+
+    return newlist
+end
+
 --- dedup the items in a list
 M.list_dedup = function(list)
     local hash = {}

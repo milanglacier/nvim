@@ -41,6 +41,10 @@ function M:complete(ctx, callback)
             return
         end
 
+        if config.add_single_line_entry then
+            data = utils.add_single_line_entry(data)
+        end
+
         data = utils.list_dedup(data)
 
         local items = {}
