@@ -3,27 +3,6 @@ local my_augroup = require('conf.builtin_extend').my_augroup
 
 return {
     {
-        'vim-pandoc/vim-pandoc-syntax',
-        event = 'VeryLazy',
-        dependencies = {
-            { 'vim-pandoc/vim-rmarkdown', branch = 'official-filetype' },
-            { 'quarto-dev/quarto-vim' },
-        },
-        init = function()
-            vim.filetype.add {
-                extension = {
-                    md = 'markdown.pandoc',
-                },
-            }
-
-            vim.g.r_indent_align_args = 0
-            vim.g.r_indent_ess_comments = 0
-            vim.g.r_indent_ess_compatible = 0
-
-            vim.g['pandoc#syntax#codeblocks#embeds#langs'] = { 'python', 'R=r', 'r', 'bash=sh', 'json' }
-        end,
-    },
-    {
         'lervag/vimtex',
         ft = 'tex',
         init = function()

@@ -290,7 +290,7 @@ return {
             })
 
             autocmd('FileType', {
-                pattern = { 'quarto', 'markdown', 'markdown.pandoc', 'rmd', 'python', 'r', 'sh', 'REPL' },
+                pattern = { 'quarto', 'markdown', 'rmd', 'python', 'r', 'sh', 'REPL' },
                 group = my_augroup,
                 desc = 'Add which key description for REPL',
                 callback = function()

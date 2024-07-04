@@ -132,13 +132,12 @@ return {
                 rmd = 'radian',
                 quarto = 'radian',
                 markdown = 'radian',
-                ['markdown.pandoc'] = 'radian',
                 python = 'ipython',
                 sh = 'bash',
             }
 
             autocmd('FileType', {
-                pattern = { 'quarto', 'markdown', 'markdown.pandoc', 'rmd', 'python', 'sh', 'REPL', 'r' },
+                pattern = { 'quarto', 'markdown', 'rmd', 'python', 'sh', 'REPL', 'r' },
                 group = my_augroup,
                 desc = 'set up REPL keymap',
                 callback = function()
@@ -273,9 +272,9 @@ return {
     {
         'iamcco/markdown-preview.nvim',
         build = 'cd app && npm install',
-        ft = { 'markdown.pandoc', 'markdown', 'rmd', 'quarto' },
+        ft = { 'markdown', 'rmd', 'quarto' },
         init = function()
-            vim.g.mkdp_filetypes = { 'markdown.pandoc', 'markdown', 'rmd', 'quarto' }
+            vim.g.mkdp_filetypes = { 'markdown', 'rmd', 'quarto' }
 
             keymap('n', '<Leader>mmp', '<cmd>MarkdownPreview<cr>', { noremap = true, desc = 'Misc Markdown Preview' })
             keymap(
