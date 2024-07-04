@@ -199,12 +199,9 @@ return {
         'HiPhish/rainbow-delimiters.nvim',
         event = 'LazyFile',
         config = function()
-            local rainbow_delimiters = require 'rainbow-delimiters'
             vim.g.rainbow_delimiters = {
                 query = {
                     latex = 'rainbow-blocks',
-                    markdown = rainbow_delimiters.strategy['local'],
-                    -- fix error when markdown has a yaml header.
                 },
             }
 
