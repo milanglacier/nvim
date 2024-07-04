@@ -22,7 +22,6 @@ M.sources = {
     },
     quarto = {
         {
-            { name = 'otter' },
             { name = 'nvim_lsp' },
             { name = 'luasnip' },
             { name = 'tags' },
