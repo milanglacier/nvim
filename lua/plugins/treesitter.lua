@@ -42,6 +42,7 @@ return {
                     'javascript',
                     'regex',
                     'markdown',
+                    'markdown_inline',
                     'go',
                     'sql',
                     'bash',
@@ -56,7 +57,7 @@ return {
                 highlight = {
                     enable = true,
                     disable = { 'sql', 'vimdoc' },
-                    additional_vim_regex_highlighting = { 'latex', 'markdown' },
+                    additional_vim_regex_highlighting = { 'latex' },
                 },
 
                 indent = {
@@ -180,7 +181,6 @@ return {
                     'json',
                     'tex',
                     'markdown',
-                    'markdown.pandoc',
                     'lua',
                     'query',
                     'vim',

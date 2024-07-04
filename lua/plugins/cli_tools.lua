@@ -132,13 +132,12 @@ return {
                 rmd = 'radian',
                 quarto = 'radian',
                 markdown = 'radian',
-                ['markdown.pandoc'] = 'radian',
                 python = 'ipython',
                 sh = 'bash',
             }
 
             autocmd('FileType', {
-                pattern = { 'quarto', 'markdown', 'markdown.pandoc', 'rmd', 'python', 'sh', 'REPL', 'r' },
+                pattern = { 'quarto', 'markdown', 'rmd', 'python', 'sh', 'REPL', 'r' },
                 group = my_augroup,
                 desc = 'set up REPL keymap',
                 callback = function()
@@ -274,9 +273,9 @@ return {
         'iamcco/markdown-preview.nvim',
         enabled = false,
         build = 'cd app && npm install',
-        ft = { 'markdown.pandoc', 'markdown', 'rmd', 'quarto' },
+        ft = { 'markdown', 'rmd', 'quarto' },
         init = function()
-            vim.g.mkdp_filetypes = { 'markdown.pandoc', 'markdown', 'rmd', 'quarto' }
+            vim.g.mkdp_filetypes = { 'markdown', 'rmd', 'quarto' }
 
             keymap('n', '<Leader>mmp', '<cmd>MarkdownPreview<cr>', { noremap = true, desc = 'Misc Markdown Preview' })
             keymap(
@@ -304,62 +303,5 @@ return {
             }
         end,
         event = 'VeryLazy',
-    },
-    {
-        'Exafunction/codeium.nvim',
-        enabled = false,
-        init = function()
-            CODEIUM_IS_ENABLED = true
-
-            keymap('n', '<Leader>tg', '', {
-                callback = function()
-                    local cmp = require 'cmp'
-                    local sources = vim.deepcopy(require('conf.cmp').sources)
-
-                    if CODEIUM_IS_ENABLED then
-                        for _, source in pairs(sources) do
-                            table.remove(source[1], 1)
-                        end
-
-                        require('cmp').setup {
-                            sources = cmp.setup {
-                                sources = cmp.config.sources(unpack(sources.global)),
-                            },
-                        }
-                        cmp.setup.filetype('quarto', {
-                            sources = cmp.config.sources(unpack(sources.quarto)),
-                        })
-
-                        cmp.setup.filetype({ 'r', 'rmd' }, {
-                            sources = cmp.config.sources(unpack(sources.r_rmd)),
-                        })
-
-                        CODEIUM_IS_ENABLED = false
-                        vim.notify 'codeium is disabled'
-                    else
-                        require('cmp').setup {
-                            sources = cmp.setup {
-                                sources = cmp.config.sources(unpack(sources.global)),
-                            },
-                        }
-                        cmp.setup.filetype('quarto', {
-                            sources = cmp.config.sources(unpack(sources.quarto)),
-                        })
-
-                        cmp.setup.filetype({ 'r', 'rmd' }, {
-                            sources = cmp.config.sources(unpack(sources.r_rmd)),
-                        })
-
-                        CODEIUM_IS_ENABLED = true
-                        vim.notify 'codeium is enabled'
-                    end
-                end,
-                desc = 'toggle codeium',
-            })
-        end,
-        event = 'InsertEnter',
-        config = function()
-            require('codeium').setup {}
-        end,
     },
 }

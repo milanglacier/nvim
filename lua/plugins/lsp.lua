@@ -306,7 +306,7 @@ end
 
 lsp_configs.pinyin = function()
     require('lspconfig').ds_pinyin_lsp.setup {
-        filetypes = { 'markdown', 'markdown.pandoc', 'rmd', 'quarto' },
+        filetypes = { 'markdown', 'rmd', 'quarto' },
         init_options = {
             db_path = os.getenv 'HOME' .. '/.local/share/ds-pinyin-lsp/dict.db3',
             completion_on = false, -- don't enable the completion by default
@@ -336,7 +336,6 @@ lsp_configs.efm = function()
             'python',
             'lua',
             'markdown',
-            'markdown.pandoc',
             'lua',
             'org',
             'sql',

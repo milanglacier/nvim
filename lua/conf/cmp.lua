@@ -5,7 +5,6 @@ local M = {}
 M.sources = {
     global = {
         {
-            { name = 'codeium' },
             { name = 'nvim_lsp' },
             { name = 'luasnip' },
             {
@@ -23,8 +22,6 @@ M.sources = {
     },
     quarto = {
         {
-            { name = 'codeium' },
-            { name = 'otter' },
             { name = 'nvim_lsp' },
             { name = 'luasnip' },
             { name = 'tags' },
@@ -36,7 +33,6 @@ M.sources = {
     },
     r_rmd = {
         {
-            { name = 'codeium' },
             { name = 'nvim_lsp' },
             { name = 'luasnip' },
             { name = 'tags' },

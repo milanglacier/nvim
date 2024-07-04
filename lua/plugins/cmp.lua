@@ -57,6 +57,7 @@ return {
                 }
 
                 local source_map = {
+                    minuet = '<M>',
                     orgmode = '<O>',
                     otter = '<o>',
                     nvim_lsp = '<L>',
@@ -87,7 +88,10 @@ return {
             local types = require 'cmp.types'
             local luasnip = require 'luasnip'
 
+            require('minuet').setup {}
+
             local my_mappings = {
+                ['<A-y>'] = require('minuet').make_cmp_map(),
                 ['<C-b>'] = cmp.mapping.scroll_docs(-4),
                 ['<C-f>'] = cmp.mapping.scroll_docs(4),
                 ['<A-i>'] = cmp.mapping.complete(),
