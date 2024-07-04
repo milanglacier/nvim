@@ -115,8 +115,6 @@ M.complete = function(context_before_cursor, context_after_cursor, callback)
                 end
             end
 
-            items = utils.list_dedup(items)
-
             callback(items)
         end),
     }):start()

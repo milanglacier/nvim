@@ -43,7 +43,7 @@ M.complete = function(context_before_cursor, context_after_cursor, callback)
     local function check_and_callback()
         if request_complete >= n_completions and not has_called_back then
             has_called_back = true
-            callback(utils.list_dedup(items))
+            callback(items)
         end
     end
 

@@ -41,6 +41,8 @@ function M:complete(ctx, callback)
             return
         end
 
+        data = utils.list_dedup(data)
+
         local items = {}
         for _, result in ipairs(data) do
             result = result:gsub('^%s*', '')

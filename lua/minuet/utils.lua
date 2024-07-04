@@ -121,12 +121,12 @@ function M.get_context(cmp_context)
     }
 end
 
---- remove item that are not string and dedup the items in a list
+--- dedup the items in a list
 M.list_dedup = function(list)
     local hash = {}
     local items_cleaned = {}
     for _, item in ipairs(list) do
-        if item and not hash[item] then
+        if type(item) == 'string' and not hash[item] then
             hash[item] = true
             table.insert(items_cleaned, item)
         end
