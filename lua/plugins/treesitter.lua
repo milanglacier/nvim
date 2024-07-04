@@ -43,6 +43,7 @@ return {
                     'regex',
                     'latex',
                     'markdown',
+                    'markdown_inline',
                     'go',
                     'sql',
                     'bash',
