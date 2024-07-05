@@ -57,7 +57,7 @@ M.complete = function(context_before_cursor, context_after_cursor, callback)
             '-H',
             'anthropic-version: 2023-06-01',
             '--max-time',
-            config.request_timeout,
+            tostring(config.request_timeout),
             '-d',
             '@' .. data_file,
         },

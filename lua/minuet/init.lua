@@ -8,7 +8,7 @@ function M.setup(config)
 end
 
 function M.make_cmp_map()
-    cmp = require 'cmp'
+    local cmp = require 'cmp'
     return cmp.mapping(cmp.mapping.complete {
         config = {
             sources = cmp.config.sources {

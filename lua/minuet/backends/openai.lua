@@ -54,7 +54,7 @@ M.complete = function(context_before_cursor, context_after_cursor, callback)
             '-H',
             'Authorization: Bearer ' .. vim.env.OPENAI_API_KEY,
             '--max-time',
-            config.request_timeout,
+            tostring(config.request_timeout),
             '-d',
             '@' .. data_file,
         },
