@@ -1,5 +1,3 @@
-local sources = require('conf.cmp').sources
-
 return {
     { 'hrsh7th/cmp-nvim-lsp' },
     {
@@ -88,6 +86,49 @@ return {
             local types = require 'cmp.types'
             local luasnip = require 'luasnip'
 
+            Cmp_sources = {
+                global = {
+                    {
+                        { name = 'nvim_lsp' },
+                        { name = 'luasnip' },
+                        {
+                            name = 'tags',
+                            option = {
+                                exact_match = true,
+                                current_buffer_only = true,
+                            },
+                        },
+                    },
+                    {
+                        { name = 'buffer' },
+                        { name = 'path' },
+                    },
+                },
+                quarto = {
+                    {
+                        { name = 'nvim_lsp' },
+                        { name = 'luasnip' },
+                        { name = 'tags' },
+                    },
+                    {
+                        { name = 'buffer' },
+                        { name = 'path' },
+                    },
+                },
+                r_rmd = {
+                    {
+                        { name = 'nvim_lsp' },
+                        { name = 'luasnip' },
+                        { name = 'tags' },
+                    },
+                    {
+                        -- { name = 'cmp_nvim_r' },
+                        { name = 'buffer' },
+                        { name = 'path' },
+                    },
+                },
+            }
+
             require('minuet').setup {}
 
             local my_mappings = {
@@ -140,7 +181,7 @@ return {
                     completion = cmp.config.window.bordered(border_opts),
                     documentation = cmp.config.window.bordered(border_opts),
                 },
-                sources = cmp.config.sources(unpack(sources.global)),
+                sources = cmp.config.sources(unpack(Cmp_sources.global)),
                 formatting = {
                     format = cmp_formatting,
                 },
@@ -209,11 +250,11 @@ return {
             })
 
             cmp.setup.filetype('quarto', {
-                sources = cmp.config.sources(unpack(sources.quarto)),
+                sources = cmp.config.sources(unpack(Cmp_sources.quarto)),
             })
 
             cmp.setup.filetype({ 'r', 'rmd' }, {
-                sources = cmp.config.sources(unpack(sources.r_rmd)),
+                sources = cmp.config.sources(unpack(Cmp_sources.r_rmd)),
             })
         end,
     },
