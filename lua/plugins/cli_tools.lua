@@ -217,7 +217,7 @@ return {
     },
     {
         'lewis6991/gitsigns.nvim',
-        cmd = 'Gitsigns',
+        event = 'LazyFile',
         init = function()
             keymap('n', '<Leader>gp', '<cmd>Gitsigns preview_hunk<CR>', { noremap = true })
             keymap('n', '<Leader>ga', '<cmd>Gitsigns<CR>', { noremap = true })
