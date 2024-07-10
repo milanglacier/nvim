@@ -10,12 +10,15 @@ return {
         event = { 'VeryLazy', 'LazyFile' },
         build = ':TSUpdate',
         lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
+        pin = '173515a5d2be6e98c2996189f77ee5993620e2aa',
         dependencies = {
             {
                 'nvim-treesitter/nvim-treesitter-textobjects',
+                pin = '34867c69838078df7d6919b130c0541c0b400c47',
             },
             {
                 'romgrk/nvim-treesitter-context',
+                pin = '1b9c756c0cad415f0a2661c858448189dd120c15',
                 config = function()
                     require('treesitter-context').setup {
                         enable = true,
@@ -197,6 +200,7 @@ return {
 
     {
         'HiPhish/rainbow-delimiters.nvim',
+        pin = '5c9660801ce345cd3835e1947c12b54290ab7e71',
         event = 'LazyFile',
         config = function()
             vim.g.rainbow_delimiters = {
