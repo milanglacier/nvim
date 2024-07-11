@@ -111,7 +111,7 @@ return {
                 pattern = TS_Parsers_Enabled_for_Fold,
                 group = my_augroup,
                 desc = 'Use treesitter fold',
-                command = 'setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr()',
+                command = 'setlocal foldmethod=expr foldexpr=v:lua.vim.treesitter.foldexpr()',
             })
         end,
     },
