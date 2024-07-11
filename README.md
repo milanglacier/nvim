@@ -662,12 +662,10 @@ Note: with no numerical argument, the REPL is default for the first REPL.
 
 ### Miscellenous
 
-| Mode | LHS        | RHS/Functionality                                                     |
-| ---- | ---------- | --------------------------------------------------------------------- |
-| n    | `<CR><CR>` | Start incremental selection (expand region) based on treesitter nodes |
-| v    | `<CR>`     | Expand the region based on scope                                      |
-| v    | `<Tab>`    | Expand the region based on treesitter node                            |
-| v    | `<S-Tab>`  | Shrink the region based on treesitter node                            |
+| Mode | LHS    | RHS/Functionality                                 |
+| ---- | ------ | ------------------------------------------------- |
+| v    | `<CR>` | Expand the region based on treesitter nodes range |
+| o    | `<CR>` | Expand the region based on treesitter node range  |
 
 ## Searcher keymaps
 
