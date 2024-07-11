@@ -240,9 +240,7 @@ return {
                 ['<Leader>m'] = { name = '+misc', mode = { 'n', 'v' } },
                 ['<Leader>mm'] = { name = '+markdown' },
                 ['<Leader>md'] = { name = '+change directory' },
-                [']<Space>'] = { name = '+Additional motions' },
                 [']<Space>l'] = { name = '+latex motions' },
-                ['[<Space>'] = { name = '+Additional motions' },
                 ['[<Space>l'] = { name = '+latex motions' },
             }
 

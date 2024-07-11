@@ -21,7 +21,7 @@ return {
 
             require('mini.ai').setup {
                 custom_textobjects = {
-                    -- See `echasnovski/mini.nvim #366`. Mini.ai does not handle quotes
+                    -- See `echasnovski/mini.nvim #366`. Mini.ai handle quotes
                     -- worse than vim's default.
                     ['"'] = false,
                     ["'"] = false,
