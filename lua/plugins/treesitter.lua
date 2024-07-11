@@ -67,7 +67,8 @@ return {
         -- lazy load configs are copied from lazyvim/plugins/treesitter.lua
         -- NOTE: This is a simplifed version. If in future there are bugs happened,
         -- will consult to lazyvim.
-        event = { 'VeryLazy', 'LazyFile' },
+        event = { 'LazyFile' },
+        cmd = { 'TSUpdate', 'TSInstall' },
         build = ':TSUpdate',
         lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
         branch = 'main',
