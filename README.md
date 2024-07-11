@@ -226,6 +226,7 @@ folder. To use this example configuration, simply copy the folder to
 ## general purpose deps
 
 1. `universal-ctags`
+2. `treesitter-cli*`: this is required for `nvim-treesitter` in `main` branch.
 
 # Keymaps
 

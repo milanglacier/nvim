@@ -69,6 +69,10 @@ return {
         lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
         branch = 'main',
         config = function()
+            if vim.fn.executable 'tree-sitter' == 0 then
+                vim.cmd [[MasonInstall tree-sitter-cli]]
+            end
+
             require('nvim-treesitter').setup {
                 ensure_installed = TS_Parsers,
                 auto_install = true,
