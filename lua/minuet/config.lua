@@ -1,6 +1,6 @@
 local default_prompt = [[
 You are the backend of an AI-powered code completion engine. Your task is to
-provide code suggestions based on the user's input. The user' s code will be
+provide code suggestions based on the user's input. The user's code will be
 enclosed in markers:
 
 - `<beginCode>`: Start of the code context
@@ -12,11 +12,12 @@ enclosed in markers:
 local default_guidelines = [[
 Guidelines:
 1. Offer completions after the `<cursorPosition>` marker.
-2. Make sure you have maintained the user's existing whitespace and indentation. This is REALLY IMPORTANT!
+2. Make sure you have maintained the user's existing whitespace and indentation.
+   This is REALLY IMPORTANT!
 3. Provide multiple completion options when possible.
 4. Return completions in JSON format as a list of lists, with each inner list
-representing a single completion option. Make sure it is a plain list without
-keys.
+   representing a single completion option. Make sure it is a plain list without
+   keys.
 5. The returned message will be further parsed and processed. Do not
    include additional comments or markdown code block fences. Return the json
    result directly.]]
@@ -80,7 +81,7 @@ local M = {
             max_tokens = 128,
             -- the number of completions request to send. Note that when
             -- add_single_line_entry is true, there can be more items returned.
-            n_completions = 1,
+            n_completions = 3,
             stop = { '\n\n' }, -- the identifier to stop the completion generation
         },
         openai = {
