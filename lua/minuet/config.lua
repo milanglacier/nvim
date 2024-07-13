@@ -11,54 +11,48 @@ enclosed in markers:
 
 local default_guidelines = [[
 Guidelines:
+
 1. Offer completions after the `<cursorPosition>` marker.
 2. Make sure you have maintained the user's existing whitespace and indentation.
    This is REALLY IMPORTANT!
 3. Provide multiple completion options when possible.
-4. Return completions in JSON format as a list of lists, with each inner list
-   representing a single completion option. Make sure it is a plain list without
-   keys.
-5. The returned message will be further parsed and processed. Do not
-   include additional comments or markdown code block fences. Return the json
-   result directly.]]
+4. Return completions separated by the marker <endCompletion>.
+5. The returned message will be further parsed and processed. DO NOT include
+   additional comments or markdown code block fences. Return the result directly.]]
 
-local default_example = [[
-
-
-Example input:
-```
-<beginCode>
+local default_fewshots = {
+    {
+        role = 'user',
+        content = [[
 # language: python
-def fib(n):
+<beginCode>
+def fibonacci(n):
     <cursorPosition>
 
 fib(5)
-<endCode>
-```
-
-Example output:
-```
-[
-[
-"    '''",
-"    Recursive Fibonacci implementation",
-"    '''",
-"    if n < 2:",
-"        return n",
-"    return fib(n - 1) + fib(n - 2)"
-],
-[
-"    '''",
-"    Iterative Fibonacci implementation",
-"    '''",
-"    a, b = 0, 1",
-"    for _ in range(n):",
-"        a, b = b, a + b",
-"    return a"
-]
-]
-```
-]]
+<endCode>]],
+    },
+    {
+        role = 'assistant',
+        content = [[
+    '''
+    Recursive Fibonacci implementation
+    '''
+    if n < 2:
+        return n
+    return fib(n - 1) + fib(n - 2)
+<endCompletion>
+    '''
+    Iterative Fibonacci implementation
+    '''
+    a, b = 0, 1
+    for _ in range(n):
+        a, b = b, a + b
+    return a
+<endCompletion>
+]],
+    },
+}
 
 local claude_guidelines = string.format(
     '%s\n%s\n%s',
@@ -91,12 +85,14 @@ local M = {
         },
         openai = {
             model = 'gpt-4o',
-            system = default_prompt .. default_guidelines .. default_example,
+            system = default_prompt .. default_guidelines,
+            few_shots = default_fewshots,
         },
         claude = {
             max_tokens = 512,
             model = 'claude-3-5-sonnet-20240620',
-            system = default_prompt .. claude_guidelines .. default_example,
+            system = default_prompt .. claude_guidelines,
+            few_shots = default_fewshots,
             stop = nil,
         },
     },

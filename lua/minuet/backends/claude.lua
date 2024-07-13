@@ -30,14 +30,15 @@ M.complete = function(context_before_cursor, context_after_cursor, callback)
         .. context_after_cursor
         .. '<endCode>'
 
+    local messages = vim.deepcopy(config.provider_options.claude.few_shots)
+    table.insert(messages, { role = 'user', content = context })
+
     local data = {
         model = config.provider_options.claude.model,
         system = config.provider_options.claude.system,
         max_tokens = config.provider_options.claude.max_tokens,
         stop_sequences = config.provider_options.claude.stop,
-        messages = {
-            { role = 'user', content = context },
-        },
+        messages = messages,
     }
 
     local data_file = utils.make_tmp_file(data)
@@ -89,9 +90,9 @@ M.complete = function(context_before_cursor, context_after_cursor, callback)
                 return
             end
 
-            local items_raw
+            local items_raw = json.content[1].text
 
-            success, items_raw = pcall(vim.json.decode, json.content[1].text)
+            success, items_raw = pcall(vim.split, items_raw, '<endCompletion>')
             if not success then
                 if config.notify then
                     vim.notify('Failed to parse Claude response at content.text', vim.log.levels.INFO)
@@ -100,21 +101,13 @@ M.complete = function(context_before_cursor, context_after_cursor, callback)
                 return
             end
 
-            if not vim.islist(items_raw) then
-                if config.notify then
-                    vim.notify('Failed to parse Claude response content as a list', vim.log.levels.INFO)
-                end
-                callback()
-                return
-            end
-
             local items = {}
 
             for _, item in ipairs(items_raw) do
-                local completion_string
-                success, completion_string = pcall(table.concat, item, '\n')
-                if success then
-                    table.insert(items, completion_string)
+                if item:find '%S' then -- only include entries that contains non-whitespace
+                    -- replace the last \n charecter if it exists
+                    item = item:gsub('\n$', '')
+                    table.insert(items, item)
                 end
             end
 
