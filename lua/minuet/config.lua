@@ -60,8 +60,11 @@ Example output:
 ```
 ]]
 
-local claude_guidelines =
-    string.format('%s\n%s', default_guidelines, '6. Keep each completion option concise, limiting it to several lines.')
+local claude_guidelines = string.format(
+    '%s\n%s',
+    default_guidelines,
+    '6. Keep each completion option concise, limiting it to a single line or only a few lines.'
+)
 
 local M = {
     provider = 'codestral',
