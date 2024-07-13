@@ -94,7 +94,7 @@ M.complete = function(context_before_cursor, context_after_cursor, callback)
             success, items_raw = pcall(vim.json.decode, json.content[1].text)
             if not success then
                 if config.notify then
-                    vim.notify('Failed to parse Claude response at choices.message.content', vim.log.levels.INFO)
+                    vim.notify('Failed to parse Claude response at content.text', vim.log.levels.INFO)
                 end
                 callback()
                 return

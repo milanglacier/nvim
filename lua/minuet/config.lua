@@ -61,9 +61,11 @@ Example output:
 ]]
 
 local claude_guidelines = string.format(
-    '%s\n%s',
+    '%s\n%s\n%s',
     default_guidelines,
-    '6. Keep each completion option concise, limiting it to a single line or only a few lines.'
+    '6. Keep each completion option concise, limiting it to a single line or only a few lines.',
+    '7. Provide at most 2 completion items.'
+    -- claude is slower and expensive, 2 items are enough.
 )
 
 local M = {
