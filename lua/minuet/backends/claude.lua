@@ -63,22 +63,9 @@ M.complete = function(context_before_cursor, context_after_cursor, callback)
             '@' .. data_file,
         },
         on_exit = vim.schedule_wrap(function(response, exit_code)
-            os.remove(data_file)
-            if exit_code ~= 0 then
-                if config.notify then
-                    vim.notify(string.format('Request failed with exit code %d', exit_code), vim.log.levels.ERROR)
-                end
-                callback()
-                return
-            end
+            local json = utils.json_decode(response, exit_code, data_file, 'Claude', callback)
 
-            local result = table.concat(response:result(), '\n')
-            local success, json = pcall(vim.json.decode, result)
-            if not success then
-                if config.notify then
-                    vim.notify('Failed to parse Claude API response', vim.log.levels.INFO)
-                end
-                callback()
+            if not json then
                 return
             end
 
@@ -92,24 +79,7 @@ M.complete = function(context_before_cursor, context_after_cursor, callback)
 
             local items_raw = json.content[1].text
 
-            success, items_raw = pcall(vim.split, items_raw, '<endCompletion>')
-            if not success then
-                if config.notify then
-                    vim.notify('Failed to parse Claude response at content.text', vim.log.levels.INFO)
-                end
-                callback()
-                return
-            end
-
-            local items = {}
-
-            for _, item in ipairs(items_raw) do
-                if item:find '%S' then -- only include entries that contains non-whitespace
-                    -- replace the last \n charecter if it exists
-                    item = item:gsub('\n$', '')
-                    table.insert(items, item)
-                end
-            end
+            local items = utils.initial_process_completion_items(items_raw, 'claude')
 
             callback(items)
         end),

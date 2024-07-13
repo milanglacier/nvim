@@ -121,6 +121,59 @@ function M.get_context(cmp_context)
     }
 end
 
+function M.json_decode(response, exit_code, data_file, provider, callback)
+    os.remove(data_file)
+
+    if exit_code ~= 0 then
+        if config.notify then
+            vim.notify(string.format('Request failed with exit code %d', exit_code), vim.log.levels.ERROR)
+        end
+        if callback then
+            callback()
+        end
+        return
+    end
+
+    local result = table.concat(response:result(), '\n')
+    local success, json = pcall(vim.json.decode, result)
+    if not success then
+        if config.notify then
+            vim.notify('Failed to parse' .. provider .. 'API response', vim.log.levels.INFO)
+        end
+        if callback then
+            callback()
+        end
+        return
+    end
+
+    return json
+end
+
+function M.initial_process_completion_items(items_raw, provider)
+    local success
+    success, items_raw = pcall(vim.split, items_raw, '<endCompletion>')
+    if not success then
+        if config.notify then
+            vim.notify('Failed to parse ' .. provider .. "'s content text", vim.log.levels.INFO)
+        end
+        return
+    end
+
+    local items = {}
+
+    for _, item in ipairs(items_raw) do
+        if item:find '%S' then -- only include entries that contains non-whitespace
+            -- replace the last \n charecter if it exists
+            item = item:gsub('\n$', '')
+            -- replace leading \n characters
+            item = item:gsub('^\n+', '')
+            table.insert(items, item)
+        end
+    end
+
+    return items
+end
+
 M.add_single_line_entry = function(list)
     local newlist = {}
 

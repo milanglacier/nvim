@@ -68,23 +68,9 @@ M.complete = function(context_before_cursor, context_after_cursor, callback)
                 -- Increment the request_send counter
                 request_complete = request_complete + 1
 
-                os.remove(data_file)
+                local json = utils.json_decode(response, exit_code, data_file, 'Codestral', check_and_callback)
 
-                if exit_code ~= 0 then
-                    if config.notify then
-                        vim.notify(string.format('Request failed with exit code %d', exit_code), vim.log.levels.ERROR)
-                    end
-                    check_and_callback()
-                    return
-                end
-
-                local result = table.concat(response:result(), '\n')
-                local success, json = pcall(vim.json.decode, result)
-                if not success then
-                    if config.notify then
-                        vim.notify('Failed to parse Codestral API response', vim.log.levels.INFO)
-                    end
-                    check_and_callback()
+                if not json then
                     return
                 end
 
@@ -97,14 +83,6 @@ M.complete = function(context_before_cursor, context_after_cursor, callback)
                 end
 
                 result = json.choices[1].message.content
-
-                if type(result) ~= 'string' then
-                    if config.notify then
-                        vim.notify('Failed to parse Codestral response at choices.message.content', vim.log.levels.INFO)
-                    end
-                    check_and_callback()
-                    return
-                end
 
                 table.insert(items, result)
 
