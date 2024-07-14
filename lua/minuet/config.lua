@@ -87,6 +87,8 @@ local M = {
             model = 'gpt-4o',
             system = default_prompt .. default_guidelines,
             few_shots = default_fewshots,
+            stop = nil,
+            max_tokens = nil,
         },
         claude = {
             max_tokens = 512,
@@ -99,6 +101,8 @@ local M = {
             model = '',
             system = default_prompt .. default_guidelines,
             few_shots = default_fewshots,
+            stop = nil,
+            max_tokens = nil,
             end_point = '',
             api_key = '',
             name = '',
