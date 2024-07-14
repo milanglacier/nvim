@@ -72,7 +72,7 @@ M.complete = function(context_before_cursor, context_after_cursor, callback)
 
             if not json.content then
                 if config.notify then
-                    vim.notify('No response from Claude API', vim.log.levels.INFO)
+                    vim.notify('Claude API returns no content', vim.log.levels.INFO)
                 end
                 callback()
                 return

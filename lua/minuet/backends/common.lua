@@ -82,7 +82,7 @@ function M.complete_openai_base(options, context_before_cursor, context_after_cu
 
             if not json.choices then
                 if config.notify then
-                    vim.notify('No response from ' .. options.name .. ' API', vim.log.levels.INFO)
+                    vim.notify(options.name .. ' API returns no content', vim.log.levels.INFO)
                 end
                 callback()
                 return

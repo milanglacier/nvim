@@ -76,7 +76,7 @@ M.complete = function(context_before_cursor, context_after_cursor, callback)
 
                 if not json.choices then
                     if config.notify then
-                        vim.notify('No response from Codestral API', vim.log.levels.INFO)
+                        vim.notify('Codestral API returns no content', vim.log.levels.INFO)
                     end
                     check_and_callback()
                     return
