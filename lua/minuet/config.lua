@@ -95,6 +95,14 @@ local M = {
             few_shots = default_fewshots,
             stop = nil,
         },
+        openai_compatible = {
+            model = '',
+            system = default_prompt .. default_guidelines,
+            few_shots = default_fewshots,
+            end_point = '',
+            api_key = '',
+            name = '',
+        },
     },
 }
 

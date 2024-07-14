@@ -1,5 +1,6 @@
 local config = require('minuet').config
 local utils = require 'minuet.utils'
+local common = require 'minuet.backends.common'
 local job = require 'plenary.job'
 
 local M = {}
@@ -79,7 +80,7 @@ M.complete = function(context_before_cursor, context_after_cursor, callback)
 
             local items_raw = json.content[1].text
 
-            local items = utils.initial_process_completion_items(items_raw, 'claude')
+            local items = common.initial_process_completion_items(items_raw, 'claude')
 
             callback(items)
         end),
