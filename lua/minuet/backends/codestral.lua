@@ -82,7 +82,7 @@ M.complete = function(context_before_cursor, context_after_cursor, callback)
                     return
                 end
 
-                result = json.choices[1].message.content
+                local result = json.choices[1].message.content
 
                 table.insert(items, result)
 
