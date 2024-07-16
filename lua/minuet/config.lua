@@ -107,6 +107,24 @@ local M = {
             api_key = '',
             name = '',
         },
+        huggingface = {
+            end_point = 'https://api-inference.huggingface.co/models/bigcode/starcoder2-3b',
+            stop = nil,
+            max_tokens = 128,
+            type = 'completion', -- chat or completion
+            n_completions = 3,
+            strategies = {
+                completion = {
+                    markers = {
+                        prefix = '<fim_prefix>',
+                        suffix = '<fim_suffix>',
+                        middle = '<fim_middle>',
+                    },
+                    strategy = 'PSM', -- PSM, SPM or PM
+                    stop = { '<fim_prefix>', '<fim_suffix>', '<fim_middle>', '<|endoftext|>' },
+                },
+            },
+        },
     },
 }
 
