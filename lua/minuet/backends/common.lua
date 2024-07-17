@@ -50,9 +50,9 @@ function M.complete_openai_base(options, context_before_cursor, context_after_cu
         model = options.model,
         -- response_format = { type = 'json_object' }, -- NOTE: in practice this option yiled even worse result
         messages = messages,
-        max_tokens = options.max_tokens,
-        stop = options.stop,
     }
+
+    data = vim.tbl_deep_extend('force', data, options.optional or {})
 
     local data_file = utils.make_tmp_file(data)
 

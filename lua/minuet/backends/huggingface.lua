@@ -1,16 +1,22 @@
 local config = require('minuet').config
 local utils = require 'minuet.utils'
 local job = require 'plenary.job'
-local options = vim.deepcopy(require('minuet.config').provider_options.huggingface)
 
-local stops = {}
+local function make_request_data()
+    local request_data = {
+        parameters = {
+            return_full_text = false,
+        },
+        options = {
+            use_cache = false,
+        },
+    }
 
-for _, token in ipairs(options.stop or {}) do
-    table.insert(stops, token)
-end
+    local options = vim.deepcopy(config.provider_options.huggingface)
 
-for _, token in ipairs(options.strategies.completion.stop or {}) do
-    table.insert(stops, token)
+    request_data = vim.tbl_deep_extend('force', request_data, options.optional or {})
+
+    return options, request_data
 end
 
 local M = {}
@@ -28,6 +34,7 @@ if not M.is_available() then
 end
 
 M.complete_completion = function(context_before_cursor, context_after_cursor, callback)
+    local options, data = make_request_data()
     local language = utils.add_language_comment()
     local tab = utils.add_tab_comment()
 
@@ -61,18 +68,7 @@ M.complete_completion = function(context_before_cursor, context_after_cursor, ca
         return
     end
 
-    local data = {
-        inputs = inputs,
-        parameters = {
-            return_full_text = false,
-            stop = stops,
-            max_new_tokens = options.max_tokens,
-            num_return_sequences = options.n_completions,
-        },
-        options = {
-            use_cache = false,
-        },
-    }
+    data.inputs = inputs
 
     local data_file = utils.make_tmp_file(data)
 
@@ -117,6 +113,7 @@ M.complete_completion = function(context_before_cursor, context_after_cursor, ca
 end
 
 M.complete = function(context_before_cursor, context_after_cursor, callback)
+    local options, _ = make_request_data()
     if options.type == 'completion' then
         M.complete_completion(context_before_cursor, context_after_cursor, callback)
     else

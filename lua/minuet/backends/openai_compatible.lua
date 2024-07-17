@@ -3,9 +3,8 @@ local common = require 'minuet.backends.common'
 
 local M = {}
 
-local options = vim.deepcopy(config.provider_options.openai_compatible)
-
 M.is_available = function()
+    local options = vim.deepcopy(config.provider_options.openai_compatible)
     if options.end_point == '' or options.api_key == '' or options.name == '' then
         return false
     end
@@ -22,6 +21,7 @@ if not M.is_available() then
 end
 
 M.complete = function(context_before_cursor, context_after_cursor, callback)
+    local options = vim.deepcopy(config.provider_options.openai_compatible)
     common.complete_openai_base(options, context_before_cursor, context_after_cursor, callback)
 end
 

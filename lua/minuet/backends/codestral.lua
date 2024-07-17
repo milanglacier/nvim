@@ -16,18 +16,26 @@ if not M.is_available() then
     vim.notify('Codestral API key is not set', vim.log.levels.ERROR)
 end
 
+local function make_request_data()
+    local options = vim.deepcopy(config.provider_options.codestral)
+
+    local request_data = {}
+
+    request_data.model = options.model
+
+    request_data = vim.tbl_deep_extend('force', request_data, options.optional or {})
+
+    return options, request_data
+end
+
 M.complete = function(context_before_cursor, context_after_cursor, callback)
+    local options, data = make_request_data()
     local language = utils.add_language_comment()
     local tab = utils.add_tab_comment()
     context_before_cursor = language .. '\n' .. tab .. '\n' .. context_before_cursor
 
-    local data = {
-        model = config.provider_options.codestral.model,
-        prompt = context_before_cursor,
-        suffix = context_after_cursor,
-        max_tokens = config.provider_options.codestral.max_tokens,
-        stop = config.provider_options.codestral.stop,
-    }
+    data.prompt = context_before_cursor
+    data.suffix = context_after_cursor
 
     local data_file = utils.make_tmp_file(data)
 
@@ -37,7 +45,7 @@ M.complete = function(context_before_cursor, context_after_cursor, callback)
 
     local items = {}
     local request_complete = 0
-    local n_completions = config.provider_options.codestral.n_completions
+    local n_completions = options.n_completions
     local has_called_back = false
 
     local function check_and_callback()

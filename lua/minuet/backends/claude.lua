@@ -17,7 +17,21 @@ if not M.is_available() then
     vim.notify('Anthropic API key is not set', vim.log.levels.ERROR)
 end
 
+local function make_request_data()
+    local options = config.provider_options.claude
+    local request_data = {
+        system = options.system,
+        max_tokens = options.max_tokens,
+        model = options.model,
+    }
+
+    request_data = vim.tbl_deep_extend('force', request_data, options.optional or {})
+
+    return options, request_data
+end
+
 M.complete = function(context_before_cursor, context_after_cursor, callback)
+    local options, data = make_request_data()
     local language = utils.add_language_comment()
     local tab = utils.add_tab_comment()
 
@@ -31,16 +45,10 @@ M.complete = function(context_before_cursor, context_after_cursor, callback)
         .. context_after_cursor
         .. '<endCode>'
 
-    local messages = vim.deepcopy(config.provider_options.claude.few_shots)
+    local messages = vim.deepcopy(options.few_shots)
     table.insert(messages, { role = 'user', content = context })
 
-    local data = {
-        model = config.provider_options.claude.model,
-        system = config.provider_options.claude.system,
-        max_tokens = config.provider_options.claude.max_tokens,
-        stop_sequences = config.provider_options.claude.stop,
-        messages = messages,
-    }
+    data.messages = messages
 
     local data_file = utils.make_tmp_file(data)
 

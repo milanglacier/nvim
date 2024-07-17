@@ -77,42 +77,47 @@ local M = {
     provider_options = {
         codestral = {
             model = 'codestral-latest',
-            max_tokens = 128,
             -- the number of completions request to send. Note that when
             -- add_single_line_entry is true, there can be more items returned.
-            n_completions = 3,
-            stop = { '\n\n' }, -- the identifier to stop the completion generation
+            n_completions = 1,
+            optional = {
+                stop = { '\n\n' }, -- the identifier to stop the completion generation
+                max_tokens = 128,
+            },
         },
         openai = {
             model = 'gpt-4o',
             system = default_prompt .. default_guidelines,
             few_shots = default_fewshots,
-            stop = nil,
-            max_tokens = nil,
+            optional = {
+                stop = nil,
+                max_tokens = nil,
+            },
         },
         claude = {
             max_tokens = 512,
             model = 'claude-3-5-sonnet-20240620',
             system = default_prompt .. claude_guidelines,
             few_shots = default_fewshots,
-            stop = nil,
+            optional = {
+                stop_sequences = nil,
+            },
         },
         openai_compatible = {
             model = '',
             system = default_prompt .. default_guidelines,
             few_shots = default_fewshots,
-            stop = nil,
             max_tokens = nil,
             end_point = '',
             api_key = '',
             name = '',
+            optional = {
+                stop = nil,
+            },
         },
         huggingface = {
             end_point = 'https://api-inference.huggingface.co/models/bigcode/starcoder2-3b',
-            stop = nil,
-            max_tokens = 128,
             type = 'completion', -- chat or completion
-            n_completions = 3,
             strategies = {
                 completion = {
                     markers = {
@@ -121,7 +126,12 @@ local M = {
                         middle = '<fim_middle>',
                     },
                     strategy = 'PSM', -- PSM, SPM or PM
+                },
+            },
+            optional = {
+                parameters = {
                     stop = { '<fim_prefix>', '<fim_suffix>', '<fim_middle>', '<|endoftext|>' },
+                    max_tokens = 128,
                 },
             },
         },
