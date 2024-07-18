@@ -107,12 +107,12 @@ local M = {
             model = '',
             system = default_prompt .. default_guidelines,
             few_shots = default_fewshots,
-            max_tokens = nil,
             end_point = '',
             api_key = '',
             name = '',
             optional = {
                 stop = nil,
+                max_tokens = nil,
             },
         },
         huggingface = {
