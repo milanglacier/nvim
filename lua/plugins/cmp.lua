@@ -129,7 +129,17 @@ return {
                 },
             }
 
-            require('minuet').setup {}
+            require('minuet').setup {
+                provider_options = {
+                    codestral = {
+                        n_completions = 3,
+                        optional = {
+                            stop = { '\n\n' },
+                            max_tokens = 256,
+                        },
+                    },
+                },
+            }
 
             local my_mappings = {
                 ['<A-y>'] = require('minuet').make_cmp_map(),
