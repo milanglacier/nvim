@@ -86,7 +86,7 @@ local M = {
             },
         },
         openai = {
-            model = 'gpt-4o',
+            model = 'gpt-4o-mini',
             system = default_prompt .. default_guidelines,
             few_shots = default_fewshots,
             optional = {
