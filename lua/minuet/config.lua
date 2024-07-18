@@ -115,6 +115,18 @@ local M = {
                 max_tokens = nil,
             },
         },
+        gemini = {
+            model = 'gemini-1.5-flash-latest',
+            system = default_prompt .. default_guidelines,
+            few_shots = default_fewshots,
+            optional = {
+                -- generationConfig = {
+                --     stopSequences = {},
+                --     maxOutputTokens = 256,
+                --     topP = 0.8,
+                -- },
+            },
+        },
         huggingface = {
             end_point = 'https://api-inference.huggingface.co/models/bigcode/starcoder2-3b',
             type = 'completion', -- chat or completion
