@@ -81,8 +81,8 @@ local M = {
             -- add_single_line_entry is true, there can be more items returned.
             n_completions = 1,
             optional = {
-                stop = { '\n\n' }, -- the identifier to stop the completion generation
-                max_tokens = 128,
+                stop = nil, -- the identifier to stop the completion generation
+                max_tokens = nil,
             },
         },
         openai = {
@@ -104,12 +104,12 @@ local M = {
             },
         },
         openai_compatible = {
-            model = '',
+            model = 'codestral-mamba-latest',
             system = default_prompt .. default_guidelines,
             few_shots = default_fewshots,
-            end_point = '',
-            api_key = '',
-            name = '',
+            end_point = 'https://api.mistral.ai/v1/chat/completions',
+            api_key = 'MISTRAL_API_KEY',
+            name = 'Mistral',
             optional = {
                 stop = nil,
                 max_tokens = nil,
