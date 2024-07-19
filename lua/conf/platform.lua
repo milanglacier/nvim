@@ -32,12 +32,19 @@ if vim.g.neovide then
     keymap('!', '<C-D-f>', '', { callback = neovide_toggle_fullscreen, desc = 'macos toggle fullscreen' })
     keymap('', '<C-D-f>', '', { callback = neovide_toggle_fullscreen, desc = 'macos toggle fullscreen' })
 
+    local function launched_from_terminal()
+        -- NOTE: I don't know why TERM=su if neovim is launched by clicking the
+        -- icons directly
+        return vim.env.TERM and vim.env.TERM ~= 'su'
+    end
+
     -- HACK: As neovide started as a login shell, it's unable to inherit the
     -- environment variable like PATH from zshrc. Therefore, we need to obtain
     -- the PATH from the interactive shell instead.
-    if vim.o.shell:find 'zsh' and vim.fn.has 'mac' == 1 then
-        vim.fn.jobstart([[[ -f "$HOME/.zshrc" ] && source "$HOME/.zshrc" && echo "$PATH"]], {
+    if vim.o.shell:find 'zsh' and vim.fn.has 'mac' == 1 and not launched_from_terminal() then
+        vim.fn.jobstart([[[ -f "$HOME/.zshrc" ] && source "$HOME/.zshrc" > /dev/null && echo "$PATH"]], {
             on_stdout = function(_, data, _)
+                vim.notify 'source zshrc'
                 vim.env.PATH = data[1]
             end,
             stdout_buffered = true,
