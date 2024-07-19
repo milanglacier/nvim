@@ -98,7 +98,7 @@ function M.complete(context_before_cursor, context_after_cursor, callback)
             '@' .. data_file,
         },
         on_exit = vim.schedule_wrap(function(response, exit_code)
-            local json = utils.json_decode(response, exit_code, data_file, 'Claude', callback)
+            local json = utils.json_decode(response, exit_code, data_file, 'Gemini', callback)
 
             if not json then
                 return
