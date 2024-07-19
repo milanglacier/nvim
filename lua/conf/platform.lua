@@ -6,7 +6,7 @@ if vim.g.neovide then
     vim.g.neovide_padding_right = 0
     vim.g.neovide_padding_left = 0
 
-    vim.g.neovide_input_macos_option_key_is_meta = 1
+    vim.g.neovide_input_macos_option_key_is_meta = 'both'
 
     local neovide_is_fullscreen = false
 
@@ -32,10 +32,10 @@ if vim.g.neovide then
     keymap('!', '<C-D-f>', '', { callback = neovide_toggle_fullscreen, desc = 'macos toggle fullscreen' })
     keymap('', '<C-D-f>', '', { callback = neovide_toggle_fullscreen, desc = 'macos toggle fullscreen' })
 
-    -- HACK: As neovide started as a login shell, it's unable to inherit
-    -- the $PATH from zshrc. Therefore, we need to obtain the PATH from the
-    -- interactive shell instead.
-    if vim.o.shell:find 'zsh' then
+    -- HACK: As neovide started as a login shell, it's unable to inherit the
+    -- environment variable like PATH from zshrc. Therefore, we need to obtain
+    -- the PATH from the interactive shell instead.
+    if vim.o.shell:find 'zsh' and vim.fn.has 'mac' == 1 then
         vim.fn.jobstart([[[ -f "$HOME/.zshrc" ] && source "$HOME/.zshrc" && echo "$PATH"]], {
             on_stdout = function(_, data, _)
                 vim.env.PATH = data[1]

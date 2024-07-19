@@ -58,5 +58,5 @@ local gui_cursor = {
 -- 'Space_Mono_Nerd_Font_Complete:h15',
 -- 'Monego_Nerd_Font_Fix:h15',
 -- 'CaskaydiaCove_Nerd_Font_Mono:h15',
-vim.o.guifont = 'CaskaydiaCove_Nerd_Font_Mono:h15'
+vim.o.guifont = 'ComicShannsMono Nerd Font Mono:h15'
 vim.o.guicursor = table.concat(gui_cursor, ',')
