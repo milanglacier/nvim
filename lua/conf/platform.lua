@@ -6,7 +6,7 @@ if vim.g.neovide then
     vim.g.neovide_padding_right = 0
     vim.g.neovide_padding_left = 0
 
-    vim.g.neovide_input_macos_alt_is_meta = 1
+    vim.g.neovide_input_macos_option_key_is_meta = 1
 
     local neovide_is_fullscreen = false
 
