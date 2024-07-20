@@ -19,8 +19,10 @@ end
 
 local function make_request_data()
     local options = config.provider_options.claude
+    local system = utils.make_system_prompt(options.system, config.n_completions)
+
     local request_data = {
-        system = options.system,
+        system = system,
         max_tokens = options.max_tokens,
         model = options.model,
     }

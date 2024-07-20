@@ -43,7 +43,9 @@ function M.complete_openai_base(options, context_before_cursor, context_after_cu
         .. '<endCode>'
 
     local messages = vim.deepcopy(options.few_shots)
-    table.insert(messages, 1, { role = 'system', content = options.system })
+    local system = utils.make_system_prompt(options.system, config.n_completions)
+
+    table.insert(messages, 1, { role = 'system', content = system })
     table.insert(messages, { role = 'user', content = context })
 
     local data = {

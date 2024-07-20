@@ -6,19 +6,18 @@ enclosed in markers:
 - `<beginCode>`: Start of the code context
 - `<cursorPosition>`: Current cursor location
 - `<endCode>`: End of the code context
-
 ]]
 
 local default_guidelines = [[
 Guidelines:
-
 1. Offer completions after the `<cursorPosition>` marker.
 2. Make sure you have maintained the user's existing whitespace and indentation.
    This is REALLY IMPORTANT!
 3. Provide multiple completion options when possible.
 4. Return completions separated by the marker <endCompletion>.
 5. The returned message will be further parsed and processed. DO NOT include
-   additional comments or markdown code block fences. Return the result directly.]]
+   additional comments or markdown code block fences. Return the result directly.
+6. Keep each completion option concise, limiting it to a single line or a few lines.]]
 
 local default_fewshots = {
     {
@@ -54,13 +53,10 @@ fib(5)
     },
 }
 
-local claude_guidelines = string.format(
-    '%s\n%s\n%s',
-    default_guidelines,
-    '6. Keep each completion option concise, limiting it to a single line or only a few lines.',
-    '7. Provide at most 2 completion items.'
-    -- claude is slower and expensive, 2 items are enough.
-)
+local n_completion_template = '7. Provide at most %d completion items.'
+
+-- use {{{ and }}} to wrap placeholders, which will be further processesed in other function
+local default_system_template = '{{{prompt}}}\n{{{guidelines}}}\n{{{n_completion_template}}}'
 
 local M = {
     provider = 'codestral',
@@ -74,12 +70,16 @@ local M = {
     request_timeout = 3, -- the timeout of the request in seconds
     -- if completion item has multiple lines, create another completion item only containing its first line.
     add_single_line_entry = true,
+    -- The number of completion items (encoded as part of the prompt for the
+    -- chat LLM) requested from the language model. It's important to note that
+    -- when 'add_single_line_entry' is set to true, the actual number of
+    -- returned items may exceed this value. Additionally, the LLM cannot
+    -- guarantee the exact number of completion items specified, as this
+    -- parameter serves only as a prompt guideline.
+    n_completions = 3,
     provider_options = {
         codestral = {
             model = 'codestral-latest',
-            -- the number of completions request to send. Note that when
-            -- add_single_line_entry is true, there can be more items returned.
-            n_completions = 1,
             optional = {
                 stop = nil, -- the identifier to stop the completion generation
                 max_tokens = nil,
@@ -87,7 +87,12 @@ local M = {
         },
         openai = {
             model = 'gpt-4o-mini',
-            system = default_prompt .. default_guidelines,
+            system = {
+                template = default_system_template,
+                prompt = default_prompt,
+                guidelines = default_guidelines,
+                n_completion_template = n_completion_template,
+            },
             few_shots = default_fewshots,
             optional = {
                 stop = nil,
@@ -97,7 +102,12 @@ local M = {
         claude = {
             max_tokens = 512,
             model = 'claude-3-5-sonnet-20240620',
-            system = default_prompt .. claude_guidelines,
+            system = {
+                template = default_system_template,
+                prompt = default_prompt,
+                guidelines = default_guidelines,
+                n_completion_template = n_completion_template,
+            },
             few_shots = default_fewshots,
             optional = {
                 stop_sequences = nil,
@@ -105,7 +115,12 @@ local M = {
         },
         openai_compatible = {
             model = 'codestral-mamba-latest',
-            system = default_prompt .. default_guidelines,
+            system = {
+                template = default_system_template,
+                prompt = default_prompt,
+                guidelines = default_guidelines,
+                n_completion_template = n_completion_template,
+            },
             few_shots = default_fewshots,
             end_point = 'https://api.mistral.ai/v1/chat/completions',
             api_key = 'MISTRAL_API_KEY',
@@ -117,7 +132,12 @@ local M = {
         },
         gemini = {
             model = 'gemini-1.5-flash-latest',
-            system = default_prompt .. default_guidelines,
+            system = {
+                template = default_system_template,
+                prompt = default_prompt,
+                guidelines = default_guidelines,
+                n_completion_template = n_completion_template,
+            },
             few_shots = default_fewshots,
             optional = {
                 -- generationConfig = {

@@ -24,6 +24,28 @@ function M.make_tmp_file(content)
     return tmp_file
 end
 
+function M.make_system_prompt(template, n_completion)
+    ---- replace the placeholders in the template with the values in the table
+    local system_prompt = template.template
+    local n_completion_template = template.n_completion_template
+
+    if type(n_completion_template) == 'string' and type(n_completion) == 'number' then
+        n_completion_template = string.format(n_completion_template, n_completion)
+        system_prompt = system_prompt:gsub('{{{n_completion_template}}}', n_completion_template)
+    end
+
+    for k, v in pairs(template) do
+        if k ~= 'template' and k ~= 'n_completion_template' and type(v) == 'string' then
+            system_prompt = system_prompt:gsub('{{{' .. k .. '}}}', v)
+        end
+    end
+
+    ---- remove the placeholders that are not replaced
+    system_prompt = system_prompt:gsub('{{{.*}}}', '')
+
+    return system_prompt
+end
+
 function M.add_language_comment()
     if vim.bo.ft == nil or vim.bo.ft == '' then
         return ''

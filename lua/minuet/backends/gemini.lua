@@ -40,10 +40,12 @@ local function make_request_data()
         end
     end
 
+    local system = utils.make_system_prompt(options.system, config.n_completions)
+
     local request_data = {
         system_instruction = {
             parts = {
-                text = options.system,
+                text = system,
             },
         },
         contents = contents,

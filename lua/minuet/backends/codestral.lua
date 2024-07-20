@@ -29,7 +29,7 @@ local function make_request_data()
 end
 
 M.complete = function(context_before_cursor, context_after_cursor, callback)
-    local options, data = make_request_data()
+    local _, data = make_request_data()
     local language = utils.add_language_comment()
     local tab = utils.add_tab_comment()
     context_before_cursor = language .. '\n' .. tab .. '\n' .. context_before_cursor
@@ -45,7 +45,7 @@ M.complete = function(context_before_cursor, context_after_cursor, callback)
 
     local items = {}
     local request_complete = 0
-    local n_completions = options.n_completions
+    local n_completions = config.n_completions
     local has_called_back = false
 
     local function check_and_callback()
