@@ -106,7 +106,12 @@ return {
         'jmbuhr/otter.nvim',
         ft = 'quarto',
         config = function()
-            require('otter').activate({ 'r', 'python' }, true)
+            autocmd('FileType', {
+                pattern = 'quarto',
+                callback = function()
+                    require('otter').activate({ 'r', 'python' }, true)
+                end,
+            })
         end,
     },
 }
