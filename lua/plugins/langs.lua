@@ -28,7 +28,7 @@ return {
                 group = my_augroup,
                 desc = 'set keymap for tex',
                 callback = function()
-                    local set_bufmap = function(mode, lhs, rhs, desc)
+                    local bufmap = function(mode, lhs, rhs, desc)
                         vim.keymap.set(mode, lhs, rhs, {
                             buffer = true,
                             noremap = false,
@@ -37,79 +37,67 @@ return {
                         })
                     end
 
-                    --- nvim-treesitter-textobjects have conflicted
-                    -- textobj map with vimtex
-                    -- (and both of them are buffer local triggerd at FileType event).
-                    -- Defer mapping vimtex specific texobj maps
-                    -- to override nvim-treesitter-textobjects' map
-                    local defer_bufmap = function(...)
-                        local param_list = { ... }
-                        vim.defer_fn(function()
-                            set_bufmap(unpack(param_list))
-                        end, 1000)
-                    end
+                    bufmap('n', '<LocalLeader>lt', '<Plug>(vimtex-toc-toggle)')
+                    bufmap('n', '<LocalLeader>ll', '<Plug>(vimtex-compile)')
+                    bufmap('n', '<LocalLeader>lc', '<Plug>(vimtex-clean)')
+                    bufmap('n', '<LocalLeader>lv', '<Plug>(vimtex-view)')
+                    bufmap('n', '<LocalLeader>lk', '<Plug>(vimtex-stop)')
+                    bufmap('n', '<LocalLeader>lm', '<Plug>(vimtex-toggle-main)')
+                    bufmap('n', '<LocalLeader>la', '<Plug>(vimtex-context-menu)')
+                    bufmap('n', '<LocalLeader>lo', '<Plug>(vimtex-compile-output)')
+                    bufmap('n', '<LocalLeader>ss', '<Plug>(vimtex-env-surround-line)')
+                    bufmap('n', '<LocalLeader>s', '<Plug>(vimtex-env-surround-operator)')
+                    bufmap('x', '<LocalLeader>s', '<Plug>(vimtex-env-surround-visual)')
 
-                    set_bufmap('n', '<LocalLeader>lt', '<Plug>(vimtex-toc-toggle)')
-                    set_bufmap('n', '<LocalLeader>ll', '<Plug>(vimtex-compile)')
-                    set_bufmap('n', '<LocalLeader>lc', '<Plug>(vimtex-clean)')
-                    set_bufmap('n', '<LocalLeader>lv', '<Plug>(vimtex-view)')
-                    set_bufmap('n', '<LocalLeader>lk', '<Plug>(vimtex-stop)')
-                    set_bufmap('n', '<LocalLeader>lm', '<Plug>(vimtex-toggle-main)')
-                    set_bufmap('n', '<LocalLeader>la', '<Plug>(vimtex-context-menu)')
-                    set_bufmap('n', '<LocalLeader>lo', '<Plug>(vimtex-compile-output)')
-                    set_bufmap('n', '<LocalLeader>ss', '<Plug>(vimtex-env-surround-line)')
-                    set_bufmap('n', '<LocalLeader>s', '<Plug>(vimtex-env-surround-operator)')
-                    set_bufmap('x', '<LocalLeader>s', '<Plug>(vimtex-env-surround-visual)')
+                    bufmap('n', 'dse', '<plug>(vimtex-env-delete)')
+                    bufmap('n', 'dsc', '<plug>(vimtex-cmd-delete)')
+                    bufmap('n', 'ds$', '<plug>(vimtex-env-delete-math)')
+                    bufmap('n', 'dsd', '<plug>(vimtex-delim-delete)')
+                    bufmap('n', 'cse', '<plug>(vimtex-env-change)')
+                    bufmap('n', 'csc', '<plug>(vimtex-cmd-change)')
+                    bufmap('n', 'cs$', '<plug>(vimtex-env-change-math)')
+                    bufmap('n', 'csd', '<plug>(vimtex-delim-change-math)')
+                    bufmap({ 'n', 'x' }, '<LocalLeader>tf', '<plug>(vimtex-cmd-toggle-frac)')
+                    bufmap('n', '<LocalLeader>tc*', '<plug>(vimtex-cmd-toggle-star)')
+                    bufmap('n', '<LocalLeader>te*', '<plug>(vimtex-env-toggle-star)')
+                    bufmap('n', '<LocalLeader>t$', '<plug>(vimtex-env-toggle-math)')
+                    bufmap({ 'n', 'x' }, '<LocalLeader>td', '<plug>(vimtex-delim-toggle-modifier)')
+                    bufmap({ 'n', 'x' }, '<LocalLeader>tD', '<plug>(vimtex-delim-toggle-modifier-reverse)')
+                    bufmap({ 'n', 'x' }, '<LocalLeader>c', '<plug>(vimtex-cmd-create)')
 
-                    set_bufmap('n', 'dse', '<plug>(vimtex-env-delete)')
-                    set_bufmap('n', 'dsc', '<plug>(vimtex-cmd-delete)')
-                    set_bufmap('n', 'ds$', '<plug>(vimtex-env-delete-math)')
-                    set_bufmap('n', 'dsd', '<plug>(vimtex-delim-delete)')
-                    set_bufmap('n', 'cse', '<plug>(vimtex-env-change)')
-                    set_bufmap('n', 'csc', '<plug>(vimtex-cmd-change)')
-                    set_bufmap('n', 'cs$', '<plug>(vimtex-env-change-math)')
-                    set_bufmap('n', 'csd', '<plug>(vimtex-delim-change-math)')
-                    set_bufmap({ 'n', 'x' }, '<LocalLeader>tf', '<plug>(vimtex-cmd-toggle-frac)')
-                    set_bufmap('n', '<LocalLeader>tc*', '<plug>(vimtex-cmd-toggle-star)')
-                    set_bufmap('n', '<LocalLeader>te*', '<plug>(vimtex-env-toggle-star)')
-                    set_bufmap('n', '<LocalLeader>t$', '<plug>(vimtex-env-toggle-math)')
-                    set_bufmap({ 'n', 'x' }, '<LocalLeader>td', '<plug>(vimtex-delim-toggle-modifier)')
-                    set_bufmap({ 'n', 'x' }, '<LocalLeader>tD', '<plug>(vimtex-delim-toggle-modifier-reverse)')
-                    set_bufmap({ 'n', 'x' }, '<LocalLeader>c', '<plug>(vimtex-cmd-create)')
+                    bufmap({ 'x', 'o' }, 'ac', '<plug>(vimtex-ac)', 'vimtex texobj around command')
+                    bufmap({ 'x', 'o' }, 'ic', '<plug>(vimtex-ic)', 'vimtex texobj in command')
+                    bufmap({ 'x', 'o' }, 'ad', '<plug>(vimtex-ad)', 'vimtex texobj around delim')
+                    bufmap({ 'x', 'o' }, 'id', '<plug>(vimtex-id)', 'vimtex texobj in delim')
+                    bufmap({ 'x', 'o' }, 'ae', '<plug>(vimtex-ae)', 'vimtex texobj around env')
+                    bufmap({ 'x', 'o' }, 'ie', '<plug>(vimtex-ie)', 'vimtex texobj in env')
+                    bufmap({ 'x', 'o' }, 'a$', '<plug>(vimtex-a$)', 'vimtex texobj around math')
+                    bufmap({ 'x', 'o' }, 'i$', '<plug>(vimtex-i$)', 'vimtex texobj in math')
+                    bufmap({ 'x', 'o' }, 'as', '<plug>(vimtex-aP)', 'vimtex texobj around section')
+                    bufmap({ 'x', 'o' }, 'is', '<plug>(vimtex-iP)', 'vimtex texobj in section')
+                    bufmap({ 'x', 'o' }, 'al', '<plug>(vimtex-am)', 'vimtex texobj around item')
+                    bufmap({ 'x', 'o' }, 'il', '<plug>(vimtex-im)', 'vimtex texobj in item')
 
-                    defer_bufmap({ 'x', 'o' }, 'ac', '<plug>(vimtex-ac)', 'vimtex texobj around command')
-                    defer_bufmap({ 'x', 'o' }, 'ic', '<plug>(vimtex-ic)', 'vimtex texobj in command')
-                    set_bufmap({ 'x', 'o' }, 'ad', '<plug>(vimtex-ad)', 'vimtex texobj around delim')
-                    set_bufmap({ 'x', 'o' }, 'id', '<plug>(vimtex-id)', 'vimtex texobj in delim')
-                    defer_bufmap({ 'x', 'o' }, 'ae', '<plug>(vimtex-ae)', 'vimtex texobj around env')
-                    defer_bufmap({ 'x', 'o' }, 'ie', '<plug>(vimtex-ie)', 'vimtex texobj in env')
-                    set_bufmap({ 'x', 'o' }, 'a$', '<plug>(vimtex-a$)', 'vimtex texobj around math')
-                    set_bufmap({ 'x', 'o' }, 'i$', '<plug>(vimtex-i$)', 'vimtex texobj in math')
-                    set_bufmap({ 'x', 'o' }, 'aS', '<plug>(vimtex-aP)', 'vimtex texobj around section')
-                    set_bufmap({ 'x', 'o' }, 'iS', '<plug>(vimtex-iP)', 'vimtex texobj in section')
-                    defer_bufmap({ 'x', 'o' }, 'al', '<plug>(vimtex-am)', 'vimtex texobj around item')
-                    defer_bufmap({ 'x', 'o' }, 'il', '<plug>(vimtex-im)', 'vimtex texobj in item')
+                    bufmap({ 'n', 'x', 'o' }, '%', '<plug>(vim-tex-%)')
 
-                    set_bufmap({ 'n', 'x', 'o' }, '%', '<plug>(vim-tex-%)')
+                    bufmap({ 'n', 'x', 'o' }, ']]', '<plug>(vimtex-]])', 'vimtex motion next start of section')
+                    bufmap({ 'n', 'x', 'o' }, '][', '<plug>(vimtex-][)', 'vimtex motion next end of section')
+                    bufmap({ 'n', 'x', 'o' }, '[]', '<plug>(vimtex-[])', 'vimtex motion prev start of section')
+                    bufmap({ 'n', 'x', 'o' }, '[[', '<plug>(vimtex-[[)', 'vimtex motion prev end of section')
+                    bufmap({ 'n', 'x', 'o' }, ']e', '<plug>(vimtex-]m)', 'vimtex motion next start of env')
+                    bufmap({ 'n', 'x', 'o' }, ']E', '<plug>(vimtex-]M)', 'vimtex motion next end of env')
+                    bufmap({ 'n', 'x', 'o' }, '[e', '<plug>(vimtex-[m)', 'vimtex motion prev start of env')
+                    bufmap({ 'n', 'x', 'o' }, '[E', '<plug>(vimtex-[M)', 'vimtex motion prev end of env')
+                    bufmap({ 'n', 'x', 'o' }, ']m', '<plug>(vimtex-]n)', 'vimtex motion next start of math')
+                    bufmap({ 'n', 'x', 'o' }, ']M', '<plug>(vimtex-]N)', 'vimtex motion next end of math')
+                    bufmap({ 'n', 'x', 'o' }, '[m', '<plug>(vimtex-[n)', 'vimtex motion prev start of math')
+                    bufmap({ 'n', 'x', 'o' }, '[M', '<plug>(vimtex-[N)', 'vimtex motion prev end of math')
+                    bufmap({ 'n', 'x', 'o' }, ']f', '<plug>(vimtex-]r)', 'vimtex motion next start of frame')
+                    bufmap({ 'n', 'x', 'o' }, ']F', '<plug>(vimtex-]R)', 'vimtex motion next end of frame')
+                    bufmap({ 'n', 'x', 'o' }, '[f', '<plug>(vimtex-[r)', 'vimtex motion prev start of frame')
+                    bufmap({ 'n', 'x', 'o' }, '[F', '<plug>(vimtex-[R)', 'vimtex motion prev end of frame')
 
-                    set_bufmap({ 'n', 'x', 'o' }, ']]', '<plug>(vimtex-]])', 'vimtex motion next start of section')
-                    set_bufmap({ 'n', 'x', 'o' }, '][', '<plug>(vimtex-][)', 'vimtex motion next end of section')
-                    set_bufmap({ 'n', 'x', 'o' }, '[]', '<plug>(vimtex-[])', 'vimtex motion prev start of section')
-                    set_bufmap({ 'n', 'x', 'o' }, '[[', '<plug>(vimtex-[[)', 'vimtex motion prev end of section')
-                    defer_bufmap({ 'n', 'x', 'o' }, ']e', '<plug>(vimtex-]m)', 'vimtex motion next start of env')
-                    defer_bufmap({ 'n', 'x', 'o' }, ']E', '<plug>(vimtex-]M)', 'vimtex motion next end of env')
-                    defer_bufmap({ 'n', 'x', 'o' }, '[e', '<plug>(vimtex-[m)', 'vimtex motion prev start of env')
-                    defer_bufmap({ 'n', 'x', 'o' }, '[E', '<plug>(vimtex-[M)', 'vimtex motion prev end of env')
-                    set_bufmap({ 'n', 'x', 'o' }, ']m', '<plug>(vimtex-]n)', 'vimtex motion next start of math')
-                    set_bufmap({ 'n', 'x', 'o' }, ']M', '<plug>(vimtex-]N)', 'vimtex motion next end of math')
-                    set_bufmap({ 'n', 'x', 'o' }, '[m', '<plug>(vimtex-[n)', 'vimtex motion prev start of math')
-                    set_bufmap({ 'n', 'x', 'o' }, '[M', '<plug>(vimtex-[N)', 'vimtex motion prev end of math')
-                    defer_bufmap({ 'n', 'x', 'o' }, ']f', '<plug>(vimtex-]r)', 'vimtex motion next start of frame')
-                    defer_bufmap({ 'n', 'x', 'o' }, ']F', '<plug>(vimtex-]R)', 'vimtex motion next end of frame')
-                    defer_bufmap({ 'n', 'x', 'o' }, '[f', '<plug>(vimtex-[r)', 'vimtex motion prev start of frame')
-                    defer_bufmap({ 'n', 'x', 'o' }, '[F', '<plug>(vimtex-[R)', 'vimtex motion prev end of frame')
-
-                    set_bufmap('n', 'K', '<plug>(vimtex-doc-package)')
+                    bufmap('n', 'K', '<plug>(vimtex-doc-package)')
                 end,
             })
         end,
@@ -118,7 +106,12 @@ return {
         'jmbuhr/otter.nvim',
         ft = 'quarto',
         config = function()
-            require('otter').activate({ 'r', 'python' }, true)
+            autocmd('FileType', {
+                pattern = 'quarto',
+                callback = function()
+                    require('otter').activate({ 'r', 'python' }, true)
+                end,
+            })
         end,
     },
 }

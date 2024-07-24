@@ -212,47 +212,43 @@ return {
         event = 'VeryLazy',
         config = function()
             local which_key = require 'which-key'
-            which_key.setup {
-                triggers = { '<leader>', '<localleader>', 'g', 'z', ']', '[', '`', '"', [[']], '@' },
+            which_key.setup {}
+
+            which_key.add {
+                { '<Leader>f', group = '+find everything', mode = { 'n', 'v' } },
+                { '<Leader>d', group = '+debugger' },
+                { '<Leader>b', group = '+buffer' },
+                { '<Leader>w', group = '+window' },
+                { '<Leader>e', group = '+explorer' },
+                { '<Leader>t', group = '+terminal/toggle' },
+                { '<Leader>o', group = '+open/org' },
+                { '<Leader>ol', group = '+open/links' },
+                { '<Leader>g', group = '+git' },
+                { '<Leader>x', group = '+quickfixlist' },
+                { '<Leader>c', group = '+chatgpt', mode = { 'n', 'v' } },
+                { '<Leader><Tab>', group = '+tab' },
+                { '<Leader>m', group = '+misc', mode = { 'n', 'v' } },
+                { '<Leader>mm', group = '+markdown' },
+                { '<Leader>md', group = '+change directory' },
+                { '<Space>l', group = '+latex motions' },
+                { '<Space>l', group = '+latex motions' },
             }
 
-            which_key.register {
-                ['<Leader>f'] = { name = '+find everything', mode = { 'n', 'v' } },
-                ['<Leader>d'] = { name = '+debugger' },
-                ['<Leader>b'] = { name = '+buffer' },
-                ['<Leader>w'] = { name = '+window' },
-                ['<Leader>e'] = { name = '+explorer' },
-                ['<Leader>t'] = { name = '+terminal/toggle' },
-                ['<Leader>o'] = { name = '+open/org' },
-                ['<Leader>ol'] = { name = '+open/links' },
-                ['<Leader>g'] = { name = '+git' },
-                ['<Leader>x'] = { name = '+quickfixlist' },
-                ['<Leader>c'] = { name = '+chatgpt', mode = { 'n', 'v' } },
-                ['<Leader><Tab>'] = { name = '+tab' },
-                ['<Leader>m'] = { name = '+misc', mode = { 'n', 'v' } },
-                ['<Leader>mm'] = { name = '+markdown' },
-                ['<Leader>md'] = { name = '+change directory' },
-                [']<Space>'] = { name = '+Additional motions' },
-                [']<Space>l'] = { name = '+latex motions' },
-                ['[<Space>'] = { name = '+Additional motions' },
-                ['[<Space>l'] = { name = '+latex motions' },
+            local keymap_for_repl = {
+                { '<Leader><Space>', group = '+localleader', buffer = 0 },
+                { '<Leader><Space>r', group = '+REPL', buffer = 0 },
+                { '<Leader><Space>s', group = '+send to REPL(motion)', buffer = 0, mode = { 'n', 'v' } },
             }
-
-            local keymap_for_repl = {}
-
-            keymap_for_repl['<Leader><Space>'] = { name = '+localleader', buffer = 0 }
-            keymap_for_repl['<Leader><Space>r'] = { name = '+REPL', buffer = 0 }
-            keymap_for_repl['<Leader><Space>s'] = { name = '+send to REPL(motion)', buffer = 0, mode = { 'n', 'v' } }
 
             autocmd('FileType', {
                 group = my_augroup,
                 pattern = 'org',
                 desc = 'add which key description for org',
                 callback = function()
-                    which_key.register {
-                        ['<Leader><Space>'] = { name = '+localleader', buffer = 0 },
-                        ['<Leader>oi'] = { name = '+org insert', buffer = 0 },
-                        ['<Leader>ox'] = { name = '+org clock', buffer = 0 },
+                    which_key.add {
+                        { '<Leader><Space>', group = '+localleader', buffer = 0 },
+                        { '<Leader>oi', group = '+org insert', buffer = 0 },
+                        { '<Leader>ox', group = '+org clock', buffer = 0 },
                     }
                 end,
             })
@@ -261,8 +257,8 @@ return {
                 group = my_augroup,
                 desc = 'add which key description for lsp',
                 callback = function(args)
-                    which_key.register {
-                        ['<Leader>l'] = { name = '+lsp', buffer = args.buf },
+                    which_key.add {
+                        { '<Leader>l', group = '+lsp', buffer = args.buf },
                     }
                 end,
             })
@@ -272,11 +268,11 @@ return {
                 pattern = 'tex',
                 desc = 'add which key description for tex',
                 callback = function()
-                    which_key.register {
-                        ['<Leader><Space>l'] = { name = '+vimtex', buffer = 0 },
-                        ['<Leader><Space>s'] = { name = '+vimtex surround', buffer = 0 },
-                        ['<Leader><Space>t'] = { name = '+vimtex toggle', buffer = 0 },
-                        ['<Leader><Space>c'] = { name = 'vimtex create cmd', buffer = 0 },
+                    which_key.add {
+                        { '<Leader><Space>l', group = '+vimtex', buffer = 0 },
+                        { '<Leader><Space>s', group = '+vimtex surround', buffer = 0 },
+                        { '<Leader><Space>t', group = '+vimtex toggle', buffer = 0 },
+                        { '<Leader><Space>c', group = 'vimtex create cmd', buffer = 0 },
                     }
                 end,
             })
@@ -286,7 +282,7 @@ return {
                 group = my_augroup,
                 desc = 'Add which key description for REPL',
                 callback = function()
-                    which_key.register(keymap_for_repl)
+                    which_key.add(keymap_for_repl)
                 end,
             })
         end,

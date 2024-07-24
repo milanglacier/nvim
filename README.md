@@ -226,6 +226,7 @@ folder. To use this example configuration, simply copy the folder to
 ## general purpose deps
 
 1. `universal-ctags`
+2. `treesitter-cli*`: this is required for `nvim-treesitter` in `main` branch.
 
 # Keymaps
 
@@ -602,72 +603,56 @@ Note: with no numerical argument, the REPL is default for the first REPL.
 
 ### Syntax based text objects keymaps
 
-| Mode | LHS          | RHS/Functionality                           |
-| ---- | ------------ | ------------------------------------------- |
-| ov   | af           | Text object: around a function definition   |
-| ov   | if           | Text object: inner of a function definition |
-| ov   | aC           | Text object: around a class definition      |
-| ov   | iC           | Text object: inner of a class definition    |
-| ov   | ak           | Text object: the same as `aC`               |
-| ov   | ik           | Text object: the same as `iC`               |
-| ov   | al           | Text object: around a loop                  |
-| ov   | il           | Text object: inner of a loop                |
-| ov   | ac           | Text object: around if-else conditions      |
-| ov   | ic           | Text object: inner of if-else conditions    |
-| ov   | ae           | Text object: around a function call         |
-| ov   | `a<Leader>a` | Text object: around a parameter(argument)   |
-| ov   | `i<Leader>a` | Text object: inner of a parameter(argument) |
+| Mode | LHS  | RHS/Functionality                           |
+| ---- | ---- | ------------------------------------------- |
+| ov   | af   | Text object: around a function definition   |
+| ov   | if   | Text object: inner of a function definition |
+| ov   | ak   | Text object: the same as `aC`               |
+| ov   | ik   | Text object: the same as `iC`               |
+| ov   | al   | Text object: around a loop                  |
+| ov   | il   | Text object: inner of a loop                |
+| ov   | ac   | Text object: around if-else conditions      |
+| ov   | ic   | Text object: inner of if-else conditions    |
+| ov   | ae   | Text object: around a function call         |
+| ov   | `aA` | Text object: around a parameter(argument)   |
+| ov   | `iA` | Text object: inner of a parameter(argument) |
 
 ### Syntaxa based navigations keymaps
 
-| Mode | LHS          | RHS/Functionality                           |
-| ---- | ------------ | ------------------------------------------- |
-| n    | `]f`         | Go to the start of next function definition |
-| n    | `]<Leader>c` | Go to the start of next class definition    |
-| n    | `]k`         | The same as `]<Leader>c`                    |
-| n    | `]l`         | Go to the start of next loop                |
-| n    | `]c`         | Go to the start of next if-else conditions  |
-| n    | `]e`         | Go to the start of next function call       |
-| n    | `]a`         | Go to the start of next parameter(argument) |
+| Mode | LHS  | RHS/Functionality                           |
+| ---- | ---- | ------------------------------------------- |
+| n    | `]f` | Go to the start of next function definition |
+| n    | `]k` | The same as `]<Leader>c`                    |
+| n    | `]l` | Go to the start of next loop                |
+| n    | `]c` | Go to the start of next if-else conditions  |
 
-| Mode | LHS          | RHS/Functionality                         |
-| ---- | ------------ | ----------------------------------------- |
-| n    | `]F`         | Go to the end of next function definition |
-| n    | `]<Leader>C` | Go to the end of next class definition    |
-| n    | `]K`         | The same as `]<Leader>C`                  |
-| n    | `]L`         | Go to the end of next loop                |
-| n    | `]C`         | Go to the end of next if-else conditions  |
-| n    | `]E`         | Go to the end of next function call       |
-| n    | `]A`         | Go to the end of next parameter(argument) |
+| Mode | LHS  | RHS/Functionality                         |
+| ---- | ---- | ----------------------------------------- |
+| n    | `]F` | Go to the end of next function definition |
+| n    | `]K` | The same as `]<Leader>C`                  |
+| n    | `]L` | Go to the end of next loop                |
+| n    | `]C` | Go to the end of next if-else conditions  |
 
-| Mode | LHS          | RHS/Functionality                               |
-| ---- | ------------ | ----------------------------------------------- |
-| n    | `[f`         | Go to the start of previous function definition |
-| n    | `[<Leader>c` | Go to the start of previous class definition    |
-| n    | `[k`         | The same as `[<Leader>c`                        |
-| n    | `[l`         | Go to the start of previous loop                |
-| n    | `[c`         | Go to the start of previous if-else conditions  |
-| n    | `[e`         | Go to the start of previous function call       |
-| n    | `[a`         | Go to the start of previous parameter(argument) |
+| Mode | LHS  | RHS/Functionality                               |
+| ---- | ---- | ----------------------------------------------- |
+| n    | `[f` | Go to the start of previous function definition |
+| n    | `[k` | The same as `[<Leader>c`                        |
+| n    | `[l` | Go to the start of previous loop                |
+| n    | `[c` | Go to the start of previous if-else conditions  |
 
-| Mode | LHS          | RHS/Functionality                             |
-| ---- | ------------ | --------------------------------------------- |
-| n    | `[F`         | Go to the end of previous function definition |
-| n    | `[<Leader>C` | Go to the end of previous class definition    |
-| n    | `[K`         | The same as `[<Leader>C`                      |
-| n    | `[L`         | Go to the end of previous loop                |
-| n    | `[C`         | Go to the end of previous if-else conditions  |
-| n    | `[E`         | Go to the end of previous function call       |
-| n    | `[A`         | Go to the end of previous parameter(argument) |
+| Mode | LHS  | RHS/Functionality                             |
+| ---- | ---- | --------------------------------------------- |
+| n    | `[F` | Go to the end of previous function definition |
+| n    | `[K` | The same as `[<Leader>C`                      |
+| n    | `[L` | Go to the end of previous loop                |
+| n    | `[C` | Go to the end of previous if-else conditions  |
 
 ### Miscellenous
 
-| Mode | LHS        | RHS/Functionality                                                     |
-| ---- | ---------- | --------------------------------------------------------------------- |
-| n    | `<CR><CR>` | Start incremental selection (expand region) based on treesitter nodes |
-| v    | `<CR>`     | Expand the region based on scope                                      |
-| v    | `<Tab>`    | Expand the region based on treesitter node                            |
-| v    | `<S-Tab>`  | Shrink the region based on treesitter node                            |
+| Mode | LHS    | RHS/Functionality                                 |
+| ---- | ------ | ------------------------------------------------- |
+| v    | `<CR>` | Expand the region based on treesitter nodes range |
+| o    | `<CR>` | Expand the region based on treesitter node range  |
 
 ## Searcher keymaps
 
@@ -931,10 +916,7 @@ The following keymaps rely on [vimtex](https://github.com/lervag/vimtex)
 2. You need to define your leader key before defining any keymaps.
    Otherwise, keymap will not be correctly mapped with your leader key.
 
-3. Note that `tree-sitter` will turn `syntax off`, and `pandoc-syntax` and `pandoc-rmarkdown`
-   relies on the builtin `syntax`, so we need to load `config.pandoc` before we load `config.treesitter`
-
-4. `vim-matchup` will (intentionally) hide the status-line if the matched pair are spanned
+3. `vim-matchup` will (intentionally) hide the status-line if the matched pair are spanned
    over entire screen to show the other side of the pair.
 
 # Discussion

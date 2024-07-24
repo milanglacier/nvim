@@ -1,10 +1,9 @@
-local sources = require('conf.cmp').sources
-
 return {
     { 'hrsh7th/cmp-nvim-lsp' },
     {
         'hrsh7th/nvim-cmp',
         dependencies = {
+            { 'milanglacier/minuet-ai.nvim' },
             { 'hrsh7th/cmp-buffer' },
             { 'hrsh7th/cmp-path' },
             { 'hrsh7th/cmp-cmdline' },
@@ -88,7 +87,60 @@ return {
             local types = require 'cmp.types'
             local luasnip = require 'luasnip'
 
-            require('minuet').setup {}
+            Cmp_sources = {
+                global = {
+                    {
+                        { name = 'nvim_lsp' },
+                        { name = 'luasnip' },
+                        {
+                            name = 'tags',
+                            option = {
+                                exact_match = true,
+                                current_buffer_only = true,
+                            },
+                        },
+                    },
+                    {
+                        { name = 'buffer' },
+                        { name = 'path' },
+                    },
+                },
+                quarto = {
+                    {
+                        { name = 'nvim_lsp' },
+                        { name = 'luasnip' },
+                        { name = 'tags' },
+                    },
+                    {
+                        { name = 'buffer' },
+                        { name = 'path' },
+                    },
+                },
+                r_rmd = {
+                    {
+                        { name = 'nvim_lsp' },
+                        { name = 'luasnip' },
+                        { name = 'tags' },
+                    },
+                    {
+                        -- { name = 'cmp_nvim_r' },
+                        { name = 'buffer' },
+                        { name = 'path' },
+                    },
+                },
+            }
+
+            require('minuet').setup {
+                provider_options = {
+                    codestral = {
+                        n_completions = 3,
+                        optional = {
+                            stop = { '\n\n' },
+                            max_tokens = 256,
+                        },
+                    },
+                },
+            }
 
             local my_mappings = {
                 ['<A-y>'] = require('minuet').make_cmp_map(),
@@ -140,7 +192,7 @@ return {
                     completion = cmp.config.window.bordered(border_opts),
                     documentation = cmp.config.window.bordered(border_opts),
                 },
-                sources = cmp.config.sources(unpack(sources.global)),
+                sources = cmp.config.sources(unpack(Cmp_sources.global)),
                 formatting = {
                     format = cmp_formatting,
                 },
@@ -209,11 +261,11 @@ return {
             })
 
             cmp.setup.filetype('quarto', {
-                sources = cmp.config.sources(unpack(sources.quarto)),
+                sources = cmp.config.sources(unpack(Cmp_sources.quarto)),
             })
 
             cmp.setup.filetype({ 'r', 'rmd' }, {
-                sources = cmp.config.sources(unpack(sources.r_rmd)),
+                sources = cmp.config.sources(unpack(Cmp_sources.r_rmd)),
             })
         end,
     },
