@@ -74,7 +74,9 @@ return {
         branch = 'main',
         config = function()
             if vim.fn.executable 'tree-sitter' == 0 then
-                vim.cmd [[MasonInstall tree-sitter-cli]]
+                if not require('mason-registry').is_installed 'tree-sitter-cli' then
+                    vim.cmd [[MasonInstall tree-sitter-cli]]
+                end
             end
 
             require('nvim-treesitter').setup {
