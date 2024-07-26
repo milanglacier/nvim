@@ -13,6 +13,9 @@ require('lazy').setup {
         patterns = { 'milanglacier' },
         fallback = true,
     },
+    change_detection = {
+        enabled = false,
+    },
     defaults = {
         lazy = true,
     },
