@@ -851,12 +851,6 @@ The following keymaps rely on [dsf.vim](https://github.com/AndrewRadev/dsf.vim)
 | ov   | `ae` | Text object: a function call     |
 | ov   | `ie` | Text object: inner function call |
 
-#### REPL keymaps for Rmarkdown
-
-The following keymaps rely on [Nvim-R](https://github.com/jalvesaq/Nvim-R)
-
-The same as in section [R REPL keymaps](#repl-keymaps-for-r)
-
 #### Rmarkdown preview keymaps
 
 The following keymaps rely on [markdown-previem.nvim](https://github.com/iamcco/markdown-preview.nvim)

@@ -16,7 +16,6 @@ return {
             { 'saadparwaiz1/cmp_luasnip' },
             { 'quangnguyen30192/cmp-nvim-tags' },
             { 'petertriho/cmp-git' },
-            -- { 'jalvesaq/cmp-nvim-r' },
         },
         event = { 'InsertEnter', 'CmdLineEnter' },
         config = function()
@@ -123,7 +122,6 @@ return {
                         { name = 'tags' },
                     },
                     {
-                        -- { name = 'cmp_nvim_r' },
                         { name = 'buffer' },
                         { name = 'path' },
                     },
@@ -131,12 +129,29 @@ return {
             }
 
             require('minuet').setup {
+                provider = 'gemini',
+                request_timeout = 4,
+                throttle = 2000,
+                notify = 'error',
                 provider_options = {
                     codestral = {
-                        n_completions = 3,
                         optional = {
                             stop = { '\n\n' },
                             max_tokens = 256,
+                        },
+                    },
+                    gemini = {
+                        optional = {
+                            generationConfig = {
+                                maxOutputTokens = 256,
+                                topP = 0.9,
+                            },
+                        },
+                    },
+                    openai = {
+                        optional = {
+                            max_tokens = 256,
+                            top_p = 0.9,
                         },
                     },
                 },
