@@ -157,7 +157,7 @@ return {
                 },
             }
 
-            local my_mappings = {
+            local mappings = {
                 ['<A-y>'] = require('minuet').make_cmp_map(),
                 ['<C-b>'] = cmp.mapping.scroll_docs(-4),
                 ['<C-f>'] = cmp.mapping.scroll_docs(4),
@@ -188,6 +188,49 @@ return {
                     end
                 end),
                 ['<ESC>'] = cmp.mapping.abort(),
+                ['<C-e>'] = cmp.mapping.abort(),
+            }
+
+            local cmdline_mappings = {
+                ['<Tab>'] = {
+                    c = function()
+                        if cmp.visible() then
+                            cmp.confirm { select = true }
+                        else
+                            cmp.complete()
+                        end
+                    end,
+                },
+                ['<S-Tab>'] = {
+                    c = function()
+                        if cmp.visible() then
+                            cmp.select_prev_item()
+                        else
+                            cmp.complete()
+                        end
+                    end,
+                },
+                ['<C-n>'] = {
+                    c = function(fallback)
+                        if cmp.visible() then
+                            cmp.select_next_item()
+                        else
+                            fallback()
+                        end
+                    end,
+                },
+                ['<C-p>'] = {
+                    c = function(fallback)
+                        if cmp.visible() then
+                            cmp.select_prev_item()
+                        else
+                            fallback()
+                        end
+                    end,
+                },
+                ['<C-e>'] = {
+                    c = cmp.mapping.abort(),
+                },
             }
 
             -- copied from AstroNvim
@@ -202,7 +245,7 @@ return {
                         require('luasnip').lsp_expand(args.body)
                     end,
                 },
-                mapping = cmp.mapping.preset.insert(my_mappings),
+                mapping = mappings,
                 window = {
                     completion = cmp.config.window.bordered(border_opts),
                     documentation = cmp.config.window.bordered(border_opts),
@@ -226,18 +269,7 @@ return {
 
             -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
             cmp.setup.cmdline('/', {
-                mapping = cmp.mapping.preset.cmdline {
-                    ['<Tab>'] = {
-                        c = function()
-                            if cmp.visible() then
-                                cmp.confirm { select = true }
-                            else
-                                cmp.complete()
-                            end
-                        end,
-                    },
-                    ['<A-i>'] = { c = cmp.mapping.complete() },
-                },
+                mapping = cmdline_mappings,
                 sources = {
                     { name = 'buffer' },
                 },
@@ -245,18 +277,7 @@ return {
 
             -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
             cmp.setup.cmdline(':', {
-                mapping = cmp.mapping.preset.cmdline {
-                    ['<Tab>'] = {
-                        c = function()
-                            if cmp.visible() then
-                                cmp.confirm { select = true }
-                            else
-                                cmp.complete()
-                            end
-                        end,
-                    },
-                    ['<A-i>'] = { c = cmp.mapping.complete() },
-                },
+                mapping = cmdline_mappings,
                 sources = cmp.config.sources({
                     { name = 'path' },
                 }, {
