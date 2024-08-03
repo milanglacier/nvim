@@ -287,7 +287,7 @@ return {
                     desc = 'hsplit: S/R selected words',
                 })
                 keymap(mode, '<Leader>sv', '', {
-                    callback = grugfar(mode, 'vsplit', nil, nil),
+                    callback = grugfar(mode, 'vsplit', true, nil),
                     desc = 'vsplit: S/R selected words',
                 })
                 keymap(mode, '<Leader>st', '', {
