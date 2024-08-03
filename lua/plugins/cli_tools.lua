@@ -270,8 +270,8 @@ return {
                     require('grug-far')[caller] {
                         windowCreationCommand = wincmd,
                         prefills = {
-                            search = mode == 'n' and current_word and vim.fn.expand '<cword>',
-                            paths = current_file and vim.fn.expand '%',
+                            search = (mode == 'n' and current_word) and vim.fn.expand '<cword>' or nil,
+                            paths = current_file and vim.fn.expand '%' or nil,
                         },
                     }
                 end
