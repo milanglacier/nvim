@@ -27,7 +27,7 @@
   "markdown-preview.nvim": { "branch": "master", "commit": "a923f5fc5ba36a3b17e289dc35dc17f66d0548ee" },
   "mason.nvim": { "branch": "main", "commit": "e2f7f9044ec30067bc11800a9e266664b88cda22" },
   "mini.nvim": { "branch": "main", "commit": "74e6b722c91113bc70d4bf67249ed8de0642b20e" },
-  "minuet-ai.nvim": { "branch": "main", "commit": "7e878bc346cb0d99832c5c9ca6c8ab3b2df5d88b" },
+  "minuet-ai.nvim": { "branch": "main", "commit": "4ffcd5f66dd4c8a12ed2d34345ad012b2629a6ef" },
   "neogit": { "branch": "master", "commit": "2b74a777b963dfdeeabfabf84d5ba611666adab4" },
   "nightfox.nvim": { "branch": "main", "commit": "d3e8b1acc095baf57af81bb5e89fe7c4359eb619" },
   "nvim-cmp": { "branch": "main", "commit": "ae644feb7b67bf1ce4260c231d1d4300b19c6f30" },
