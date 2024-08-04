@@ -132,7 +132,7 @@ return {
                 provider = 'gemini',
                 request_timeout = 4,
                 throttle = 2000,
-                notify = 'error',
+                notify = 'warn',
                 provider_options = {
                     codestral = {
                         optional = {
