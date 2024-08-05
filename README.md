@@ -42,7 +42,7 @@
   - [Integration with other tools](#integration-with-other-tools)
     - [Terminal emulator keymaps](#terminal-emulator-keymaps)
     - [Git keymaps](#git-keymaps)
-    - [Ripgrep keymaps](#ripgrep-keymaps)
+    - [Search and Replace keymaps](#search-and-replace-keymaps)
     - [Minuet keymaps](#minuet-keymaps)
   - [REPL keymaps](#repl-keymaps)
   - [Treesitter keymaps](#treesitter-keymaps)
@@ -65,7 +65,6 @@
     - [Rmarkdown keymaps](#rmarkdown-keymaps)
       - [Builtin keymaps for Rmarkdown](#builtin-keymaps-for-rmarkdown)
       - [Text objects keymaps for Rmarkdown](#text-objects-keymaps-for-rmarkdown)
-      - [REPL keymaps for Rmarkdown](#repl-keymaps-for-rmarkdown)
       - [Rmarkdown preview keymaps](#rmarkdown-preview-keymaps)
     - [Markdown keymaps](#markdown-keymaps)
     - [Latex keymaps](#latex-keymaps)
@@ -561,13 +560,17 @@ The following keymaps rely on [diffview.nvim](https://github.com/sindrets/diffvi
 | n    | `<Leader>gd` | Compare git diff for current file with HEAD |
 | n    | `<Leader>gf` | Open git diff view for commits history      |
 
-### Ripgrep keymaps
+### Search and Replace keymaps
 
-The following keymaps rely on [nvim-spectre](https://github.com/nvim-pack/nvim-spectre)
+The following keymaps rely on [grug-far.nvim](https://github.com/MagicDuck/grug-far.nvim)
 
-| Mode | LHS          | RHS/Functionality                                                                                      |
-| ---- | ------------ | ------------------------------------------------------------------------------------------------------ |
-| nv   | `<Leader>fR` | Open ripgrep search panel (to show searched results of selected text if on visual mode) in the project |
+| Mode | LHS          | RHS/Functionality                                                                  |
+| ---- | ------------ | ---------------------------------------------------------------------------------- |
+| nv   | `<Leader>/`  | Open search and replace UI in a new tab                                            |
+| nv   | `<Leader>ss` | search and replace with current word or selected text in horizontal split          |
+| nv   | `<Leader>ss` | search and replace with current selected word or selected text in vertical split   |
+| nv   | `<Leader>st` | search and replace with current selected word or selected text in new tab          |
+| nv   | `<Leader>sf` | search and replace with current selected word or selected text within current file |
 
 ### Minuet keymaps
 

@@ -221,6 +221,7 @@ return {
                 { '<Leader>w', group = '+window' },
                 { '<Leader>e', group = '+explorer' },
                 { '<Leader>t', group = '+terminal/toggle' },
+                { '<Leader>s', group = '+search/replace' },
                 { '<Leader>o', group = '+open/org' },
                 { '<Leader>ol', group = '+open/links' },
                 { '<Leader>g', group = '+git' },
