@@ -735,9 +735,8 @@ The following keymaps rely on [nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
 | `i`  | `<C-p>`   | Select previous candidate                                              |
 | `i`  | `<A-i>`   | Manually invoke the completion                                         |
 | `i`  | `<Tab>`   | Select the candidate / expand the snippet / go to next slot in snippet |
-| `i`  | `<CR>`    | Select the candidate                                                   |
 | `i`  | `<S-Tab>` | Select previous candidate / go to previous slot in snippet             |
-| `i`  | `<ESC>`   | Abort the completion                                                   |
+| `i`  | `<C-e>`   | Abort the completion                                                   |
 
 ## Debugger Adapter Protocol keymaps
 

@@ -186,10 +186,20 @@ return {
                 ['<C-b>'] = cmp.mapping.scroll_docs(-4),
                 ['<C-f>'] = cmp.mapping.scroll_docs(4),
                 ['<A-i>'] = cmp.mapping.complete(),
-                ['<CR>'] = cmp.mapping.confirm { select = true },
+                ['<CR>'] = cmp.mapping(function(fallback)
+                    -- HACK: cmp.visible() is blocking, we want to check if cmp
+                    -- is visible non-blocking.
+                    if cmp.core.view:visible() then
+                        cmp.confirm { select = true }
+                    else
+                        fallback()
+                    end
+                end),
                 -- Select the candidates in nvim-cmp window and also insert the text into the buffer
                 ['<C-n>'] = cmp.mapping.select_next_item { behavior = types.cmp.SelectBehavior.Insert },
                 ['<C-p>'] = cmp.mapping.select_prev_item { behavior = types.cmp.SelectBehavior.Insert },
+                ['<Down>'] = cmp.mapping.select_next_item { behavior = types.cmp.SelectBehavior.Insert },
+                ['<Up>'] = cmp.mapping.select_prev_item { behavior = types.cmp.SelectBehavior.Insert },
                 -- Select the candidates in nvim-cmp window but don't insert the text into the buffer
                 ['<C-j>'] = cmp.mapping.select_next_item { behavior = types.cmp.SelectBehavior.Select },
                 ['<C-k>'] = cmp.mapping.select_prev_item { behavior = types.cmp.SelectBehavior.Select },
@@ -211,7 +221,6 @@ return {
                         fallback()
                     end
                 end),
-                ['<ESC>'] = cmp.mapping.abort(),
                 ['<C-e>'] = cmp.mapping.abort(),
             }
 
