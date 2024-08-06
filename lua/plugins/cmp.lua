@@ -129,7 +129,7 @@ return {
             }
 
             require('minuet').setup {
-                provider = 'gemini',
+                provider = 'openai_compatible',
                 request_timeout = 4,
                 throttle = 2000,
                 notify = 'warn',
@@ -167,6 +167,12 @@ return {
                         },
                     },
                     openai = {
+                        optional = {
+                            max_tokens = 256,
+                            top_p = 0.9,
+                        },
+                    },
+                    openai_compatible = {
                         optional = {
                             max_tokens = 256,
                             top_p = 0.9,
