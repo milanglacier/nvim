@@ -224,8 +224,10 @@ return {
             keymap('n', '<Leader>gr', '<cmd>Gitsigns reset_hunk<CR>', { noremap = true })
             keymap('n', '<Leader>gs', '<cmd>Gitsigns stage_hunk<CR>', { noremap = true })
             keymap('n', '<Leader>gq', '<cmd>Gitsigns setqflist<CR>', { noremap = true })
-            keymap('n', ']h', '<cmd>Gitsigns next_hunk<CR>', { noremap = true })
-            keymap('n', '[h', '<cmd>Gitsigns prev_hunk<CR>', { noremap = true })
+
+            -- text objects
+            keymap('v', 'ih', '<ESC><CMD>Gitsigns select_hunk<CR>', { noremap = true })
+            keymap('o', 'ih', ':<C-U>Gitsigns select_hunk<CR>', { noremap = true })
         end,
         config = function()
             require('gitsigns').setup {
