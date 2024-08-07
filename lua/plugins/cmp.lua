@@ -3,12 +3,74 @@ return {
     {
         'hrsh7th/nvim-cmp',
         dependencies = {
-            { 'milanglacier/minuet-ai.nvim' },
+            {
+                'milanglacier/minuet-ai.nvim',
+                config = function()
+                    require('minuet').setup {
+                        provider = 'gemini',
+                        request_timeout = 4,
+                        throttle = 2000,
+                        notify = 'verbose',
+                        provider_options = {
+                            codestral = {
+                                optional = {
+                                    stop = { '\n\n' },
+                                    max_tokens = 256,
+                                },
+                            },
+                            gemini = {
+                                optional = {
+                                    generationConfig = {
+                                        maxOutputTokens = 256,
+                                        topP = 0.9,
+                                    },
+                                    safetySettings = {
+                                        {
+                                            category = 'HARM_CATEGORY_DANGEROUS_CONTENT',
+                                            threshold = 'BLOCK_NONE',
+                                        },
+                                        {
+                                            category = 'HARM_CATEGORY_HATE_SPEECH',
+                                            threshold = 'BLOCK_NONE',
+                                        },
+                                        {
+                                            category = 'HARM_CATEGORY_HARASSMENT',
+                                            threshold = 'BLOCK_NONE',
+                                        },
+                                        {
+                                            category = 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
+                                            threshold = 'BLOCK_NONE',
+                                        },
+                                    },
+                                },
+                            },
+                            openai = {
+                                optional = {
+                                    max_tokens = 256,
+                                    top_p = 0.9,
+                                },
+                            },
+                            openai_compatible = {
+                                optional = {
+                                    max_tokens = 256,
+                                    top_p = 0.9,
+                                },
+                            },
+                        },
+                    }
+                end,
+            },
             { 'hrsh7th/cmp-buffer' },
             { 'hrsh7th/cmp-path' },
             { 'hrsh7th/cmp-cmdline' },
             {
                 'L3MON4D3/LuaSnip',
+                config = function()
+                    require('luasnip.loaders.from_vscode').lazy_load()
+                    require('luasnip.loaders.from_vscode').lazy_load {
+                        paths = { vim.fn.stdpath 'config' .. '/snippets' },
+                    }
+                end,
                 dependencies = {
                     { 'rafamadriz/friendly-snippets' },
                 },
@@ -79,9 +141,6 @@ return {
                 return vim_item
             end
 
-            require('luasnip.loaders.from_vscode').lazy_load()
-            require('luasnip.loaders.from_vscode').lazy_load { paths = { vim.fn.stdpath 'config' .. '/snippets' } }
-
             local cmp = require 'cmp'
             local types = require 'cmp.types'
             local luasnip = require 'luasnip'
@@ -124,59 +183,6 @@ return {
                     {
                         { name = 'buffer' },
                         { name = 'path' },
-                    },
-                },
-            }
-
-            require('minuet').setup {
-                provider = 'gemini',
-                request_timeout = 4,
-                throttle = 2000,
-                notify = 'warn',
-                provider_options = {
-                    codestral = {
-                        optional = {
-                            stop = { '\n\n' },
-                            max_tokens = 256,
-                        },
-                    },
-                    gemini = {
-                        optional = {
-                            generationConfig = {
-                                maxOutputTokens = 256,
-                                topP = 0.9,
-                            },
-                            safetySettings = {
-                                {
-                                    category = 'HARM_CATEGORY_DANGEROUS_CONTENT',
-                                    threshold = 'BLOCK_NONE',
-                                },
-                                {
-                                    category = 'HARM_CATEGORY_HATE_SPEECH',
-                                    threshold = 'BLOCK_NONE',
-                                },
-                                {
-                                    category = 'HARM_CATEGORY_HARASSMENT',
-                                    threshold = 'BLOCK_NONE',
-                                },
-                                {
-                                    category = 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
-                                    threshold = 'BLOCK_NONE',
-                                },
-                            },
-                        },
-                    },
-                    openai = {
-                        optional = {
-                            max_tokens = 256,
-                            top_p = 0.9,
-                        },
-                    },
-                    openai_compatible = {
-                        optional = {
-                            max_tokens = 256,
-                            top_p = 0.9,
-                        },
                     },
                 },
             }
