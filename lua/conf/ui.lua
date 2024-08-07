@@ -5,37 +5,43 @@ local my_augroup = require('conf.builtin_extend').my_augroup
 
 local git_workspace_diff_setup = function()
     local function is_a_git_dir()
-        local is_git = vim.fn.system 'git rev-parse --is-inside-work-tree' == 'true\n'
+        local is_git = vim.fs.root(vim.fn.getcwd(), '.git')
         return is_git
     end
 
     local function compute_workspace_diff(cwd)
-        vim.fn.jobstart([[git diff --stat | tail -n 1]], {
-            stdout_buffered = true,
-            on_stdout = function(_, data, _)
-                local changes_raw = data[1]
-                changes_raw = string.sub(changes_raw, 1, -2) -- the last character is \n, remove it
-                changes_raw = vim.split(changes_raw, ',')
+        vim.system({ 'git', 'diff', '--stat' }, { text = true }, function(obj)
+            local stdout = vim.split(obj.stdout, '\n')
+            -- if there are diffs, then there will be at least two lines, the
+            -- 1:n-2 lines are the changed file name, and the second last line
+            -- is the stats, and the last line is an empty string.
+            if #stdout < 2 then
+                return
+            end
 
-                local changes = ''
+            -- get the second last line containing the stats
+            local changes_raw = stdout[#stdout - 1]
 
-                for _, i in pairs(changes_raw) do
-                    if i:find 'change' then
-                        changes = changes .. ' ' .. i:match '(%d+)'
-                    elseif i:find 'insertion' then
-                        changes = changes .. ' +' .. i:match '(%d+)'
-                    elseif i:find 'deletion' then
-                        changes = changes .. ' -' .. i:match '(%d+)'
-                    end
+            local changes_table = vim.split(changes_raw, ',')
+
+            local changes = ''
+
+            for _, i in pairs(changes_table) do
+                if i:find 'change' then
+                    changes = changes .. ' ' .. i:match '(%d+)'
+                elseif i:find 'insertion' then
+                    changes = changes .. ' +' .. i:match '(%d+)'
+                elseif i:find 'deletion' then
+                    changes = changes .. ' -' .. i:match '(%d+)'
                 end
+            end
 
-                if changes ~= '' then
-                    changes = ' ' .. changes
-                end
+            if changes ~= '' then
+                changes = ' ' .. changes
+            end
 
-                M.git_workspace_diff[cwd] = changes
-            end,
-        })
+            M.git_workspace_diff[cwd] = changes
+        end)
     end
 
     local function init_workspace_diff()
