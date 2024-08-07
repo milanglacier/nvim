@@ -223,10 +223,33 @@ return {
             keymap('n', '<Leader>ga', '<cmd>Gitsigns<CR>', { noremap = true })
             keymap('n', '<Leader>gr', '<cmd>Gitsigns reset_hunk<CR>', { noremap = true })
             keymap('n', '<Leader>gs', '<cmd>Gitsigns stage_hunk<CR>', { noremap = true })
+            keymap('n', '<Leader>gR', '<cmd>Gitsigns undo_stage_hunk<CR>', { noremap = true })
             keymap('n', '<Leader>gq', '<cmd>Gitsigns setqflist<CR>', { noremap = true })
+            keymap('n', ']h', '', {
+                noremap = true,
+                desc = 'git next hunk',
+                callback = function()
+                    if vim.wo.diff then
+                        vim.cmd 'normal! ]c'
+                    else
+                        require('gitsigns').nav_hunk 'next'
+                    end
+                end,
+            })
+            keymap('n', '[h', '', {
+                noremap = true,
+                desc = 'git prv hunk',
+                callback = function()
+                    if vim.wo.diff then
+                        vim.cmd 'normal! [c'
+                    else
+                        require('gitsigns').nav_hunk 'prev'
+                    end
+                end,
+            })
 
             -- text objects
-            keymap('v', 'ih', '<ESC><CMD>Gitsigns select_hunk<CR>', { noremap = true })
+            keymap('v', 'ih', '<esc><cmd>Gitsigns select_hunk<CR>', { noremap = true })
             keymap('o', 'ih', ':<C-U>Gitsigns select_hunk<CR>', { noremap = true })
         end,
         config = function()
