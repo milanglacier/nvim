@@ -96,28 +96,7 @@ M.winbar_symbol = function()
         return navic.get_location()
     end
 
-    local winwidth = vim.api.nvim_win_get_width(0)
-    local filename = vim.fn.expand '%:.'
-
-    local winbar = filename
-
-    local rest_length = winwidth - #winbar - 3
-    local ts_status = ''
-
-    if rest_length > 5 then
-        local size = math.floor(rest_length * 0.8)
-
-        ts_status = require('nvim-treesitter').statusline {
-            indicator_size = size,
-            separator = '  ',
-        } or ''
-
-        if ts_status ~= nil and ts_status ~= '' then
-            ts_status = ts_status:gsub('%s+', ' ')
-        end
-    end
-
-    return ts_status
+    return ''
 end
 
 M.git_workspace_diff = {}
