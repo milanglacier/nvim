@@ -226,6 +226,7 @@ folder. To use this example configuration, simply copy the folder to
 
 1. `universal-ctags`
 2. `treesitter-cli*`: this is required for `nvim-treesitter` in `main` branch.
+3. `lazygit`: this is only required if want to use `lazygit` in neovim (which is binded to `<leader>og`).
 
 # Keymaps
 
@@ -542,23 +543,27 @@ The following keymaps rely on [gitsigns.nvim](https://github.com/lewis6991/gitsi
 | n    | `<Leader>gp` | Preview current git diff hunk |
 | n    | `<Leader>ga` | Git actions                   |
 | n    | `<Leader>gs` | Stage current git diff hunk   |
+| n    | `<Leader>gR` | Unstage current git diff hunk |
 | n    | `<Leader>gr` | Reset current git diff hunk   |
 | n    | `<Leader>gq` | Send git diff hunks to qflist |
 | n    | `]h`         | Go to next git diff hunk      |
 | n    | `[h`         | Go to previous git diff hunk  |
 
-The following keymaps rely on [neogit](https://github.com/TimUntersberger/neogit)
+| Mode | LHS          | RHS/Functionality |
+| ---- | ------------ | ----------------- |
+| n    | `<Leader>og` | Open Lazygit      |
 
-| Mode | LHS          | RHS/Functionality         |
-| ---- | ------------ | ------------------------- |
-| n    | `<Leader>gg` | Open Neogit git dashboard |
+The following keymaps rely on [mini.nvim](htpps://https://github.com/echasnovski/mini.nvim)
 
-The following keymaps rely on [diffview.nvim](https://github.com/sindrets/diffview.nvim)
-
-| Mode | LHS          | RHS/Functionality                           |
-| ---- | ------------ | ------------------------------------------- |
-| n    | `<Leader>gd` | Compare git diff for current file with HEAD |
-| n    | `<Leader>gf` | Open git diff view for commits history      |
+| Mode | LHS          | RHS/Functionality                                        |
+| ---- | ------------ | -------------------------------------------------------- |
+| n    | `<Leader>gd` | Show diff                                                |
+| n    | `<Leader>gD` | Show staged diff                                         |
+| n    | `<Leader>gl` | Show log                                                 |
+| n    | `<Leader>gL` | Show log of current buffer                               |
+| n    | `<Leader>gc` | commit                                                   |
+| n    | `<Leader>gc` | commit ammend                                            |
+| nv   | `<Leader>gg` | DWIM (refer to `mini-git`'s doc for `show_at_cursor()`') |
 
 ### Search and Replace keymaps
 

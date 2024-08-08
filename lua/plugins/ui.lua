@@ -186,7 +186,6 @@ return {
             }
         end,
     },
-    { 'echasnovski/mini.nvim' },
     {
         'folke/trouble.nvim',
         cmd = 'Trouble',
@@ -233,6 +232,7 @@ return {
                 { '<Leader>o', group = '+open/org' },
                 { '<Leader>ol', group = '+open/links' },
                 { '<Leader>g', group = '+git' },
+                { '<Leader>gt', group = '+telescope' },
                 { '<Leader>x', group = '+quickfixlist' },
                 { '<Leader>c', group = '+chatgpt', mode = { 'n', 'v' } },
                 { '<Leader><Tab>', group = '+tab' },
