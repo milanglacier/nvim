@@ -1,8 +1,13 @@
 local M = {}
 local keymap = vim.api.nvim_set_keymap
 
+-- referenced from https://github.com/echasnovski/nvim
 M.open_lazygit = function()
-    -- referenced from https://github.com/echasnovski/nvim
+    if vim.fn.executable 'lazygit' == 0 then
+        vim.notify 'Lazygit is not installed'
+        return
+    end
+
     vim.cmd 'tabedit'
     vim.cmd 'setlocal nonumber signcolumn=no'
 
@@ -14,7 +19,6 @@ M.open_lazygit = function()
         end,
     })
     vim.cmd 'startinsert'
-    vim.b.minipairs_disable = true
 end
 
 keymap('n', '<Leader>og', '', {
