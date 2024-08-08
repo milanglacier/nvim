@@ -28,7 +28,7 @@ M.mini_git_setup = function()
         desc = 'Git Commit',
         callback = function()
             vim.cmd 'Git diff --cached'
-            vim.cmd 'horizontal Git commit --amend'
+            vim.cmd 'horizontal Git commit'
         end,
     })
     -- commit ammend
