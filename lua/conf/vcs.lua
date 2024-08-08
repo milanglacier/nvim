@@ -27,6 +27,8 @@ keymap('n', '<Leader>og', '', {
 })
 
 M.mini_git_setup = function()
+    -- I don't need to use minigit to track status (repo, head, status etc.)
+    vim.g.minigit_disable = true
     require('mini.git').setup()
     keymap('n', '<Leader>gc', '', {
         desc = 'Git Commit',
