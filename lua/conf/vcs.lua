@@ -16,6 +16,7 @@ M.open_lazygit = function()
             vim.cmd 'silent! :checktime'
             -- Check if any buffers were changed outside of Vim.
             vim.cmd 'silent! :bw'
+            vim.cmd 'tabclose'
         end,
     })
     vim.cmd 'startinsert'
