@@ -91,6 +91,78 @@ M.get_workspace_diff = function()
     end
 end
 
+M.encoding = function()
+    local ret, _ = (vim.bo.fenc or vim.go.enc):gsub('^utf%-8$', '')
+    return ret
+end
+
+M.fileformat = function()
+    local ret, _ = vim.bo.fileformat:gsub('^unix$', '')
+    if ret == 'dos' then
+        ret = ''
+    end
+    return ret
+end
+
+-- current file is lua/conf/ui.lua
+-- current working directory is ~/.config/nvim
+-- this function will return "nvim"
+--
+---@return string project_name
+M.project_name = function()
+    -- don't use pattern matching, just plain match
+    if vim.fn.expand('%:p'):find(vim.fn.getcwd(), nil, true) then
+        -- if the absolute path of current file is a sub directory of cwd
+        return ' ' .. vim.fn.fnamemodify('%', ':p:h:t')
+    else
+        return ''
+    end
+end
+
+M.file_status_symbol = {
+    modified = '',
+    readonly = '',
+    new = '',
+    unnamed = '󰽤',
+}
+
+M.get_diagnostics_in_current_root_dir = function()
+    local buffers = vim.api.nvim_list_bufs()
+    local severity = vim.diagnostic.severity
+    ---@diagnostic disable-next-line: undefined-field
+    local cwd = vim.uv.cwd()
+
+    local function dir_is_parent_of_buf(buf, dir)
+        local filename = vim.api.nvim_buf_get_name(buf)
+        if vim.fn.filereadable(filename) == 0 then
+            return false
+        end
+
+        for path in vim.fs.parents(filename) do
+            if dir == path then
+                return true
+            end
+        end
+        return false
+    end
+    local function get_num_of_diags_in_buf(severity_level, buf)
+        local count = vim.diagnostic.get(buf, { severity = severity_level })
+        return vim.tbl_count(count)
+    end
+
+    local n_diagnostics = { ERROR = 0, WARN = 0, INFO = 0, HINT = 0 }
+
+    for _, buf in ipairs(buffers) do
+        if dir_is_parent_of_buf(buf, cwd) then
+            for _, level in ipairs { 'ERROR', 'WARN', 'INFO', 'HINT' } do
+                n_diagnostics[level] = n_diagnostics[level] + get_num_of_diags_in_buf(severity[level], buf)
+            end
+        end
+    end
+
+    return n_diagnostics.ERROR, n_diagnostics.WARN, n_diagnostics.INFO, n_diagnostics.HINT
+end
+
 M.winbar_symbol = function()
     if not vim.lsp.buf_is_attached(0) then
         return ''
@@ -125,6 +197,7 @@ M.trouble_workspace_diagnostics = function()
         mode = 'diagnostics',
         filter = function(items)
             return vim.tbl_filter(function(item)
+                ---@diagnostic disable-next-line: undefined-field
                 return item.dirname:find(vim.uv.cwd(), 1, true)
             end, items)
         end,
