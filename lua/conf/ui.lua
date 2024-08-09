@@ -83,8 +83,8 @@ end
 M.get_workspace_diff = function()
     local cwd = vim.fn.getcwd()
     -- don't use pattern matching
-    if vim.fn.expand('%:p'):find(cwd, nil, true) then
-        -- if the absolute path of current file is a sub directory of cwd
+    if vim.fn.expand('%:p:h'):find(cwd, nil, true) then
+        -- if the absolute path of current file excluding the file name is a sub directory of cwd
         return M.git_workspace_diff[cwd] or ''
     else
         return ''
@@ -111,7 +111,7 @@ end
 ---@return string project_name
 M.project_name = function()
     -- don't use pattern matching, just plain match
-    if vim.fn.expand('%:p'):find(vim.fn.getcwd(), nil, true) then
+    if vim.fn.expand('%:p:h'):find(vim.fn.getcwd(), nil, true) then
         -- if the absolute path of current file is a sub directory of cwd
         return ' ' .. vim.fn.fnamemodify('%', ':p:h:t')
     else
@@ -138,12 +138,8 @@ M.get_diagnostics_in_current_root_dir = function()
             return false
         end
 
-        for path in vim.fs.parents(filename) do
-            if dir == path then
-                return true
-            end
-        end
-        return false
+        -- expand to full path name and remove the last component
+        return vim.fn.fnamemodify(filename, ':p:h'):find(dir, nil, true) and true or false
     end
     local function get_num_of_diags_in_buf(severity_level, buf)
         local count = vim.diagnostic.get(buf, { severity = severity_level })
