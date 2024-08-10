@@ -114,6 +114,12 @@ return {
                     Operator = '󰆕',
                     TypeParameter = '',
                     Codeium = '󰩂',
+                    claude = '󰋦',
+                    openai = '󱢆',
+                    codestral = '󱎥',
+                    mistral = '󱎥',
+                    gemini = '',
+                    groq = '',
                 }
 
                 local source_map = {
