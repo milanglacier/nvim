@@ -168,15 +168,12 @@ return {
                 ['iA'] = '@parameter.inner',
             }
 
-            -- NOTE: The main branch of `nvim-treesitter-textobjects` currently
-            -- contains bug affecting move commands. Await upstream fix to make
-            -- them functional.
-            -- local movers = {
-            --     ['f'] = '@function.outer',
-            --     ['k'] = '@class.outer',
-            --     ['l'] = '@loop.outer',
-            --     ['c'] = '@conditional.outer',
-            -- }
+            local movers = {
+                ['f'] = '@function.outer',
+                ['k'] = '@class.outer',
+                ['l'] = '@loop.outer',
+                ['c'] = '@conditional.outer',
+            }
 
             autocmd('FileType', {
                 pattern = TS_Parsers_Enabled_for_Text_Objs,
@@ -192,35 +189,35 @@ return {
                         })
                     end
 
-                    -- for k, obj in pairs(movers) do
-                    -- vim.keymap.set({ 'n', 'x', 'o' }, ']' .. k, function()
-                    --     require('nvim-treesitter-textobjects.move').goto_next_start(obj, 'textobjects')
-                    -- end, {
-                    --     desc = obj .. ' next start',
-                    --     buffer = true,
-                    -- })
-                    --
-                    -- vim.keymap.set({ 'n', 'x', 'o' }, '[' .. k, function()
-                    --     require('nvim-treesitter-textobjects.move').goto_previous_start(obj, 'textobjects')
-                    -- end, {
-                    --     desc = obj .. ' prev start',
-                    --     buffer = true,
-                    -- })
-                    --
-                    -- vim.keymap.set({ 'n', 'x', 'o' }, ']' .. k:upper(), function()
-                    --     require('nvim-treesitter-textobjects.move').goto_next_end(obj, 'textobjects')
-                    -- end, {
-                    --     desc = obj .. ' next End',
-                    --     buffer = true,
-                    -- })
-                    --
-                    -- vim.keymap.set({ 'n', 'x', 'o' }, '[' .. k:upper(), function()
-                    --     require('nvim-treesitter-textobjects.move').goto_previous_end(obj, 'textobjects')
-                    -- end, {
-                    --     desc = obj .. ' prev End',
-                    --     buffer = true,
-                    -- })
-                    -- end
+                    for k, obj in pairs(movers) do
+                        vim.keymap.set({ 'n', 'x', 'o' }, ']' .. k, function()
+                            require('nvim-treesitter-textobjects.move').goto_next_start(obj, 'textobjects')
+                        end, {
+                            desc = obj .. ' next start',
+                            buffer = true,
+                        })
+
+                        vim.keymap.set({ 'n', 'x', 'o' }, '[' .. k, function()
+                            require('nvim-treesitter-textobjects.move').goto_previous_start(obj, 'textobjects')
+                        end, {
+                            desc = obj .. ' prev start',
+                            buffer = true,
+                        })
+
+                        vim.keymap.set({ 'n', 'x', 'o' }, ']' .. k:upper(), function()
+                            require('nvim-treesitter-textobjects.move').goto_next_end(obj, 'textobjects')
+                        end, {
+                            desc = obj .. ' next End',
+                            buffer = true,
+                        })
+
+                        vim.keymap.set({ 'n', 'x', 'o' }, '[' .. k:upper(), function()
+                            require('nvim-treesitter-textobjects.move').goto_previous_end(obj, 'textobjects')
+                        end, {
+                            desc = obj .. ' prev End',
+                            buffer = true,
+                        })
+                    end
                 end,
             })
         end,
