@@ -80,7 +80,7 @@ return {
             end
 
             require('nvim-treesitter').setup {
-                ensure_installed = TS_Parsers,
+                ensure_install = TS_Parsers,
             }
 
             vim.treesitter.language.register('markdown', { 'quarto', 'rmd' })
