@@ -22,6 +22,7 @@ M.open_lazygit = function()
         end,
     })
     vim.cmd 'startinsert'
+    vim.b[0].jk_esc_undo_sequence = 'k\x1c\x0E' -- k<C-\><C-N>
 end
 
 keymap('n', '<Leader>og', '', {

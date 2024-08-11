@@ -87,7 +87,19 @@ keymap(
 )
 
 M.jk_as_esc = function()
-    keymap('t', 'k', [[<BS><C-\><C-N>]], opts)
+    keymap('t', 'k', [[]], {
+        noremap = true,
+        expr = true,
+        callback = function()
+            -- some terminal program may want to use different "undo" escape sequence,
+            -- for example we want to use `k<C-\><C-N>` as "undo" escape
+            -- sequence for lazygit.
+            -- In expr mapping, the special key sequence are not interpreted,
+            -- we need to input the ascii code of those special key sequence
+            -- directly. The default is <BS><C-\><C-N>
+            return vim.b[0].jk_esc_undo_sequence or '\x08\x1c\x0E'
+        end,
+    })
     keymap('i', 'k', [[<BS><ESC>]], opts)
     keymap('v', 'k', [[k<ESC>]], opts)
     vim.defer_fn(function()
