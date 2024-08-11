@@ -5,7 +5,6 @@ local keymap = vim.api.nvim_set_keymap
 return {
     {
         'echasnovski/mini.nvim',
-        cmd = 'Git',
         event = 'LazyFile',
         init = function()
             keymap('n', 'ys', '<Plug>(mini-surround-add)', {})
@@ -61,9 +60,6 @@ return {
                     -- don't enable block move in normal mode
                 },
             }
-
-            -- setup mini.git
-            require('conf.vcs').mini_git_setup()
         end,
     },
     {
@@ -82,7 +78,7 @@ return {
     },
     {
         'junegunn/vim-easy-align',
-        keys = { { '<Plug>(EasyAlign)', mode = { 'n', 'v' } } },
+        event = 'VeryLazy',
         init = function()
             keymap('x', 'ga', '<Plug>(EasyAlign)', {})
             keymap('n', 'ga', '<Plug>(EasyAlign)', {})
@@ -117,6 +113,7 @@ return {
     },
     {
         'gbprod/substitute.nvim',
+        event = 'VeryLazy',
         init = function()
             keymap('n', 'gs', "<cmd>lua require('substitute').operator()<cr>", { noremap = true })
             keymap('n', 'gss', "<cmd>lua require('substitute').line()<cr>", { noremap = true })
@@ -163,7 +160,7 @@ return {
     },
     {
         'monaqa/dial.nvim',
-        keys = { { '<Plug>(dial-increment)', mode = { 'n', 'v' } }, { '<Plug>(dial-decrement)', mode = { 'n', 'v' } } },
+        event = 'VeryLazy',
         init = function()
             keymap('n', '<C-a>', '<Plug>(dial-increment)', { desc = 'increment' })
             keymap('n', '<C-x>', '<Plug>(dial-decrement)', { desc = 'decrement' })
@@ -196,22 +193,6 @@ return {
             require('dial.config').augends:register_group {
                 default = universal,
             }
-        end,
-    },
-    -- text editing tools only for nvim
-    {
-        'norcalli/nvim-colorizer.lua',
-        event = 'LazyFile',
-        config = function()
-            require('colorizer').setup()
-        end,
-    },
-    {
-        'folke/todo-comments.nvim',
-        event = 'LazyFile',
-        config = function()
-            -- don't show icons at status column
-            require('todo-comments').setup { signs = false }
         end,
     },
 }

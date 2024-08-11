@@ -86,24 +86,6 @@ return {
             vim.treesitter.language.register('markdown', { 'quarto', 'rmd' })
 
             autocmd('FileType', {
-                pattern = TS_Parsers_Enabled_for_Highlight,
-                group = my_augroup,
-                desc = 'Enable treesitter highlight',
-                callback = function()
-                    vim.treesitter.start()
-                end,
-            })
-
-            autocmd('FileType', {
-                pattern = { 'quarto', 'rmd' },
-                group = my_augroup,
-                desc = 'Enable regex highlight with treesitter',
-                callback = function()
-                    vim.cmd [[setlocal syntax=on]]
-                end,
-            })
-
-            autocmd('FileType', {
                 pattern = TS_Parsers_Enabled_for_Indent,
                 group = my_augroup,
                 desc = 'Enable treesitter indent',
@@ -120,21 +102,6 @@ return {
             })
         end,
     },
-
-    {
-        'HiPhish/rainbow-delimiters.nvim',
-        event = 'LazyFile',
-        config = function()
-            vim.g.rainbow_delimiters = {
-                query = {
-                    latex = 'rainbow-blocks',
-                },
-            }
-
-            require 'rainbow-delimiters'
-        end,
-    },
-
     {
         'nvim-treesitter/nvim-treesitter-textobjects',
         event = { 'LazyFile' },
@@ -168,6 +135,9 @@ return {
                 ['iA'] = '@parameter.inner',
             }
 
+            -- NOTE: The main branch of `nvim-treesitter-textobjects` currently
+            -- contains bug affecting move commands. Await upstream fix to make
+            -- them functional.
             local movers = {
                 ['f'] = '@function.outer',
                 ['k'] = '@class.outer',
@@ -219,32 +189,6 @@ return {
                         })
                     end
                 end,
-            })
-        end,
-    },
-    {
-        'romgrk/nvim-treesitter-context',
-        event = { 'LazyFile' },
-        lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
-        config = function()
-            require('treesitter-context').setup {
-                enable = true,
-                throttle = true,
-            }
-        end,
-    },
-
-    {
-        'mfussenegger/nvim-treehopper',
-        init = function()
-            keymap('v', '<CR>', ':<C-U>lua require("tsht").nodes()<CR>', {
-                desc = 'treesitter nodes',
-            })
-            keymap('o', '<CR>', '', {
-                callback = function()
-                    require('tsht').nodes()
-                end,
-                desc = 'treesitter nodes',
             })
         end,
     },
