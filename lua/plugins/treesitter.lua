@@ -104,7 +104,9 @@ return {
     },
     {
         'nvim-treesitter/nvim-treesitter-textobjects',
-        event = { 'LazyFile' },
+        -- FIXME: must load this plugin earlier otherwise the first file opened
+        -- by vscode cannot activate the treesitter textobjects keymaps.
+        event = { 'VeryLazy' },
         lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
         branch = 'main',
         config = function()
