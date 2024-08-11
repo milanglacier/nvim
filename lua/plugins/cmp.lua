@@ -3,12 +3,74 @@ return {
     {
         'hrsh7th/nvim-cmp',
         dependencies = {
-            { 'milanglacier/minuet-ai.nvim' },
+            {
+                'milanglacier/minuet-ai.nvim',
+                config = function()
+                    require('minuet').setup {
+                        provider = 'gemini',
+                        request_timeout = 4,
+                        throttle = 2000,
+                        notify = 'verbose',
+                        provider_options = {
+                            codestral = {
+                                optional = {
+                                    stop = { '\n\n' },
+                                    max_tokens = 256,
+                                },
+                            },
+                            gemini = {
+                                optional = {
+                                    generationConfig = {
+                                        maxOutputTokens = 256,
+                                        topP = 0.9,
+                                    },
+                                    safetySettings = {
+                                        {
+                                            category = 'HARM_CATEGORY_DANGEROUS_CONTENT',
+                                            threshold = 'BLOCK_NONE',
+                                        },
+                                        {
+                                            category = 'HARM_CATEGORY_HATE_SPEECH',
+                                            threshold = 'BLOCK_NONE',
+                                        },
+                                        {
+                                            category = 'HARM_CATEGORY_HARASSMENT',
+                                            threshold = 'BLOCK_NONE',
+                                        },
+                                        {
+                                            category = 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
+                                            threshold = 'BLOCK_NONE',
+                                        },
+                                    },
+                                },
+                            },
+                            openai = {
+                                optional = {
+                                    max_tokens = 256,
+                                    top_p = 0.9,
+                                },
+                            },
+                            openai_compatible = {
+                                optional = {
+                                    max_tokens = 256,
+                                    top_p = 0.9,
+                                },
+                            },
+                        },
+                    }
+                end,
+            },
             { 'hrsh7th/cmp-buffer' },
             { 'hrsh7th/cmp-path' },
             { 'hrsh7th/cmp-cmdline' },
             {
                 'L3MON4D3/LuaSnip',
+                config = function()
+                    require('luasnip.loaders.from_vscode').lazy_load()
+                    require('luasnip.loaders.from_vscode').lazy_load {
+                        paths = { vim.fn.stdpath 'config' .. '/snippets' },
+                    }
+                end,
                 dependencies = {
                     { 'rafamadriz/friendly-snippets' },
                 },
@@ -52,6 +114,12 @@ return {
                     Operator = '[O]',
                     TypeParameter = '[T]',
                     Codeium = '[A]',
+                    claude = '',
+                    openai = '',
+                    codestral = '',
+                    mistral = '',
+                    gemini = '',
+                    groq = '',
                 }
 
                 local source_map = {
@@ -78,9 +146,6 @@ return {
 
                 return vim_item
             end
-
-            require('luasnip.loaders.from_vscode').lazy_load()
-            require('luasnip.loaders.from_vscode').lazy_load { paths = { vim.fn.stdpath 'config' .. '/snippets' } }
 
             local cmp = require 'cmp'
             local types = require 'cmp.types'
@@ -128,62 +193,25 @@ return {
                 },
             }
 
-            require('minuet').setup {
-                provider = 'gemini',
-                request_timeout = 4,
-                throttle = 2000,
-                notify = 'warn',
-                provider_options = {
-                    codestral = {
-                        optional = {
-                            stop = { '\n\n' },
-                            max_tokens = 256,
-                        },
-                    },
-                    gemini = {
-                        optional = {
-                            generationConfig = {
-                                maxOutputTokens = 256,
-                                topP = 0.9,
-                            },
-                            safetySettings = {
-                                {
-                                    category = 'HARM_CATEGORY_DANGEROUS_CONTENT',
-                                    threshold = 'BLOCK_NONE',
-                                },
-                                {
-                                    category = 'HARM_CATEGORY_HATE_SPEECH',
-                                    threshold = 'BLOCK_NONE',
-                                },
-                                {
-                                    category = 'HARM_CATEGORY_HARASSMENT',
-                                    threshold = 'BLOCK_NONE',
-                                },
-                                {
-                                    category = 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
-                                    threshold = 'BLOCK_NONE',
-                                },
-                            },
-                        },
-                    },
-                    openai = {
-                        optional = {
-                            max_tokens = 256,
-                            top_p = 0.9,
-                        },
-                    },
-                },
-            }
-
             local mappings = {
                 ['<A-y>'] = require('minuet').make_cmp_map(),
                 ['<C-b>'] = cmp.mapping.scroll_docs(-4),
                 ['<C-f>'] = cmp.mapping.scroll_docs(4),
                 ['<A-i>'] = cmp.mapping.complete(),
-                ['<CR>'] = cmp.mapping.confirm { select = true },
+                ['<CR>'] = cmp.mapping(function(fallback)
+                    -- HACK: cmp.visible() is blocking, we want to check if cmp
+                    -- is visible non-blocking.
+                    if cmp.core.view:visible() then
+                        cmp.confirm { select = true }
+                    else
+                        fallback()
+                    end
+                end),
                 -- Select the candidates in nvim-cmp window and also insert the text into the buffer
                 ['<C-n>'] = cmp.mapping.select_next_item { behavior = types.cmp.SelectBehavior.Insert },
                 ['<C-p>'] = cmp.mapping.select_prev_item { behavior = types.cmp.SelectBehavior.Insert },
+                ['<Down>'] = cmp.mapping.select_next_item { behavior = types.cmp.SelectBehavior.Insert },
+                ['<Up>'] = cmp.mapping.select_prev_item { behavior = types.cmp.SelectBehavior.Insert },
                 -- Select the candidates in nvim-cmp window but don't insert the text into the buffer
                 ['<C-j>'] = cmp.mapping.select_next_item { behavior = types.cmp.SelectBehavior.Select },
                 ['<C-k>'] = cmp.mapping.select_prev_item { behavior = types.cmp.SelectBehavior.Select },
@@ -205,7 +233,6 @@ return {
                         fallback()
                     end
                 end),
-                ['<ESC>'] = cmp.mapping.abort(),
                 ['<C-e>'] = cmp.mapping.abort(),
             }
 

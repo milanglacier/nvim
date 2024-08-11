@@ -8,78 +8,13 @@ return {
         'nvim-lualine/lualine.nvim',
         event = 'VeryLazy',
         config = function()
-            local encoding = function()
-                local ret, _ = (vim.bo.fenc or vim.go.enc):gsub('^utf%-8$', '')
-                return ret
-            end
-
-            local fileformat = function()
-                local ret, _ = vim.bo.fileformat:gsub('^unix$', '')
-                return ret
-            end
-
-            -- current file is lua/conf/ui.lua
-            -- current working directory is ~/.config/nvim
-            -- this function will return "nvim"
-            --
-            ---@return string project_name
-            local project_name = function()
-                -- don't use pattern matching, just plain match
-                if vim.fn.expand('%:p'):find(vim.fn.getcwd(), nil, true) then
-                    -- if the absolute path of current file is a sub directory of cwd
-                    return '[P] ' .. vim.fn.fnamemodify('%', ':p:h:t')
-                else
-                    return ''
-                end
-            end
-
-            local file_status_symbol = {
-                modified = '[*]',
-                readonly = '[X]',
-                new = '[+]',
-                unnamed = '[%]',
-            }
-
             local lualine = require 'lualine'
 
             local diagnostics_sources = require('lualine.components.diagnostics.sources').sources
 
-            diagnostics_sources.get_diagnostics_in_current_root_dir = function()
-                local buffers = vim.api.nvim_list_bufs()
-                local severity = vim.diagnostic.severity
-                local cwd = vim.uv.cwd()
+            local confui = require 'conf.ui'
 
-                local function dir_is_parent_of_buf(buf, dir)
-                    local filename = vim.api.nvim_buf_get_name(buf)
-                    if vim.fn.filereadable(filename) == 0 then
-                        return false
-                    end
-
-                    for path in vim.fs.parents(filename) do
-                        if dir == path then
-                            return true
-                        end
-                    end
-                    return false
-                end
-
-                local function get_num_of_diags_in_buf(severity_level, buf)
-                    local count = vim.diagnostic.get(buf, { severity = severity_level })
-                    return vim.tbl_count(count)
-                end
-
-                local n_diagnostics = { ERROR = 0, WARN = 0, INFO = 0, HINT = 0 }
-
-                for _, buf in ipairs(buffers) do
-                    if dir_is_parent_of_buf(buf, cwd) then
-                        for _, level in ipairs { 'ERROR', 'WARN', 'INFO', 'HINT' } do
-                            n_diagnostics[level] = n_diagnostics[level] + get_num_of_diags_in_buf(severity[level], buf)
-                        end
-                    end
-                end
-
-                return n_diagnostics.ERROR, n_diagnostics.WARN, n_diagnostics.INFO, n_diagnostics.HINT
-            end
+            diagnostics_sources.get_diagnostics_in_current_root_dir = confui.get_diagnostics_in_current_root_dir
 
             lualine.setup {
                 options = {
@@ -108,14 +43,14 @@ return {
                     lualine_a = { 'mode' },
                     lualine_b = {
                         'branch',
-                        project_name,
-                        require('conf.ui').get_workspace_diff,
+                        confui.project_name,
+                        confui.get_workspace_diff,
                     },
-                    lualine_c = { { 'filename', path = 1, symbols = file_status_symbol }, { 'searchcount' } }, -- relative path
+                    lualine_c = { { 'filename', path = 1, symbols = confui.file_status_symbol }, { 'searchcount' } }, -- relative path
                     lualine_x = {
                         { 'diagnostics', sources = { 'get_diagnostics_in_current_root_dir' } },
-                        encoding,
-                        fileformat,
+                        confui.encoding,
+                        confui.fileformat,
                         'filetype',
                     },
                     lualine_y = { 'progress' },
@@ -137,9 +72,10 @@ return {
                 },
                 winbar = {
                     lualine_a = {
-                        { 'filename', path = 0, symbols = file_status_symbol },
+                        { 'filetype', icon_only = true },
+                        { 'filename', path = 0, symbols = confui.file_status_symbol },
                     },
-                    lualine_c = { require('conf.ui').winbar_symbol },
+                    lualine_c = { confui.winbar_symbol },
                     lualine_x = {
                         function()
                             return ' '
@@ -152,7 +88,7 @@ return {
                 },
                 inactive_winbar = {
                     lualine_a = {
-                        { 'filename', path = 0, symbols = file_status_symbol },
+                        { 'filename', path = 0, symbols = confui.file_status_symbol },
                     },
                     lualine_x = {
                         { 'diagnostics', sources = { 'nvim_diagnostic' } },
@@ -178,7 +114,6 @@ return {
             }
         end,
     },
-    { 'echasnovski/mini.nvim' },
     {
         'folke/trouble.nvim',
         cmd = 'Trouble',
@@ -225,6 +160,7 @@ return {
                 { '<Leader>o', group = '+open/org' },
                 { '<Leader>ol', group = '+open/links' },
                 { '<Leader>g', group = '+git' },
+                { '<Leader>gt', group = '+telescope' },
                 { '<Leader>x', group = '+quickfixlist' },
                 { '<Leader>c', group = '+chatgpt', mode = { 'n', 'v' } },
                 { '<Leader><Tab>', group = '+tab' },

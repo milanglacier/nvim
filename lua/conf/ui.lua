@@ -5,33 +5,39 @@ local my_augroup = require('conf.builtin_extend').my_augroup
 
 local git_workspace_diff_setup = function()
     local function is_a_git_dir()
-        local is_git = vim.fn.system 'git rev-parse --is-inside-work-tree' == 'true\n'
+        local is_git = vim.fs.root(vim.fn.getcwd(), '.git')
         return is_git
     end
 
     local function compute_workspace_diff(cwd)
-        vim.fn.jobstart([[git diff --stat | tail -n 1]], {
-            stdout_buffered = true,
-            on_stdout = function(_, data, _)
-                local changes_raw = data[1]
-                changes_raw = string.sub(changes_raw, 1, -2) -- the last character is \n, remove it
-                changes_raw = vim.split(changes_raw, ',')
+        vim.system({ 'git', 'diff', '--stat' }, { text = true }, function(obj)
+            local stdout = vim.split(obj.stdout, '\n')
+            -- if there are diffs, then there will be at least two lines, the
+            -- 1:n-2 lines are the changed file name, and the second last line
+            -- is the stats, and the last line is an empty string.
+            if #stdout < 2 then
+                return
+            end
 
-                local changes = ''
+            -- get the second last line containing the stats
+            local changes_raw = stdout[#stdout - 1]
 
-                for _, i in pairs(changes_raw) do
-                    if i:find 'change' then
-                        changes = changes .. 'Φ ' .. i:match '(%d+)'
-                    elseif i:find 'insertion' then
-                        changes = changes .. ' +' .. i:match '(%d+)'
-                    elseif i:find 'deletion' then
-                        changes = changes .. ' -' .. i:match '(%d+)'
-                    end
+            local changes_table = vim.split(changes_raw, ',')
+
+            local changes = ''
+
+            for _, i in pairs(changes_table) do
+                if i:find 'change' then
+                    changes = changes .. 'Φ ' .. i:match '(%d+)'
+                elseif i:find 'insertion' then
+                    changes = changes .. ' +' .. i:match '(%d+)'
+                elseif i:find 'deletion' then
+                    changes = changes .. ' -' .. i:match '(%d+)'
                 end
+            end
 
-                M.git_workspace_diff[cwd] = changes
-            end,
-        })
+            M.git_workspace_diff[cwd] = changes
+        end)
     end
 
     local function init_workspace_diff()
@@ -73,12 +79,80 @@ end
 M.get_workspace_diff = function()
     local cwd = vim.fn.getcwd()
     -- don't use pattern matching
-    if vim.fn.expand('%:p'):find(cwd, nil, true) then
-        -- if the absolute path of current file is a sub directory of cwd
+    if vim.fn.expand('%:p:h'):find(cwd, nil, true) then
+        -- if the absolute path of current file excluding the file name is a sub directory of cwd
         return M.git_workspace_diff[cwd] or ''
     else
         return ''
     end
+end
+
+M.encoding = function()
+    local ret, _ = (vim.bo.fenc or vim.go.enc):gsub('^utf%-8$', '')
+    return ret
+end
+
+M.fileformat = function()
+    local ret, _ = vim.bo.fileformat:gsub('^unix$', '')
+    if ret == 'dos' then
+        ret = '[M$]'
+    end
+    return ret
+end
+
+-- current file is lua/conf/ui.lua
+-- current working directory is ~/.config/nvim
+-- this function will return "nvim"
+--
+---@return string project_name
+M.project_name = function()
+    -- don't use pattern matching, just plain match
+    if vim.fn.expand('%:p:h'):find(vim.fn.getcwd(), nil, true) then
+        -- if the absolute path of current file is a sub directory of cwd
+        return '[P] ' .. vim.fn.fnamemodify('%', ':p:h:t')
+    else
+        return ''
+    end
+end
+
+M.file_status_symbol = {
+    modified = '[*]',
+    readonly = '[X]',
+    new = '[+]',
+    unnamed = '[%]',
+}
+
+M.get_diagnostics_in_current_root_dir = function()
+    local buffers = vim.api.nvim_list_bufs()
+    local severity = vim.diagnostic.severity
+    ---@diagnostic disable-next-line: undefined-field
+    local cwd = vim.uv.cwd()
+
+    local function dir_is_parent_of_buf(buf, dir)
+        local filename = vim.api.nvim_buf_get_name(buf)
+        if vim.fn.filereadable(filename) == 0 then
+            return false
+        end
+
+        -- expand to full path name and remove the last component
+        return vim.fn.fnamemodify(filename, ':p:h'):find(dir, nil, true) and true or false
+    end
+    local function get_num_of_diags_in_buf(severity_level, buf)
+        local count = vim.diagnostic.get(buf, { severity = severity_level })
+        return vim.tbl_count(count)
+    end
+
+    local n_diagnostics = { ERROR = 0, WARN = 0, INFO = 0, HINT = 0 }
+
+    for _, buf in ipairs(buffers) do
+        if dir_is_parent_of_buf(buf, cwd) then
+            for _, level in ipairs { 'ERROR', 'WARN', 'INFO', 'HINT' } do
+                n_diagnostics[level] = n_diagnostics[level] + get_num_of_diags_in_buf(severity[level], buf)
+            end
+        end
+    end
+
+    return n_diagnostics.ERROR, n_diagnostics.WARN, n_diagnostics.INFO, n_diagnostics.HINT
 end
 
 M.winbar_symbol = function()
@@ -92,28 +166,7 @@ M.winbar_symbol = function()
         return navic.get_location()
     end
 
-    local winwidth = vim.api.nvim_win_get_width(0)
-    local filename = vim.fn.expand '%:.'
-
-    local winbar = filename
-
-    local rest_length = winwidth - #winbar - 3
-    local ts_status = ''
-
-    if rest_length > 5 then
-        local size = math.floor(rest_length * 0.8)
-
-        ts_status = require('nvim-treesitter').statusline {
-            indicator_size = size,
-            separator = ' | ',
-        } or ''
-
-        if ts_status ~= nil and ts_status ~= '' then
-            ts_status = ts_status:gsub('%s+', ' ')
-        end
-    end
-
-    return ts_status
+    return ''
 end
 
 M.git_workspace_diff = {}
@@ -136,6 +189,7 @@ M.trouble_workspace_diagnostics = function()
         mode = 'diagnostics',
         filter = function(items)
             return vim.tbl_filter(function(item)
+                ---@diagnostic disable-next-line: undefined-field
                 return item.dirname:find(vim.uv.cwd(), 1, true)
             end, items)
         end,

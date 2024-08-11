@@ -223,9 +223,35 @@ return {
             keymap('n', '<Leader>ga', '<cmd>Gitsigns<CR>', { noremap = true })
             keymap('n', '<Leader>gr', '<cmd>Gitsigns reset_hunk<CR>', { noremap = true })
             keymap('n', '<Leader>gs', '<cmd>Gitsigns stage_hunk<CR>', { noremap = true })
+            keymap('v', '<Leader>gs', ':<C-U>Gitsigns stage_hunk<CR>', { noremap = true })
+            keymap('n', '<Leader>gR', '<cmd>Gitsigns undo_stage_hunk<CR>', { noremap = true })
             keymap('n', '<Leader>gq', '<cmd>Gitsigns setqflist<CR>', { noremap = true })
-            keymap('n', ']h', '<cmd>Gitsigns next_hunk<CR>', { noremap = true })
-            keymap('n', '[h', '<cmd>Gitsigns prev_hunk<CR>', { noremap = true })
+            keymap('n', ']h', '', {
+                noremap = true,
+                desc = 'git next hunk',
+                callback = function()
+                    if vim.wo.diff then
+                        vim.cmd 'normal! ]c'
+                    else
+                        require('gitsigns').nav_hunk 'next'
+                    end
+                end,
+            })
+            keymap('n', '[h', '', {
+                noremap = true,
+                desc = 'git prv hunk',
+                callback = function()
+                    if vim.wo.diff then
+                        vim.cmd 'normal! [c'
+                    else
+                        require('gitsigns').nav_hunk 'prev'
+                    end
+                end,
+            })
+
+            -- text objects
+            keymap('v', 'ih', '<esc><cmd>Gitsigns select_hunk<CR>', { noremap = true })
+            keymap('o', 'ih', ':<C-U>Gitsigns select_hunk<CR>', { noremap = true })
         end,
         config = function()
             require('gitsigns').setup {
@@ -235,22 +261,14 @@ return {
         end,
     },
     {
-        'NeogitOrg/neogit',
-        cmd = 'Neogit',
-        init = function()
-            keymap('n', '<Leader>gg', '<cmd>Neogit<CR>', { noremap = true, desc = 'Neogit' })
-        end,
-        config = function()
-            require('neogit').setup { console_timeout = 4000 }
-        end,
-    },
-    {
         'sindrets/diffview.nvim',
+        -- I don't use this plugin very often. I've thought about removing it,
+        -- but it's still pretty useful, especially for showing side-by-side
+        -- diffs in two panels. So, I decided to keep the plugin and its
+        -- commands around, but I didn't set up any keymaps for it. This way,
+        -- it's there when I need it, but it doesn't take up space in my
+        -- regular key bindings.
         cmd = { 'DiffviewOpen', 'DiffviewFileHistory' },
-        init = function()
-            keymap('n', '<Leader>gd', '<cmd>DiffviewOpen<CR>', { noremap = true })
-            keymap('n', '<Leader>gf', '<cmd>DiffviewFileHistory<CR>', { noremap = true })
-        end,
     },
     {
         'MagicDuck/grug-far.nvim',

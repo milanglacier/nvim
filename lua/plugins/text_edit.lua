@@ -5,6 +5,7 @@ local keymap = vim.api.nvim_set_keymap
 return {
     {
         'echasnovski/mini.nvim',
+        cmd = 'Git',
         event = 'LazyFile',
         init = function()
             keymap('n', 'ys', '<Plug>(mini-surround-add)', {})
@@ -60,6 +61,9 @@ return {
                     -- don't enable block move in normal mode
                 },
             }
+
+            -- setup mini.git
+            require('conf.vcs').mini_git_setup()
         end,
     },
     {

@@ -38,17 +38,14 @@ return {
 
             keymap(
                 'n',
-                '<leader>F',
-                '<cmd>Telescope builtin include_extensions=true<cr>',
-                opts_desc 'Telescope extensions'
-            )
-            keymap(
-                'n',
                 '<leader>fe',
                 '<cmd>Telescope builtin include_extensions=true<cr>',
                 opts_desc 'Telescope extensions'
             )
-            keymap('n', '<A-x>', '<cmd>Telescope commands<cr>', opts_desc 'Telescope extensions')
+
+            keymap('n', '<leader>gtl', '<cmd>Telescope git_commits<cr>', opts_desc 'Git Log')
+            keymap('n', '<leader>gtb', '<cmd>Telescope git_bcommits<cr>', opts_desc 'Git Buffer Log')
+            keymap('v', '<leader>gtb', ':<C-U>Telescope git_bcommits_range<cr>', opts_desc 'Git Hunk Log')
         end,
         config = function()
             local telescope = require 'telescope'
