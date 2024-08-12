@@ -8,11 +8,6 @@ Event.mappings['User LazyFile'] = Event.mappings.LazyFile
 
 require('lazy').setup {
     spec = { import = 'plugins' },
-    dev = {
-        path = vim.env.HOME .. '/Desktop/personal-projects',
-        patterns = { 'milanglacier' },
-        fallback = true,
-    },
     change_detection = {
         enabled = false,
     },
