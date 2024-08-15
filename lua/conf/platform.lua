@@ -29,7 +29,7 @@ if vim.g.neovide then
                 end
                 vim.schedule(function()
                     vim.notify(string.format('Update $%s by sourcing zshrc', var))
-                    vim.env[var] = data.stdout
+                    vim.env[var] = data.stdout:sub(1, -2) -- remove the last char which is '\n'
                 end)
             end)
         end
