@@ -8,7 +8,7 @@ return {
                 config = function()
                     require('minuet').setup {
                         provider = 'gemini',
-                        request_timeout = 2,
+                        request_timeout = 4,
                         throttle = 2000,
                         notify = 'verbose',
                         provider_options = {
