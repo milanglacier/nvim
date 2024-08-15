@@ -105,7 +105,7 @@ autocmd('FileType', {
             desc = 'open file at cursor',
         })
     end,
-    desc = 'Bind `gf` to open file at cursor',
+    desc = 'Bind `g<cr>` to open file at cursor',
 })
 
 return M
