@@ -217,7 +217,7 @@ keymap('n', '<Leader>olw', '', {
     desc = 'open URI under the cursor with w3m',
 })
 
-command('Wbq', 'w | bd', {})
+command('WQ', 'w | bd', { desc = 'Finishing Editing with nvr.' })
 -- this is useful with integration with `nvr` which allows you to prevent from
 -- nested nvim instance when neovim's builtin terminal trys to invoke nvim
 -- instance.
@@ -225,6 +225,6 @@ command('Wbq', 'w | bd', {})
 -- NOTE: when nvim instance is invoked via `nvr`, you can't use
 -- standard `:wq` to quit the instance since it is still running. You need to
 -- delete the buffer. That is, either using ':bd' (don't save the result), or
--- ':Wbq' (save the result) to finish the editing.
+-- ':WQ' (save the result) to finish the editing.
 
 return M

@@ -37,7 +37,7 @@ M.mini_git_setup = function()
     keymap('n', '<Leader>gc', '', {
         desc = 'Git Commit',
         callback = function()
-            vim.cmd 'Git diff --cached'
+            vim.cmd 'Git diff --cached --patch-with-stat'
             vim.cmd 'horizontal Git commit'
         end,
     })
@@ -45,12 +45,12 @@ M.mini_git_setup = function()
     keymap('n', '<Leader>gC', '', {
         desc = 'Git Commit Amend',
         callback = function()
-            vim.cmd 'Git diff --cached'
+            vim.cmd 'Git diff --cached --patch-with-stat'
             vim.cmd 'horizontal Git commit --amend'
         end,
     })
-    keymap('n', '<Leader>gd', '<Cmd>Git diff<CR>', { desc = 'Diff' })
-    keymap('n', '<Leader>gD', '<Cmd>Git diff --cached<CR>', { desc = 'Cached Diff' })
+    keymap('n', '<Leader>gd', '<Cmd>Git diff --patch-with-stat<CR>', { desc = 'Diff' })
+    keymap('n', '<Leader>gD', '<Cmd>Git diff --cached --patch-with-stat<CR>', { desc = 'Cached Diff' })
     keymap('n', '<Leader>gl', '<Cmd>Git log --oneline<CR>', { desc = 'Log' })
     keymap('n', '<Leader>gL', '<Cmd>Git log --oneline --follow -- %<CR>', { desc = 'Log buffer' })
     keymap('n', '<Leader>gg', '<Cmd>lua MiniGit.show_at_cursor()<CR>', { desc = 'Minigit DWIM' })
@@ -105,7 +105,7 @@ autocmd('FileType', {
             desc = 'open file at cursor',
         })
     end,
-    desc = 'Bind `gf` to open file at cursor',
+    desc = 'Bind `g<cr>` to open file at cursor',
 })
 
 return M
