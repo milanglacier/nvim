@@ -180,7 +180,7 @@ M.reopen_qflist_by_trouble = function()
 
     for _, winid in ipairs(windows) do
         local bufid = vim.api.nvim_win_get_buf(winid)
-        local buf_filetype = vim.api.nvim_buf_get_option(bufid, 'filetype')
+        local buf_filetype = vim.bo[bufid].filetype
         if buf_filetype == 'qf' then
             vim.api.nvim_win_close(winid, true)
         end
