@@ -129,7 +129,6 @@ M.file_status_symbol = {
 M.get_diagnostics_in_current_root_dir = function()
     local buffers = vim.api.nvim_list_bufs()
     local severity = vim.diagnostic.severity
-    ---@diagnostic disable-next-line: undefined-field
     local cwd = vim.uv.cwd()
 
     local function dir_is_parent_of_buf(buf, dir)
@@ -193,7 +192,6 @@ M.trouble_workspace_diagnostics = function()
         mode = 'diagnostics',
         filter = function(items)
             return vim.tbl_filter(function(item)
-                ---@diagnostic disable-next-line: undefined-field
                 return item.dirname:find(vim.uv.cwd(), 1, true)
             end, items)
         end,
