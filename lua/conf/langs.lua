@@ -469,7 +469,7 @@ autocmd('FileType', {
     end,
 })
 
-local wincmd = function(buf, orig_buf)
+M.edit_src_wincmd = function(buf, orig_buf)
     local filename = vim.fn.fnamemodify(api.nvim_buf_get_name(orig_buf), ':t')
     local ft = api.nvim_get_option_value('filetype', { buf = buf })
     if ft == nil or ft == '' then
@@ -562,7 +562,7 @@ local function edit_src_in_dedicated_buffer()
 
     api.nvim_buf_set_lines(buf, 0, -1, false, vim.split(content, '\n'))
 
-    wincmd(buf, orig_buf)
+    M.edit_src_wincmd(buf, orig_buf)
 
     bufmap(buf, 'n', '<LocalLeader>c', '', {
         desc = 'commit change to original file',
