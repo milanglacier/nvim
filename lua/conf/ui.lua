@@ -11,11 +11,16 @@ local git_workspace_diff_setup = function()
 
     local function compute_workspace_diff(cwd)
         vim.system({ 'git', 'diff', '--stat' }, { text = true }, function(obj)
+            if obj.code ~= 0 then
+                return
+            end
+
             local stdout = vim.split(obj.stdout, '\n')
             -- if there are diffs, then there will be at least two lines, the
             -- 1:n-2 lines are the changed file name, and the second last line
             -- is the stats, and the last line is an empty string.
             if #stdout < 2 then
+                M.git_workspace_diff[cwd] = ''
                 return
             end
 
