@@ -562,8 +562,6 @@ local function edit_src_in_dedicated_buffer()
 
     api.nvim_buf_set_lines(buf, 0, -1, false, vim.split(content, '\n'))
 
-    local window_name = string.format('%s:%s', filename, ft or 'editsrc')
-
     wincmd(buf, orig_buf)
 
     bufmap(buf, 'n', '<LocalLeader>c', '', {
