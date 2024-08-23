@@ -258,7 +258,7 @@ to find all keymaps.
 | ic   | `<C-d>` | Delete a char forwardly           |
 | c    | `<A-f>` | Move cursor to next word          |
 | c    | `<A-b>` | Move cursor to previous word      |
-| ivt  | `jk`    | Switch to normal mode             |
+| it   | `jk`    | Switch to normal mode             |
 
 ### Builtin window keymaps
 

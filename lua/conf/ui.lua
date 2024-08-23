@@ -11,11 +11,16 @@ local git_workspace_diff_setup = function()
 
     local function compute_workspace_diff(cwd)
         vim.system({ 'git', 'diff', '--stat' }, { text = true }, function(obj)
+            if obj.code ~= 0 then
+                return
+            end
+
             local stdout = vim.split(obj.stdout, '\n')
             -- if there are diffs, then there will be at least two lines, the
             -- 1:n-2 lines are the changed file name, and the second last line
             -- is the stats, and the last line is an empty string.
             if #stdout < 2 then
+                M.git_workspace_diff[cwd] = ''
                 return
             end
 
@@ -125,7 +130,6 @@ M.file_status_symbol = {
 M.get_diagnostics_in_current_root_dir = function()
     local buffers = vim.api.nvim_list_bufs()
     local severity = vim.diagnostic.severity
-    ---@diagnostic disable-next-line: undefined-field
     local cwd = vim.uv.cwd()
 
     local function dir_is_parent_of_buf(buf, dir)
@@ -176,7 +180,7 @@ M.reopen_qflist_by_trouble = function()
 
     for _, winid in ipairs(windows) do
         local bufid = vim.api.nvim_win_get_buf(winid)
-        local buf_filetype = vim.api.nvim_buf_get_option(bufid, 'filetype')
+        local buf_filetype = vim.bo[bufid].filetype
         if buf_filetype == 'qf' then
             vim.api.nvim_win_close(winid, true)
         end
@@ -189,7 +193,6 @@ M.trouble_workspace_diagnostics = function()
         mode = 'diagnostics',
         filter = function(items)
             return vim.tbl_filter(function(item)
-                ---@diagnostic disable-next-line: undefined-field
                 return item.dirname:find(vim.uv.cwd(), 1, true)
             end, items)
         end,

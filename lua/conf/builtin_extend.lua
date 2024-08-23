@@ -101,11 +101,9 @@ M.jk_as_esc = function()
         end,
     })
     keymap('i', 'k', [[<BS><ESC>]], opts)
-    keymap('v', 'k', [[k<ESC>]], opts)
     vim.defer_fn(function()
         pcall(vim.api.nvim_del_keymap, 't', 'k')
         pcall(vim.api.nvim_del_keymap, 'i', 'k')
-        pcall(vim.api.nvim_del_keymap, 'v', 'k')
     end, 100)
     return 'j'
 end

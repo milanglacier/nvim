@@ -66,15 +66,16 @@ return {
         'milanglacier/yarepl.nvim',
         event = 'VeryLazy',
         config = function()
+            vim.g.REPL_floatwin_ratio = 0.5
             require('yarepl').setup {
                 wincmd = function(bufnr, name)
                     if vim.g.REPL_use_floatwin == 1 then
                         vim.api.nvim_open_win(bufnr, true, {
                             relative = 'editor',
-                            row = math.floor(vim.o.lines * 0.25),
-                            col = math.floor(vim.o.columns * 0.25),
-                            width = math.floor(vim.o.columns * 0.5),
-                            height = math.floor(vim.o.lines * 0.5),
+                            row = math.floor(vim.o.lines * (1 - vim.g.REPL_floatwin_ratio) / 2),
+                            col = math.floor(vim.o.columns * (1 - vim.g.REPL_floatwin_ratio) / 2),
+                            width = math.floor(vim.o.columns * vim.g.REPL_floatwin_ratio),
+                            height = math.floor(vim.o.lines * vim.g.REPL_floatwin_ratio),
                             style = 'minimal',
                             title = name,
                             border = 'rounded',
