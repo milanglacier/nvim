@@ -409,7 +409,6 @@ return {
         init = function()
             autocmd('FileType', {
                 pattern = { 'go', 'python', 'lua' },
-                once = true,
                 desc = 'Load refactoring.nvim',
                 callback = function()
                     bufmap(
