@@ -1,5 +1,6 @@
 local my_augroup = require('conf.builtin_extend').my_augroup
 local autocmd = vim.api.nvim_create_autocmd
+local keymap = vim.api.nvim_set_keymap
 local command = vim.api.nvim_create_user_command
 local bufmap = vim.api.nvim_buf_set_keymap
 
@@ -49,6 +50,20 @@ command('GetVisualRegionAndSentenceUnderPoint', get_visual_region_and_sentenec_u
 return {
     {
         'nvim-orgmode/orgmode',
+        init = function()
+            keymap('n', '<Leader>oa', '', {
+                desc = 'org agenda',
+                callback = function()
+                    require('orgmode').action 'agenda.prompt'
+                end,
+            })
+            keymap('n', '<Leader>oc', '', {
+                desc = 'org capture',
+                callback = function()
+                    require('orgmode').action 'capture.prompt'
+                end,
+            })
+        end,
         ft = 'org',
         config = function()
             local org_dir = '~/Desktop/orgmode'
@@ -164,13 +179,11 @@ return {
                 },
 
                 mappings = {
-                    prefix = '<Leader>o',
-
+                    prefix = '<localleader>',
                     global = {
-                        org_agenda = '<prefix>a',
-                        org_capture = '<prefix>c',
+                        org_agenda = false,
+                        org_capture = false,
                     },
-
                     capture = {
                         org_capture_finalize = '<C-c><C-c>',
                         org_capture_refile = '<C-c><C-r>',
