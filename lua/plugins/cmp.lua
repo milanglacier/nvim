@@ -10,7 +10,7 @@ return {
                         provider = 'gemini',
                         request_timeout = 4,
                         throttle = 2000,
-                        notify = 'verbose',
+                        notify = 'error',
                         provider_options = {
                             codestral = {
                                 optional = {
@@ -158,6 +158,7 @@ return {
             Cmp_sources = {
                 global = {
                     {
+                        { name = 'minuet' },
                         { name = 'nvim_lsp' },
                         { name = 'luasnip' },
                         {
