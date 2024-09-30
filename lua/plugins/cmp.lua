@@ -10,7 +10,7 @@ return {
                         provider = 'gemini',
                         request_timeout = 4,
                         throttle = 2000,
-                        notify = 'verbose',
+                        notify = 'error',
                         provider_options = {
                             codestral = {
                                 optional = {
@@ -51,6 +51,10 @@ return {
                                 },
                             },
                             openai_compatible = {
+                                api_key = 'FIREWORKS_API_KEY',
+                                end_point = 'https://api.fireworks.ai/inference/v1/chat/completions',
+                                model = 'accounts/fireworks/models/llama-v3p1-70b-instruct',
+                                name = 'Fireworks',
                                 optional = {
                                     max_tokens = 256,
                                     top_p = 0.9,
@@ -154,6 +158,7 @@ return {
             Cmp_sources = {
                 global = {
                     {
+                        { name = 'minuet' },
                         { name = 'nvim_lsp' },
                         { name = 'luasnip' },
                         {
