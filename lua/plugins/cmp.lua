@@ -158,9 +158,9 @@ return {
             Cmp_sources = {
                 global = {
                     {
+                        { name = 'luasnip' },
                         { name = 'minuet' },
                         { name = 'nvim_lsp' },
-                        { name = 'luasnip' },
                         {
                             name = 'tags',
                             option = {
@@ -176,8 +176,8 @@ return {
                 },
                 quarto = {
                     {
-                        { name = 'nvim_lsp' },
                         { name = 'luasnip' },
+                        { name = 'nvim_lsp' },
                         { name = 'tags' },
                     },
                     {
@@ -187,8 +187,8 @@ return {
                 },
                 r_rmd = {
                     {
-                        { name = 'nvim_lsp' },
                         { name = 'luasnip' },
+                        { name = 'nvim_lsp' },
                         { name = 'tags' },
                     },
                     {
