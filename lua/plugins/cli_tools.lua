@@ -221,6 +221,8 @@ return {
         event = 'LazyFile',
         init = function()
             keymap('n', '<Leader>gp', '<cmd>Gitsigns preview_hunk<CR>', { noremap = true })
+            keymap('n', '<Leader>gB', '<cmd>Gitsigns blame<CR>', { noremap = true })
+            keymap('n', '<Leader>gb', '<cmd>Gitsigns blame_line<CR>', { noremap = true })
             keymap('n', '<Leader>ga', '<cmd>Gitsigns<CR>', { noremap = true })
             keymap('n', '<Leader>gr', '<cmd>Gitsigns reset_hunk<CR>', { noremap = true })
             keymap('n', '<Leader>gs', '<cmd>Gitsigns stage_hunk<CR>', { noremap = true })
@@ -255,10 +257,7 @@ return {
             keymap('o', 'ih', ':<C-U>Gitsigns select_hunk<CR>', { noremap = true })
         end,
         config = function()
-            require('gitsigns').setup {
-                current_line_blame = true,
-                current_line_blame_formatter = '<author>, <author_time:%R> - <summary> - <abbrev_sha>',
-            }
+            require('gitsigns').setup { update_debounce = 200 }
         end,
     },
     {
