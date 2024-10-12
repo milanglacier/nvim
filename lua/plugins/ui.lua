@@ -147,7 +147,14 @@ return {
         event = 'VeryLazy',
         config = function()
             local which_key = require 'which-key'
-            which_key.setup {}
+            which_key.setup {
+                icons = {
+                    mappings = false,
+                    keys = {
+                        Tab = '<T>'
+                    },
+                }
+            }
 
             which_key.add {
                 { '<Leader>f', group = '+find everything', mode = { 'n', 'v' } },
