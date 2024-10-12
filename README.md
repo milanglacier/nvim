@@ -542,6 +542,8 @@ The following keymaps rely on [gitsigns.nvim](https://github.com/lewis6991/gitsi
 | ---- | ------------ | ----------------------------- |
 | n    | `<Leader>gp` | Preview current git diff hunk |
 | n    | `<Leader>ga` | Git actions                   |
+| n    | `<Leader>gB` | Git blame current file        |
+| n    | `<Leader>gb` | Git blame current line        |
 | n    | `<Leader>gs` | Stage current git diff hunk   |
 | n    | `<Leader>gR` | Unstage current git diff hunk |
 | n    | `<Leader>gr` | Reset current git diff hunk   |

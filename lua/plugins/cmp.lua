@@ -1,7 +1,10 @@
 return {
     { 'hrsh7th/cmp-nvim-lsp' },
     {
-        'hrsh7th/nvim-cmp',
+        -- 'hrsh7th/nvim-cmp',
+        -- use the fork of nvim-cmp
+        'iguanacucumber/magazine.nvim',
+        name = 'nvim-cmp',
         dependencies = {
             {
                 'milanglacier/minuet-ai.nvim',
