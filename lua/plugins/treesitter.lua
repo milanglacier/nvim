@@ -89,6 +89,9 @@ return {
                     -- we manage highlight by ourself
                     enable = false,
                 },
+                indent = {
+                    enable = TS_Parsers_Enabled_for_Indent,
+                },
                 textobjects = {
                     select = {
                         enable = true,
@@ -157,15 +160,6 @@ return {
                 desc = 'Enable regex highlight with treesitter',
                 callback = function()
                     vim.cmd [[setlocal syntax=on]]
-                end,
-            })
-
-            autocmd('FileType', {
-                pattern = TS_Parsers_Enabled_for_Indent,
-                group = my_augroup,
-                desc = 'Enable treesitter indent',
-                callback = function()
-                    vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
                 end,
             })
 
