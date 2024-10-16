@@ -167,7 +167,7 @@ return {
                 { '<Leader>gt', group = '+telescope' },
                 { '<Leader>x', group = '+quickfixlist' },
                 { '<Leader>a', group = '+aider', mode = { 'n', 'v' } },
-                { '<Leader>c', group = '+llm', mode = { 'n', 'v' } },
+                { '<Leader>c', group = '+chat', mode = { 'n', 'v' } },
                 { '<Leader><Tab>', group = '+tab' },
                 { '<Leader>m', group = '+misc', mode = { 'n', 'v' } },
                 { '<Leader>mm', group = '+markdown' },
