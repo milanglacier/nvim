@@ -166,6 +166,7 @@ return {
                 { '<Leader>g', group = '+git' },
                 { '<Leader>gt', group = '+telescope' },
                 { '<Leader>x', group = '+quickfixlist' },
+                { '<Leader>a', group = '+aider', mode = { 'n', 'v' } },
                 { '<Leader>c', group = '+llm', mode = { 'n', 'v' } },
                 { '<Leader><Tab>', group = '+tab' },
                 { '<Leader>m', group = '+misc', mode = { 'n', 'v' } },

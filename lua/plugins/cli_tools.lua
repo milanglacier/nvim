@@ -66,10 +66,17 @@ return {
         'milanglacier/yarepl.nvim',
         event = 'VeryLazy',
         config = function()
+            local yarepl = require 'yarepl'
+            local aider = require 'conf.aider'
+
             vim.g.REPL_floatwin_ratio = 0.5
-            require('yarepl').setup {
+
+            yarepl.setup {
+                metas = { aider = { cmd = { 'aider' }, formatter = aider.formatter } },
                 wincmd = function(bufnr, name)
-                    if vim.g.REPL_use_floatwin == 1 then
+                    if name == 'aider' then
+                        aider.wincmd(bufnr)
+                    elseif vim.g.REPL_use_floatwin == 1 then
                         vim.api.nvim_open_win(bufnr, true, {
                             relative = 'editor',
                             row = math.floor(vim.o.lines * (1 - vim.g.REPL_floatwin_ratio) / 2),
@@ -168,7 +175,6 @@ return {
                     })
                     bufmap(0, 'n', '<LocalLeader>re', '<Plug>(REPLExec)', {
                         desc = 'Execute command in REPL',
-                        expr = true,
                     })
                     bufmap(0, 'n', '<LocalLeader>rq', '<Plug>(REPLClose)', {
                         desc = 'Quit REPL',
