@@ -46,6 +46,97 @@ local prefixes = {
     '/web',
 }
 
+local aider_args = {
+    '--model',
+    '--opus',
+    '--sonnet',
+    '--4',
+    '--4o',
+    '--mini',
+    '--4-turbo',
+    '--35turbo',
+    '--deepseek',
+    '--o1-mini',
+    '--o1-preview',
+    '--architect',
+    '--weak-model',
+    '--editor-model',
+    '--editor-edit-format',
+    '--show-model-warnings',
+    '--no-show-model-warnings',
+    '--cache-prompts',
+    '--no-cache-prompts',
+    '--map-refresh',
+    '--map-multiplier-no-files',
+    '--restore-chat-history',
+    '--no-restore-chat-history',
+    '--pretty',
+    '--no-pretty',
+    '--stream',
+    '--no-stream',
+    '--user-input-color',
+    '--tool-output-color',
+    '--tool-error-color',
+    '--tool-warning-color',
+    '--assistant-output-color',
+    '--completion-menu-color',
+    '--completion-menu-bg-color',
+    '--completion-menu-current-color',
+    '--completion-menu-current-bg-color',
+    '--code-theme',
+    '--show-diffs',
+    '--git',
+    '--no-git',
+    '--gitignore',
+    '--no-gitignore',
+    '--aiderignore',
+    '--subtree-only',
+    '--auto-commits',
+    '--no-auto-commits',
+    '--dirty-commits',
+    '--no-dirty-commits',
+    '--attribute-author',
+    '--no-attribute-author',
+    '--attribute-committer',
+    '--no-attribute-committer',
+    '--attribute-commit-message-author',
+    '--no-attribute-commit-message-author',
+    '--attribute-commit-message-committer',
+    '--no-attribute-commit-message-committer',
+    '--commit',
+    '--commit-prompt',
+    '--dry-run',
+    '--no-dry-run',
+    '--skip-sanity-check-repo',
+    '--lint',
+    '--lint-cmd',
+    '--auto-lint',
+    '--no-auto-lint',
+    '--test-cmd',
+    '--auto-test',
+    '--no-auto-test',
+    '--test',
+    '--file',
+    '--read',
+    '--vim',
+    '--chat-language',
+    '--install-main-branch',
+    '--apply',
+    '--yes-always',
+    '-v',
+    '--show-repo-map',
+    '--show-prompts',
+    '--message',
+    '--message-file',
+    '--encoding',
+    '-c',
+    '--gui',
+    '--suggest-shell-commands',
+    '--no-suggest-shell-commands',
+    '--voice-format',
+    '--voice-language',
+}
+
 -- how to improve the integration
 -- with aider
 
@@ -80,12 +171,33 @@ local prefix_handler = create_prefix_handler()
 -- Expose the sender function
 M.formatter = prefix_handler.formatter
 M.set_prefix = prefix_handler.set_prefix
+M.aider_args = {}
+
+M.create_aider_meta = function()
+    return {
+        cmd = function()
+            local args = vim.deepcopy(M.aider_args)
+            table.insert(args, 1, 'aider')
+            return args
+        end,
+        formatter = M.formatter,
+    }
+end
 
 function M.send_to_aider_no_format(id, lines)
     local yarepl = require 'yarepl'
     local bufnr = vim.api.nvim_get_current_buf()
     yarepl._send_strings(id, 'aider', bufnr, lines, false)
 end
+
+vim.api.nvim_create_user_command('AiderArgs', function(opts)
+    M.aider_args = opts.fargs or {}
+end, {
+    nargs = '*',
+    complete = function()
+        return aider_args
+    end,
+})
 
 vim.api.nvim_create_user_command('AiderSetPrefix', function(opts)
     local prefix = opts.args

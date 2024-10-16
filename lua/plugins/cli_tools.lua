@@ -72,7 +72,7 @@ return {
             vim.g.REPL_floatwin_ratio = 0.5
 
             yarepl.setup {
-                metas = { aider = { cmd = { 'aider' }, formatter = aider.formatter } },
+                metas = { aider = aider.create_aider_meta() },
                 wincmd = function(bufnr, name)
                     if name == 'aider' then
                         aider.wincmd(bufnr)
