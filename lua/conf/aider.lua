@@ -1,4 +1,3 @@
-require 'conf.builtin_extend'
 local keymap = vim.api.nvim_set_keymap
 
 local M = {}
@@ -136,9 +135,6 @@ local aider_args = {
     '--voice-format',
     '--voice-language',
 }
-
--- how to improve the integration
--- with aider
 
 -- Create a closure for prefix handling
 local function create_prefix_handler()
