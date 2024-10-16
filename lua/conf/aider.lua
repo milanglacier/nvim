@@ -322,5 +322,8 @@ keymap('n', '<Leader>ag', '<cmd>AiderSetPrefix<cr>', {
 keymap('n', '<Leader>aG', '<cmd>AiderRemovePrefix<cr>', {
     desc = 'remove aider prefix',
 })
+keymap('n', '<Leader>a<space>', '<cmd>checktime<cr>', {
+    desc = 'sync file changes by aider to nvim buffer',
+})
 
 return M
