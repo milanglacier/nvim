@@ -23,6 +23,7 @@ return {
                     component_separators = { left = '', right = '' },
                     section_separators = { left = '|', right = '|' },
                     always_divide_middle = false,
+                    always_show_tabline = false,
                     disabled_filetypes = {
                         winbar = {
                             'aerial',
@@ -59,15 +60,6 @@ return {
                 tabline = {
                     lualine_b = {
                         { 'tabs', mode = 2, max_length = vim.o.columns },
-                        {
-                            function()
-                                vim.o.showtabline = 1
-                                return ''
-                                --HACK: lualine will set &showtabline to 2 if you have configured
-                                --lualine for displaying tabline. We want to restore the default
-                                --behavior here.
-                            end,
-                        },
                     },
                 },
                 winbar = {

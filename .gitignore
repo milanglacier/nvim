@@ -2,3 +2,4 @@
 .tags
 .luarc.json
 .aider*
+.env
