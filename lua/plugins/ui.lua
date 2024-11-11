@@ -152,10 +152,10 @@ return {
                 { '<Leader>w', group = '+window' },
                 { '<Leader>e', group = '+explorer' },
                 { '<Leader>t', group = '+terminal/toggle' },
-                { '<Leader>s', group = '+search/replace' },
+                { '<Leader>s', group = '+search/replace', mode = { 'n', 'v' } },
                 { '<Leader>o', group = '+open/org' },
                 { '<Leader>ol', group = '+open/links' },
-                { '<Leader>g', group = '+git' },
+                { '<Leader>g', group = '+git', mode = { 'n', 'v' } },
                 { '<Leader>gt', group = '+telescope' },
                 { '<Leader>x', group = '+quickfixlist' },
                 { '<Leader>a', group = '+aider', mode = { 'n', 'v' } },
@@ -164,8 +164,6 @@ return {
                 { '<Leader>m', group = '+misc', mode = { 'n', 'v' } },
                 { '<Leader>mm', group = '+markdown' },
                 { '<Leader>md', group = '+change directory' },
-                { '<Space>l', group = '+latex motions' },
-                { '<Space>l', group = '+latex motions' },
             }
 
             local keymap_for_repl = {
@@ -192,7 +190,7 @@ return {
                 desc = 'add which key description for lsp',
                 callback = function(args)
                     which_key.add {
-                        { '<Leader>l', group = '+lsp', buffer = args.buf },
+                        { '<Leader>l', group = '+lsp', buffer = args.buf, mode = { 'n', 'v' } },
                     }
                 end,
             })
