@@ -143,7 +143,11 @@ return {
         event = 'VeryLazy',
         config = function()
             local which_key = require 'which-key'
-            which_key.setup {}
+            which_key.setup {
+                triggers = {
+                    { '<auto>', mode = 'nso' },
+                },
+            }
 
             which_key.add {
                 { '<Leader>f', group = '+find everything', mode = { 'n', 'v' } },
