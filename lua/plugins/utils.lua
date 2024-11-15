@@ -19,6 +19,7 @@ return {
     },
     {
         'kyazdani42/nvim-tree.lua',
+        lazy = vim.fn.argc(-1) == 0, -- load nvim-tree early when opening a directory from the cmdline
         cmd = { 'NvimTreeToggle', 'NvimTreeFindFileToggle', 'NvimTreeRefresh' },
         init = function()
             keymap('n', '<leader>et', '<cmd>NvimTreeToggle<CR>', { noremap = true, silent = true })
