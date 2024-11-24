@@ -152,15 +152,20 @@ autocmd('BufEnter', {
     callback = function()
         local filename = vim.api.nvim_buf_get_name(0)
         filename = vim.fn.shellescape(filename)
+        local is_mac = vim.fn.has 'mac' == 1
+        local is_unix = vim.fn.has 'unix' == 1
 
-        if vim.fn.has 'mac' == 1 then
-            vim.cmd['!'] { 'open', filename }
-            vim.cmd.redraw()
-
-            vim.defer_fn(function()
-                vim.cmd.bdelete { bang = true }
-            end, 1000)
+        if not (is_mac or is_unix) then
+            return
         end
+
+        vim.cmd['!'] { is_mac and 'open' or 'xdg-open', filename }
+
+        vim.cmd.redraw()
+
+        vim.defer_fn(function()
+            vim.cmd.bdelete { bang = true }
+        end, 1000)
     end,
 })
 
