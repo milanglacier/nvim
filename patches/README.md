@@ -13,3 +13,6 @@ are housed within this single directory.
   insufficient to register the `Esc` key correctly when typing `jk` in quick
   succession. This patch adjusts the waiting period to accommodate such
   conditions.
+- **`nixos/run-yarepl-under-fhs.patch`**: Adapts REPL commands to operate
+  within a customized FHS environment under NixOS. Apply this patch in
+  conjunction with the nix configuration file from the `dist/nixos` module.
