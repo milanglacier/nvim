@@ -919,12 +919,11 @@ details.
 
 # Patches Module
 
-The [patches](./patches) directory contains several small, commonly used
-patches designed for various environments. These modifications are
-straightforward and do not need the creation or maintenance of separate
-branches (in contrast to the `vscode` branch used for `vscode-neovim`
-configurations). For convenience, these patches are housed within this single
-directory.
+The [patches](./patches) houses a collection of compact, commonly utilized patches
+designed for various environments. These modifications are straightforward and
+don't require separate branch management (unlike the `vscode` branch used for
+`vscode-neovim` configurations). For organizational simplicity, all patches are
+consolidated in this single directory.
 
 # Other Notes
 
