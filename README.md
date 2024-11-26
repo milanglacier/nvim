@@ -68,6 +68,8 @@
       - [Rmarkdown preview keymaps](#rmarkdown-preview-keymaps)
     - [Markdown keymaps](#markdown-keymaps)
     - [Latex keymaps](#latex-keymaps)
+- [Dist Module](#dist-module)
+- [Patches Module](#patches-module)
 - [Other Notes](#other-notes)
 - [Discussion](#discussion)
 
@@ -908,6 +910,21 @@ The following keymaps rely on [vimtex](https://github.com/lervag/vimtex)
 | n    | `csc` | Change the surround command        |
 | n    | `cs$` | Change the surround math delimiter |
 | n    | `csd` | Change the surround delimiter      |
+
+# Dist Module
+
+The [dist](./dist) directory houses various configuration files for tools that
+integrate with my Neovim workflow. Check [README](./dist/README.md) for
+details.
+
+# Patches Module
+
+The [patches](./patches) directory contains several small, commonly used
+patches designed for various environments. These modifications are
+straightforward and do not need the creation or maintenance of separate
+branches (in contrast to the `vscode` branch used for `vscode-neovim`
+configurations). For convenience, these patches are housed within this single
+directory.
 
 # Other Notes
 
