@@ -168,12 +168,32 @@ local prefix_handler = create_prefix_handler()
 M.formatter = prefix_handler.formatter
 M.set_prefix = prefix_handler.set_prefix
 M.aider_args = {}
+M.aider_cmd = 'aider'
+
+M.setup = function(params)
+    M.aider_cmd = params.aider_cmd or M.aider_cmd
+    M.aider_args = params.aider_args or M.aider_args
+end
 
 M.create_aider_meta = function()
     return {
         cmd = function()
-            local args = vim.deepcopy(M.aider_args)
-            table.insert(args, 1, 'aider')
+            local args
+            -- build up the command to launch aider based on M.aider_args (the
+            -- command line options) and the M.aider_cmd.
+            if type(M.aider_cmd) == 'string' then
+                args = vim.deepcopy(M.aider_args)
+                table.insert(args, 1, M.aider_cmd)
+            elseif type(M.aider_cmd == 'table') then
+                args = vim.deepcopy(M.aider_cmd)
+                for _, arg in ipairs(M.aider_args) do
+                    table.insert(args, arg)
+                end
+            else
+                vim.notify('invalid aider cmd type', vim.log.levels.ERROR)
+                return
+            end
+
             return args
         end,
         formatter = M.formatter,
