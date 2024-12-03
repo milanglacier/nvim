@@ -165,13 +165,6 @@ autocmd('BufEnter', {
     desc = 'open binary files with system default application',
     callback = function()
         local filename = vim.api.nvim_buf_get_name(0)
-        local is_mac = vim.fn.has 'mac' == 1
-        local is_unix = vim.fn.has 'unix' == 1
-
-        if not (is_mac or is_unix) then
-            return
-        end
-
         vim.system({ M.open(), filename }, {})
 
         vim.cmd.redraw()
