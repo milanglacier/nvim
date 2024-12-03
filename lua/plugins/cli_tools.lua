@@ -329,22 +329,6 @@ return {
         end,
     },
     {
-        'iamcco/markdown-preview.nvim',
-        build = 'cd app && npm install',
-        ft = { 'markdown', 'rmd', 'quarto' },
-        init = function()
-            vim.g.mkdp_filetypes = { 'markdown', 'rmd', 'quarto' }
-
-            keymap('n', '<Leader>mmp', '<cmd>MarkdownPreview<cr>', { noremap = true, desc = 'Misc Markdown Preview' })
-            keymap(
-                'n',
-                '<Leader>mmq',
-                '<cmd>MarkdownPreviewStop<cr>',
-                { noremap = true, desc = 'Misc Markdown Preview Stop' }
-            )
-        end,
-    },
-    {
         'ludovicchabant/vim-gutentags',
         init = function()
             vim.g.gutentags_add_ctrlp_root_markers = 0
@@ -361,5 +345,20 @@ return {
             }
         end,
         event = 'VeryLazy',
+    },
+    {
+        'MeanderingProgrammer/render-markdown.nvim',
+        ft = { 'markdown', 'rmd', 'org', 'quarto' },
+        config = function()
+            require('render-markdown').setup {
+                code = {
+                    sign = false,
+                },
+                heading = {
+                    sign = false,
+                    icons = { '󰬺 ', '󰬻 ', '󰬼 ', '󰬽 ', '󰬾 ', '󰬿 ' },
+                },
+            }
+        end,
     },
 }
