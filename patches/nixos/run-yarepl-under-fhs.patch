@@ -1,5 +1,5 @@
 diff --git a/lua/plugins/cli_tools.lua b/lua/plugins/cli_tools.lua
-index 97e849c..c333e16 100644
+index 7021cf4..f45128a 100644
 --- a/lua/plugins/cli_tools.lua
 +++ b/lua/plugins/cli_tools.lua
 @@ -69,10 +69,17 @@ return {
@@ -18,6 +18,6 @@ index 97e849c..c333e16 100644
 +                    aider = aider.create_aider_meta(),
 +                    ipython = { cmd = { 'fhs', '-c', "'ipython'" } },
 +                },
-                 wincmd = function(bufnr, name)
-                     if name == 'aider' then
-                         aider.wincmd(bufnr)
+             }
+         end,
+         init = function()
