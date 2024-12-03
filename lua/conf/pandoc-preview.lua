@@ -8,7 +8,7 @@ local autocmd = vim.api.nvim_create_autocmd
 local my_augroup = require('conf.builtin_extend').my_augroup
 local bufmap = vim.api.nvim_buf_set_keymap
 
-local enabled_fts = {
+M.enabled_fts = {
     'markdown',
     'quarto',
     'rmd',
@@ -32,8 +32,8 @@ local function build_pandoc_command(filename, temp_file)
     return pandoc_args
 end
 
-local function preview(buf)
-    if not vim.tbl_contains(enabled_fts, vim.bo[buf].ft) then
+function M.preview(buf)
+    if not vim.tbl_contains(M.enabled_fts, vim.bo[buf].ft) then
         vim.notify 'Unsupported filetype'
         return
     end
@@ -83,15 +83,17 @@ local function preview(buf)
 end
 
 autocmd('FileType', {
-    pattern = enabled_fts,
+    pattern = M.enabled_fts,
     group = my_augroup,
     desc = 'setup pandoc preview command',
     callback = function()
         bufmap(0, 'n', '<LocalLeader>mp', '', {
             callback = function()
-                preview(0)
+                M.preview(0)
             end,
             desc = 'preview file in html',
         })
     end,
 })
+
+return M
