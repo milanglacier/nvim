@@ -173,6 +173,7 @@ M.aider_cmd = 'aider'
 M.setup = function(params)
     M.aider_cmd = params.aider_cmd or M.aider_cmd
     M.aider_args = params.aider_args or M.aider_args
+    M.wincmd = params.wincmd or M.wincmd
 end
 
 M.create_aider_meta = function()
@@ -197,6 +198,7 @@ M.create_aider_meta = function()
             return args
         end,
         formatter = M.formatter,
+        wincmd = M.wincmd,
     }
 end
 

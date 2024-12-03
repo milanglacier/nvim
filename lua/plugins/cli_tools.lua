@@ -73,26 +73,6 @@ return {
 
             yarepl.setup {
                 metas = { aider = aider.create_aider_meta() },
-                wincmd = function(bufnr, name)
-                    if name == 'aider' then
-                        aider.wincmd(bufnr)
-                    elseif vim.g.REPL_use_floatwin == 1 then
-                        vim.api.nvim_open_win(bufnr, true, {
-                            relative = 'editor',
-                            row = math.floor(vim.o.lines * (1 - vim.g.REPL_floatwin_ratio) / 2),
-                            col = math.floor(vim.o.columns * (1 - vim.g.REPL_floatwin_ratio) / 2),
-                            width = math.floor(vim.o.columns * vim.g.REPL_floatwin_ratio),
-                            height = math.floor(vim.o.lines * vim.g.REPL_floatwin_ratio),
-                            style = 'minimal',
-                            title = name,
-                            border = 'rounded',
-                            title_pos = 'center',
-                        })
-                    else
-                        vim.cmd [[belowright 15 split]]
-                        vim.api.nvim_set_current_buf(bufnr)
-                    end
-                end,
             }
         end,
         init = function()
