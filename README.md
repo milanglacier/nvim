@@ -866,21 +866,17 @@ The following keymaps rely on [dsf.vim](https://github.com/AndrewRadev/dsf.vim)
 
 #### Rmarkdown preview keymaps
 
-The following keymaps rely on [markdown-previem.nvim](https://github.com/iamcco/markdown-preview.nvim)
-
-| Mode | LHS           | RHS/Functionality      |
-| ---- | ------------- | ---------------------- |
-| n    | `<Leader>mmp` | Preview rmarkdown file |
-| n    | `<Leader>mmq` | Stop previewing        |
+| Mode | LHS               | RHS/Functionality     |
+| ---- | ----------------- | --------------------- |
+| n    | `<localleader>mp` | Preview markdown file |
 
 ### Markdown keymaps
 
 The following keymaps rely on [markdown-previem.nvim](https://github.com/iamcco/markdown-preview.nvim)
 
-| Mode | LHS           | RHS/Functionality     |
-| ---- | ------------- | --------------------- |
-| n    | `<Leader>mmp` | Preview markdown file |
-| n    | `<Leader>mmq` | Stop previewing       |
+| Mode | LHS               | RHS/Functionality     |
+| ---- | ----------------- | --------------------- |
+| n    | `<localleader>mp` | Preview markdown file |
 
 ### Latex keymaps
 
