@@ -7,6 +7,7 @@ M.pandoc_args = {}
 local autocmd = vim.api.nvim_create_autocmd
 local my_augroup = require('conf.builtin_extend').my_augroup
 local bufmap = vim.api.nvim_buf_set_keymap
+local open = require('conf.builtin_extend').open
 
 M.enabled_fts = {
     'markdown',
@@ -63,17 +64,7 @@ function M.preview(buf)
             return
         end
 
-        local is_mac = vim.fn.has 'mac' == 1
-        local is_unix = vim.fn.has 'unix' == 1
-
-        if not (is_mac or is_unix) then
-            vim.notify 'This command only supports unix and macOS'
-            return
-        end
-
-        local open = is_mac and 'open' or 'xdg-open'
-
-        vim.system { open, temp_file }
+        vim.system { open(), temp_file }
 
         -- delete the file after the html has been opened
         vim.defer_fn(function()

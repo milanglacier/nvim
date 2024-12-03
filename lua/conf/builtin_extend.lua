@@ -145,13 +145,26 @@ end
 
 command('PingCursor', 'lua require("conf.builtin_extend").ping_cursor()', {})
 
+function M.open()
+    local is_mac = vim.fn.has 'mac' == 1
+    local is_unix = vim.fn.has 'unix' == 1
+
+    if is_mac then
+        return 'open'
+    elseif is_unix then
+        return 'xdg-open'
+    else
+        -- windows uses start-process
+        return 'start-process'
+    end
+end
+
 autocmd('BufEnter', {
     pattern = { '*.pdf', '*.png', '*.jpg', '*.jpeg' },
     group = M.my_augroup,
     desc = 'open binary files with system default application',
     callback = function()
         local filename = vim.api.nvim_buf_get_name(0)
-        filename = vim.fn.shellescape(filename)
         local is_mac = vim.fn.has 'mac' == 1
         local is_unix = vim.fn.has 'unix' == 1
 
@@ -159,7 +172,7 @@ autocmd('BufEnter', {
             return
         end
 
-        vim.cmd['!'] { is_mac and 'open' or 'xdg-open', filename }
+        vim.system({ M.open(), filename }, {})
 
         vim.cmd.redraw()
 
@@ -180,7 +193,8 @@ function M.open_URI_under_cursor(use_w3m)
                 return true
             end
 
-            vim.cmd['!'] { 'open', uri }
+            vim.system({ M.open(), filename }, { text = true }, function() end)
+
             vim.cmd.redraw()
             return true
         else
