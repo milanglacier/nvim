@@ -69,7 +69,7 @@ function M.preview(buf)
         -- delete the file after the html has been opened
         vim.defer_fn(function()
             vim.fn.delete(temp_file)
-        end, 1000)
+        end, 3000)
     end)
 end
 
