@@ -11,7 +11,7 @@
   "cmp_luasnip": { "branch": "master", "commit": "98d9cb5c2c38532bd9bdb481067b20fea8f32e90" },
   "dial.nvim": { "branch": "master", "commit": "46b4375e84e8eb771129bff6b2b1e47746601ef9" },
   "diffview.nvim": { "branch": "main", "commit": "4516612fe98ff56ae0415a259ff6361a89419b0a" },
-  "dsf.vim": { "branch": "master", "commit": "b88e64d0987ab3ad7e7aebf94ded656d70c924e3" },
+  "dsf.vim": { "branch": "main", "commit": "b88e64d0987ab3ad7e7aebf94ded656d70c924e3" },
   "edge": { "branch": "master", "commit": "5b5a0683be0d9d8023a874ebf7e230095f4e1bae" },
   "everforest": { "branch": "master", "commit": "44c2659ffb6d26a994346974b4d12e988f43e5e5" },
   "friendly-snippets": { "branch": "main", "commit": "efff286dd74c22f731cdec26a70b46e5b203c619" },
