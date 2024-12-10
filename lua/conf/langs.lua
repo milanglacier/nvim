@@ -8,13 +8,11 @@ local command = vim.api.nvim_create_user_command
 local bufmap = vim.api.nvim_buf_set_keymap
 local bufcmd = vim.api.nvim_buf_create_user_command
 
-function M.textobj_code_chunk(
-    around_or_inner,
-    start_pattern,
-    end_pattern,
-    has_same_start_end_pattern,
-    is_in_visual_mode
-)
+function M.textobj_code_chunk(around_or_inner, start_pattern, end_pattern)
+    local has_same_start_end_pattern = start_pattern == end_pattern
+    -- \22 is Ctrl-V
+    local is_in_visual_mode = vim.tbl_contains({ 'v', 'V', '\22' }, vim.fn.mode())
+
     -- send `<ESC>` key to clear visual marks such that we can update the
     -- visual range.
     if is_in_visual_mode then
@@ -104,7 +102,7 @@ autocmd('FileType', {
             silent = true,
             desc = 'rmd/quarto code chunk text object a',
             callback = function()
-                M.textobj_code_chunk('a', '```{.+}', '^```$', false, true)
+                M.textobj_code_chunk('a', '```{.+}', '^```$')
             end,
         })
 
@@ -112,7 +110,7 @@ autocmd('FileType', {
             silent = true,
             desc = 'rmd/quarto code chunk text object i',
             callback = function()
-                M.textobj_code_chunk('i', '```{.+}', '^```$', false, true)
+                M.textobj_code_chunk('i', '```{.+}', '^```$')
             end,
         })
     end,
@@ -127,7 +125,7 @@ autocmd('FileType', {
             silent = true,
             desc = 'code chunk text object a',
             callback = function()
-                M.textobj_code_chunk('a', '^# ?%%%%.*', '^# ?%%%%.*', true)
+                M.textobj_code_chunk('a', '^# ?%%%%.*', '^# ?%%%%.*')
                 -- # %%xxxxx or #%%xxxx
             end,
         })
@@ -135,7 +133,7 @@ autocmd('FileType', {
             silent = true,
             desc = 'code chunk text object i',
             callback = function()
-                M.textobj_code_chunk('i', '^# ?%%%%.*', '^# ?%%%%.*', true)
+                M.textobj_code_chunk('i', '^# ?%%%%.*', '^# ?%%%%.*')
             end,
         })
 
@@ -143,7 +141,7 @@ autocmd('FileType', {
             silent = true,
             desc = 'code chunk text object a',
             callback = function()
-                M.textobj_code_chunk('a', '^# ?%%%%.*', '^# ?%%%%.*', true, true)
+                M.textobj_code_chunk('a', '^# ?%%%%.*', '^# ?%%%%.*')
             end,
         })
 
@@ -151,7 +149,7 @@ autocmd('FileType', {
             silent = true,
             desc = 'code chunk text object i',
             callback = function()
-                M.textobj_code_chunk('i', '^# ?%%%%.*', '^# ?%%%%.*', true, true)
+                M.textobj_code_chunk('i', '^# ?%%%%.*', '^# ?%%%%.*')
             end,
         })
 
@@ -159,14 +157,14 @@ autocmd('FileType', {
             silent = true,
             desc = 'databricks code chunk text object a',
             callback = function()
-                M.textobj_code_chunk('a', '# COMMAND ----------', '# COMMAND ----------', true)
+                M.textobj_code_chunk('a', '# COMMAND ----------', '# COMMAND ----------')
             end,
         })
         bufmap(0, 'o', 'im', '', {
             silent = true,
             desc = 'databricks code chunk text object i',
             callback = function()
-                M.textobj_code_chunk('i', '# COMMAND ----------', '# COMMAND ----------', true)
+                M.textobj_code_chunk('i', '# COMMAND ----------', '# COMMAND ----------')
             end,
         })
 
@@ -174,7 +172,7 @@ autocmd('FileType', {
             silent = true,
             desc = 'databricks code chunk text object a',
             callback = function()
-                M.textobj_code_chunk('a', '# COMMAND ----------', '# COMMAND ----------', true, true)
+                M.textobj_code_chunk('a', '# COMMAND ----------', '# COMMAND ----------')
             end,
         })
 
@@ -182,7 +180,7 @@ autocmd('FileType', {
             silent = true,
             desc = 'databricks code chunk text object i',
             callback = function()
-                M.textobj_code_chunk('i', '# COMMAND ----------', '# COMMAND ----------', true, true)
+                M.textobj_code_chunk('i', '# COMMAND ----------', '# COMMAND ----------')
             end,
         })
     end,
@@ -197,14 +195,14 @@ autocmd('FileType', {
             silent = true,
             desc = 'databricks code chunk text object a',
             callback = function()
-                M.textobj_code_chunk('a', '-- COMMAND ----------', '-- COMMAND ----------', true)
+                M.textobj_code_chunk('a', '-- COMMAND ----------', '-- COMMAND ----------')
             end,
         })
         bufmap(0, 'o', 'im', '', {
             silent = true,
             desc = 'databricks code chunk text object i',
             callback = function()
-                M.textobj_code_chunk('i', '-- COMMAND ----------', '-- COMMAND ----------', true)
+                M.textobj_code_chunk('i', '-- COMMAND ----------', '-- COMMAND ----------')
             end,
         })
 
@@ -212,7 +210,7 @@ autocmd('FileType', {
             silent = true,
             desc = 'databricks code chunk text object a',
             callback = function()
-                M.textobj_code_chunk('a', '-- COMMAND ----------', '-- COMMAND ----------', true, true)
+                M.textobj_code_chunk('a', '-- COMMAND ----------', '-- COMMAND ----------')
             end,
         })
 
@@ -220,7 +218,7 @@ autocmd('FileType', {
             silent = true,
             desc = 'databricks code chunk text object i',
             callback = function()
-                M.textobj_code_chunk('i', '-- COMMAND ----------', '-- COMMAND ----------', true, true)
+                M.textobj_code_chunk('i', '-- COMMAND ----------', '-- COMMAND ----------')
             end,
         })
     end,
