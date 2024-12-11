@@ -93,11 +93,11 @@ local function set_code_chunk_keymaps(start_pattern, end_pattern, key, desc)
 end
 
 autocmd('FileType', {
-    pattern = { 'rmd', 'quarto' },
+    pattern = { 'rmd', 'quarto', 'markdown' },
     group = my_augroup,
     desc = 'set rmarkdown code chunk textobj',
     callback = function()
-        set_code_chunk_keymaps('```{.+}', '^```$', 'c', 'rmd/quarto code chunk text objects')
+        set_code_chunk_keymaps('```.+', '^```$', 'c', 'rmd/quarto code chunk text objects')
     end,
 })
 
