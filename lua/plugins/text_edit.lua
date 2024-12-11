@@ -200,7 +200,7 @@ return {
     },
     -- text editing tools only for nvim
     {
-        'norcalli/nvim-colorizer.lua',
+        'catgoose/nvim-colorizer.lua',
         event = 'LazyFile',
         config = function()
             require('colorizer').setup()

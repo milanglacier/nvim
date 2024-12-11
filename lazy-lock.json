@@ -30,7 +30,7 @@
   "minuet-ai.nvim": { "branch": "main", "commit": "ea06ce3c9631ceed2eed079fa3cbffdc4dd376f7" },
   "nightfox.nvim": { "branch": "main", "commit": "7557f26defd093c4e9bc17f28b08403f706f5a44" },
   "nvim-cmp": { "branch": "main", "commit": "c9135e36779f036936e8305383126740c39f5d0f" },
-  "nvim-colorizer.lua": { "branch": "master", "commit": "a065833f35a3a7cc3ef137ac88b5381da2ba302e" },
+  "nvim-colorizer.lua": { "branch": "master", "commit": "4acf88d31b3a7a1a7f31e9c30bf2b23c6313abdb" },
   "nvim-dap": { "branch": "master", "commit": "580d6e526358afd0e4bba053e68fd59cf581a161" },
   "nvim-dap-go": { "branch": "main", "commit": "6aa88167ea1224bcef578e8c7160fe8afbb44848" },
   "nvim-dap-python": { "branch": "master", "commit": "34282820bb713b9a5fdb120ae8dd85c2b3f49b51" },
@@ -77,5 +77,5 @@
   "vimtex": { "branch": "master", "commit": "de42a9a5e4e24253201256953133efdf488906ae" },
   "which-key.nvim": { "branch": "main", "commit": "9b365a6428a9633e3eeb34dbef1b791511c54f70" },
   "winshift.nvim": { "branch": "main", "commit": "37468ed6f385dfb50402368669766504c0e15583" },
-  "yarepl.nvim": { "branch": "main", "commit": "ec727d490122c836fe99fe6489ddbf22ac1ea46a" }
+  "yarepl.nvim": { "branch": "main", "commit": "6cab35fb3f1ceeedcc12a4f39b03b8e22aca0eeb" }
 }
