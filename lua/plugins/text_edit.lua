@@ -203,7 +203,10 @@ return {
         'catgoose/nvim-colorizer.lua',
         event = 'LazyFile',
         config = function()
-            require('colorizer').setup()
+            require('colorizer').setup {
+                enable_short_hex = false,
+                enable_named_colors = false,
+            }
         end,
     },
     {
