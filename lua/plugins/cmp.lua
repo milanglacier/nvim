@@ -56,7 +56,7 @@ return {
                             openai_compatible = {
                                 api_key = 'FIREWORKS_API_KEY',
                                 end_point = 'https://api.fireworks.ai/inference/v1/chat/completions',
-                                model = 'accounts/fireworks/models/llama-v3p1-70b-instruct',
+                                model = 'accounts/fireworks/models/llama-v3p3-70b-instruct',
                                 name = 'Fireworks',
                                 optional = {
                                     max_tokens = 256,
