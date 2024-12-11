@@ -107,12 +107,7 @@ autocmd('FileType', {
     desc = 'set r, python code chunk textobj',
     callback = function()
         set_code_chunk_keymaps('^# ?%%%%.*', '^# ?%%%%.*', '<Leader>c', 'r/python code chunk text objects')
-        set_code_chunk_keymaps(
-            '# COMMAND ----------',
-            '# COMMAND ----------',
-            'm',
-            'r/python databricks chunk text objects'
-        )
+        set_code_chunk_keymaps('# COMMAND ---', '# COMMAND ---', 'm', 'r/python databricks chunk text objects')
     end,
 })
 
@@ -121,7 +116,7 @@ autocmd('FileType', {
     group = my_augroup,
     desc = 'set sql code chunk textobj',
     callback = function()
-        set_code_chunk_keymaps('-- COMMAND ----------', '-- COMMAND ----------', 'm', 'sql databricks chunk text objects')
+        set_code_chunk_keymaps('-- COMMAND ---', '-- COMMAND ---', 'm', 'sql databricks chunk text objects')
     end,
 })
 
