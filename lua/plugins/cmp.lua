@@ -13,6 +13,16 @@ return {
                         provider = 'gemini',
                         request_timeout = 4,
                         throttle = 2000,
+                        virtualtext = {
+                            auto_trigger_ft = { 'python', 'lua' },
+                            keymap = {
+                                accept = '<A-A>',
+                                accept_line = '<A-a>',
+                                prev = '<A-[>',
+                                next = '<A-]>',
+                                dismiss = '<A-e>',
+                            },
+                        },
                         notify = 'error',
                         provider_options = {
                             codestral = {
@@ -162,7 +172,7 @@ return {
                 global = {
                     {
                         { name = 'luasnip' },
-                        { name = 'minuet' },
+                        -- { name = 'minuet' },
                         { name = 'nvim_lsp' },
                         {
                             name = 'tags',
