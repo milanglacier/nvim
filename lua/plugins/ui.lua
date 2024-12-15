@@ -28,6 +28,7 @@ return {
                         winbar = {
                             'aerial',
                             'NvimTree',
+                            'neo-tree',
                             'starter',
                             'Trouble',
                             'qf',
@@ -91,7 +92,7 @@ return {
                         'diff',
                     },
                 },
-                extensions = { 'aerial', 'nvim-tree', 'quickfix', 'toggleterm' },
+                extensions = { 'aerial', 'neo-tree', 'quickfix', 'toggleterm' },
             }
         end,
     },
