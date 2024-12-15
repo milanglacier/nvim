@@ -17,34 +17,39 @@ return {
         end,
         lazy = false,
     },
+    { 'MunifTanjim/nui.nvim' },
     {
-        'kyazdani42/nvim-tree.lua',
-        lazy = vim.fn.argc(-1) == 0, -- load nvim-tree early when opening a directory from the cmdline
-        cmd = { 'NvimTreeToggle', 'NvimTreeFindFileToggle', 'NvimTreeRefresh' },
+        'nvim-neo-tree/neo-tree.nvim',
+        lazy = vim.fn.argc(-1) == 0, -- load on start when opening a directory from the cmdline
+        cmd = { 'Neotree' },
         init = function()
-            keymap('n', '<leader>et', '<cmd>NvimTreeToggle<CR>', { noremap = true, silent = true })
-            keymap('n', '<leader>ef', '<cmd>NvimTreeFindFileToggle<CR>', { noremap = true, silent = true })
-            keymap('n', '<leader>er', '<cmd>NvimTreeRefresh<CR>', { noremap = true, silent = true })
+            keymap('n', '<leader>et', '<cmd>Neotree toggle filesystem reveal<cr>', { desc = 'Explorer Togggle' })
         end,
         config = function()
-            -- this function is generated from `NvimTreeGenerateOnAttach`
-            local function on_attach(bufnr)
-                local api = require 'nvim-tree.api'
-                api.config.mappings.default_on_attach(bufnr)
-            end
-
-            require('nvim-tree').setup {
-                on_attach = on_attach,
-                -- this makes nvim-tree opens in project root when switching between projects,
-                -- see project.nvim's README
-                respect_buf_cwd = true,
-                update_cwd = true,
-                update_focused_file = {
-                    enable = true,
-                    update_cwd = true,
+            require('neo-tree').setup {
+                open_files_do_not_replace_types = { 'terminal', 'Trouble', 'trouble', 'qf', 'Outline' },
+                filesystem = {
+                    -- don't let neotree change the cwd when neotree switch to
+                    -- another directory.
+                    bind_to_cwd = false,
+                    follow_current_file = { enabled = true },
+                    use_libuv_file_watcher = true,
+                    follow_current_file = { enabled = true },
+                    hijack_netrw_behavior = 'open_current',
+                    filtered_items = {
+                        hide_dotfiles = false,
+                        hide_gitignored = false,
+                        never_show = {
+                            '.DS_Store',
+                        },
+                    },
                 },
-                git = {
-                    ignore = false,
+                window = {
+                    mappings = {
+                        ['l'] = 'open',
+                        ['h'] = 'close_node',
+                        ['<space>'] = 'none',
+                    },
                 },
             }
         end,

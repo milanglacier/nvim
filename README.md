@@ -393,13 +393,11 @@ The following keymaps rely on [Trouble.nvim](https://github.com/folke/trouble.nv
 
 ### File explorer keymaps
 
-The following keymaps rely on [nvim-tree.lua](https://github.com/nvim-tree/nvim-tree.lua)
+The following keymaps rely on [neo-tree.nvim](https://github.com/nvim-neo-tree/neo-tree.nvim)
 
-| Mode | LHS          | RHS/Functionality                                          |
-| ---- | ------------ | ---------------------------------------------------------- |
-| n    | `<Leader>et` | Toggle file explorer via Nvimtree                          |
-| n    | `<Leader>ef` | Toggle file explorer fosusing on current file via Nvimtree |
-| n    | `<Leader>er` | Refresh Nvimtree file explorer                             |
+| Mode | LHS          | RHS/Functionality                |
+| ---- | ------------ | -------------------------------- |
+| n    | `<Leader>et` | Toggle file explorer via NeoTree |
 
 ### Window layout keymaps
 
