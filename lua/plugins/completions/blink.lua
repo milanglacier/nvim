@@ -33,7 +33,11 @@ local M = {
                     preset = 'super-tab',
                     ['<C-space>'] = {},
                     ['<C-e>'] = { 'cancel', 'fallback' },
-                    ['<A-i>'] = { 'show', 'show_documentation', 'hide_documentation' },
+                    ['<A-y>'] = {
+                        function(cmp)
+                            cmp.show { providers = { 'minuet' } }
+                        end,
+                    },
                     ['<A-1>'] = { accept_nth_items(1), 'fallback' },
                     ['<A-2>'] = { accept_nth_items(2), 'fallback' },
                     ['<A-3>'] = { accept_nth_items(3), 'fallback' },
@@ -106,6 +110,11 @@ local M = {
                             name = 'orgmode',
                             module = 'blink.compat.source',
                             score_offset = 4,
+                        },
+                        minuet = {
+                            name = 'minuet',
+                            module = 'blink.compat.source',
+                            score_offset = 6,
                         },
                     },
                 },
