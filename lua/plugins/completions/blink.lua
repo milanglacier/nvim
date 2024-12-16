@@ -14,6 +14,7 @@ local M = {
             { 'quangnguyen30192/cmp-nvim-tags' },
             {
                 'saghen/blink.compat',
+                version = not blink_use_main and '*' or nil,
                 config = function()
                     require('blink.compat').setup {}
                 end,
