@@ -213,8 +213,8 @@ autocmd('LspAttach', {
     desc = 'Disable semantic highlight',
 })
 
--- use nvim-cmp capabilities. Define the capabilities here which will be
--- fetched from cmp-nvim-lsp when lspconfig is loaded
+-- use nvim-cmp/blink capabilities. Define the capabilities here which will be
+-- fetched when lspconfig is loaded
 local capabilities
 
 local enabled_lsps = { 'r', 'python', 'bash', 'cpp', 'vim', 'nvim', 'pinyin', 'sql', 'latex', 'go', 'rust', 'efm' }
@@ -383,7 +383,9 @@ return {
         'neovim/nvim-lspconfig',
         event = 'LazyFile',
         config = function()
-            capabilities = require('cmp_nvim_lsp').default_capabilities()
+            capabilities = require('plugins.completion').completion_frontend == 'blink'
+                    and require('blink.cmp').get_lsp_capabilities()
+                or require('cmp_nvim_lsp').default_capabilities()
 
             for _, lsp in pairs(enabled_lsps) do
                 lsp_configs[lsp]()

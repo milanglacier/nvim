@@ -1,76 +1,4 @@
 return {
-    {
-        'milanglacier/minuet-ai.nvim',
-        event = { 'InsertEnter' },
-        config = function()
-            require('minuet').setup {
-                provider = 'gemini',
-                request_timeout = 4,
-                throttle = 2000,
-                virtualtext = {
-                    auto_trigger_ft = { 'python', 'lua' },
-                    keymap = {
-                        accept = '<A-A>',
-                        accept_line = '<A-a>',
-                        prev = '<A-[>',
-                        next = '<A-]>',
-                        dismiss = '<A-e>',
-                    },
-                },
-                notify = 'error',
-                provider_options = {
-                    codestral = {
-                        optional = {
-                            stop = { '\n\n' },
-                            max_tokens = 256,
-                        },
-                    },
-                    gemini = {
-                        optional = {
-                            generationConfig = {
-                                maxOutputTokens = 256,
-                                topP = 0.9,
-                            },
-                            safetySettings = {
-                                {
-                                    category = 'HARM_CATEGORY_DANGEROUS_CONTENT',
-                                    threshold = 'BLOCK_NONE',
-                                },
-                                {
-                                    category = 'HARM_CATEGORY_HATE_SPEECH',
-                                    threshold = 'BLOCK_NONE',
-                                },
-                                {
-                                    category = 'HARM_CATEGORY_HARASSMENT',
-                                    threshold = 'BLOCK_NONE',
-                                },
-                                {
-                                    category = 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
-                                    threshold = 'BLOCK_NONE',
-                                },
-                            },
-                        },
-                    },
-                    openai = {
-                        optional = {
-                            max_tokens = 256,
-                            top_p = 0.9,
-                        },
-                    },
-                    openai_compatible = {
-                        api_key = 'FIREWORKS_API_KEY',
-                        end_point = 'https://api.fireworks.ai/inference/v1/chat/completions',
-                        model = 'accounts/fireworks/models/llama-v3p3-70b-instruct',
-                        name = 'Fireworks',
-                        optional = {
-                            max_tokens = 256,
-                            top_p = 0.9,
-                        },
-                    },
-                },
-            }
-        end,
-    },
     { 'hrsh7th/cmp-nvim-lsp' },
     {
         -- 'hrsh7th/nvim-cmp',
@@ -81,18 +9,7 @@ return {
             { 'hrsh7th/cmp-buffer' },
             { 'hrsh7th/cmp-path' },
             { 'hrsh7th/cmp-cmdline' },
-            {
-                'L3MON4D3/LuaSnip',
-                config = function()
-                    require('luasnip.loaders.from_vscode').lazy_load()
-                    require('luasnip.loaders.from_vscode').lazy_load {
-                        paths = { vim.fn.stdpath 'config' .. '/snippets' },
-                    }
-                end,
-                dependencies = {
-                    { 'rafamadriz/friendly-snippets' },
-                },
-            },
+            { 'L3MON4D3/LuaSnip' },
             { 'saadparwaiz1/cmp_luasnip' },
             { 'quangnguyen30192/cmp-nvim-tags' },
             { 'petertriho/cmp-git' },
@@ -100,67 +17,12 @@ return {
         event = { 'InsertEnter', 'CmdLineEnter' },
         config = function()
             local cmp_formatting = function(entry, vim_item)
-                local symbol_map = {
-                    Number = '󰎠',
-                    Array = '',
-                    Variable = '',
-                    Method = 'ƒ',
-                    Property = '',
-                    Boolean = '⊨',
-                    Namespace = '',
-                    Package = '',
-                    Text = '󰉿',
-                    Function = '󰊕',
-                    Constructor = '',
-                    Field = '󰜢',
-                    Class = '󰠱',
-                    Interface = '',
-                    Module = '',
-                    Unit = '󰑭',
-                    Value = '󰎠',
-                    Enum = '',
-                    Keyword = '󰌋',
-                    Snippet = '',
-                    Color = '󰏘',
-                    File = '󰈙',
-                    Reference = '󰈇',
-                    Folder = '󰉋',
-                    EnumMember = '',
-                    Constant = '󰏿',
-                    Struct = '󰙅',
-                    Event = '',
-                    Operator = '󰆕',
-                    TypeParameter = '',
-                    Codeium = '󰩂',
-                    claude = '󰋦',
-                    openai = '󱢆',
-                    codestral = '󱎥',
-                    mistral = '󱎥',
-                    gemini = '',
-                    groq = '',
-                }
+                local kind_icons = require('plugins.completion').kind_icons
 
-                local source_map = {
-                    minuet = '󱗻',
-                    orgmode = '',
-                    otter = '󰼁',
-                    nvim_lsp = '',
-                    buffer = '',
-                    luasnip = '',
-                    path = '',
-                    git = '',
-                    tags = '',
-                    cmdline = '󰘳',
-                    latex_symbols = '',
-                    cmp_nvim_r = '󰟔',
-                    codeium = '󰩂',
-                }
+                local source_icons = require('plugins.completion').source_icons
 
-                local symbol_fallback = ''
-                local source_fallback = '󰜚'
-
-                vim_item.kind = string.format('%s %s', symbol_map[vim_item.kind] or symbol_fallback, vim_item.kind)
-                vim_item.menu = source_map[entry.source.name] or source_fallback
+                vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind] or kind_icons.fallback, vim_item.kind)
+                vim_item.menu = source_icons[entry.source.name] or source_icons.fallback
 
                 return vim_item
             end
@@ -169,7 +31,7 @@ return {
             local types = require 'cmp.types'
             local luasnip = require 'luasnip'
 
-            Cmp_sources = {
+            local cmp_sources = {
                 global = {
                     {
                         { name = 'luasnip' },
@@ -182,17 +44,6 @@ return {
                                 current_buffer_only = true,
                             },
                         },
-                    },
-                    {
-                        { name = 'buffer' },
-                        { name = 'path' },
-                    },
-                },
-                quarto = {
-                    {
-                        { name = 'luasnip' },
-                        { name = 'nvim_lsp' },
-                        { name = 'tags' },
                     },
                     {
                         { name = 'buffer' },
@@ -314,7 +165,7 @@ return {
                     completion = cmp.config.window.bordered(border_opts),
                     documentation = cmp.config.window.bordered(border_opts),
                 },
-                sources = cmp.config.sources(unpack(Cmp_sources.global)),
+                sources = cmp.config.sources(unpack(cmp_sources.global)),
                 formatting = {
                     format = cmp_formatting,
                 },
@@ -360,12 +211,8 @@ return {
                 }),
             })
 
-            cmp.setup.filetype('quarto', {
-                sources = cmp.config.sources(unpack(Cmp_sources.quarto)),
-            })
-
             cmp.setup.filetype({ 'r', 'rmd' }, {
-                sources = cmp.config.sources(unpack(Cmp_sources.r_rmd)),
+                sources = cmp.config.sources(unpack(cmp_sources.r_rmd)),
             })
         end,
     },
