@@ -88,7 +88,7 @@ local M = {
                     per_filetype = {
                         org = { 'lsp', 'path', 'snippets', 'buffer', 'orgmode', 'tags' },
                     },
-                    min_keyword_length = 1,
+                    min_keyword_length = 0,
                     providers = {
                         luasnip = {
                             score_offset = 2,
