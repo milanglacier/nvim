@@ -90,7 +90,7 @@ local M = {
                     default = { 'lsp', 'path', 'luasnip', 'buffer', 'tags' },
                     cmdline = {},
                     per_filetype = {
-                        org = { 'lsp', 'path', 'snippets', 'buffer', 'orgmode', 'tags' },
+                        org = { 'lsp', 'path', 'luasnip', 'buffer', 'orgmode', 'tags' },
                     },
                     min_keyword_length = 0,
                     providers = {
@@ -113,8 +113,8 @@ local M = {
                         },
                         minuet = {
                             name = 'minuet',
-                            module = 'blink.compat.source',
-                            score_offset = 6,
+                            module = 'minuet.blink',
+                            score_offset = 8,
                         },
                     },
                 },
