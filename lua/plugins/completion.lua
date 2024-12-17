@@ -90,15 +90,11 @@ local M = {
 
     {
         import = 'plugins.completions.blink',
-        enabled = function()
-            return completion_frontend == 'blink'
-        end,
+        enabled = completion_frontend == 'blink',
     },
     {
         import = 'plugins.completions.cmp',
-        enabled = function()
-            return completion_frontend == 'cmp'
-        end,
+        enabled = completion_frontend == 'cmp',
     },
 }
 
