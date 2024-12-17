@@ -32,7 +32,6 @@ return {
                     -- don't let neotree change the cwd when neotree switch to
                     -- another directory.
                     bind_to_cwd = false,
-                    follow_current_file = { enabled = true },
                     use_libuv_file_watcher = true,
                     follow_current_file = { enabled = true },
                     hijack_netrw_behavior = 'open_current',
