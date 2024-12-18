@@ -59,6 +59,9 @@ local M = {
                         selection = 'auto_insert',
                     },
                     documentation = {
+                        window = {
+                            border = 'rounded',
+                        },
                         auto_show = true,
                         auto_show_delay_ms = 200,
                     },
