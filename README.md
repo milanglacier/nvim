@@ -395,9 +395,10 @@ The following keymaps rely on [Trouble.nvim](https://github.com/folke/trouble.nv
 
 The following keymaps rely on [neo-tree.nvim](https://github.com/nvim-neo-tree/neo-tree.nvim)
 
-| Mode | LHS          | RHS/Functionality                |
-| ---- | ------------ | -------------------------------- |
-| n    | `<Leader>et` | Toggle file explorer via NeoTree |
+| Mode | LHS          | RHS/Functionality                      |
+| ---- | ------------ | -------------------------------------- |
+| n    | `<Leader>et` | Toggle file explorer via NeoTree       |
+| n    | `<Leader>et` | Toggle git status explorer via NeoTree |
 
 ### Window layout keymaps
 

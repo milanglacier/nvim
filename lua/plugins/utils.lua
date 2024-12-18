@@ -23,7 +23,8 @@ return {
         lazy = vim.fn.argc(-1) == 0, -- load on start when opening a directory from the cmdline
         cmd = { 'Neotree' },
         init = function()
-            keymap('n', '<leader>et', '<cmd>Neotree toggle filesystem reveal<cr>', { desc = 'Explorer Togggle' })
+            keymap('n', '<leader>ef', '<cmd>Neotree toggle filesystem reveal<cr>', { desc = 'Explorer File' })
+            keymap('n', '<leader>eg', '<cmd>Neotree toggle git_status reveal<cr>', { desc = 'Explorer Git' })
         end,
         config = function()
             require('neo-tree').setup {
