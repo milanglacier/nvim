@@ -98,18 +98,19 @@ return {
         end,
     },
     {
-        'rcarriga/nvim-notify',
+        'folke/snacks.nvim',
         event = 'VeryLazy',
         init = function()
-            keymap('n', '<leader>fn', '<cmd>Telescope notify<cr>', opts)
+            keymap(
+                'n',
+                '<leader>fn',
+                '<cmd>lua Snacks.notifier.show_history()<cr>',
+                { desc = 'Notification history' }
+            )
         end,
         config = function()
-            vim.notify = require 'notify'
-
-            ---@diagnostic disable-next-line: missing-fields
-            require('notify').setup {
-                max_width = 45,
-                max_height = 20,
+            require('snacks').setup {
+                notifier = { enabled = true, timeout = 2000 },
             }
         end,
     },
