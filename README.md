@@ -581,9 +581,13 @@ The following keymaps rely on [grug-far.nvim](https://github.com/MagicDuck/grug-
 
 The following keymaps rely on `Minuet`, an LLM-powered completion source.
 
-| Mode | LHS     | RHS/Functionality          |
-| ---- | ------- | -------------------------- |
-| n    | `<M-y>` | Invoke `minuet` completion |
+| Mode | LHS     | RHS/Functionality                                          |
+| ---- | ------- | ---------------------------------------------------------- |
+| n    | `<M-]>` | Invoke `minuet` completion or cycle to next completion     |
+| n    | `<M-[>` | Invoke `minuet` completion or cycle to previous completion |
+| n    | `<M-a>` | Accept line                                                |
+| n    | `<M-A>` | Accept whole completion                                    |
+| n    | `<M-e>` | Reject completion                                          |
 
 ## REPL keymaps
 
