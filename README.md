@@ -674,7 +674,7 @@ Note: with no numerical argument, the REPL is default for the first REPL.
 The following keymaps rely on
 
 [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim),
-[nvim-notify](https://github.com/rcarriga/nvim-notify),
+[snacks.nvim](https://github.com/folke/snacks.nvim),
 [project.nvim](https://github.com/ahmedkhalf/project.nvim)
 
 | Mode | LHS          | RHS/Functionality                    |
