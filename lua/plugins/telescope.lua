@@ -106,7 +106,14 @@ return {
                 },
             }
 
-            require('telescope').load_extension 'fzf'
+            local ok = pcall(require('telescope').load_extension, 'fzf')
+            if not ok then
+                vim.notify(
+                    'Failed to load telescope fzf extension, please install make and a C compiler.',
+                    vim.log.levels.ERROR
+                )
+            end
+
             require('telescope').load_extension 'projects'
             require('telescope').load_extension 'ui-select'
         end,
