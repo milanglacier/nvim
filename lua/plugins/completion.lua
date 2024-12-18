@@ -90,11 +90,11 @@ local M = {
 
     {
         import = 'plugins.completions.blink',
-        enabled = completion_frontend == 'blink',
+        cond = completion_frontend == 'blink',
     },
     {
         import = 'plugins.completions.cmp',
-        enabled = completion_frontend == 'cmp',
+        cond = completion_frontend == 'cmp',
     },
 }
 
