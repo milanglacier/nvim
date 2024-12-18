@@ -20,46 +20,16 @@ local attach_keymaps = function(args)
         bufnr,
         'n',
         '<Leader>lt',
-        '',
-        opts {
-            'lsp type definition',
-            callback = function()
-                require('telescope.builtin').lsp_type_definitions {
-                    layout_strategies = 'vertical',
-                    jump_type = 'tab',
-                }
-            end,
-        }
+        '<cmd>Telescope lsp_type_definitions jump_type=tab<cr>',
+        opts { 'lsp type definition' }
     )
 
     -- reference
-    bufmap(
-        bufnr,
-        'n',
-        'gr',
-        '',
-        opts {
-            desc = 'lsp references telescope',
-            callback = function()
-                require('telescope.builtin').lsp_references {
-                    layout_strategies = 'vertical',
-                    jump_type = 'tab',
-                }
-            end,
-        }
-    )
+    bufmap(bufnr, 'n', 'gr', '<cmd>Telescope lsp_references jump_type=tab<cr>', opts { 'lsp references telescope' })
 
     -- code action
     bufmap(bufnr, 'n', '<Leader>la', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts { 'lsp code action' })
-    bufmap(
-        bufnr,
-        'x',
-        '<Leader>la',
-        ':<C-U>lua vim.lsp.buf.code_action()<CR>',
-        opts {
-            'lsp range code action',
-        }
-    )
+    bufmap(bufnr, 'x', '<Leader>la', ':<C-U>lua vim.lsp.buf.code_action()<CR>', opts { 'lsp range code action' })
 
     -- hover
     bufmap(bufnr, 'n', 'gh', '', opts { 'lsp hover', vim.lsp.buf.hover })
@@ -74,58 +44,18 @@ local attach_keymaps = function(args)
     bufmap(bufnr, 'n', '<Leader>ln', '<cmd>lua vim.lsp.buf.rename()<CR>', opts { 'lsp rename' })
 
     -- go to definition, implementation
-    bufmap(
-        bufnr,
-        'n',
-        'gd',
-        '',
-        opts {
-            desc = 'lsp go to definition',
-            callback = function()
-                require('telescope.builtin').lsp_definitions {
-                    layout_strategies = 'vertical',
-                    jump_type = 'tab',
-                }
-            end,
-        }
-    )
+    bufmap(bufnr, 'n', 'gd', '<cmd>Telescope lsp_definitions jump_type=tab<cr>', opts { 'lsp go to definition' })
 
     bufmap(
         bufnr,
         'n',
         '<Leader>li',
-        '',
-        opts {
-            desc = 'lsp go to implementation',
-            callback = function()
-                require('telescope.builtin').lsp_implementations {
-                    layout_strategies = 'vertical',
-                    jump_type = 'tab',
-                }
-            end,
-        }
+        '<cmd>Telescope lsp_implementations jump_type=tab<cr>',
+        opts { 'lsp go to implementation' }
     )
 
-    bufmap(
-        bufnr,
-        'n',
-        '<Leader>lci',
-        '',
-        opts {
-            desc = 'lsp incoming calls',
-            callback = require('telescope.builtin').lsp_incoming_calls,
-        }
-    )
-    bufmap(
-        bufnr,
-        'n',
-        '<Leader>lco',
-        '',
-        opts {
-            desc = 'lsp outgoing calls',
-            callback = require('telescope.builtin').lsp_outgoing_calls,
-        }
-    )
+    bufmap(bufnr, 'n', '<Leader>lci', '<cmd>Telescope lsp_incoming_calls<cr>', opts { 'lsp incoming calls' })
+    bufmap(bufnr, 'n', '<Leader>lco', '<cmd>Telescope lsp_outgoing_calls<cr>', opts { 'lsp outgoing calls' })
 
     -- workspace
     bufcmd(bufnr, 'LspWorkspace', function(options)
@@ -418,14 +348,14 @@ return {
                         'n',
                         '<Leader>lr',
                         '<CMD>lua require("refactoring").select_refactor()<CR>',
-                        { desc = 'refactoring' }
+                        opts { 'refactoring' }
                     )
                     bufmap(
                         0,
                         'v',
                         '<Leader>lr',
                         ':lua require("refactoring").select_refactor()<CR>',
-                        { desc = 'refactoring' }
+                        opts { 'refactoring' }
                     )
                 end,
             })
