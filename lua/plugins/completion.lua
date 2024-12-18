@@ -1,5 +1,5 @@
 local completion_frontend = 'cmp'
-local blink_use_main = true
+local blink_use_main = false
 
 local M = {
     {
