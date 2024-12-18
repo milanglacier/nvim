@@ -50,6 +50,7 @@ return {
                     },
                     lualine_c = { { 'filename', path = 1, symbols = confui.file_status_symbol }, { 'searchcount' } }, -- relative path
                     lualine_x = {
+                        confui.macro_status,
                         { 'diagnostics', sources = { 'get_diagnostics_in_current_root_dir' } },
                         confui.encoding,
                         confui.fileformat,
@@ -105,6 +106,7 @@ return {
         config = function()
             vim.notify = require 'notify'
 
+            ---@diagnostic disable-next-line: missing-fields
             require('notify').setup {
                 max_width = 45,
                 max_height = 20,
