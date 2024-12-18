@@ -298,24 +298,23 @@ end, {
     desc = 'This command deactivates a python venv.',
 })
 
+local function run_toggleterm_cmd_for_curret_file(cmd, options)
+    local winid = vim.api.nvim_get_current_win()
+    local current_file = vim.fn.expand '%:p'
+    local term_id = options.args ~= '' and tonumber(options.args) or nil
+    cmd = string.format(cmd, current_file)
+    require('toggleterm').exec(cmd, term_id)
+    vim.cmd.normal { 'G', bang = true }
+    vim.api.nvim_set_current_win(winid)
+end
+
 autocmd('FileType', {
     desc = 'set command for rendering rmarkdown',
     pattern = 'rmd',
     group = my_augroup,
     callback = function()
         bufcmd(0, 'RenderRmd', function(options)
-            local winid = vim.api.nvim_get_current_win()
-            ---@diagnostic disable-next-line: missing-parameter
-            local current_file = vim.fn.expand '%:.' -- relative path to current wd
-            current_file = vim.fn.shellescape(current_file)
-
-            local cmd = string.format([[R --quiet -e "rmarkdown::render(%s)"]], current_file)
-            local term_id = options.args ~= '' and tonumber(options.args) or nil
-
-            ---@diagnostic disable-next-line: missing-parameter
-            require('toggleterm').exec(cmd, term_id)
-            vim.cmd.normal { 'G', bang = true }
-            vim.api.nvim_set_current_win(winid)
+            run_toggleterm_cmd_for_curret_file([[R --quiet -e "rmarkdown::render(%s)"]], options)
         end, {
             nargs = '?', -- 0 or 1 arg
         })
@@ -328,35 +327,13 @@ autocmd('FileType', {
     group = my_augroup,
     callback = function()
         bufcmd(0, 'RenderQuarto', function(options)
-            local winid = vim.api.nvim_get_current_win()
-            ---@diagnostic disable-next-line: missing-parameter
-            local current_file = vim.fn.expand '%:.' -- relative path to current wd
-            current_file = vim.fn.shellescape(current_file)
-
-            local cmd = string.format([[quarto render %s]], current_file)
-            local term_id = options.args ~= '' and tonumber(options.args) or nil
-
-            ---@diagnostic disable-next-line: missing-parameter
-            require('toggleterm').exec(cmd, term_id)
-            vim.cmd.normal { 'G', bang = true }
-            vim.api.nvim_set_current_win(winid)
+            run_toggleterm_cmd_for_curret_file([[quarto render %s]], options)
         end, {
             nargs = '?', -- 0 or 1 arg
         })
 
         bufcmd(0, 'PreviewQuarto', function(options)
-            local winid = vim.api.nvim_get_current_win()
-            ---@diagnostic disable-next-line: missing-parameter
-            local current_file = vim.fn.expand '%:.' -- relative path to current wd
-            current_file = vim.fn.shellescape(current_file)
-
-            local cmd = string.format([[quarto preview %s]], current_file)
-            local term_id = options.args ~= '' and tonumber(options.args) or nil
-
-            ---@diagnostic disable-next-line: missing-parameter
-            require('toggleterm').exec(cmd, term_id)
-            vim.cmd.normal { 'G', bang = true }
-            vim.api.nvim_set_current_win(winid)
+            run_toggleterm_cmd_for_curret_file([[quarto preview %s]], options)
         end, {
             nargs = '?', -- 0 or 1 arg
         })
