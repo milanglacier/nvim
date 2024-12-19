@@ -1,6 +1,5 @@
 local autocmd = vim.api.nvim_create_autocmd
 local my_augroup = require('conf.builtin_extend').my_augroup
-local opts = { noremap = true, silent = true }
 local keymap = vim.api.nvim_set_keymap
 
 return {
