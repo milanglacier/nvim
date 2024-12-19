@@ -98,7 +98,7 @@ local M = {
                     min_keyword_length = 0,
                     providers = {
                         luasnip = {
-                            score_offset = 10,
+                            score_offset = 4,
                         },
                         tags = {
                             name = 'tags',
