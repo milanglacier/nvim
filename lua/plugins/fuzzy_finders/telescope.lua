@@ -108,8 +108,7 @@ return {
                 },
             }
 
-            local ok = pcall(require('telescope').load_extension, 'fzf')
-            if not ok then
+            if not pcall(require('telescope').load_extension, 'fzf') then
                 vim.notify(
                     'Failed to load telescope fzf extension, please install make and a C compiler.',
                     vim.log.levels.ERROR

@@ -55,7 +55,12 @@ return {
             require('nvim-dap-virtual-text').setup {}
 
             if Milanglacier.fuzzy_finder == 'telescope' then
-                pcall(require('telescope').load_extension, 'dap')
+                if not pcall(require('telescope').load_extension, 'dap') then
+                    vim.notify(
+                        'Failed to load telescope dap extension. Please check your telescope installation and configuration.',
+                        vim.log.levels.ERROR
+                    )
+                end
             end
 
             local opts = function(desc)
