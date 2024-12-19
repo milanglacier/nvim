@@ -42,7 +42,7 @@ vim.g.maplocalleader = [[  ]]
 vim.o.mouse = 'a'
 vim.env.NVIM_TUI_ENABLE_TRUE_COLOR = 1
 vim.o.termguicolors = true
-vim.opt.tags:append '.tags;'  -- ; means upper search parent directory with .tags file
+vim.opt.tags:append '.tags;' -- ; means upper search parent directory with .tags file
 
 local gui_cursor = {
     'n-v-c:block',
@@ -61,3 +61,9 @@ local gui_cursor = {
 -- 'CaskaydiaCove_Nerd_Font_Mono:h15',
 vim.o.guifont = 'ComicShannsMono Nerd Font Mono:h15'
 vim.o.guicursor = table.concat(gui_cursor, ',')
+
+-- Configuration options for Neovim plugins
+vim.g.milanglacier = {
+    completion_frontend = 'cmp',
+    blink_use_main = false,
+}

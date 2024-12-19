@@ -1,6 +1,3 @@
-local completion_frontend = 'cmp'
-local blink_use_main = false
-
 local M = {
     {
         'milanglacier/minuet-ai.nvim',
@@ -90,16 +87,13 @@ local M = {
 
     {
         import = 'plugins.completions.blink',
-        cond = completion_frontend == 'blink',
+        cond = vim.g.milanglacier.completion_frontend == 'blink',
     },
     {
         import = 'plugins.completions.cmp',
-        cond = completion_frontend == 'cmp',
+        cond = vim.g.milanglacier.completion_frontend == 'cmp',
     },
 }
-
-M.completion_frontend = completion_frontend
-M.blink_use_main = blink_use_main
 
 M.kind_icons = {
     Number = '󰎠',

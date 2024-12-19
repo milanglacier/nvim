@@ -138,6 +138,7 @@ autocmd('LspAttach', {
     group = my_augroup,
     callback = function(args)
         local client = vim.lsp.get_client_by_id(args.data.client_id)
+        ---@diagnostic disable-next-line
         client.server_capabilities.semanticTokensProvider = nil
     end,
     desc = 'Disable semantic highlight',
@@ -313,7 +314,7 @@ return {
         'neovim/nvim-lspconfig',
         event = 'LazyFile',
         config = function()
-            capabilities = require('plugins.completion').completion_frontend == 'blink'
+            capabilities = vim.g.milanglacier.completion_frontend == 'blink'
                     and require('blink.cmp').get_lsp_capabilities()
                 or require('cmp_nvim_lsp').default_capabilities()
 
@@ -372,6 +373,8 @@ return {
                 callback = function(args)
                     local bufnr = args.buf
                     local client = vim.lsp.get_client_by_id(args.data.client_id)
+
+                    ---@diagnostic disable-next-line
                     if client.server_capabilities.documentSymbolProvider then
                         require('nvim-navic').attach(client, bufnr)
                     end
