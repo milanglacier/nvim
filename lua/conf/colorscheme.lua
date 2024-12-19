@@ -73,6 +73,11 @@ local scheme_options = {
                         vim_sneak = true,
                         dap = true,
                         dap_ui = true,
+                        snacks = true,
+                        telescope = true,
+                        fzf = true,
+                        treesitter = true,
+                        treesitter_context = true,
                     },
                 }
             end,
@@ -91,6 +96,7 @@ local scheme_options = {
         {
             'tokyonight',
             function()
+                ---@diagnostic disable-next-line: missing-fields
                 require('tokyonight').setup {
                     styles = {
                         comments = { italic = false },
@@ -139,6 +145,11 @@ local scheme_options = {
                         vim_sneak = true,
                         dap = true,
                         dap_ui = true,
+                        snacks = true,
+                        telescope = true,
+                        fzf = true,
+                        treesitter = true,
+                        treesitter_context = true,
                     },
                 }
             end,
