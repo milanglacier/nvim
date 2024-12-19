@@ -87,11 +87,11 @@ local M = {
 
     {
         import = 'plugins.completions.blink',
-        cond = vim.g.milanglacier.completion_frontend == 'blink',
+        cond = Milanglacier.completion_frontend == 'blink',
     },
     {
         import = 'plugins.completions.cmp',
-        cond = vim.g.milanglacier.completion_frontend == 'cmp',
+        cond = Milanglacier.completion_frontend == 'cmp',
     },
 }
 

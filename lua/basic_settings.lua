@@ -63,7 +63,7 @@ vim.o.guifont = 'ComicShannsMono Nerd Font Mono:h15'
 vim.o.guicursor = table.concat(gui_cursor, ',')
 
 -- Configuration options for Neovim plugins
-vim.g.milanglacier = {
     completion_frontend = 'cmp',
     blink_use_main = false,
+Milanglacier = {
 }

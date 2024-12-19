@@ -1,4 +1,4 @@
-local blink_use_main = vim.g.milanglacier.blink_use_main
+local blink_use_main = Milanglacier.blink_use_main
 
 local M = {
     {
