@@ -8,7 +8,6 @@ return {
             { 'mfussenegger/nvim-dap-python' },
             { 'leoluz/nvim-dap-go' },
             { 'rcarriga/nvim-dap-ui', dependencies = { 'nvim-neotest/nvim-nio' } },
-            { 'nvim-telescope/telescope-dap.nvim' },
             { 'theHamsta/nvim-dap-virtual-text' },
         },
         config = function()
@@ -53,12 +52,15 @@ return {
                 dapui.close()
             end
 
+            require('nvim-dap-virtual-text').setup {}
+
+            if Milanglacier.fuzzy_finder == 'telescope' then
+                pcall(require('telescope').load_extension, 'dap')
+            end
+
             local opts = function(desc)
                 return { noremap = true, desc = desc }
             end
-
-            require('nvim-dap-virtual-text').setup {}
-            require('telescope').load_extension 'dap'
 
             keymap('n', '<F5>', '<cmd>lua require"dap".continue()<CR>', opts 'dap continue')
             keymap('n', '<F6>', '<cmd>lua require"dap".pause()<CR>', opts 'dap pause')
