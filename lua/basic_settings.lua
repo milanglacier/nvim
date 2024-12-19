@@ -66,4 +66,5 @@ vim.o.guicursor = table.concat(gui_cursor, ',')
     completion_frontend = 'cmp',
     blink_use_main = false,
 Milanglacier = {
+    fuzzy_finder = 'telescope',
 }
