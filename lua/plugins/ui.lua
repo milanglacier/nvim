@@ -2,6 +2,13 @@ local autocmd = vim.api.nvim_create_autocmd
 local my_augroup = require('conf.builtin_extend').my_augroup
 local keymap = vim.api.nvim_set_keymap
 
+---@param desc? string
+---@param callback? fun()
+---@return table
+local function opts(desc, callback)
+    return { silent = true, desc = desc, noremap = true, callback = callback }
+end
+
 return {
     {
         'nvim-lualine/lualine.nvim',
@@ -92,7 +99,7 @@ return {
                         'diff',
                     },
                 },
-                extensions = { 'aerial', 'neo-tree', 'quickfix', 'toggleterm' },
+                extensions = { 'aerial', 'neo-tree', 'quickfix', 'toggleterm', 'fzf' },
             }
         end,
     },
@@ -100,12 +107,7 @@ return {
         'folke/snacks.nvim',
         event = 'VeryLazy',
         init = function()
-            keymap(
-                'n',
-                '<leader>fn',
-                '<cmd>lua Snacks.notifier.show_history()<cr>',
-                { desc = 'Notification history' }
-            )
+            keymap('n', '<leader>fn', '<cmd>lua Snacks.notifier.show_history()<cr>', opts 'Notification History')
         end,
         config = function()
             require('snacks').setup {
@@ -120,24 +122,16 @@ return {
             require('trouble').setup {}
         end,
         init = function()
-            local function opt(desc, callback)
-                return { silent = true, desc = desc, noremap = true, callback = callback }
-            end
-
-            keymap('n', '<leader>xw', '', opt('Workspace dianostics', require('conf.ui').trouble_workspace_diagnostics))
-            keymap('n', '<leader>xd', '<cmd>Trouble diagnostics toggle filter.buf=0<cr>', opt 'Document Diagnostics')
-            keymap('n', '<leader>xl', '<cmd>TroubleToggle loclist<cr>', opt 'Open loclist')
-            keymap(
-                'n',
-                '<leader>xq',
-                [[<cmd>lua require 'conf.ui'.reopen_qflist_by_trouble()<cr>]],
-                opt 'Open quickfix'
-            )
+            local ui = require 'conf.ui'
+            keymap('n', '<leader>xw', '', opts('Workspace dianostics', ui.trouble_workspace_diagnostics))
+            keymap('n', '<leader>xd', '<cmd>Trouble diagnostics toggle filter.buf=0<cr>', opts 'Document Diagnostics')
+            keymap('n', '<leader>xl', '<cmd>TroubleToggle loclist<cr>', opts 'Open loclist')
+            keymap('n', '<leader>xq', '', opts('Open quickfix', ui.reopen_qflist_by_trouble))
             keymap(
                 'n',
                 '<leader>xr',
                 '<cmd>Trouble lsp toggle focus=false win.position=bottom<cr>',
-                opt 'Lsp reference'
+                opts 'Lsp reference'
             )
         end,
     },
