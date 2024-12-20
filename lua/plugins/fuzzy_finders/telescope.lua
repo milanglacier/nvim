@@ -83,10 +83,6 @@ return {
                             ['v'] = 'select_vertical',
                             ['<C-b>'] = 'preview_scrolling_up',
                             ['<C-f>'] = 'preview_scrolling_down',
-                            ['K'] = require('telescope.actions').toggle_selection
-                                + require('telescope.actions').move_selection_worse,
-                            ['J'] = require('telescope.actions').toggle_selection
-                                + require('telescope.actions').move_selection_better,
                         },
                     },
                     layout_strategy = 'vertical',
