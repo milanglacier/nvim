@@ -6,7 +6,7 @@ return {
     {
         'ahmedkhalf/project.nvim',
         init = function()
-            keymap('n', '<Leader>fp', '<cmd>Telescope projects<CR>', { noremap = true })
+            keymap('n', '<Leader>fp', '<cmd>FF projects<CR>', { noremap = true })
         end,
         config = function()
             require('project_nvim').setup {
