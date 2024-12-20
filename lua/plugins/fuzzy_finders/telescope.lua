@@ -70,6 +70,12 @@ return {
                 defaults = {
                     mappings = {
                         i = {
+                            -- <C-t> open file in new tab
+                            -- <C-v> open file in new vsplit
+                            -- <tab> toggle selection and go to next item, used for making multi-selection
+                            -- <s-tab> toggle selection and go to prev item, used for making multi-selection
+                            -- <c-q> send all items to quickfix list
+                            -- <a-q> send selected items to quickfix list
                             ['<C-s>'] = 'select_horizontal',
                             ['<C-b>'] = 'preview_scrolling_up',
                             ['<C-f>'] = 'preview_scrolling_down',
