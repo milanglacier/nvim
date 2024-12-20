@@ -687,7 +687,6 @@ The following keymaps rely on
 | n    | `<Leader>fp` | Show recently visited projects       |
 | n    | `<Leader>fk` | Show keymaps                         |
 | n    | `<Leader>fc` | Show commands                        |
-| n    | `<A-x>`      | Show commands                        |
 | n    | `<Leader>fC` | Show command history                 |
 | n    | `<Leader>fs` | Show lsp document symbols            |
 | n    | `<Leader>fr` | Show registers                       |
@@ -695,7 +694,6 @@ The following keymaps rely on
 | n    | `<Leader>fn` | Show notifications                   |
 | n    | `<Leader>fT` | Show treesitter nodes                |
 | n    | `<Leader>ft` | Show tags                            |
-| n    | `<Leader>F`  | Show all available telescope finders |
 | n    | `<Leader>fe` | The same as `<Leader>F`              |
 
 ## Language Server Protocol keymaps
