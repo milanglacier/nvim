@@ -91,7 +91,6 @@ local M = {
 
                 sources = {
                     default = { 'lsp', 'path', 'luasnip', 'buffer', 'tags' },
-                    cmdline = {},
                     per_filetype = {
                         org = { 'lsp', 'path', 'luasnip', 'buffer', 'orgmode', 'tags' },
                     },
