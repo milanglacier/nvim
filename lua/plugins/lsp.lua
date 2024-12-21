@@ -16,16 +16,10 @@ local command = vim.api.nvim_create_user_command
 local attach_keymaps = function(args)
     local bufnr = args.buf
 
-    bufmap(
-        bufnr,
-        'n',
-        '<Leader>lt',
-        '<cmd>Telescope lsp_type_definitions jump_type=tab<cr>',
-        opts { 'lsp type definition' }
-    )
+    bufmap(bufnr, 'n', '<Leader>lt', '<cmd>FF lsp_type_definitions<cr>', opts { 'lsp type definition' })
 
     -- reference
-    bufmap(bufnr, 'n', 'gr', '<cmd>Telescope lsp_references jump_type=tab<cr>', opts { 'lsp references telescope' })
+    bufmap(bufnr, 'n', 'gr', '<cmd>FF lsp_references<cr>', opts { 'lsp references' })
 
     -- code action
     bufmap(bufnr, 'n', '<Leader>la', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts { 'lsp code action' })
@@ -44,18 +38,12 @@ local attach_keymaps = function(args)
     bufmap(bufnr, 'n', '<Leader>ln', '<cmd>lua vim.lsp.buf.rename()<CR>', opts { 'lsp rename' })
 
     -- go to definition, implementation
-    bufmap(bufnr, 'n', 'gd', '<cmd>Telescope lsp_definitions jump_type=tab<cr>', opts { 'lsp go to definition' })
+    bufmap(bufnr, 'n', 'gd', '<cmd>FF lsp_definitions<cr>', opts { 'lsp definition' })
 
-    bufmap(
-        bufnr,
-        'n',
-        '<Leader>li',
-        '<cmd>Telescope lsp_implementations jump_type=tab<cr>',
-        opts { 'lsp go to implementation' }
-    )
+    bufmap(bufnr, 'n', '<Leader>li', '<cmd>FF lsp_implementations<cr>', opts { 'lsp go to implementation' })
 
-    bufmap(bufnr, 'n', '<Leader>lci', '<cmd>Telescope lsp_incoming_calls<cr>', opts { 'lsp incoming calls' })
-    bufmap(bufnr, 'n', '<Leader>lco', '<cmd>Telescope lsp_outgoing_calls<cr>', opts { 'lsp outgoing calls' })
+    bufmap(bufnr, 'n', '<Leader>lci', '<cmd>FF lsp_incoming_calls<cr>', opts { 'lsp incoming calls' })
+    bufmap(bufnr, 'n', '<Leader>lco', '<cmd>FF lsp_outgoing_calls<cr>', opts { 'lsp outgoing calls' })
 
     -- workspace
     bufcmd(bufnr, 'LspWorkspace', function(options)
@@ -78,20 +66,8 @@ local attach_keymaps = function(args)
     bufmap(bufnr, 'v', '<Leader>lf', '<cmd>lua vim.lsp.buf.format { async = true }<CR>', opts { 'lsp range format' })
 
     -- diagnostic
-    bufmap(
-        bufnr,
-        'n',
-        '<Leader>ld',
-        '<cmd>Telescope diagnostics bufnr=0<CR>',
-        opts { 'lsp file diagnostics by telescope' }
-    )
-    bufmap(
-        bufnr,
-        'n',
-        '<Leader>lw',
-        '<cmd>Telescope diagnostics root_dir=true<CR>',
-        opts { 'lsp workspace diagnostics by telescope' }
-    )
+    bufmap(bufnr, 'n', '<Leader>ld', '<cmd>FF buf_diagnositcs<CR>', opts { 'lsp buffer diagnostics' })
+    bufmap(bufnr, 'n', '<Leader>lw', '<cmd>FF workspace_diagnositcs<CR>', opts { 'lsp workspace diagnostics' })
     bufmap(bufnr, 'n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts { 'prev diagnostic' })
     bufmap(bufnr, 'n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts { 'next diagnostic' })
 
@@ -314,8 +290,7 @@ return {
         'neovim/nvim-lspconfig',
         event = 'LazyFile',
         config = function()
-            capabilities = Milanglacier.completion_frontend == 'blink'
-                    and require('blink.cmp').get_lsp_capabilities()
+            capabilities = Milanglacier.completion_frontend == 'blink' and require('blink.cmp').get_lsp_capabilities()
                 or require('cmp_nvim_lsp').default_capabilities()
 
             for _, lsp in pairs(enabled_lsps) do

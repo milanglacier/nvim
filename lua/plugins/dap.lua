@@ -103,26 +103,11 @@ return {
 
             -- telescope extensions
 
-            keymap('n', '<Leader>dc', '<cmd>lua require"telescope".extensions.dap.commands{}<CR>', opts 'dap commands')
-            keymap(
-                'n',
-                '<Leader>dC',
-                '<cmd>lua require"telescope".extensions.dap.configurations{}<CR>',
-                opts 'dap configs'
-            )
-            keymap(
-                'n',
-                '<Leader>db',
-                '<cmd>lua require"telescope".extensions.dap.list_breakpoints{}<CR>',
-                opts 'dap list breakpoints'
-            )
-            keymap(
-                'n',
-                '<Leader>dv',
-                '<cmd>lua require"telescope".extensions.dap.variables{}<CR>',
-                opts 'dap variables'
-            )
-            keymap('n', '<Leader>df', '<cmd>lua require"telescope".extensions.dap.frames{}<CR>', opts 'dap frames')
+            keymap('n', '<Leader>dc', '<cmd>FF dap_commands<CR>', opts 'dap commands')
+            keymap('n', '<Leader>dC', '<cmd>FF dap_configurations<CR>', opts 'dap configs')
+            keymap('n', '<Leader>db', '<cmd>FF dap_breakpoints<CR>', opts 'dap list breakpoints')
+            keymap('n', '<Leader>dv', '<cmd>FF dap_variables<CR>', opts 'dap variables')
+            keymap('n', '<Leader>df', '<cmd>FF dap_frames<CR>', opts 'dap frames')
 
             vim.fn.sign_define('DapBreakpoint', { text = '', texhl = 'TodoFgFIX' })
             vim.fn.sign_define('DapBreakpointCondition', { text = '', texhl = 'TodoFgFIX' })
