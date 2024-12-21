@@ -15,6 +15,7 @@ local M = {
         init = function()
             keymap('n', '<Leader>fe', '<CMD>FzfLua builtin<CR>', opts_desc 'Fzf Extensions')
             keymap('n', '<Leader>ff', '<CMD>FzfLua files<CR>', opts_desc 'Fzf Files')
+            keymap('n', '<Leader>fo', '<CMD>FzfLua oldfiles<CR>', opts_desc 'Fzf Recent Files')
             keymap(
                 'n',
                 '<Leader>fF',
@@ -50,6 +51,8 @@ local M = {
                 defaults = {
                     -- formatter = "path.filename_first",
                     formatter = 'path.dirname_first',
+                    -- don't show the suggestin tip for keybindings. I know everything.
+                    no_header_i = true,
                 },
 
                 keymap = {
@@ -76,7 +79,7 @@ local M = {
                         true,
                         ['alt-i'] = actions.toggle_ignore,
                         ['alt-h'] = actions.toggle_hidden,
-                        ['enter'] = actions.file_edit,
+                        ['enter'] = actions.file_edit_or_qf,
                         -- send selected items to qf
                         ['alt-q'] = actions.file_edit_or_qf,
                         -- send all items to qf
@@ -92,8 +95,6 @@ local M = {
                     find_opts = [[-type f -not -path '*/\.git/*']],
                     cwd_prompt = false,
                     git_icons = false,
-                    -- don't show the suggestin tip for keybindings. I know everything.
-                    header = false,
                     actions = {
                         ['ctrl-g'] = false,
                     },
@@ -112,18 +113,6 @@ local M = {
                     include_current_session = true,
                 },
 
-                tags = {
-                    no_header_i = true,
-                },
-
-                buffers = {
-                    no_header_i = true,
-                },
-
-                treesitter = {
-                    no_header_i = true,
-                },
-
                 registers = {
                     winopts = {
                         preview = {
@@ -134,6 +123,7 @@ local M = {
 
                 lsp = {
                     jump_to_single_result = true,
+                    -- open a new tab when there is only one result
                     jump_to_single_result_action = actions.file_tabedit,
                     -- for lsp references ignore current reference
                     ignore_current_line = true,
