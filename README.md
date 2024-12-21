@@ -227,8 +227,10 @@ folder. To use this example configuration, simply copy the folder to
 ## general purpose deps
 
 1. `universal-ctags`
-2. `treesitter-cli*`: this is required for `nvim-treesitter` in `main` branch.
+2. A c compiler. Required to install treesitter parsers.
 3. `lazygit`: this is only required if want to use `lazygit` in neovim (which is binded to `<leader>og`).
+4. `fzf`: this is only required if you are using `fzf-lua` as your fuzzy
+   finder. You don't need it you are using `telescope`.
 
 # Keymaps
 
