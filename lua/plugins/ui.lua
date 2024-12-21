@@ -22,6 +22,12 @@ return {
 
             diagnostics_sources.get_diagnostics_in_current_root_dir = confui.get_diagnostics_in_current_root_dir
 
+            -- HACK: see lualine.nvim issue #1201, Illegal character from fzf
+            -- may hang lualine. We disable lualine from trying to get the
+            -- content from current selected item from fzf to avoid invalid
+            -- character.
+            require('lualine.extensions.fzf').sections.lualine_y = {}
+
             lualine.setup {
                 options = {
                     icons_enabled = true,
