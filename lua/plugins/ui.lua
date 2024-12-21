@@ -147,7 +147,7 @@ return {
             }
 
             which_key.add {
-                { '<Leader>f', group = '+find everything', mode = { 'n', 'v' } },
+                { '<Leader>f', group = '+find', mode = { 'n', 'v' } },
                 { '<Leader>d', group = '+debugger' },
                 { '<Leader>b', group = '+buffer' },
                 { '<Leader>w', group = '+window' },
@@ -157,8 +157,8 @@ return {
                 { '<Leader>o', group = '+open/org' },
                 { '<Leader>ol', group = '+open/links' },
                 { '<Leader>g', group = '+git', mode = { 'n', 'v' } },
-                { '<Leader>gt', group = '+telescope' },
-                { '<Leader>x', group = '+quickfixlist' },
+                { '<Leader>gm', group = '+misc' },
+                { '<Leader>x', group = '+qf' },
                 { '<Leader>a', group = '+aider', mode = { 'n', 'v' } },
                 { '<Leader>c', group = '+chat', mode = { 'n', 'v' } },
                 { '<Leader><Tab>', group = '+tab' },
