@@ -47,6 +47,9 @@ local M = {
                     ['--no-scrollbar'] = true,
                     -- allow cycle from last item to first item
                     ['--cycle'] = true,
+                    --  I usually use 4 for tab width. However I want to save
+                    --  more spaces for one-liner
+                    ['--tabstop'] = 2,
                 },
                 defaults = {
                     -- formatter = "path.filename_first",
@@ -106,7 +109,6 @@ local M = {
                     actions = {
                         ['ctrl-g'] = false,
                     },
-                    no_header_i = true,
                 },
 
                 old_files = {
@@ -127,6 +129,19 @@ local M = {
                     jump_to_single_result_action = actions.file_tabedit,
                     -- for lsp references ignore current reference
                     ignore_current_line = true,
+                },
+
+                diagnostics = {
+                    winopts = {
+                        preview = {
+                            vertical = 'up:50%',
+                        },
+                    },
+                    fzf_opts = {
+                        -- concat the source location and the diagnostics into
+                        -- a single line.
+                        ['--no-multi-line'] = true,
+                    },
                 },
             }
 
