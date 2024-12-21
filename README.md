@@ -240,7 +240,7 @@ The `<Leader>` key is `<Space>`,
 the `<LocalLeader>` key is `<Space><Space>` or `<Backslash>`.
 
 In case you forget the keymaps
-you can always use `<Leader>fk` (`:Telescope keymaps`)
+you can always use `<Leader>fk` (`:FzfLua keymaps` or `:Telescope keymaps`)
 to find all keymaps.
 
 ## Builtin keymaps
@@ -673,9 +673,10 @@ Note: with no numerical argument, the REPL is default for the first REPL.
 
 The following keymaps rely on
 
-[telescope.nvim](https://github.com/nvim-telescope/telescope.nvim),
-[snacks.nvim](https://github.com/folke/snacks.nvim),
-[project.nvim](https://github.com/ahmedkhalf/project.nvim)
+- [fzf.lua](https://github.com/ibhagwan/fzf-luahttps://github.com/ibhagwan/fzf-lua)
+  or [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim),
+- [snacks.nvim](https://github.com/folke/snacks.nvim),
+- [project.nvim](https://github.com/ahmedkhalf/project.nvim)
 
 | Mode | LHS          | RHS/Functionality                    |
 | ---- | ------------ | ------------------------------------ |
@@ -694,7 +695,7 @@ The following keymaps rely on
 | n    | `<Leader>fn` | Show notifications                   |
 | n    | `<Leader>fT` | Show treesitter nodes                |
 | n    | `<Leader>ft` | Show tags                            |
-| n    | `<Leader>fe` | The same as `<Leader>F`              |
+| n    | `<Leader>fe` | Show available searchers             |
 
 ## Language Server Protocol keymaps
 
