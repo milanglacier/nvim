@@ -26,7 +26,7 @@ fzf.projects = function()
     fzf.fzf_exec(reverse, {
         actions = {
             ['default'] = function(e)
-                fzf.files { cwd = e[1] }
+                fzf.files { cwd = e[1], header = false, winopts = { title = e[1] } }
             end,
         },
         winopts = {
