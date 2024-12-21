@@ -15,6 +15,12 @@ local M = {
         init = function()
             keymap('n', '<Leader>fe', '<CMD>FzfLua builtin<CR>', opts_desc 'Fzf Extensions')
             keymap('n', '<Leader>ff', '<CMD>FzfLua files<CR>', opts_desc 'Fzf Files')
+            keymap(
+                'n',
+                '<Leader>fF',
+                [[<CMD>FzfLua files cmd=rg\ --files\ --color\ never\ --hidden\ --no-ignore\ --iglob\ !.git<CR>]],
+                opts_desc 'Fzf Files No ignore'
+            )
         end,
         config = function()
             local actions = require 'fzf-lua.actions'
@@ -59,8 +65,8 @@ local M = {
                         ['ctrl-x'] = 'jump',
                         -- select/unselect current item and move to next
                         -- selected items can be send to qflist together
-                        ['tab'] = 'toggle+down',
-                        ['btab'] = 'toggle+up',
+                        -- ['tab'] = 'toggle+down',
+                        -- ['btab'] = 'toggle+up',
                     },
                 },
 
@@ -112,6 +118,25 @@ local M = {
 
                 buffers = {
                     no_header_i = true,
+                },
+
+                treesitter = {
+                    no_header_i = true,
+                },
+
+                registers = {
+                    winopts = {
+                        preview = {
+                            vertical = 'up:0',
+                        },
+                    },
+                },
+
+                lsp = {
+                    jump_to_single_result = true,
+                    jump_to_single_result_action = actions.file_tabedit,
+                    -- for lsp references ignore current reference
+                    ignore_current_line = true,
                 },
             }
 
