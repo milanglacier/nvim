@@ -13,15 +13,41 @@ local M = {
         cond = Milanglacier.fuzzy_finder == 'fzf',
         cmd = 'FzfLua',
         init = function()
-            keymap('n', '<Leader>fe', '<CMD>FzfLua builtin<CR>', opts_desc 'Fzf Extensions')
-            keymap('n', '<Leader>ff', '<CMD>FzfLua files<CR>', opts_desc 'Fzf Files')
-            keymap('n', '<Leader>fo', '<CMD>FzfLua oldfiles<CR>', opts_desc 'Fzf Recent Files')
+            keymap('n', '<Leader>ff', '<cmd>FzfLua files<cr>', opts_desc 'Fzf Files')
             keymap(
                 'n',
                 '<Leader>fF',
-                [[<CMD>FzfLua files cmd=rg\ --files\ --color\ never\ --hidden\ --no-ignore\ --iglob\ !.git<CR>]],
+                [[<cmd>FzfLua files cmd=rg\ --files\ --color\ never\ --hidden\ --no-ignore\ --iglob\ !.git<cr>]],
                 opts_desc 'Fzf Files No ignore'
             )
+            keymap('n', '<Leader>fG', '<cmd>FzfLua grep<cr>', opts_desc 'Fzf Grep')
+            keymap('n', '<Leader>fg', '<cmd>FzfLua live_grep<cr>', opts_desc 'Fzf Live Grep')
+            keymap('n', '<Leader>fb', '<cmd>FzfLua buffers<cr>', opts_desc 'Fzf buffers')
+            keymap('n', '<Leader>fh', '<cmd>FzfLua helptags<cr>', opts_desc 'Fzf helptags')
+            keymap('n', '<Leader>fk', '<cmd>FzfLua keymaps<cr>', opts_desc 'Fzf keymaps')
+
+            keymap('n', '<Leader>fc', '<cmd>FzfLua commands<cr>', opts_desc 'Fzf commands')
+            keymap('n', '<Leader>fC', '<cmd>FzfLua command_history<cr>', opts_desc 'Fzf commands history')
+
+            keymap('n', '<leader>fs', '<cmd>FzfLua lsp_document_symbols<cr>', opts_desc 'lsp doc symbol')
+            keymap(
+                'n',
+                '<leader>fw',
+                '<cmd>FzfLua lsp_workspace_symbols cwd_only=true<cr>',
+                opts_desc 'lsp workspace symbol'
+            )
+            keymap('n', '<leader>fr', '<cmd>FzfLua registers<cr>', opts_desc 'Fzf registers')
+            keymap('n', '<leader>fj', '<cmd>FzfLua jumplist<cr>', opts_desc 'Fzf jumplist')
+            keymap('n', '<leader>fo', '<cmd>FzfLua oldfiles<cr>', opts_desc 'Fzf oldfilels')
+            keymap('n', '<leader>fT', '<cmd>FzfLua treesitter<cr>', opts_desc 'Fzf treesitter')
+            keymap('n', '<leader>ft', '<cmd>FzfLua tags<cr>', opts_desc 'Fzf tags')
+            keymap('n', '<leader>fm', '<cmd>FzfLua marks<cr>', opts_desc 'Fzf marks')
+
+            keymap('n', '<leader>fe', '<cmd>FzfLua builtin<cr>', opts_desc 'Fzf extensions')
+
+            keymap('n', '<leader>gml', '<cmd>FzfLua git_commits<cr>', opts_desc 'Git Log')
+            keymap('n', '<leader>gmb', '<cmd>FzfLua git_bcommits<cr>', opts_desc 'Git Buffer Log')
+            keymap('v', '<leader>gmb', '<cmd>FzfLua git_bcommits<cr>', opts_desc 'Git Hunk Log')
         end,
         config = function()
             local actions = require 'fzf-lua.actions'
