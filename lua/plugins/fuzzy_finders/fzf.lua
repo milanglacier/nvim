@@ -56,7 +56,7 @@ local M = {
                     builtin = {
                         ['<c-f>'] = 'preview-page-down',
                         ['<c-b>'] = 'preview-page-up',
-                        ['<c-/>'] = 'toggle_help',
+                        ['<C-/>'] = 'toggle-help',
                     },
                     fzf = {
                         -- standard ctrl-k behavior as in bash
