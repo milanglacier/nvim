@@ -29,6 +29,10 @@ fzf.projects = function()
                 fzf.files { cwd = e[1] }
             end,
         },
+        winopts = {
+            title = 'Recent Projects',
+            title_pos = 'center',
+        },
     })
 end
 fzf.oldfiles = 'FzfLua oldfiles'
