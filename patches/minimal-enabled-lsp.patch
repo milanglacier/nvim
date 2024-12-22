@@ -1,0 +1,13 @@
+diff --git a/lua/plugins/lsp.lua b/lua/plugins/lsp.lua
+index c7846a8..55718be 100644
+--- a/lua/plugins/lsp.lua
++++ b/lua/plugins/lsp.lua
+@@ -217,7 +217,7 @@ autocmd('LspAttach', {
+ -- fetched from cmp-nvim-lsp when lspconfig is loaded
+ local capabilities
+ 
+-local enabled_lsps = { 'r', 'python', 'bash', 'cpp', 'vim', 'nvim', 'pinyin', 'sql', 'latex', 'go', 'rust', 'efm' }
++local enabled_lsps = { 'python', 'nvim', 'efm' }
+ 
+ local lsp_configs = {}
+ 

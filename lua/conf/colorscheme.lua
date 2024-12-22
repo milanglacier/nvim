@@ -73,6 +73,11 @@ local scheme_options = {
                         vim_sneak = true,
                         dap = true,
                         dap_ui = true,
+                        snacks = true,
+                        telescope = true,
+                        fzf = true,
+                        treesitter = true,
+                        treesitter_context = true,
                     },
                 }
             end,
@@ -91,6 +96,7 @@ local scheme_options = {
         {
             'tokyonight',
             function()
+                ---@diagnostic disable-next-line: missing-fields
                 require('tokyonight').setup {
                     styles = {
                         comments = { italic = false },
@@ -139,6 +145,11 @@ local scheme_options = {
                         vim_sneak = true,
                         dap = true,
                         dap_ui = true,
+                        snacks = true,
+                        telescope = true,
+                        fzf = true,
+                        treesitter = true,
+                        treesitter_context = true,
                     },
                 }
             end,
@@ -228,7 +239,7 @@ local function select_colorscheme_based_on_bg(bg)
     end
 
     vim.ui.select(items_to_be_selected, {
-        prompt = 'select one colorscheme',
+        prompt = 'select colorscheme: ',
         format_item = function(item)
             return theme_options_at_time[item][1]
         end,
@@ -244,7 +255,7 @@ end
 
 function F.pick_quickly()
     vim.ui.select({ 1, 2 }, {
-        prompt = 'select the background of the colorscheme',
+        prompt = 'select background of the colorscheme: ',
         format_item = function(item)
             if item == 1 then
                 return 'dark'

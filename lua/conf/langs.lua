@@ -8,13 +8,11 @@ local command = vim.api.nvim_create_user_command
 local bufmap = vim.api.nvim_buf_set_keymap
 local bufcmd = vim.api.nvim_buf_create_user_command
 
-function M.textobj_code_chunk(
-    around_or_inner,
-    start_pattern,
-    end_pattern,
-    has_same_start_end_pattern,
-    is_in_visual_mode
-)
+function M.textobj_code_chunk(around_or_inner, start_pattern, end_pattern)
+    local has_same_start_end_pattern = start_pattern == end_pattern
+    -- \22 is Ctrl-V
+    local is_in_visual_mode = vim.tbl_contains({ 'v', 'V', '\22' }, vim.fn.mode())
+
     -- send `<ESC>` key to clear visual marks such that we can update the
     -- visual range.
     if is_in_visual_mode then
@@ -80,41 +78,26 @@ function M.textobj_code_chunk(
     end
 end
 
+local function set_code_chunk_keymaps(start_pattern, end_pattern, key, desc)
+    for _, mode in ipairs { 'o', 'x' } do
+        for _, around_or_inner in ipairs { 'a', 'i' } do
+            bufmap(0, mode, around_or_inner .. key, '', {
+                silent = true,
+                desc = desc,
+                callback = function()
+                    M.textobj_code_chunk(around_or_inner, start_pattern, end_pattern)
+                end,
+            })
+        end
+    end
+end
+
 autocmd('FileType', {
-    pattern = { 'rmd', 'quarto' },
+    pattern = { 'rmd', 'quarto', 'markdown' },
     group = my_augroup,
     desc = 'set rmarkdown code chunk textobj',
     callback = function()
-        bufmap(0, 'o', 'ac', '', {
-            silent = true,
-            desc = 'rmd/quarto code chunk text object a',
-            callback = function()
-                M.textobj_code_chunk('a', '```{.+}', '^```$')
-            end,
-        })
-        bufmap(0, 'o', 'ic', '', {
-            silent = true,
-            desc = 'rmd/quarto code chunk text object i',
-            callback = function()
-                M.textobj_code_chunk('i', '```{.+}', '^```$')
-            end,
-        })
-
-        bufmap(0, 'x', 'ac', '', {
-            silent = true,
-            desc = 'rmd/quarto code chunk text object a',
-            callback = function()
-                M.textobj_code_chunk('a', '```{.+}', '^```$', false, true)
-            end,
-        })
-
-        bufmap(0, 'x', 'ic', '', {
-            silent = true,
-            desc = 'rmd/quarto code chunk text object i',
-            callback = function()
-                M.textobj_code_chunk('i', '```{.+}', '^```$', false, true)
-            end,
-        })
+        set_code_chunk_keymaps('```.+', '^```$', 'c', 'rmd/quarto code chunk text objects')
     end,
 })
 
@@ -123,68 +106,8 @@ autocmd('FileType', {
     group = my_augroup,
     desc = 'set r, python code chunk textobj',
     callback = function()
-        bufmap(0, 'o', 'a<Leader>c', '', {
-            silent = true,
-            desc = 'code chunk text object a',
-            callback = function()
-                M.textobj_code_chunk('a', '^# ?%%%%.*', '^# ?%%%%.*', true)
-                -- # %%xxxxx or #%%xxxx
-            end,
-        })
-        bufmap(0, 'o', 'i<Leader>c', '', {
-            silent = true,
-            desc = 'code chunk text object i',
-            callback = function()
-                M.textobj_code_chunk('i', '^# ?%%%%.*', '^# ?%%%%.*', true)
-            end,
-        })
-
-        bufmap(0, 'x', 'a<Leader>c', '', {
-            silent = true,
-            desc = 'code chunk text object a',
-            callback = function()
-                M.textobj_code_chunk('a', '^# ?%%%%.*', '^# ?%%%%.*', true, true)
-            end,
-        })
-
-        bufmap(0, 'x', 'i<Leader>c', '', {
-            silent = true,
-            desc = 'code chunk text object i',
-            callback = function()
-                M.textobj_code_chunk('i', '^# ?%%%%.*', '^# ?%%%%.*', true, true)
-            end,
-        })
-
-        bufmap(0, 'o', 'am', '', {
-            silent = true,
-            desc = 'databricks code chunk text object a',
-            callback = function()
-                M.textobj_code_chunk('a', '# COMMAND ----------', '# COMMAND ----------', true)
-            end,
-        })
-        bufmap(0, 'o', 'im', '', {
-            silent = true,
-            desc = 'databricks code chunk text object i',
-            callback = function()
-                M.textobj_code_chunk('i', '# COMMAND ----------', '# COMMAND ----------', true)
-            end,
-        })
-
-        bufmap(0, 'x', 'am', '', {
-            silent = true,
-            desc = 'databricks code chunk text object a',
-            callback = function()
-                M.textobj_code_chunk('a', '# COMMAND ----------', '# COMMAND ----------', true, true)
-            end,
-        })
-
-        bufmap(0, 'x', 'im', '', {
-            silent = true,
-            desc = 'databricks code chunk text object i',
-            callback = function()
-                M.textobj_code_chunk('i', '# COMMAND ----------', '# COMMAND ----------', true, true)
-            end,
-        })
+        set_code_chunk_keymaps('^# ?%%%%.*', '^# ?%%%%.*', '<Leader>c', 'r/python code chunk text objects')
+        set_code_chunk_keymaps('# COMMAND ---', '# COMMAND ---', 'm', 'r/python databricks chunk text objects')
     end,
 })
 
@@ -193,36 +116,7 @@ autocmd('FileType', {
     group = my_augroup,
     desc = 'set sql code chunk textobj',
     callback = function()
-        bufmap(0, 'o', 'am', '', {
-            silent = true,
-            desc = 'databricks code chunk text object a',
-            callback = function()
-                M.textobj_code_chunk('a', '-- COMMAND ----------', '-- COMMAND ----------', true)
-            end,
-        })
-        bufmap(0, 'o', 'im', '', {
-            silent = true,
-            desc = 'databricks code chunk text object i',
-            callback = function()
-                M.textobj_code_chunk('i', '-- COMMAND ----------', '-- COMMAND ----------', true)
-            end,
-        })
-
-        bufmap(0, 'x', 'am', '', {
-            silent = true,
-            desc = 'databricks code chunk text object a',
-            callback = function()
-                M.textobj_code_chunk('a', '-- COMMAND ----------', '-- COMMAND ----------', true, true)
-            end,
-        })
-
-        bufmap(0, 'x', 'im', '', {
-            silent = true,
-            desc = 'databricks code chunk text object i',
-            callback = function()
-                M.textobj_code_chunk('i', '-- COMMAND ----------', '-- COMMAND ----------', true, true)
-            end,
-        })
+        set_code_chunk_keymaps('-- COMMAND ---', '-- COMMAND ---', 'm', 'sql databricks chunk text objects')
     end,
 })
 
@@ -404,24 +298,23 @@ end, {
     desc = 'This command deactivates a python venv.',
 })
 
+local function run_toggleterm_cmd_for_curret_file(cmd, options)
+    local winid = vim.api.nvim_get_current_win()
+    local current_file = vim.fn.expand '%:p'
+    local term_id = options.args ~= '' and tonumber(options.args) or nil
+    cmd = string.format(cmd, current_file)
+    require('toggleterm').exec(cmd, term_id)
+    vim.cmd.normal { 'G', bang = true }
+    vim.api.nvim_set_current_win(winid)
+end
+
 autocmd('FileType', {
     desc = 'set command for rendering rmarkdown',
     pattern = 'rmd',
     group = my_augroup,
     callback = function()
         bufcmd(0, 'RenderRmd', function(options)
-            local winid = vim.api.nvim_get_current_win()
-            ---@diagnostic disable-next-line: missing-parameter
-            local current_file = vim.fn.expand '%:.' -- relative path to current wd
-            current_file = vim.fn.shellescape(current_file)
-
-            local cmd = string.format([[R --quiet -e "rmarkdown::render(%s)"]], current_file)
-            local term_id = options.args ~= '' and tonumber(options.args) or nil
-
-            ---@diagnostic disable-next-line: missing-parameter
-            require('toggleterm').exec(cmd, term_id)
-            vim.cmd.normal { 'G', bang = true }
-            vim.api.nvim_set_current_win(winid)
+            run_toggleterm_cmd_for_curret_file([[R --quiet -e "rmarkdown::render(%s)"]], options)
         end, {
             nargs = '?', -- 0 or 1 arg
         })
@@ -434,35 +327,13 @@ autocmd('FileType', {
     group = my_augroup,
     callback = function()
         bufcmd(0, 'RenderQuarto', function(options)
-            local winid = vim.api.nvim_get_current_win()
-            ---@diagnostic disable-next-line: missing-parameter
-            local current_file = vim.fn.expand '%:.' -- relative path to current wd
-            current_file = vim.fn.shellescape(current_file)
-
-            local cmd = string.format([[quarto render %s]], current_file)
-            local term_id = options.args ~= '' and tonumber(options.args) or nil
-
-            ---@diagnostic disable-next-line: missing-parameter
-            require('toggleterm').exec(cmd, term_id)
-            vim.cmd.normal { 'G', bang = true }
-            vim.api.nvim_set_current_win(winid)
+            run_toggleterm_cmd_for_curret_file([[quarto render %s]], options)
         end, {
             nargs = '?', -- 0 or 1 arg
         })
 
         bufcmd(0, 'PreviewQuarto', function(options)
-            local winid = vim.api.nvim_get_current_win()
-            ---@diagnostic disable-next-line: missing-parameter
-            local current_file = vim.fn.expand '%:.' -- relative path to current wd
-            current_file = vim.fn.shellescape(current_file)
-
-            local cmd = string.format([[quarto preview %s]], current_file)
-            local term_id = options.args ~= '' and tonumber(options.args) or nil
-
-            ---@diagnostic disable-next-line: missing-parameter
-            require('toggleterm').exec(cmd, term_id)
-            vim.cmd.normal { 'G', bang = true }
-            vim.api.nvim_set_current_win(winid)
+            run_toggleterm_cmd_for_curret_file([[quarto preview %s]], options)
         end, {
             nargs = '?', -- 0 or 1 arg
         })

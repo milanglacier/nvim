@@ -73,26 +73,6 @@ return {
 
             yarepl.setup {
                 metas = { aider = aider.create_aider_meta() },
-                wincmd = function(bufnr, name)
-                    if name == 'aider' then
-                        aider.wincmd(bufnr)
-                    elseif vim.g.REPL_use_floatwin == 1 then
-                        vim.api.nvim_open_win(bufnr, true, {
-                            relative = 'editor',
-                            row = math.floor(vim.o.lines * (1 - vim.g.REPL_floatwin_ratio) / 2),
-                            col = math.floor(vim.o.columns * (1 - vim.g.REPL_floatwin_ratio) / 2),
-                            width = math.floor(vim.o.columns * vim.g.REPL_floatwin_ratio),
-                            height = math.floor(vim.o.lines * vim.g.REPL_floatwin_ratio),
-                            style = 'minimal',
-                            title = name,
-                            border = 'rounded',
-                            title_pos = 'center',
-                        })
-                    else
-                        vim.cmd [[belowright 15 split]]
-                        vim.api.nvim_set_current_buf(bufnr)
-                    end
-                end,
             }
         end,
         init = function()
@@ -158,7 +138,7 @@ return {
                     bufmap(0, 'n', '<LocalLeader>rf', '<Plug>(REPLFocus)', {
                         desc = 'Focus on REPL',
                     })
-                    bufmap(0, 'n', '<LocalLeader>rv', '<CMD>Telescope REPLShow<CR>', {
+                    bufmap(0, 'n', '<LocalLeader>rv', '<CMD>FF repl_show<CR>', {
                         desc = 'View REPLs in telescope',
                     })
                     bufmap(0, 'n', '<LocalLeader>rh', '<Plug>(REPLHide)', {
@@ -329,23 +309,6 @@ return {
         end,
     },
     {
-        'iamcco/markdown-preview.nvim',
-        enabled = false,
-        build = 'cd app && npm install',
-        ft = { 'markdown', 'rmd', 'quarto' },
-        init = function()
-            vim.g.mkdp_filetypes = { 'markdown', 'rmd', 'quarto' }
-
-            keymap('n', '<Leader>mmp', '<cmd>MarkdownPreview<cr>', { noremap = true, desc = 'Misc Markdown Preview' })
-            keymap(
-                'n',
-                '<Leader>mmq',
-                '<cmd>MarkdownPreviewStop<cr>',
-                { noremap = true, desc = 'Misc Markdown Preview Stop' }
-            )
-        end,
-    },
-    {
         'ludovicchabant/vim-gutentags',
         init = function()
             vim.g.gutentags_add_ctrlp_root_markers = 0
@@ -362,5 +325,21 @@ return {
             }
         end,
         event = 'VeryLazy',
+    },
+    {
+        'MeanderingProgrammer/render-markdown.nvim',
+        ft = { 'markdown', 'rmd', 'quarto' },
+        config = function()
+            require('render-markdown').setup {
+                file_types = { 'markdown', 'rmd', 'quarto' },
+                code = {
+                    sign = false,
+                },
+                heading = {
+                    sign = false,
+                    icons = { '󰬺 ', '󰬻 ', '󰬼 ', '󰬽 ', '󰬾 ', '󰬿 ' },
+                },
+            }
+        end,
     },
 }

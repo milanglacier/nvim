@@ -160,6 +160,7 @@ M.get_diagnostics_in_current_root_dir = function()
 end
 
 M.winbar_symbol = function()
+    ---@diagnostic disable-next-line
     if not vim.lsp.buf_is_attached(0) then
         return ''
     end
@@ -171,6 +172,16 @@ M.winbar_symbol = function()
     end
 
     return ''
+end
+
+M.macro_status = function()
+    local macro_recording = vim.fn.reg_recording()
+
+    if macro_recording ~= '' then
+        return '@REC ' .. macro_recording
+    else
+        return ''
+    end
 end
 
 M.git_workspace_diff = {}

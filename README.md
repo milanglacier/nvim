@@ -68,6 +68,8 @@
       - [Rmarkdown preview keymaps](#rmarkdown-preview-keymaps)
     - [Markdown keymaps](#markdown-keymaps)
     - [Latex keymaps](#latex-keymaps)
+- [Dist Module](#dist-module)
+- [Patches Module](#patches-module)
 - [Other Notes](#other-notes)
 - [Discussion](#discussion)
 
@@ -225,8 +227,10 @@ folder. To use this example configuration, simply copy the folder to
 ## general purpose deps
 
 1. `universal-ctags`
-2. `treesitter-cli*`: this is required for `nvim-treesitter` in `main` branch.
+2. A c compiler. Required to install treesitter parsers.
 3. `lazygit`: this is only required if want to use `lazygit` in neovim (which is binded to `<leader>og`).
+4. `fzf`: this is only required if you are using `fzf-lua` as your fuzzy
+   finder. You don't need it you are using `telescope`.
 
 # Keymaps
 
@@ -238,7 +242,7 @@ The `<Leader>` key is `<Space>`,
 the `<LocalLeader>` key is `<Space><Space>` or `<Backslash>`.
 
 In case you forget the keymaps
-you can always use `<Leader>fk` (`:Telescope keymaps`)
+you can always use `<Leader>fk` (`:FzfLua keymaps` or `:Telescope keymaps`)
 to find all keymaps.
 
 ## Builtin keymaps
@@ -362,8 +366,6 @@ to find all keymaps.
 
 | Mode | LHS           | RHS/Functionality                                      |
 | ---- | ------------- | ------------------------------------------------------ |
-| n    | `<Leader>olx` | Open URI under cursor using xdg-open                   |
-| n    | `<Leader>olw` | Open URI under cursor using w3m                        |
 | n    | `<C-g>`       | `<ESC>`                                                |
 | n    | `<Leader>mt`  | search current word from tags file and send to loclist |
 | n    | `<Leader>mdc` | Set working dir as current file's dir                  |
@@ -393,13 +395,12 @@ The following keymaps rely on [Trouble.nvim](https://github.com/folke/trouble.nv
 
 ### File explorer keymaps
 
-The following keymaps rely on [nvim-tree.lua](https://github.com/nvim-tree/nvim-tree.lua)
+The following keymaps rely on [neo-tree.nvim](https://github.com/nvim-neo-tree/neo-tree.nvim)
 
-| Mode | LHS          | RHS/Functionality                                          |
-| ---- | ------------ | ---------------------------------------------------------- |
-| n    | `<Leader>et` | Toggle file explorer via Nvimtree                          |
-| n    | `<Leader>ef` | Toggle file explorer fosusing on current file via Nvimtree |
-| n    | `<Leader>er` | Refresh Nvimtree file explorer                             |
+| Mode | LHS          | RHS/Functionality                      |
+| ---- | ------------ | -------------------------------------- |
+| n    | `<Leader>et` | Toggle file explorer via NeoTree       |
+| n    | `<Leader>et` | Toggle git status explorer via NeoTree |
 
 ### Window layout keymaps
 
@@ -583,9 +584,13 @@ The following keymaps rely on [grug-far.nvim](https://github.com/MagicDuck/grug-
 
 The following keymaps rely on `Minuet`, an LLM-powered completion source.
 
-| Mode | LHS     | RHS/Functionality          |
-| ---- | ------- | -------------------------- |
-| n    | `<M-y>` | Invoke `minuet` completion |
+| Mode | LHS     | RHS/Functionality                                          |
+| ---- | ------- | ---------------------------------------------------------- |
+| n    | `<M-]>` | Invoke `minuet` completion or cycle to next completion     |
+| n    | `<M-[>` | Invoke `minuet` completion or cycle to previous completion |
+| n    | `<M-a>` | Accept line                                                |
+| n    | `<M-A>` | Accept whole completion                                    |
+| n    | `<M-e>` | Reject completion                                          |
 
 ## REPL keymaps
 
@@ -597,7 +602,7 @@ Note: with no numerical argument, the REPL is default for the first REPL.
 | n    | `<LocalLeader>rs` | Start REPL `i`, e.g. `<LocalLeader>rs` to start REPL 1 and `3<LocalLeader>rs` to start REPL `3` |
 | n    | `<LocalLeader>rf` | Focus on the window of REPL attached or REPL `i`, e.g. `<LocalLeader>rf`, `2<LocalLeader>rf`    |
 | n    | `<LocalLeader>rs` | Swap two REPLs.                                                                                 |
-| n    | `<LocalLeader>rv` | View REPLs in telescope.                                                                        |
+| n    | `<LocalLeader>rv` | View REPLs in fuzzy finder (fzf or telescope).                                                  |
 | n    | `<LocalLeader>rh` | Hide the window of REPL attached or REPL `i`, e.g. `<LocalLeader>rf`, `2<LocalLeader>rf`        |
 | n    | `<LocalLeader>ra` | Attach current buffer to a REPL                                                                 |
 | n    | `<LocalLeader>rd` | Detach current buffer to any REPL                                                               |
@@ -670,9 +675,10 @@ Note: with no numerical argument, the REPL is default for the first REPL.
 
 The following keymaps rely on
 
-[telescope.nvim](https://github.com/nvim-telescope/telescope.nvim),
-[nvim-notify](https://github.com/rcarriga/nvim-notify),
-[project.nvim](https://github.com/ahmedkhalf/project.nvim)
+- [fzf.lua](https://github.com/ibhagwan/fzf-luahttps://github.com/ibhagwan/fzf-lua)
+  or [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim),
+- [snacks.nvim](https://github.com/folke/snacks.nvim),
+- [project.nvim](https://github.com/ahmedkhalf/project.nvim)
 
 | Mode | LHS          | RHS/Functionality                    |
 | ---- | ------------ | ------------------------------------ |
@@ -684,7 +690,6 @@ The following keymaps rely on
 | n    | `<Leader>fp` | Show recently visited projects       |
 | n    | `<Leader>fk` | Show keymaps                         |
 | n    | `<Leader>fc` | Show commands                        |
-| n    | `<A-x>`      | Show commands                        |
 | n    | `<Leader>fC` | Show command history                 |
 | n    | `<Leader>fs` | Show lsp document symbols            |
 | n    | `<Leader>fr` | Show registers                       |
@@ -692,8 +697,7 @@ The following keymaps rely on
 | n    | `<Leader>fn` | Show notifications                   |
 | n    | `<Leader>fT` | Show treesitter nodes                |
 | n    | `<Leader>ft` | Show tags                            |
-| n    | `<Leader>F`  | Show all available telescope finders |
-| n    | `<Leader>fe` | The same as `<Leader>F`              |
+| n    | `<Leader>fe` | Show available searchers             |
 
 ## Language Server Protocol keymaps
 
@@ -864,21 +868,17 @@ The following keymaps rely on [dsf.vim](https://github.com/AndrewRadev/dsf.vim)
 
 #### Rmarkdown preview keymaps
 
-The following keymaps rely on [markdown-previem.nvim](https://github.com/iamcco/markdown-preview.nvim)
-
-| Mode | LHS           | RHS/Functionality      |
-| ---- | ------------- | ---------------------- |
-| n    | `<Leader>mmp` | Preview rmarkdown file |
-| n    | `<Leader>mmq` | Stop previewing        |
+| Mode | LHS               | RHS/Functionality     |
+| ---- | ----------------- | --------------------- |
+| n    | `<localleader>mp` | Preview markdown file |
 
 ### Markdown keymaps
 
 The following keymaps rely on [markdown-previem.nvim](https://github.com/iamcco/markdown-preview.nvim)
 
-| Mode | LHS           | RHS/Functionality     |
-| ---- | ------------- | --------------------- |
-| n    | `<Leader>mmp` | Preview markdown file |
-| n    | `<Leader>mmq` | Stop previewing       |
+| Mode | LHS               | RHS/Functionality     |
+| ---- | ----------------- | --------------------- |
+| n    | `<localleader>mp` | Preview markdown file |
 
 ### Latex keymaps
 
@@ -908,6 +908,20 @@ The following keymaps rely on [vimtex](https://github.com/lervag/vimtex)
 | n    | `csc` | Change the surround command        |
 | n    | `cs$` | Change the surround math delimiter |
 | n    | `csd` | Change the surround delimiter      |
+
+# Dist Module
+
+The [dist](./dist) directory houses various configuration files for tools that
+integrate with my Neovim workflow. Check [README](./dist/README.md) for
+details.
+
+# Patches Module
+
+The [patches](./patches) houses a collection of compact, commonly utilized patches
+designed for various environments. These modifications are straightforward and
+don't require separate branch management (unlike the `vscode` branch used for
+`vscode-neovim` configurations). For organizational simplicity, all patches are
+consolidated in this single directory.
 
 # Other Notes
 

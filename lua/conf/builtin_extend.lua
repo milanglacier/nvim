@@ -145,74 +145,34 @@ end
 
 command('PingCursor', 'lua require("conf.builtin_extend").ping_cursor()', {})
 
+function M.open()
+    local is_mac = vim.fn.has 'mac' == 1
+    local is_unix = vim.fn.has 'unix' == 1
+
+    if is_mac then
+        return 'open'
+    elseif is_unix then
+        return 'xdg-open'
+    else
+        -- windows uses start-process
+        return 'start-process'
+    end
+end
+
 autocmd('BufEnter', {
     pattern = { '*.pdf', '*.png', '*.jpg', '*.jpeg' },
     group = M.my_augroup,
     desc = 'open binary files with system default application',
     callback = function()
         local filename = vim.api.nvim_buf_get_name(0)
-        filename = vim.fn.shellescape(filename)
+        vim.system({ M.open(), filename }, {})
 
-        if vim.fn.has 'mac' == 1 then
-            vim.cmd['!'] { 'open', filename }
-            vim.cmd.redraw()
+        vim.cmd.redraw()
 
-            vim.defer_fn(function()
-                vim.cmd.bdelete { bang = true }
-            end, 1000)
-        end
+        vim.defer_fn(function()
+            vim.cmd.bdelete { bang = true }
+        end, 1000)
     end,
-})
-
-function M.open_URI_under_cursor(use_w3m)
-    local function open_uri(uri)
-        if type(uri) ~= 'nil' then
-            uri = string.gsub(uri, '#', '\\#') --double escapes any # signs
-            uri = '"' .. uri .. '"'
-
-            if use_w3m then
-                vim.cmd.terminal { 'w3m', uri }
-                return true
-            end
-
-            vim.cmd['!'] { 'open', uri }
-            vim.cmd.redraw()
-            return true
-        else
-            return false
-        end
-    end
-
-    local word_under_cursor = vim.fn.expand '<cWORD>'
-    -- any uri with a protocol segment
-    local regex_protocol_uri = '%a*:%/%/[%a%d%#%[%]%-%%+:;!$@/?&=_.,~*()]*[^%)]'
-    if open_uri(string.match(word_under_cursor, regex_protocol_uri)) then
-        return
-    end
-    -- consider anything that looks like string/string a github link
-    local regex_plugin_url = '[%a%d%-%.%_]*%/[%a%d%-%.%_]*'
-    if open_uri('https://github.com/' .. string.match(word_under_cursor, regex_plugin_url)) then
-        return
-    end
-end
-
-command('OpenURIUnderCursor', M.open_URI_under_cursor, {})
-command('OpenURIUnderCursorWithW3m', function()
-    M.open_URI_under_cursor(true)
-end, {})
-
-keymap('n', '<Leader>olx', '', {
-    callback = M.open_URI_under_cursor,
-    noremap = true,
-    desc = 'open URI under the cursor with xdg-open',
-})
-
-keymap('n', '<Leader>olw', '', {
-    callback = function()
-        M.open_URI_under_cursor(true)
-    end,
-    noremap = true,
-    desc = 'open URI under the cursor with w3m',
 })
 
 command('WQ', 'w | bd', { desc = 'Finishing Editing with nvr.' })

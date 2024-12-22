@@ -145,9 +145,9 @@ H.items = {
     { name = 'New [T]heme    ', action = new_theme },
     { name = 'New [V]erses   ', action = new_verse },
     { name = 'Neovim [I]nfo  ', action = 'Lazy profile' },
-    { name = 'Open [P]rojects', action = 'Telescope projects' },
-    { name = '[R]ecent File  ', action = 'Telescope oldfiles' },
-    { name = 'Open [F]ile    ', action = 'Telescope find_files' },
+    { name = 'Open [P]rojects', action = 'FF projects' },
+    { name = '[R]ecent File  ', action = 'FF oldfiles' },
+    { name = 'Open [F]ile    ', action = 'FF find_files' },
     { name = 'New [B]uffer   ', action = 'enew' },
     { name = '[Q]uit Neovim  ', action = 'qall!' },
 }

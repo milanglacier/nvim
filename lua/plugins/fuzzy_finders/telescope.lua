@@ -15,10 +15,11 @@ return {
         dependencies = {
             { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
             { 'nvim-telescope/telescope-ui-select.nvim' },
+            { 'nvim-telescope/telescope-dap.nvim' },
         },
         init = function()
-            keymap('n', '<leader>ff', '<cmd>Telescope find_files hidden=true<cr>', opts)
-            keymap('n', '<leader>fF', '<cmd>Telescope find_files no_ignore=true hidden=true<cr>', opts)
+            keymap('n', '<leader>ff', '<cmd>Telescope find_files<cr>', opts)
+            keymap('n', '<leader>fF', '<cmd>Telescope find_files no_ignore=true<cr>', opts)
             keymap('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', opts)
             keymap('n', '<leader>fb', '<cmd>Telescope buffers<cr>', opts)
             keymap('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', opts)
@@ -43,9 +44,9 @@ return {
                 opts_desc 'Telescope extensions'
             )
 
-            keymap('n', '<leader>gtl', '<cmd>Telescope git_commits<cr>', opts_desc 'Git Log')
-            keymap('n', '<leader>gtb', '<cmd>Telescope git_bcommits<cr>', opts_desc 'Git Buffer Log')
-            keymap('v', '<leader>gtb', ':<C-U>Telescope git_bcommits_range<cr>', opts_desc 'Git Hunk Log')
+            keymap('n', '<leader>gml', '<cmd>Telescope git_commits<cr>', opts_desc 'Git Log')
+            keymap('n', '<leader>gmb', '<cmd>Telescope git_bcommits<cr>', opts_desc 'Git Buffer Log')
+            keymap('v', '<leader>gmb', ':<C-U>Telescope git_bcommits_range<cr>', opts_desc 'Git Hunk Log')
         end,
         config = function()
             local telescope = require 'telescope'
@@ -56,6 +57,7 @@ return {
                         modes = { 'n', 'i', 'c', 'x', 'v', 'o', '', '!' },
                     },
                     find_files = {
+                        hidden = true,
                         find_command = function(_)
                             if 1 == vim.fn.executable 'rg' then
                                 return { 'rg', '--files', '--color', 'never', '--iglob', '!.git' }
@@ -68,6 +70,12 @@ return {
                 defaults = {
                     mappings = {
                         i = {
+                            -- <C-t> open file in new tab
+                            -- <C-v> open file in new vsplit
+                            -- <tab> toggle selection and go to next item, used for making multi-selection
+                            -- <s-tab> toggle selection and go to prev item, used for making multi-selection
+                            -- <c-q> send all items to quickfix list
+                            -- <a-q> send selected items to quickfix list
                             ['<C-s>'] = 'select_horizontal',
                             ['<C-b>'] = 'preview_scrolling_up',
                             ['<C-f>'] = 'preview_scrolling_down',
@@ -81,10 +89,6 @@ return {
                             ['v'] = 'select_vertical',
                             ['<C-b>'] = 'preview_scrolling_up',
                             ['<C-f>'] = 'preview_scrolling_down',
-                            ['K'] = require('telescope.actions').toggle_selection
-                                + require('telescope.actions').move_selection_worse,
-                            ['J'] = require('telescope.actions').toggle_selection
-                                + require('telescope.actions').move_selection_better,
                         },
                     },
                     layout_strategy = 'vertical',
@@ -106,8 +110,13 @@ return {
                 },
             }
 
-            require('telescope').load_extension 'fzf'
-            require('telescope').load_extension 'notify'
+            if not pcall(require('telescope').load_extension, 'fzf') then
+                vim.notify(
+                    'Failed to load telescope fzf extension, please install make and a C compiler.',
+                    vim.log.levels.ERROR
+                )
+            end
+
             require('telescope').load_extension 'projects'
             require('telescope').load_extension 'ui-select'
         end,

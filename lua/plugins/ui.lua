@@ -1,7 +1,13 @@
 local autocmd = vim.api.nvim_create_autocmd
 local my_augroup = require('conf.builtin_extend').my_augroup
-local opts = { noremap = true, silent = true }
 local keymap = vim.api.nvim_set_keymap
+
+---@param desc? string
+---@param callback? fun()
+---@return table
+local function opts(desc, callback)
+    return { silent = true, desc = desc, noremap = true, callback = callback }
+end
 
 return {
     {
@@ -16,6 +22,12 @@ return {
 
             diagnostics_sources.get_diagnostics_in_current_root_dir = confui.get_diagnostics_in_current_root_dir
 
+            -- HACK: see lualine.nvim issue #1201, Illegal character from fzf
+            -- may hang lualine. We disable lualine from trying to get the
+            -- content from current selected item from fzf to avoid invalid
+            -- character.
+            require('lualine.extensions.fzf').sections.lualine_y = {}
+
             lualine.setup {
                 options = {
                     icons_enabled = false,
@@ -28,6 +40,7 @@ return {
                         winbar = {
                             'aerial',
                             'NvimTree',
+                            'neo-tree',
                             'starter',
                             'Trouble',
                             'qf',
@@ -49,6 +62,7 @@ return {
                     },
                     lualine_c = { { 'filename', path = 1, symbols = confui.file_status_symbol }, { 'searchcount' } }, -- relative path
                     lualine_x = {
+                        confui.macro_status,
                         { 'diagnostics', sources = { 'get_diagnostics_in_current_root_dir' } },
                         confui.encoding,
                         confui.fileformat,
@@ -87,22 +101,19 @@ return {
                         'diff',
                     },
                 },
-                extensions = { 'aerial', 'nvim-tree', 'quickfix', 'toggleterm' },
+                extensions = { 'aerial', 'neo-tree', 'quickfix', 'toggleterm', 'fzf' },
             }
         end,
     },
     {
-        'rcarriga/nvim-notify',
+        'folke/snacks.nvim',
         event = 'VeryLazy',
         init = function()
-            keymap('n', '<leader>fn', '<cmd>Telescope notify<cr>', opts)
+            keymap('n', '<leader>fn', '<cmd>lua Snacks.notifier.show_history()<cr>', opts 'Notification History')
         end,
         config = function()
-            vim.notify = require 'notify'
-
-            require('notify').setup {
-                max_width = 45,
-                max_height = 20,
+            require('snacks').setup {
+                notifier = { enabled = true, timeout = 2000 },
             }
         end,
     },
@@ -113,24 +124,16 @@ return {
             require('trouble').setup {}
         end,
         init = function()
-            local function opt(desc, callback)
-                return { silent = true, desc = desc, noremap = true, callback = callback }
-            end
-
-            keymap('n', '<leader>xw', '', opt('Workspace dianostics', require('conf.ui').trouble_workspace_diagnostics))
-            keymap('n', '<leader>xd', '<cmd>Trouble diagnostics toggle filter.buf=0<cr>', opt 'Document Diagnostics')
-            keymap('n', '<leader>xl', '<cmd>TroubleToggle loclist<cr>', opt 'Open loclist')
-            keymap(
-                'n',
-                '<leader>xq',
-                [[<cmd>lua require 'conf.ui'.reopen_qflist_by_trouble()<cr>]],
-                opt 'Open quickfix'
-            )
+            local ui = require 'conf.ui'
+            keymap('n', '<leader>xw', '', opts('Workspace dianostics', ui.trouble_workspace_diagnostics))
+            keymap('n', '<leader>xd', '<cmd>Trouble diagnostics toggle filter.buf=0<cr>', opts 'Document Diagnostics')
+            keymap('n', '<leader>xl', '<cmd>TroubleToggle loclist<cr>', opts 'Open loclist')
+            keymap('n', '<leader>xq', '', opts('Open quickfix', ui.reopen_qflist_by_trouble))
             keymap(
                 'n',
                 '<leader>xr',
                 '<cmd>Trouble lsp toggle focus=false win.position=bottom<cr>',
-                opt 'Lsp reference'
+                opts 'Lsp reference'
             )
         end,
     },
@@ -145,30 +148,31 @@ return {
                     keys = {
                         Tab = '<T>'
                     },
-                }
+                },
+                triggers = {
+                    { '<auto>', mode = 'nso' },
+                },
             }
 
             which_key.add {
-                { '<Leader>f', group = '+find everything', mode = { 'n', 'v' } },
+                { '<Leader>f', group = '+find', mode = { 'n', 'v' } },
                 { '<Leader>d', group = '+debugger' },
                 { '<Leader>b', group = '+buffer' },
                 { '<Leader>w', group = '+window' },
                 { '<Leader>e', group = '+explorer' },
                 { '<Leader>t', group = '+terminal/toggle' },
-                { '<Leader>s', group = '+search/replace' },
+                { '<Leader>s', group = '+search/replace', mode = { 'n', 'v' } },
                 { '<Leader>o', group = '+open/org' },
                 { '<Leader>ol', group = '+open/links' },
-                { '<Leader>g', group = '+git' },
-                { '<Leader>gt', group = '+telescope' },
-                { '<Leader>x', group = '+quickfixlist' },
+                { '<Leader>g', group = '+git', mode = { 'n', 'v' } },
+                { '<Leader>gm', group = '+misc' },
+                { '<Leader>x', group = '+qf' },
                 { '<Leader>a', group = '+aider', mode = { 'n', 'v' } },
                 { '<Leader>c', group = '+chat', mode = { 'n', 'v' } },
                 { '<Leader><Tab>', group = '+tab' },
                 { '<Leader>m', group = '+misc', mode = { 'n', 'v' } },
                 { '<Leader>mm', group = '+markdown' },
                 { '<Leader>md', group = '+change directory' },
-                { '<Space>l', group = '+latex motions' },
-                { '<Space>l', group = '+latex motions' },
             }
 
             local keymap_for_repl = {
@@ -195,7 +199,7 @@ return {
                 desc = 'add which key description for lsp',
                 callback = function(args)
                     which_key.add {
-                        { '<Leader>l', group = '+lsp', buffer = args.buf },
+                        { '<Leader>l', group = '+lsp', buffer = args.buf, mode = { 'n', 'v' } },
                     }
                 end,
             })

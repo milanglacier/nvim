@@ -1,0 +1,13 @@
+diff --git a/lua/conf/builtin_extend.lua b/lua/conf/builtin_extend.lua
+index 57b2263..80126c9 100644
+--- a/lua/conf/builtin_extend.lua
++++ b/lua/conf/builtin_extend.lua
+@@ -104,7 +104,7 @@ M.jk_as_esc = function()
+     vim.defer_fn(function()
+         pcall(vim.api.nvim_del_keymap, 't', 'k')
+         pcall(vim.api.nvim_del_keymap, 'i', 'k')
+-    end, 100)
++    end, 300)
+     return 'j'
+ end
+ 

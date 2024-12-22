@@ -46,6 +46,7 @@ local prefixes = {
 }
 
 local aider_args = {
+    '--watch-files',
     '--model',
     '--opus',
     '--sonnet',
@@ -134,6 +135,7 @@ local aider_args = {
     '--no-suggest-shell-commands',
     '--voice-format',
     '--voice-language',
+    '--multiline',
 }
 
 -- Create a closure for prefix handling
@@ -167,16 +169,38 @@ local prefix_handler = create_prefix_handler()
 -- Expose the sender function
 M.formatter = prefix_handler.formatter
 M.set_prefix = prefix_handler.set_prefix
-M.aider_args = {}
+M.aider_args = { '--watch-files' }
+M.aider_cmd = 'aider'
+
+M.setup = function(params)
+    M.aider_cmd = params.aider_cmd or M.aider_cmd
+    M.aider_args = params.aider_args or M.aider_args
+    M.wincmd = params.wincmd or M.wincmd
+end
 
 M.create_aider_meta = function()
     return {
         cmd = function()
-            local args = vim.deepcopy(M.aider_args)
-            table.insert(args, 1, 'aider')
+            local args
+            -- build up the command to launch aider based on M.aider_args (the
+            -- command line options) and the M.aider_cmd.
+            if type(M.aider_cmd) == 'string' then
+                args = vim.deepcopy(M.aider_args)
+                table.insert(args, 1, M.aider_cmd)
+            elseif type(M.aider_cmd == 'table') then
+                args = vim.deepcopy(M.aider_cmd)
+                for _, arg in ipairs(M.aider_args) do
+                    table.insert(args, arg)
+                end
+            else
+                vim.notify('invalid aider cmd type', vim.log.levels.ERROR)
+                return
+            end
+
             return args
         end,
         formatter = M.formatter,
+        wincmd = M.wincmd,
     }
 end
 
@@ -186,7 +210,7 @@ function M.send_to_aider_no_format(id, lines)
     yarepl._send_strings(id, 'aider', bufnr, lines, false)
 end
 
-vim.api.nvim_create_user_command('AiderArgs', function(opts)
+vim.api.nvim_create_user_command('AiderSetArgs', function(opts)
     M.aider_args = opts.fargs or {}
 end, {
     nargs = '*',

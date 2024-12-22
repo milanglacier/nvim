@@ -16,50 +16,14 @@ local command = vim.api.nvim_create_user_command
 local attach_keymaps = function(args)
     local bufnr = args.buf
 
-    bufmap(
-        bufnr,
-        'n',
-        '<Leader>lt',
-        '',
-        opts {
-            'lsp type definition',
-            callback = function()
-                require('telescope.builtin').lsp_type_definitions {
-                    layout_strategies = 'vertical',
-                    jump_type = 'tab',
-                }
-            end,
-        }
-    )
+    bufmap(bufnr, 'n', '<Leader>lt', '<cmd>FF lsp_type_definitions<cr>', opts { 'lsp type definition' })
 
     -- reference
-    bufmap(
-        bufnr,
-        'n',
-        'gr',
-        '',
-        opts {
-            desc = 'lsp references telescope',
-            callback = function()
-                require('telescope.builtin').lsp_references {
-                    layout_strategies = 'vertical',
-                    jump_type = 'tab',
-                }
-            end,
-        }
-    )
+    bufmap(bufnr, 'n', 'gr', '<cmd>FF lsp_references<cr>', opts { 'lsp references' })
 
     -- code action
     bufmap(bufnr, 'n', '<Leader>la', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts { 'lsp code action' })
-    bufmap(
-        bufnr,
-        'x',
-        '<Leader>la',
-        ':<C-U>lua vim.lsp.buf.code_action()<CR>',
-        opts {
-            'lsp range code action',
-        }
-    )
+    bufmap(bufnr, 'x', '<Leader>la', ':<C-U>lua vim.lsp.buf.code_action()<CR>', opts { 'lsp range code action' })
 
     -- hover
     bufmap(bufnr, 'n', 'gh', '', opts { 'lsp hover', vim.lsp.buf.hover })
@@ -74,58 +38,12 @@ local attach_keymaps = function(args)
     bufmap(bufnr, 'n', '<Leader>ln', '<cmd>lua vim.lsp.buf.rename()<CR>', opts { 'lsp rename' })
 
     -- go to definition, implementation
-    bufmap(
-        bufnr,
-        'n',
-        'gd',
-        '',
-        opts {
-            desc = 'lsp go to definition',
-            callback = function()
-                require('telescope.builtin').lsp_definitions {
-                    layout_strategies = 'vertical',
-                    jump_type = 'tab',
-                }
-            end,
-        }
-    )
+    bufmap(bufnr, 'n', 'gd', '<cmd>FF lsp_definitions<cr>', opts { 'lsp definition' })
 
-    bufmap(
-        bufnr,
-        'n',
-        '<Leader>li',
-        '',
-        opts {
-            desc = 'lsp go to implementation',
-            callback = function()
-                require('telescope.builtin').lsp_implementations {
-                    layout_strategies = 'vertical',
-                    jump_type = 'tab',
-                }
-            end,
-        }
-    )
+    bufmap(bufnr, 'n', '<Leader>li', '<cmd>FF lsp_implementations<cr>', opts { 'lsp go to implementation' })
 
-    bufmap(
-        bufnr,
-        'n',
-        '<Leader>lci',
-        '',
-        opts {
-            desc = 'lsp incoming calls',
-            callback = require('telescope.builtin').lsp_incoming_calls,
-        }
-    )
-    bufmap(
-        bufnr,
-        'n',
-        '<Leader>lco',
-        '',
-        opts {
-            desc = 'lsp outgoing calls',
-            callback = require('telescope.builtin').lsp_outgoing_calls,
-        }
-    )
+    bufmap(bufnr, 'n', '<Leader>lci', '<cmd>FF lsp_incoming_calls<cr>', opts { 'lsp incoming calls' })
+    bufmap(bufnr, 'n', '<Leader>lco', '<cmd>FF lsp_outgoing_calls<cr>', opts { 'lsp outgoing calls' })
 
     -- workspace
     bufcmd(bufnr, 'LspWorkspace', function(options)
@@ -148,20 +66,8 @@ local attach_keymaps = function(args)
     bufmap(bufnr, 'v', '<Leader>lf', '<cmd>lua vim.lsp.buf.format { async = true }<CR>', opts { 'lsp range format' })
 
     -- diagnostic
-    bufmap(
-        bufnr,
-        'n',
-        '<Leader>ld',
-        '<cmd>Telescope diagnostics bufnr=0<CR>',
-        opts { 'lsp file diagnostics by telescope' }
-    )
-    bufmap(
-        bufnr,
-        'n',
-        '<Leader>lw',
-        '<cmd>Telescope diagnostics root_dir=true<CR>',
-        opts { 'lsp workspace diagnostics by telescope' }
-    )
+    bufmap(bufnr, 'n', '<Leader>ld', '<cmd>FF buf_diagnositcs<CR>', opts { 'lsp buffer diagnostics' })
+    bufmap(bufnr, 'n', '<Leader>lw', '<cmd>FF workspace_diagnositcs<CR>', opts { 'lsp workspace diagnostics' })
     bufmap(bufnr, 'n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts { 'prev diagnostic' })
     bufmap(bufnr, 'n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts { 'next diagnostic' })
 
@@ -208,13 +114,14 @@ autocmd('LspAttach', {
     group = my_augroup,
     callback = function(args)
         local client = vim.lsp.get_client_by_id(args.data.client_id)
+        ---@diagnostic disable-next-line
         client.server_capabilities.semanticTokensProvider = nil
     end,
     desc = 'Disable semantic highlight',
 })
 
--- use nvim-cmp capabilities. Define the capabilities here which will be
--- fetched from cmp-nvim-lsp when lspconfig is loaded
+-- use nvim-cmp/blink capabilities. Define the capabilities here which will be
+-- fetched when lspconfig is loaded
 local capabilities
 
 local enabled_lsps = {}
@@ -383,7 +290,8 @@ return {
         'neovim/nvim-lspconfig',
         event = 'LazyFile',
         config = function()
-            capabilities = require('cmp_nvim_lsp').default_capabilities()
+            capabilities = Milanglacier.completion_frontend == 'blink' and require('blink.cmp').get_lsp_capabilities()
+                or require('cmp_nvim_lsp').default_capabilities()
 
             for _, lsp in pairs(enabled_lsps) do
                 lsp_configs[lsp]()
@@ -416,14 +324,14 @@ return {
                         'n',
                         '<Leader>lr',
                         '<CMD>lua require("refactoring").select_refactor()<CR>',
-                        { desc = 'refactoring' }
+                        opts { 'refactoring' }
                     )
                     bufmap(
                         0,
                         'v',
                         '<Leader>lr',
                         ':lua require("refactoring").select_refactor()<CR>',
-                        { desc = 'refactoring' }
+                        opts { 'refactoring' }
                     )
                 end,
             })
@@ -440,6 +348,8 @@ return {
                 callback = function(args)
                     local bufnr = args.buf
                     local client = vim.lsp.get_client_by_id(args.data.client_id)
+
+                    ---@diagnostic disable-next-line
                     if client.server_capabilities.documentSymbolProvider then
                         require('nvim-navic').attach(client, bufnr)
                     end
@@ -462,12 +372,10 @@ return {
         config = function()
             require('lazydev').setup {
                 library = {
-                    { path = 'luvit-meta/library', words = { 'vim%.uv' } },
+                    { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
                 },
             }
         end,
     },
-    -- tyoe hint for vim.uv
-    { 'Bilal2453/luvit-meta' },
     { 'nanotee/sqls.nvim' },
 }
