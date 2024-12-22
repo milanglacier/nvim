@@ -602,7 +602,7 @@ Note: with no numerical argument, the REPL is default for the first REPL.
 | n    | `<LocalLeader>rs` | Start REPL `i`, e.g. `<LocalLeader>rs` to start REPL 1 and `3<LocalLeader>rs` to start REPL `3` |
 | n    | `<LocalLeader>rf` | Focus on the window of REPL attached or REPL `i`, e.g. `<LocalLeader>rf`, `2<LocalLeader>rf`    |
 | n    | `<LocalLeader>rs` | Swap two REPLs.                                                                                 |
-| n    | `<LocalLeader>rv` | View REPLs in telescope.                                                                        |
+| n    | `<LocalLeader>rv` | View REPLs in fuzzy finder (fzf or telescope).                                                  |
 | n    | `<LocalLeader>rh` | Hide the window of REPL attached or REPL `i`, e.g. `<LocalLeader>rf`, `2<LocalLeader>rf`        |
 | n    | `<LocalLeader>ra` | Attach current buffer to a REPL                                                                 |
 | n    | `<LocalLeader>rd` | Detach current buffer to any REPL                                                               |

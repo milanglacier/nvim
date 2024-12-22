@@ -37,6 +37,9 @@ fzf.projects = function()
 end
 fzf.oldfiles = 'FzfLua oldfiles'
 fzf.find_files = 'FzfLua files'
+fzf.repl_show = function()
+    require('yarepl.extensions.fzf').repl_show()
+end
 
 -- dap
 fzf.dap_commands = 'FzfLua dap_commands'
@@ -67,6 +70,7 @@ local telescope = {}
 telescope.projects = 'Telescope projects'
 telescope.oldfiles = 'Telescope oldfiles'
 telescope.find_files = 'Telescope find_files'
+telescope.repl_show = 'Telescope REPLShow'
 
 -- dap
 telescope.dap_commands = function()

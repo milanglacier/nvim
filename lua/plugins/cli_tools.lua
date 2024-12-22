@@ -138,7 +138,7 @@ return {
                     bufmap(0, 'n', '<LocalLeader>rf', '<Plug>(REPLFocus)', {
                         desc = 'Focus on REPL',
                     })
-                    bufmap(0, 'n', '<LocalLeader>rv', '<CMD>Telescope REPLShow<CR>', {
+                    bufmap(0, 'n', '<LocalLeader>rv', '<CMD>FF repl_show<CR>', {
                         desc = 'View REPLs in telescope',
                     })
                     bufmap(0, 'n', '<LocalLeader>rh', '<Plug>(REPLHide)', {
