@@ -210,7 +210,7 @@ function M.send_to_aider_no_format(id, lines)
     yarepl._send_strings(id, 'aider', bufnr, lines, false)
 end
 
-vim.api.nvim_create_user_command('AiderArgs', function(opts)
+vim.api.nvim_create_user_command('AiderSetArgs', function(opts)
     M.aider_args = opts.fargs or {}
 end, {
     nargs = '*',
