@@ -70,7 +70,7 @@ return {
             local aider = require 'yarepl.extensions.aider'
 
             yarepl.setup {
-                metas = { aider = aider.create_aider_meta() },
+                metas = { aider = aider.create_aider_meta(), python = false, R = false },
             }
         end,
         init = function()
