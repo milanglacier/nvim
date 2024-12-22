@@ -69,19 +69,11 @@ return {
             local yarepl = require 'yarepl'
             local aider = require 'yarepl.extensions.aider'
 
-            vim.g.REPL_floatwin_ratio = 0.5
-
             yarepl.setup {
                 metas = { aider = aider.create_aider_meta() },
             }
         end,
         init = function()
-            vim.g.REPL_use_floatwin = 0
-
-            command('REPLToggleFloatWin', function()
-                vim.g.REPL_use_floatwin = vim.g.REPL_use_floatwin == 1 and 0 or 1
-            end, {})
-
             ----- Set Aichat Keymap ------
             keymap('n', '<Leader>cs', '<Plug>(REPLStart-aichat)', {
                 desc = 'Start an Aichat REPL',
