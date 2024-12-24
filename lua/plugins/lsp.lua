@@ -124,7 +124,7 @@ autocmd('LspAttach', {
 -- fetched when lspconfig is loaded
 local capabilities
 
-local enabled_lsps = {}
+local enabled_lsps = { 'efm', 'nvim' }
 
 local lsp_configs = {}
 
