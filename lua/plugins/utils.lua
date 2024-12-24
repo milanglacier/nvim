@@ -29,6 +29,8 @@ return {
         config = function()
             require('neo-tree').setup {
                 open_files_do_not_replace_types = { 'terminal', 'Trouble', 'trouble', 'qf', 'Outline' },
+                enable_git_status = false,
+                enable_diagnostics = false,
                 filesystem = {
                     -- don't let neotree change the cwd when neotree switch to
                     -- another directory.
@@ -64,6 +66,14 @@ return {
                         },
                     },
                 },
+                default_component_configs = {
+                    icon = {
+                        folder_closed = "",
+                        folder_open = "",
+                        folder_empty = "",
+                        default = "",
+                    },
+                }
             }
         end,
     },
