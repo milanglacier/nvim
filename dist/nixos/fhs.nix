@@ -12,7 +12,9 @@
                         name = "fhs";
                         targetPkgs = pkgs: (base.targetPkgs pkgs) ++ [pkgs.pkg-config];
                         profile = "export FHS=1";
-                        runScript = "bash";
+                        # Leave runScript empty to pass commands and arguments directly.
+                        # Example: fhs python -c "print('hello world')"
+                        runScript = "";
                         extraOutputsToInstall = ["dev"];
                     })
         )
