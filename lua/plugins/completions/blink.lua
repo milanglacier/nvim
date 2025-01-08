@@ -56,7 +56,10 @@ local M = {
                         },
                     },
                     list = {
-                        selection = 'auto_insert',
+                        selection = {
+                            preselect = true,
+                            auto_insert = true,
+                        },
                     },
                     documentation = {
                         window = {
@@ -74,29 +77,16 @@ local M = {
                     },
                 },
 
-                snippets = {
-                    expand = function(snippet)
-                        require('luasnip').lsp_expand(snippet)
-                    end,
-                    active = function(filter)
-                        if filter and filter.direction then
-                            return require('luasnip').jumpable(filter.direction)
-                        end
-                        return require('luasnip').in_snippet()
-                    end,
-                    jump = function(direction)
-                        require('luasnip').jump(direction)
-                    end,
-                },
+                snippets = { preset = 'luasnip' },
 
                 sources = {
-                    default = { 'lsp', 'path', 'luasnip', 'buffer', 'tags' },
+                    default = { 'lsp', 'path', 'snippets', 'buffer', 'tags' },
                     per_filetype = {
-                        org = { 'lsp', 'path', 'luasnip', 'buffer', 'orgmode', 'tags' },
+                        org = { 'lsp', 'path', 'snippets', 'buffer', 'orgmode', 'tags' },
                     },
                     min_keyword_length = 0,
                     providers = {
-                        luasnip = {
+                        snippets = {
                             score_offset = 4,
                         },
                         tags = {
