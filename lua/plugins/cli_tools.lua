@@ -2,7 +2,6 @@ local keymap = vim.api.nvim_set_keymap
 local autocmd = vim.api.nvim_create_autocmd
 local my_augroup = require('conf.builtin_extend').my_augroup
 local bufmap = vim.api.nvim_buf_set_keymap
-local command = vim.api.nvim_create_user_command
 
 return {
     -- an installer for a bunch of CLI tools (e.g. LSP, linters)
@@ -67,25 +66,14 @@ return {
         event = 'VeryLazy',
         config = function()
             local yarepl = require 'yarepl'
-            local aider = require 'conf.aider'
-
-            vim.g.REPL_floatwin_ratio = 0.5
+            local aider = require 'yarepl.extensions.aider'
 
             yarepl.setup {
-                metas = { aider = aider.create_aider_meta() },
+                metas = { aider = aider.create_aider_meta(), python = false, R = false },
             }
         end,
         init = function()
-            vim.g.REPL_use_floatwin = 0
-
-            command('REPLToggleFloatWin', function()
-                vim.g.REPL_use_floatwin = vim.g.REPL_use_floatwin == 1 and 0 or 1
-            end, {})
-
-            keymap('n', '<Leader>tR', '<CMD>REPLToggleFloatWin<CR>', {
-                desc = 'Toggle float win for REPL',
-            })
-
+            ----- Set Aichat Keymap ------
             keymap('n', '<Leader>cs', '<Plug>(REPLStart-aichat)', {
                 desc = 'Start an Aichat REPL',
             })
@@ -114,6 +102,54 @@ return {
                 desc = 'Clear aichat REPLs.',
             })
 
+            ----- Set Aider Keymap ------
+            -- general keymap from yarepl
+            keymap('n', '<Leader>as', '<Plug>(REPLStart-aider)', {
+                desc = 'Start an aider REPL',
+            })
+            keymap('n', '<Leader>af', '<Plug>(REPLFocus-aider)', {
+                desc = 'Focus on aider REPL',
+            })
+            keymap('n', '<Leader>ah', '<Plug>(REPLHide-aider)', {
+                desc = 'Hide aider REPL',
+            })
+            keymap('v', '<Leader>ar', '<Plug>(REPLSendVisual-aider)', {
+                desc = 'Send visual region to aider',
+            })
+            keymap('n', '<Leader>arr', '<Plug>(REPLSendLine-aider)', {
+                desc = 'Send lines to aider',
+            })
+            keymap('n', '<Leader>ar', '<Plug>(REPLSendOperator-aider)', {
+                desc = 'Send Operator to aider',
+            })
+
+            -- special keymap from aider
+            keymap('n', '<Leader>ae', '<Plug>(AiderExec)', {
+                desc = 'Execute command in aider',
+            })
+            keymap('n', '<Leader>ay', '<Plug>(AiderSendYes)', {
+                desc = 'Send y to aider',
+            })
+            keymap('n', '<Leader>an', '<Plug>(AiderSendNo)', {
+                desc = 'Send n to aider',
+            })
+            keymap('n', '<Leader>aa', '<Plug>(AiderSendAbort)', {
+                desc = 'Send abort to aider',
+            })
+            keymap('n', '<Leader>aq', '<Plug>(AiderSendExit)', {
+                desc = 'Send exit to aider',
+            })
+            keymap('n', '<Leader>ag', '<cmd>AiderSetPrefix<cr>', {
+                desc = 'set aider prefix',
+            })
+            keymap('n', '<Leader>aG', '<cmd>AiderRemovePrefix<cr>', {
+                desc = 'remove aider prefix',
+            })
+            keymap('n', '<Leader>a<space>', '<cmd>checktime<cr>', {
+                desc = 'sync file changes by aider to nvim buffer',
+            })
+
+            ----- Set Filetype Specific keymap -----
             local ft_to_repl = {
                 r = 'radian',
                 R = 'radian',

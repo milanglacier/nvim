@@ -21,6 +21,7 @@ return {
             keymap('n', '<leader>ff', '<cmd>Telescope find_files<cr>', opts)
             keymap('n', '<leader>fF', '<cmd>Telescope find_files no_ignore=true<cr>', opts)
             keymap('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', opts)
+            keymap('n', '<leader>fG', '<cmd>Telescope grep_string<cr>', opts)
             keymap('n', '<leader>fb', '<cmd>Telescope buffers<cr>', opts)
             keymap('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', opts)
             keymap('n', '<leader>fk', '<cmd>Telescope keymaps show_plug=false<cr>', opts)

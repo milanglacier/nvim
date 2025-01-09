@@ -28,6 +28,7 @@ TS_Parsers = {
     'go',
     'sql',
     'bash',
+    'nix',
 }
 
 -- highlight

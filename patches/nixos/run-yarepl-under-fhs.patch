@@ -1,22 +1,22 @@
 diff --git a/lua/plugins/cli_tools.lua b/lua/plugins/cli_tools.lua
-index 7021cf4..f45128a 100644
+index b834d6b..43fb297 100644
 --- a/lua/plugins/cli_tools.lua
 +++ b/lua/plugins/cli_tools.lua
-@@ -69,10 +69,17 @@ return {
+@@ -69,8 +69,17 @@ return {
              local yarepl = require 'yarepl'
-             local aider = require 'conf.aider'
+             local aider = require 'yarepl.extensions.aider'
  
 +            aider.setup {
-+                aider_cmd = { 'fhs', '-c', "'aider'" },
++                aider_cmd = { 'fhs', 'aider' },
 +            }
 +
-             vim.g.REPL_floatwin_ratio = 0.5
- 
              yarepl.setup {
--                metas = { aider = aider.create_aider_meta() },
+-                metas = { aider = aider.create_aider_meta(), python = false, R = false },
 +                metas = {
 +                    aider = aider.create_aider_meta(),
-+                    ipython = { cmd = { 'fhs', '-c', "'ipython'" } },
++                    python = false,
++                    R = false,
++                    ipython = { cmd = { 'fhs', 'ipython' } },
 +                },
              }
          end,
