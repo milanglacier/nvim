@@ -120,45 +120,28 @@ autocmd('LspAttach', {
     desc = 'Disable semantic highlight',
 })
 
--- use nvim-cmp/blink capabilities. Define the capabilities here which will be
--- fetched when lspconfig is loaded
-local capabilities
-
 local enabled_lsps = { 'r', 'python', 'bash', 'cpp', 'vim', 'nvim', 'pinyin', 'sql', 'latex', 'go', 'rust', 'efm' }
 
 local lsp_configs = {}
 
 lsp_configs.python = function()
-    require('lspconfig').basedpyright.setup {
-        capabilities = capabilities,
-    }
+    require('lspconfig').basedpyright.setup {}
 end
 
 lsp_configs.r = function()
-    require('lspconfig').r_language_server.setup {
-        capabilities = capabilities,
-    }
+    require('lspconfig').r_language_server.setup {}
 end
 
 lsp_configs.latex = function()
-    require('lspconfig').texlab.setup {
-        capabilities = capabilities,
-    }
+    require('lspconfig').texlab.setup {}
 end
 
 lsp_configs.bash = function()
-    require('lspconfig').bashls.setup {
-        capabilities = capabilities,
-    }
+    require('lspconfig').bashls.setup {}
 end
 
 lsp_configs.cpp = function()
-    local clangd_capabilities = vim.deepcopy(capabilities)
-    clangd_capabilities.offsetEncoding = { 'utf-16' }
-
-    require('lspconfig').clangd.setup {
-        capabilities = clangd_capabilities,
-    }
+    require('lspconfig').clangd.setup {}
 end
 
 lsp_configs.nvim = function()
@@ -166,7 +149,6 @@ lsp_configs.nvim = function()
         on_attach = function(client, _)
             client.server_capabilities.documentFormattingProvider = false
         end,
-        capabilities = capabilities,
         settings = {
             Lua = {
                 diagnostics = {
@@ -181,9 +163,7 @@ lsp_configs.nvim = function()
 end
 
 lsp_configs.vim = function()
-    require('lspconfig').vimls.setup {
-        capabilities = capabilities,
-    }
+    require('lspconfig').vimls.setup {}
 end
 
 lsp_configs.sql = function()
@@ -198,7 +178,6 @@ lsp_configs.sql = function()
             bufmap(bufnr, 'n', '<LocalLeader>sv', '<cmd>SqlsExecuteQueryVertical<CR>', { silent = true })
             bufmap(bufnr, 'v', '<LocalLeader>sv', '<cmd>SqlsExecuteQueryVertical<CR>', { silent = true })
         end,
-        capabilities = capabilities,
         on_new_config = function(new_config, new_rootdir)
             if vim.fn.filereadable(new_rootdir .. '/config.yml') == 1 then
                 new_config.cmd = {
@@ -222,19 +201,11 @@ lsp_configs.pinyin = function()
 end
 
 lsp_configs.go = function()
-    require('lspconfig').gopls.setup {
-        capabilities = capabilities,
-    }
+    require('lspconfig').gopls.setup {}
 end
 
 lsp_configs.rust = function()
-    local rust_capabilities = vim.deepcopy(capabilities)
-    rust_capabilities.experimental = {
-        serverStatusNotification = true,
-    }
-    require('lspconfig').rust_analyzer.setup {
-        capabilities = rust_capabilities,
-    }
+    require('lspconfig').rust_analyzer.setup {}
 end
 
 lsp_configs.efm = function()
@@ -290,8 +261,12 @@ return {
         'neovim/nvim-lspconfig',
         event = 'LazyFile',
         config = function()
-            capabilities = Milanglacier.completion_frontend == 'blink' and require('blink.cmp').get_lsp_capabilities()
+            local capabilities = Milanglacier.completion_frontend == 'blink'
+                    and require('blink.cmp').get_lsp_capabilities()
                 or require('cmp_nvim_lsp').default_capabilities()
+
+            local lspconfig = require 'lspconfig'
+            lspconfig.util.default_config = vim.tbl_extend('force', lspconfig.util.default_config, capabilities)
 
             for _, lsp in pairs(enabled_lsps) do
                 lsp_configs[lsp]()
