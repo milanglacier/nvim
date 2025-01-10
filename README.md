@@ -668,6 +668,7 @@ Note: with no numerical argument, the REPL is default for the first REPL.
 | ---- | ------- | ------------------------------------------------- |
 | n    | `g<CR>` | Jump to the start of the selected treesitter node |
 | n    | `g<BS>` | Jump to the end of the selected treesitter node   |
+| vo   | `<CR>`  | Select region based on treesitter node            |
 
 ## Searcher keymaps
 
