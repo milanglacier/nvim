@@ -1,10 +1,10 @@
 diff --git a/lua/plugins/lsp.lua b/lua/plugins/lsp.lua
-index ca7b55e..0cba2d6 100644
+index bd64663..25605ea 100644
 --- a/lua/plugins/lsp.lua
 +++ b/lua/plugins/lsp.lua
-@@ -124,7 +124,7 @@ autocmd('LspAttach', {
- -- fetched when lspconfig is loaded
- local capabilities
+@@ -120,7 +120,7 @@ autocmd('LspAttach', {
+     desc = 'Disable semantic highlight',
+ })
  
 -local enabled_lsps = { 'r', 'python', 'bash', 'cpp', 'vim', 'nvim', 'pinyin', 'sql', 'latex', 'go', 'rust', 'efm' }
 +local enabled_lsps = { 'python', 'nvim', 'efm' }
