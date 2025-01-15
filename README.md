@@ -104,12 +104,14 @@ notebooks. And many neovim plugins, such as treesitter, can be embedded
 seamlessly in vscode, allowing for a smooth and uninterrupted workflow.
 
 **NOTE**: If you plan to use this configuration with `vscode-neovim`, please
-use the `vscode` branch. If you wish to use neovim both in the terminal
-and in vscode, we suggest creating two folders in `~/.config` or your specified
-`$XDG_CONFIG` path. One is `~/.config/nvim`, which uses the default
-configuration in the `master` branch, and the other is
-`~/.config/vscode-neovim`, which uses the configuration in the `vscode`
-branch. This takes advantage of the `NVIM_APPNAME` feature in `nvim 0.9`.
+use the [forked repo](https://github.com/milanglacier/vscode-neovim) as I
+decided to maintain the two configs separately. If you wish to use neovim both
+in the terminal and in vscode, we suggest creating two folders in `~/.config`
+or your specified `$XDG_CONFIG` path. One is `~/.config/nvim`, which uses the
+default configuration in the `master` branch, and the other is
+`~/.config/vscode-neovim`, which uses the configuration in the `vscode` branch.
+This takes advantage of the `NVIM_APPNAME` feature in `nvim 0.9`. Refer to the
+vscode-neovim repo for further details.
 
 Then, Set `vscode-neovim.NVIM_APPNAME` to `vscode-neovim` in vscode settings.
 
@@ -668,8 +670,7 @@ Note: with no numerical argument, the REPL is default for the first REPL.
 | ---- | ------- | ------------------------------------------------- |
 | n    | `g<CR>` | Jump to the start of the selected treesitter node |
 | n    | `g<BS>` | Jump to the end of the selected treesitter node   |
-| v    | `<CR>`  | Expand the region based on treesitter nodes range |
-| o    | `<CR>`  | Expand the region based on treesitter node range  |
+| vo   | `<CR>`  | Select region based on treesitter node            |
 
 ## Searcher keymaps
 
