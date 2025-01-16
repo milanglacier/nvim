@@ -14,6 +14,12 @@ return {
             keymap('x', 'S', '<Plug>(mini-surround-add)', {})
             keymap('n', 'cs', '<Plug>(mini-surround-replace)', {})
             keymap('n', 'ds', '<Plug>(mini-surround-delete)', {})
+            keymap(
+                'n',
+                '<leader>m<space>',
+                '<cmd>lua require("mini.trailspace").trim()<CR>',
+                { desc = 'Remove Trailing Spaces' }
+            )
         end,
         config = function()
             require('mini.pairs').setup {}
