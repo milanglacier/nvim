@@ -5,6 +5,9 @@ pkgs,
 ...
 }: {
     home.packages = with pkgs; [
+        # use current neovim session as $EDITOR when running embedded terminal
+        # inside neovim
+        neovim-remote
         # build deps
         gcc
         gnumake
