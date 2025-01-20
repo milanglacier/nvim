@@ -78,10 +78,10 @@
 ## Modern Devtools Integration
 
 Built on modern devtools including LSP and treesitter. Treesitter delivers
-AST-level highlighting, text objects, and navigations, while LSP offers
-features like auto completion, go to definition and reference, and code
-diagnostics. By harnessing the power of both Ctags and LSP, this configuration
-brings a harmonic blend of old-school and modern development tools.
+AST-level highlighting, text objects, and navigations, while LSP offers features
+like auto completion, go to definition and reference, and code diagnostics. By
+harnessing the power of both Ctags and LSP, this configuration brings a harmonic
+blend of old-school and modern development tools.
 
 ## Powerful Text Edit Plugins
 
@@ -99,16 +99,16 @@ including python, R, SQL, Latex, rmarkdown, and quarto.
 Curated configuration working together with vscode thanks to
 [vscode-neovim](https://github.com/vscode-neovim/vscode-neovim). Access all the
 familiar neovim keybindings, including translations of equivalent commands in
-vscode, even when working with complex graphical content like Jupyter
-notebooks. And many neovim plugins, such as treesitter, can be embedded
-seamlessly in vscode, allowing for a smooth and uninterrupted workflow.
+vscode, even when working with complex graphical content like Jupyter notebooks.
+And many neovim plugins, such as treesitter, can be embedded seamlessly in
+vscode, allowing for a smooth and uninterrupted workflow.
 
-**NOTE**: If you plan to use this configuration with `vscode-neovim`, please
-use the [forked repo](https://github.com/milanglacier/vscode-neovim) as I
-decided to maintain the two configs separately. If you wish to use neovim both
-in the terminal and in vscode, we suggest creating two folders in `~/.config`
-or your specified `$XDG_CONFIG` path. One is `~/.config/nvim`, which uses the
-default configuration in the `master` branch, and the other is
+**NOTE**: If you plan to use this configuration with `vscode-neovim`, please use
+the [forked repo](https://github.com/milanglacier/vscode-neovim) as I decided to
+maintain the two configs separately. If you wish to use neovim both in the
+terminal and in vscode, we suggest creating two folders in `~/.config` or your
+specified `$XDG_CONFIG` path. One is `~/.config/nvim`, which uses the default
+configuration in the `master` branch, and the other is
 `~/.config/vscode-neovim`, which uses the configuration in the `vscode` branch.
 This takes advantage of the `NVIM_APPNAME` feature in `nvim 0.9`. Refer to the
 vscode-neovim repo for further details.
@@ -136,8 +136,9 @@ and wild!
 - This screenshot showcases writing Lua code with smart autocompletion through
   both language server (LSP) and universal-ctags (ctags). This combination
   seamlessly blends old-school and modern tools. The bottom window shows the
-  occurrence of referenced symbols that you specify (via `lsp find references`), while the right window shows the symbol outline of the current
-  file (via `lsp document symbols`).
+  occurrence of referenced symbols that you specify (via `lsp find references`),
+  while the right window shows the symbol outline of the current file (via
+  `lsp document symbols`).
 
 ![literate-programming](./assets/literate-programming.png)
 
@@ -149,35 +150,34 @@ and wild!
 
 ![dap](./assets/dap-python.png)
 
-- This screenshot demonstrates how to debug Python program in neovim. Stepping through
-  the code and watching variables and stack frames, just like in vscode.
+- This screenshot demonstrates how to debug Python program in neovim. Stepping
+  through the code and watching variables and stack frames, just like in vscode.
 
 # Dependencies
 
 You are responsible for installing the dependencies, but most of them are
-optional. They consist mainly of language servers and linters that correspond
-to their respective languages. You can choose the ones you need and leave out
-the others. Even if certain dependencies are absent, neovim will still operate
-and display notifications instead of halting completely.
+optional. They consist mainly of language servers and linters that correspond to
+their respective languages. You can choose the ones you need and leave out the
+others. Even if certain dependencies are absent, neovim will still operate and
+display notifications instead of halting completely.
 
 If your system lacks a proper package manager, such as with Windows, or if the
 packages are out of date, as with Debian, you can use `Mason.nvim`, a neovim
 plugin specifically to install some of the dependencies. Dependencies marked
 with a `*` can be installed through `Mason.nvim`. To install these packages
-within neovim, enter `:Mason` in the prompt, and a popup window will appear
-with the intuitive interface of `Mason`. From there, you can easily install
-packages.
+within neovim, enter `:Mason` in the prompt, and a popup window will appear with
+the intuitive interface of `Mason`. From there, you can easily install packages.
 
-This configuration relies on an external tool called `efm-langserver`, which
-can be installed via `mason`. However, it needs to be separately configured
-outside of neovim. An example configuration for `efm` is provided in the `dist`
-folder. To use this example configuration, simply copy the folder to
-`~/.config/`.
+This configuration relies on an external tool called `efm-langserver`, which can
+be installed via `mason`. However, it needs to be separately configured outside
+of neovim. An example configuration for `efm` is provided in the `dist` folder.
+To use this example configuration, simply copy the folder to `~/.config/`.
 
 ## python deps
 
 1. `python`.
-2. `debugpy`: this module should be included by the `python` at the top of your `$PATH`.
+2. `debugpy`: this module should be included by the `python` at the top of your
+   `$PATH`.
 3. `ipython`
 4. `black*`
 5. `efm-langserver*`
@@ -185,7 +185,8 @@ folder. To use this example configuration, simply copy the folder to
 
 ## r deps
 
-1. `r-language-server`: this is a R package that should be installed by the `r` at the top of your `$PATH`
+1. `r-language-server`: this is a R package that should be installed by the `r`
+   at the top of your `$PATH`
 2. `radian`
 
 ## lua deps
@@ -230,22 +231,21 @@ folder. To use this example configuration, simply copy the folder to
 
 1. `universal-ctags`
 2. A c compiler. Required to install treesitter parsers.
-3. `lazygit`: this is only required if want to use `lazygit` in neovim (which is binded to `<leader>og`).
-4. `fzf`: this is only required if you are using `fzf-lua` as your fuzzy
-   finder. You don't need it you are using `telescope`.
+3. `lazygit`: this is only required if want to use `lazygit` in neovim (which is
+   binded to `<leader>og`).
+4. `fzf`: this is only required if you are using `fzf-lua` as your fuzzy finder.
+   You don't need it you are using `telescope`.
 
 # Keymaps
 
-NOTE: this only includes keymaps defined by myself,
-and some of the default plugins keymaps
-that I used frequently.
+NOTE: this only includes keymaps defined by myself, and some of the default
+plugins keymaps that I used frequently.
 
-The `<Leader>` key is `<Space>`,
-the `<LocalLeader>` key is `<Space><Space>` or `<Backslash>`.
+The `<Leader>` key is `<Space>`, the `<LocalLeader>` key is `<Space><Space>` or
+`<Backslash>`.
 
-In case you forget the keymaps
-you can always use `<Leader>fk` (`:FzfLua keymaps` or `:Telescope keymaps`)
-to find all keymaps.
+In case you forget the keymaps you can always use `<Leader>fk`
+(`:FzfLua keymaps` or `:Telescope keymaps`) to find all keymaps.
 
 ## Builtin keymaps
 
@@ -383,7 +383,8 @@ to find all keymaps.
 
 ### Pretty quickfix list keymaps
 
-The following keymaps rely on [Trouble.nvim](https://github.com/folke/trouble.nvim.git)
+The following keymaps rely on
+[Trouble.nvim](https://github.com/folke/trouble.nvim.git)
 
 | Mode | LHS          | RHS/Functionality                                   |
 | ---- | ------------ | --------------------------------------------------- |
@@ -397,7 +398,8 @@ The following keymaps rely on [Trouble.nvim](https://github.com/folke/trouble.nv
 
 ### File explorer keymaps
 
-The following keymaps rely on [neo-tree.nvim](https://github.com/nvim-neo-tree/neo-tree.nvim)
+The following keymaps rely on
+[neo-tree.nvim](https://github.com/nvim-neo-tree/neo-tree.nvim)
 
 | Mode | LHS          | RHS/Functionality                      |
 | ---- | ------------ | -------------------------------------- |
@@ -406,7 +408,8 @@ The following keymaps rely on [neo-tree.nvim](https://github.com/nvim-neo-tree/n
 
 ### Window layout keymaps
 
-The following keymaps rely on [winshift.nvim](https://github.com/sindrets/winshift.nvim)
+The following keymaps rely on
+[winshift.nvim](https://github.com/sindrets/winshift.nvim)
 
 | Mode | LHS          | RHS/Functionality        |
 | ---- | ------------ | ------------------------ |
@@ -416,7 +419,8 @@ The following keymaps rely on [winshift.nvim](https://github.com/sindrets/winshi
 
 ### Align text keymaps
 
-The following keymaps rely on [vim-easy-align](https://github.com/junegunn/vim-easy-align)
+The following keymaps rely on
+[vim-easy-align](https://github.com/junegunn/vim-easy-align)
 
 | Mode | LHS | RHS/Functionality                                                 |
 | ---- | --- | ----------------------------------------------------------------- |
@@ -424,7 +428,8 @@ The following keymaps rely on [vim-easy-align](https://github.com/junegunn/vim-e
 
 ### Comment keymaps
 
-The following keymaps rely on [mini.comment](https://github.com/echasnovski/mini.nvim)
+The following keymaps rely on
+[mini.comment](https://github.com/echasnovski/mini.nvim)
 
 | Mode | LHS | RHS/Functionality                                            |
 | ---- | --- | ------------------------------------------------------------ |
@@ -460,7 +465,8 @@ The following keymaps rely on [vim-sneak](https://github.com/justinmk/vim-sneak)
 
 ### Text objects enhancement keymaps
 
-The following keymaps rely on [mini.ai](https://github.com/echasnovski/mini.nvim)
+The following keymaps rely on
+[mini.ai](https://github.com/echasnovski/mini.nvim)
 
 | Mode | LHS  | RHS/Functionality                                             |
 | ---- | ---- | ------------------------------------------------------------- |
@@ -473,7 +479,8 @@ The following keymaps rely on [mini.ai](https://github.com/echasnovski/mini.nvim
 
 ### Block text movement
 
-The following keymaps rely on [mini.move](https://github.com/echasnovski/mini.nvim)
+The following keymaps rely on
+[mini.move](https://github.com/echasnovski/mini.nvim)
 
 | Mode | LHS     | RHS/Functionality            |
 | ---- | ------- | ---------------------------- |
@@ -484,7 +491,8 @@ The following keymaps rely on [mini.move](https://github.com/echasnovski/mini.nv
 
 ### Surround pairs keymaps
 
-The following keymaps rely on [mini.surround](https://github.com/echasnovski/mini.nvim)
+The following keymaps rely on
+[mini.surround](https://github.com/echasnovski/mini.nvim)
 
 | Mode | LHS | RHS/Functionality                                          |
 | ---- | --- | ---------------------------------------------------------- |
@@ -497,7 +505,8 @@ The following keymaps rely on [mini.surround](https://github.com/echasnovski/min
 
 ### substitution keymaps
 
-The following keymaps rely on [substitute.nvim](https://github.com/gbprod/substitute.nvim)
+The following keymaps rely on
+[substitute.nvim](https://github.com/gbprod/substitute.nvim)
 
 | Mode | LHS | RHS/Functionality                                                                                      |
 | ---- | --- | ------------------------------------------------------------------------------------------------------ |
@@ -507,14 +516,16 @@ The following keymaps rely on [substitute.nvim](https://github.com/gbprod/substi
 
 ### Other text objects keymaps
 
-The following keymaps rely on [vim-textobj-beween](https://github.com/thinca/vim-textobj-between)
+The following keymaps rely on
+[vim-textobj-beween](https://github.com/thinca/vim-textobj-between)
 
 | Mode | LHS | RHS/Functionality                                    |
 | ---- | --- | ---------------------------------------------------- |
 | ov   | ab  | Text object: around text between the input character |
 | ov   | ib  | Text object: inner text between the input character  |
 
-The following keymaps rely on [vim-textobj-chainmember](https://github.com/D4KU/vim-textobj-chainmember)
+The following keymaps rely on
+[vim-textobj-chainmember](https://github.com/D4KU/vim-textobj-chainmember)
 
 | Mode | LHS | RHS/Functionality                                     |
 | ---- | --- | ----------------------------------------------------- |
@@ -525,7 +536,8 @@ The following keymaps rely on [vim-textobj-chainmember](https://github.com/D4KU/
 
 ### Terminal emulator keymaps
 
-The following keymaps rely on [toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim)
+The following keymaps rely on
+[toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim)
 
 | Mode | LHS          | RHS/Functionality                                        |
 | ---- | ------------ | -------------------------------------------------------- |
@@ -539,7 +551,8 @@ The following keymaps rely on [toggleterm.nvim](https://github.com/akinsho/toggl
 
 ### Git keymaps
 
-The following keymaps rely on [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim)
+The following keymaps rely on
+[gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim)
 
 | Mode | LHS          | RHS/Functionality             |
 | ---- | ------------ | ----------------------------- |
@@ -558,7 +571,8 @@ The following keymaps rely on [gitsigns.nvim](https://github.com/lewis6991/gitsi
 | ---- | ------------ | ----------------- |
 | n    | `<Leader>og` | Open Lazygit      |
 
-The following keymaps rely on [mini.nvim](htpps://https://github.com/echasnovski/mini.nvim)
+The following keymaps rely on
+[mini.nvim](htpps://https://github.com/echasnovski/mini.nvim)
 
 | Mode | LHS          | RHS/Functionality                                        |
 | ---- | ------------ | -------------------------------------------------------- |
@@ -572,7 +586,8 @@ The following keymaps rely on [mini.nvim](htpps://https://github.com/echasnovski
 
 ### Search and Replace keymaps
 
-The following keymaps rely on [grug-far.nvim](https://github.com/MagicDuck/grug-far.nvim)
+The following keymaps rely on
+[grug-far.nvim](https://github.com/MagicDuck/grug-far.nvim)
 
 | Mode | LHS          | RHS/Functionality                                                                  |
 | ---- | ------------ | ---------------------------------------------------------------------------------- |
@@ -702,7 +717,8 @@ The following keymaps rely on
 
 ## Language Server Protocol keymaps
 
-The following keymaps rely on [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)
+The following keymaps rely on
+[nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)
 
 | Mode | LHS          | RHS/Functionality                           |
 | ---- | ------------ | ------------------------------------------- |
@@ -731,7 +747,8 @@ The following keymaps rely on [nvim-lspconfig](https://github.com/neovim/nvim-ls
 | i    | `<A-s>` | Show signature help |
 | i    | `<A-h>` | Hover               |
 
-The following keymaps rely on [aerial.nvim](https://github.com/stevearc/aerial.nvim)
+The following keymaps rely on
+[aerial.nvim](https://github.com/stevearc/aerial.nvim)
 
 | Mode | LHS          | RHS/Functionality                      |
 | ---- | ------------ | -------------------------------------- |
@@ -794,7 +811,8 @@ The following keymaps rely on [nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
 
 #### REPL keymaps for R
 
-The following keymaps rely on [yarepl.nvim](https://github.com/milanglacier/yarepl.nvim)
+The following keymaps rely on
+[yarepl.nvim](https://github.com/milanglacier/yarepl.nvim)
 
 | Mode | LHS               | RHS/Functionality |
 | ---- | ----------------- | ----------------- |
@@ -818,7 +836,8 @@ The following keymaps rely on [yarepl.nvim](https://github.com/milanglacier/yare
 
 #### REPL keymaps for Python
 
-The following keymaps rely on [yarepl.nvim](https://github.com/milanglacier/yarepl.nvim)
+The following keymaps rely on
+[yarepl.nvim](https://github.com/milanglacier/yarepl.nvim)
 
 | Mode | LHS               | RHS/Functionality     |
 | ---- | ----------------- | --------------------- |
@@ -875,7 +894,8 @@ The following keymaps rely on [dsf.vim](https://github.com/AndrewRadev/dsf.vim)
 
 ### Markdown keymaps
 
-The following keymaps rely on [markdown-previem.nvim](https://github.com/iamcco/markdown-preview.nvim)
+The following keymaps rely on
+[markdown-previem.nvim](https://github.com/iamcco/markdown-preview.nvim)
 
 | Mode | LHS               | RHS/Functionality     |
 | ---- | ----------------- | --------------------- |
@@ -913,33 +933,33 @@ The following keymaps rely on [vimtex](https://github.com/lervag/vimtex)
 # Dist Module
 
 The [dist](./dist) directory houses various configuration files for tools that
-integrate with my Neovim workflow. Check [README](./dist/README.md) for
-details.
+integrate with my Neovim workflow. Check [README](./dist/README.md) for details.
 
 # Patches Module
 
-The [patches](./patches) houses a collection of compact, commonly utilized patches
-designed for various environments. These modifications are straightforward and
-don't require separate branch management (unlike the `vscode` branch used for
-`vscode-neovim` configurations). For organizational simplicity, all patches are
-consolidated in this single directory.
+The [patches](./patches) houses a collection of compact, commonly utilized
+patches designed for various environments. These modifications are
+straightforward and don't require separate branch management (unlike the
+`vscode` branch used for `vscode-neovim` configurations). For organizational
+simplicity, all patches are consolidated in this single directory.
 
 # Other Notes
 
-1. `vim-sneak` defines relatively inconsistent behavior: in normal mode,
-   use `s/S`, in operator pending mode, use `z/Z`, in visual mode,
-   use `s/Z`. In normal mode, default mapping `s` is replaced.
-   In op mode, use `z/Z` is to be compatible with `vim-surround` (mappings: `ys/ds/cs`),
-   in visual mode, use `s/Z` is to be compatible with
-   folding (mapping: `zf`) and `vim-surround` (mapping: `S`)
+1. `vim-sneak` defines relatively inconsistent behavior: in normal mode, use
+   `s/S`, in operator pending mode, use `z/Z`, in visual mode, use `s/Z`. In
+   normal mode, default mapping `s` is replaced. In op mode, use `z/Z` is to be
+   compatible with `vim-surround` (mappings: `ys/ds/cs`), in visual mode, use
+   `s/Z` is to be compatible with folding (mapping: `zf`) and `vim-surround`
+   (mapping: `S`)
 
-2. You need to define your leader key before defining any keymaps.
-   Otherwise, keymap will not be correctly mapped with your leader key.
+2. You need to define your leader key before defining any keymaps. Otherwise,
+   keymap will not be correctly mapped with your leader key.
 
-3. `vim-matchup` will (intentionally) hide the status-line if the matched pair are spanned
-   over entire screen to show the other side of the pair.
+3. `vim-matchup` will (intentionally) hide the status-line if the matched pair
+   are spanned over entire screen to show the other side of the pair.
 
 # Discussion
 
-1. It is recommended to use the mailing list `~northyear/nvim-devel@lists.sr.ht`.
+1. It is recommended to use the mailing list
+   `~northyear/nvim-devel@lists.sr.ht`.
 2. Alternatively, you are also welcome to open a Github issue.
