@@ -251,17 +251,21 @@ return {
         'lewis6991/gitsigns.nvim',
         event = 'LazyFile',
         init = function()
-            keymap('n', '<Leader>gp', '<cmd>Gitsigns preview_hunk<CR>', { noremap = true })
-            keymap('n', '<Leader>gB', '<cmd>Gitsigns blame<CR>', { noremap = true })
-            keymap('n', '<Leader>gb', '<cmd>Gitsigns blame_line<CR>', { noremap = true })
-            keymap('n', '<Leader>ga', '<cmd>Gitsigns<CR>', { noremap = true })
-            keymap('n', '<Leader>gr', '<cmd>Gitsigns reset_hunk<CR>', { noremap = true })
-            keymap('n', '<Leader>gs', '<cmd>Gitsigns stage_hunk<CR>', { noremap = true })
-            keymap('v', '<Leader>gs', ':<C-U>Gitsigns stage_hunk<CR>', { noremap = true })
-            keymap('n', '<Leader>gR', '<cmd>Gitsigns undo_stage_hunk<CR>', { noremap = true })
-            keymap('n', '<Leader>gq', '<cmd>Gitsigns setqflist<CR>', { noremap = true })
+            keymap('n', '<Leader>gp', '<cmd>Gitsigns preview_hunk<CR>', { desc = 'preview hunk' })
+            keymap(
+                'n',
+                '<Leader>gv',
+                '<cmd>Gitsigns preview_hunk_inline<CR>',
+                { desc = 'preview hunk as virtual text' }
+            )
+            keymap('n', '<Leader>gB', '<cmd>Gitsigns blame<CR>', {})
+            keymap('n', '<Leader>gb', '<cmd>Gitsigns blame_line<CR>', {})
+            keymap('n', '<Leader>ga', '<cmd>Gitsigns<CR>', {})
+            keymap('n', '<Leader>gr', '<cmd>Gitsigns reset_hunk<CR>', {})
+            keymap('n', '<Leader>gs', '<cmd>Gitsigns stage_hunk<CR>', { desc = 'stage or unstage hunk' })
+            keymap('v', '<Leader>gs', ':<C-U>Gitsigns stage_hunk<CR>', {})
+            keymap('n', '<Leader>gq', '<cmd>Gitsigns setqflist<CR>', {})
             keymap('n', ']h', '', {
-                noremap = true,
                 desc = 'git next hunk',
                 callback = function()
                     if vim.wo.diff then
@@ -272,7 +276,6 @@ return {
                 end,
             })
             keymap('n', '[h', '', {
-                noremap = true,
                 desc = 'git prv hunk',
                 callback = function()
                     if vim.wo.diff then
@@ -284,8 +287,8 @@ return {
             })
 
             -- text objects
-            keymap('v', 'ih', '<esc><cmd>Gitsigns select_hunk<CR>', { noremap = true })
-            keymap('o', 'ih', ':<C-U>Gitsigns select_hunk<CR>', { noremap = true })
+            keymap('v', 'ih', '<esc><cmd>Gitsigns select_hunk<CR>', {})
+            keymap('o', 'ih', ':<C-U>Gitsigns select_hunk<CR>', {})
         end,
         config = function()
             require('gitsigns').setup { update_debounce = 200 }
