@@ -12,6 +12,7 @@ local M = {
                     keymap = {
                         accept = '<A-A>',
                         accept_line = '<A-a>',
+                        accept_n_lines = '<A-z>',
                         prev = '<A-[>',
                         next = '<A-]>',
                         dismiss = '<A-e>',
