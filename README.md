@@ -554,18 +554,18 @@ The following keymaps rely on
 The following keymaps rely on
 [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim)
 
-| Mode | LHS          | RHS/Functionality             |
-| ---- | ------------ | ----------------------------- |
-| n    | `<Leader>gp` | Preview current git diff hunk |
-| n    | `<Leader>ga` | Git actions                   |
-| n    | `<Leader>gB` | Git blame current file        |
-| n    | `<Leader>gb` | Git blame current line        |
-| n    | `<Leader>gs` | Stage current git diff hunk   |
-| n    | `<Leader>gR` | Unstage current git diff hunk |
-| n    | `<Leader>gr` | Reset current git diff hunk   |
-| n    | `<Leader>gq` | Send git diff hunks to qflist |
-| n    | `]h`         | Go to next git diff hunk      |
-| n    | `[h`         | Go to previous git diff hunk  |
+| Mode | LHS          | RHS/Functionality                             |
+| ---- | ------------ | --------------------------------------------- |
+| n    | `<Leader>gp` | Preview current git diff hunk                 |
+| n    | `<Leader>gv` | Preview current git diff hunk as virtual text |
+| n    | `<Leader>ga` | Git actions                                   |
+| n    | `<Leader>gB` | Git blame current file                        |
+| n    | `<Leader>gb` | Git blame current line                        |
+| n    | `<Leader>gs` | Stage / Unstage current git diff hunk         |
+| n    | `<Leader>gr` | Reset current git diff hunk                   |
+| n    | `<Leader>gq` | Send git diff hunks to qflist                 |
+| n    | `]h`         | Go to next git diff hunk                      |
+| n    | `[h`         | Go to previous git diff hunk                  |
 
 | Mode | LHS          | RHS/Functionality |
 | ---- | ------------ | ----------------- |
@@ -599,15 +599,18 @@ The following keymaps rely on
 
 ### Minuet keymaps
 
-The following keymaps rely on `Minuet`, an LLM-powered completion source.
+The following keymaps rely on `Minuet`, a code completion plugin as an
+alternative to github copilot. Minuet allows you to select your preferred LLM
+for code completion.
 
 | Mode | LHS     | RHS/Functionality                                          |
 | ---- | ------- | ---------------------------------------------------------- |
-| n    | `<M-]>` | Invoke `minuet` completion or cycle to next completion     |
-| n    | `<M-[>` | Invoke `minuet` completion or cycle to previous completion |
-| n    | `<M-a>` | Accept line                                                |
-| n    | `<M-A>` | Accept whole completion                                    |
-| n    | `<M-e>` | Reject completion                                          |
+| i    | `<M-]>` | Invoke `minuet` completion or cycle to next completion     |
+| i    | `<M-[>` | Invoke `minuet` completion or cycle to previous completion |
+| i    | `<M-a>` | Accept line                                                |
+| i    | `<M-z>` | Accept n lines of completion                               |
+| i    | `<M-A>` | Accept whole completion                                    |
+| i    | `<M-e>` | Reject completion                                          |
 
 ## REPL keymaps
 
