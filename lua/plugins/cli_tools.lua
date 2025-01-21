@@ -71,6 +71,37 @@ return {
             yarepl.setup {
                 metas = { aider = aider.create_aider_meta(), python = false, R = false },
             }
+
+            require('yarepl.extensions.code_cell').register_text_objects {
+                {
+                    key = 'c',
+                    start_pattern = '```.+',
+                    end_pattern = '^```$',
+                    ft = { 'rmd', 'quarto', 'markdown' },
+                    desc = 'markdown code cells',
+                },
+                {
+                    key = '<Leader>c',
+                    start_pattern = '^# ?%%%%.*',
+                    end_pattern = '^# ?%%%%.*',
+                    ft = { 'r', 'python' },
+                    desc = 'r/python code cells',
+                },
+                {
+                    key = 'm',
+                    start_pattern = '# COMMAND ---',
+                    end_pattern = '# COMMAND ---',
+                    ft = { 'r', 'python' },
+                    desc = 'databricks code cells',
+                },
+                {
+                    key = 'm',
+                    start_pattern = '-- COMMAND ---',
+                    end_pattern = '-- COMMAND ---',
+                    ft = { 'sql' },
+                    desc = 'databricks code cells',
+                },
+            }
         end,
         init = function()
             ----- Set Aichat Keymap ------
