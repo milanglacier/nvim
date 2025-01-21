@@ -168,10 +168,20 @@ with a `*` can be installed through `Mason.nvim`. To install these packages
 within neovim, enter `:Mason` in the prompt, and a popup window will appear with
 the intuitive interface of `Mason`. From there, you can easily install packages.
 
-This configuration relies on an external tool called `efm-langserver`, which can
-be installed via `mason`. However, it needs to be separately configured outside
-of neovim. An example configuration for `efm` is provided in the `dist` folder.
-To use this example configuration, simply copy the folder to `~/.config/`.
+This configuration has an optional dependency `efm-langserver`, which can be
+installed via `mason`. However, it needs to be separately configured outside of
+neovim. An example configuration for `efm` is provided in the `dist` folder. To
+use this example configuration, simply copy the folder to `~/.config/`.
+
+## general purpose deps
+
+1. `universal-ctags`
+2. A C compiler. Required to install treesitter parsers.
+3. `lazygit`: this is only required if want to use `lazygit` in neovim (which is
+   binded to `<leader>og`).
+4. `fzf`: this is only required if you are using `fzf-lua` as your fuzzy finder.
+   You don't need it you are using `telescope`.
+5. `ripgrep`
 
 ## python deps
 
@@ -226,15 +236,6 @@ To use this example configuration, simply copy the folder to `~/.config/`.
 ## cpp deps
 
 1. `clangd*`: Apple's `xcode` command line tools ship this for you.
-
-## general purpose deps
-
-1. `universal-ctags`
-2. A c compiler. Required to install treesitter parsers.
-3. `lazygit`: this is only required if want to use `lazygit` in neovim (which is
-   binded to `<leader>og`).
-4. `fzf`: this is only required if you are using `fzf-lua` as your fuzzy finder.
-   You don't need it you are using `telescope`.
 
 # Keymaps
 
