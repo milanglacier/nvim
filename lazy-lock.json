@@ -23,7 +23,7 @@
   "lualine.nvim": { "branch": "master", "commit": "2a5bae925481f999263d6f5ed8361baef8df4f83" },
   "mason.nvim": { "branch": "main", "commit": "e2f7f9044ec30067bc11800a9e266664b88cda22" },
   "mini.nvim": { "branch": "main", "commit": "4446e834c30c799627d65691c73d59638e5c965f" },
-  "minuet-ai.nvim": { "branch": "main", "commit": "72a67c514a66f6b8a692d7f16a64d42c86d8312b" },
+  "minuet-ai.nvim": { "branch": "main", "commit": "45d74725f5844da6903d060dc8e6a0c0ca91b2e3" },
   "neo-tree.nvim": { "branch": "main", "commit": "27abb114bcd7e9afec6fb15001b55c9cdb6c74a6" },
   "nightfox.nvim": { "branch": "main", "commit": "595ffb8f291fc4a9bef3201a28b7c0379a41cdee" },
   "nui.nvim": { "branch": "main", "commit": "53e907ffe5eedebdca1cd503b00aa8692068ca46" },
@@ -69,5 +69,5 @@
   "vimtex": { "branch": "master", "commit": "3f0bdcfbe8167c081cd83153910c871b681c1d8f" },
   "which-key.nvim": { "branch": "main", "commit": "1f8d414f61e0b05958c342df9b6a4c89ce268766" },
   "winshift.nvim": { "branch": "main", "commit": "37468ed6f385dfb50402368669766504c0e15583" },
-  "yarepl.nvim": { "branch": "main", "commit": "abf7fd881ab6cfbdcc4d354db43469253046ddc5" }
+  "yarepl.nvim": { "branch": "main", "commit": "148a4828325d2075c6d34d7796bc2f62f279588e" }
 }
