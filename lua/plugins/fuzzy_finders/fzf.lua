@@ -122,6 +122,8 @@ local M = {
 
                 files = {
                     find_opts = [[-type f -not -path '*/\.git/*']],
+                    rg_opts = [[--color=never --files --hidden --follow -g "!.git"]],
+                    fd_opts = [[--color=never --type f --hidden --follow --exclude .git]],
                     cwd_prompt = false,
                     git_icons = false,
                     actions = {
