@@ -75,6 +75,8 @@ local M = {
                             columns = { { 'label', 'label_description', gap = 1 }, { 'kind_icon', 'kind' } },
                         },
                     },
+
+                    trigger = { prefetch_on_insert = false },
                 },
 
                 snippets = { preset = 'luasnip' },
