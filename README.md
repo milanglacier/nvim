@@ -606,8 +606,8 @@ for code completion.
 
 | Mode | LHS     | RHS/Functionality                                          |
 | ---- | ------- | ---------------------------------------------------------- |
-| i    | `<M-]>` | Invoke `minuet` completion or cycle to next completion     |
-| i    | `<M-[>` | Invoke `minuet` completion or cycle to previous completion |
+| i    | `<M-'>` | Invoke `minuet` completion or cycle to next completion     |
+| i    | `<M-;>` | Invoke `minuet` completion or cycle to previous completion |
 | i    | `<M-a>` | Accept line                                                |
 | i    | `<M-z>` | Accept n lines of completion                               |
 | i    | `<M-A>` | Accept whole completion                                    |
