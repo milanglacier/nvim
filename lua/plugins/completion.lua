@@ -46,6 +46,7 @@ local M = {
                         next = '<A-;>',
                         dismiss = '<A-e>',
                     },
+                    show_on_completion_menu = true,
                 },
                 notify = 'error',
                 provider_options = {
