@@ -3,8 +3,6 @@ local plugin_specs = {
     { 'rose-pine/neovim', name = 'rose-pine' },
     { 'folke/tokyonight.nvim', branch = 'main' },
     { 'sainnhe/everforest' },
-    { 'sainnhe/edge' },
-    { 'ellisonleao/gruvbox.nvim' },
     { 'rebelot/kanagawa.nvim' },
     { 'catppuccin/nvim', name = 'catppuccin' },
 }

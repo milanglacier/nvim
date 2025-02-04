@@ -36,7 +36,6 @@ local scheme_options = {
                 vim.g.everforest_better_performance = 1
             end,
         },
-        { 'gruvbox' },
         {
             'kanagawa',
             function()
@@ -111,14 +110,6 @@ local scheme_options = {
                 vim.g.everforest_background = 'soft'
                 vim.g.everforest_diagnostic_virtual_text = 'colored'
                 vim.g.everforest_better_performance = 1
-            end,
-        },
-        { 'gruvbox' },
-        {
-            'edge',
-            function()
-                vim.g.edge_diagnostic_virtual_text = 'colored'
-                vim.g.edge_better_performance = 1
             end,
         },
         {
