@@ -64,6 +64,7 @@ return {
     {
         'milanglacier/yarepl.nvim',
         event = 'VeryLazy',
+        lazy = vim.fn.argc(-1) == 0,
         config = function()
             local yarepl = require 'yarepl'
             local aider = require 'yarepl.extensions.aider'
