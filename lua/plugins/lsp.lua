@@ -261,9 +261,13 @@ return {
         'neovim/nvim-lspconfig',
         event = 'LazyFile',
         config = function()
-            local capabilities = Milanglacier.completion_frontend == 'blink'
-                    and require('blink.cmp').get_lsp_capabilities()
-                or require('cmp_nvim_lsp').default_capabilities()
+            local capabilities = {}
+
+            if Milanglacier.completion_frontend == 'blink' then
+                capabilities = require('blink.cmp').get_lsp_capabilities()
+            elseif Milanglacier.completion_frontend == 'cmp' then
+                capabilities = require('cmp_nvim_lsp').default_capabilities()
+            end
 
             local lspconfig = require 'lspconfig'
             lspconfig.util.default_config = vim.tbl_extend('force', lspconfig.util.default_config, capabilities)
