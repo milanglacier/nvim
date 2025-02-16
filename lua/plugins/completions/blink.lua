@@ -118,6 +118,10 @@ local M = {
                     nerd_font_variant = 'normal',
                     kind_icons = require('plugins.completion').kind_icons,
                 },
+
+                -- we will disable blink completion in terminal mode, as
+                -- completion should be handled by the terminal program itself.
+                term = { enabled = false },
             }
         end,
     },
