@@ -152,9 +152,9 @@ local M = {
                 },
 
                 lsp = {
-                    jump_to_single_result = true,
-                    -- open a new tab when there is only one result
-                    jump_to_single_result_action = actions.file_tabedit,
+                    -- directly jump to the location when there is only one result
+                    jump1 = true,
+                    jump1_action = actions.file_edit,
                     -- for lsp references ignore current reference
                     ignore_current_line = true,
                 },
