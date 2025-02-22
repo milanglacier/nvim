@@ -34,7 +34,7 @@ local M = {
 
             require('minuet').setup {
                 provider = 'gemini',
-                request_timeout = 4,
+                request_timeout = 2,
                 throttle = 2000,
                 virtualtext = {
                     auto_trigger_ft = {},
@@ -96,13 +96,17 @@ local M = {
                         },
                     },
                     openai_compatible = {
-                        api_key = 'FIREWORKS_API_KEY',
-                        end_point = 'https://api.fireworks.ai/inference/v1/chat/completions',
-                        model = 'accounts/fireworks/models/llama-v3p3-70b-instruct',
-                        name = 'Fireworks',
+                        api_key = 'OPENROUTER_API_KEY',
+                        end_point = 'https://openrouter.ai/api/v1/chat/completions',
+                        model = 'meta-llama/llama-3.3-70b-instruct',
+                        name = 'Openrouter',
                         optional = {
-                            max_tokens = 256,
+                            max_tokens = 128,
                             top_p = 0.9,
+                            provider = {
+                                 -- Prioritize throughput for faster completion
+                                sort = 'throughput',
+                            },
                         },
                     },
                 },
