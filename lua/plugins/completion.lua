@@ -174,7 +174,11 @@ M.kind_icons = {
     codestral = '󱎥',
     mistral = '󱎥',
     gemini = '',
-    groq = '',
+    Groq = '',
+    Openrouter = '󱂇',
+    Ollama = '󰳆',
+    ['Llama.cpp'] = '󰳆',
+    Deepseek = '',
     -- FALLBACK
     fallback = '',
 }
