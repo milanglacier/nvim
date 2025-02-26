@@ -104,7 +104,7 @@ local M = {
                             max_tokens = 128,
                             top_p = 0.9,
                             provider = {
-                                 -- Prioritize throughput for faster completion
+                                -- Prioritize throughput for faster completion
                                 sort = 'throughput',
                             },
                         },
@@ -184,8 +184,10 @@ M.source_icons = {
     orgmode = '',
     otter = '󰼁',
     nvim_lsp = '',
+    lsp = '',
     buffer = '',
     luasnip = '',
+    snippets = '',
     path = '',
     git = '',
     tags = '',

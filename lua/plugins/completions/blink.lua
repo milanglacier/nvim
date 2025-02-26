@@ -72,7 +72,22 @@ local M = {
                         border = 'rounded',
                         draw = {
                             treesitter = { 'lsp' },
-                            columns = { { 'label', 'label_description', gap = 1 }, { 'kind_icon', 'kind' } },
+                            columns = {
+                                { 'label', 'label_description', gap = 1 },
+                                { 'kind_icon', 'kind' },
+                                { 'source_icon' },
+                            },
+                            components = {
+                                source_icon = {
+                                    -- don't truncate source_icon
+                                    ellipsis = false,
+                                    text = function(ctx)
+                                        local source_icons = require('plugins.completion').source_icons
+                                        return source_icons[ctx.source_name:lower()] or source_icons.fallback
+                                    end,
+                                    highlight = 'BlinkCmpSource',
+                                },
+                            },
                         },
                     },
 
