@@ -96,6 +96,21 @@ local M = {
 
                 snippets = { preset = 'luasnip' },
 
+                cmdline = {
+                    keymap = {
+                        -- I want to use tab to confirm selection rather than
+                        -- cycle between completion item
+                        preset = 'super-tab',
+                    },
+                    completion = {
+                        menu = {
+                            auto_show = true,
+                        },
+                        -- disable ghost text as I don't use noice
+                        ghost_text = { enabled = false },
+                    },
+                },
+
                 sources = {
                     default = { 'lsp', 'path', 'snippets', 'buffer', 'tags' },
                     per_filetype = {
