@@ -343,7 +343,7 @@ return {
                 return function()
                     local caller
                     if mode == 'n' then
-                        caller = 'grug_far'
+                        caller = 'open'
                     else
                         -- send control-u before calling the command
                         -- This is required for visual mode
