@@ -213,7 +213,6 @@ use this example configuration, simply copy the folder to `~/.config/`.
 ## markdown deps
 
 1. `prettierd*`
-2. `vale*`
 3. `efm-langserver*`
 
 ## sql deps

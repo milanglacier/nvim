@@ -40,7 +40,7 @@ tools:
         root-markers:
             - .style.yapf
             - pyproject.toml
-      
+
     black: &black
         format-command: "black --quiet -"
         format-stdin: true
@@ -55,7 +55,6 @@ tools:
 
 languages:
     markdown:
-        - <<: *vale
         - <<: *prettierd
 
     rmd:
@@ -63,9 +62,6 @@ languages:
 
     quarto:
         - <<: *prettierd
-
-    org:
-        - <<: *vale
 
     text:
         - <<: *vale

@@ -22,7 +22,6 @@ pkgs,
         stylua
         # markdown
         prettierd
-        vale
     ];
     programs = {
         neovim = {

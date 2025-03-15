@@ -215,7 +215,6 @@ lsp_configs.efm = function()
             'lua',
             'markdown',
             'lua',
-            'org',
             'sql',
             'rmd',
             'quarto',
