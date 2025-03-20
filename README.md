@@ -213,7 +213,7 @@ use this example configuration, simply copy the folder to `~/.config/`.
 ## markdown deps
 
 1. `prettierd*`
-3. `efm-langserver*`
+2. `efm-langserver*`
 
 ## sql deps
 
@@ -251,20 +251,23 @@ In case you forget the keymaps you can always use `<Leader>fk`
 
 ### Builtin movement keymaps
 
-| Mode | LHS     | RHS/Functionality                 |
-| ---- | ------- | --------------------------------- |
-| ic   | `<C-b>` | `<Left>`                          |
-| ic   | `<C-p>` | `<Up>`                            |
-| ic   | `<C-f>` | `<Right>`                         |
-| ic   | `<C-n>` | `<Down>`                          |
-| ic   | `<C-a>` | Go to Beginning of the line       |
-| ic   | `<C-e>` | Go to end of the line             |
-| ic   | `<C-h>` | `<Backspace>`                     |
-| ic   | `<C-k>` | Del chars from cursor to line end |
-| ic   | `<C-d>` | Delete a char forwardly           |
-| c    | `<A-f>` | Move cursor to next word          |
-| c    | `<A-b>` | Move cursor to previous word      |
-| it   | `jk`    | Switch to normal mode             |
+| Mode | LHS          | RHS/Functionality                 |
+| ---- | ------------ | --------------------------------- |
+| ic   | `<C-b>`      | `<Left>`                          |
+| ic   | `<C-p>`      | `<Up>`                            |
+| ic   | `<C-f>`      | `<Right>`                         |
+| ic   | `<C-n>`      | `<Down>`                          |
+| ic   | `<C-a>`      | Go to Beginning of the line       |
+| ic   | `<C-e>`      | Go to end of the line             |
+| ic   | `<C-h>`      | `<Backspace>`                     |
+| ic   | `<C-k>`      | Del chars from cursor to line end |
+| ic   | `<C-d>`      | Delete a char forwardly           |
+| c    | `<A-f>`      | Move cursor to next word          |
+| c    | `<A-b>`      | Move cursor to previous word      |
+| it   | `jk`         | Switch to normal mode             |
+| i    | `<A-c><A-c>` | Tag completion                    |
+| i    | `<A-c><A-f>` | File completion                   |
+| i    | `<A-c><A-d>` | Document word completion          |
 
 ### Builtin window keymaps
 

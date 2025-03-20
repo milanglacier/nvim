@@ -27,9 +27,6 @@ autocmd('LspAttach', {
 })
 
 keymap('i', '<A-y>', '<cmd>lua vim.lsp.completion.get()<CR>', { desc = 'Manual invoke LSP completion', noremap = true })
-keymap('i', '<A-c><A-c>', '<C-x><C-]>', { desc = 'Tag completion', noremap = true })
-keymap('i', '<A-c><A-f>', '<C-x><C-f>', { desc = 'File completion', noremap = true })
-keymap('i', '<A-c><A-d>', '<C-n>', { desc = 'Document completion', noremap = true })
 
 local function feedkeys(keys)
     -- the magic character 'n' means that we want noremap behavior
