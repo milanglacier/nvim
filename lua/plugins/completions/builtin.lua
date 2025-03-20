@@ -26,6 +26,54 @@ autocmd('LspAttach', {
     desc = 'Enable built-in auto completion',
 })
 
-keymap('i', '<A-y>', '<cmd>lua vim.lsp.completion.get()<CR>', { desc = 'Manual invoke LSP completion' })
+keymap('i', '<A-y>', '<cmd>lua vim.lsp.completion.get()<CR>', { desc = 'Manual invoke LSP completion', noremap = true })
+keymap('i', '<A-c><A-c>', '<C-x><C-]>', { desc = 'Tag completion', noremap = true })
+keymap('i', '<A-c><A-f>', '<C-x><C-f>', { desc = 'File completion', noremap = true })
+keymap('i', '<A-c><A-d>', '<C-n>', { desc = 'Document completion', noremap = true })
+
+local function feedkeys(keys)
+    -- the magic character 'n' means that we want noremap behavior
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(keys, true, false, true), 'n', true)
+end
+
+-- the behavior of tab is depending on scenario:
+-- if popup menu is visible, then select next completion
+-- if snippet has next jumpable anchor, then jump to it
+-- else just fallback to the default tab behavior
+keymap('i', '<tab>', '', {
+    desc = 'tab DWIM',
+    callback = function()
+        local luasnip = require 'luasnip'
+
+        if vim.fn.pumvisible() == 1 then
+            feedkeys '<C-n>'
+        elseif luasnip.expand_or_jumpable() then
+            luasnip.expand_or_jump()
+        else
+            feedkeys '<tab>'
+        end
+    end,
+    noremap = true,
+})
+
+-- the behavior of backtab is depending on scenario:
+-- if popup menu is visible, then select prev completion
+-- if snippet has previous jumpable anchor, then jump to it
+-- else just fallback to the default backtab behavior
+keymap('i', '<S-tab>', '', {
+    desc = 'backtab DWIM',
+    callback = function()
+        local luasnip = require 'luasnip'
+
+        if vim.fn.pumvisible() == 1 then
+            feedkeys '<C-p>'
+        elseif luasnip.jumpable(-1) then
+            luasnip.jump(-1)
+        else
+            feedkeys '<S-tab>'
+        end
+    end,
+    noremap = true,
+})
 
 return M
