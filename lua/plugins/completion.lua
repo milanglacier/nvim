@@ -135,6 +135,10 @@ local M = {
         import = 'plugins.completions.cmp',
         cond = Milanglacier.completion_frontend == 'cmp',
     },
+    {
+        import = 'plugins.completions.builtin',
+        cond = Milanglacier.completion_frontend == 'builtin',
+    },
 }
 
 M.kind_icons = {
