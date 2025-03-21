@@ -102,16 +102,6 @@ vim.o.tagfunc = 'v:lua.TAGFUNC_FALLBACK_IMMEDIATELY'
 
 autocmd('LspAttach', {
     group = my_augroup,
-    once = true,
-    callback = function()
-        vim.lsp.handlers['textDocument/signatureHelp'] =
-            vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'rounded', max_height = 30, max_width = 80 })
-    end,
-    desc = 'Set the UI for signature help',
-})
-
-autocmd('LspAttach', {
-    group = my_augroup,
     callback = function(args)
         local client = vim.lsp.get_client_by_id(args.data.client_id)
         ---@diagnostic disable-next-line
