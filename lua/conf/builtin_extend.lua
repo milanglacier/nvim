@@ -38,9 +38,7 @@ keymap('i', '<A-c><A-d>', '<C-n>', opts_desc 'Document completion')
 
 -- cannot use { silent = true } here, the reason is unknown.
 keymap('c', '<C-b>', '<Left>', { noremap = true })
-keymap('c', '<C-p>', '<Up>', { noremap = true })
 keymap('c', '<C-f>', '<Right>', { noremap = true })
-keymap('c', '<C-n>', '<Down>', { noremap = true })
 keymap('c', '<C-a>', '<home>', { noremap = true })
 keymap('c', '<C-e>', '<end>', { noremap = true })
 keymap('c', '<C-h>', '<BS>', { noremap = true })
