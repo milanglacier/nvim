@@ -37,40 +37,48 @@ end
 -- if popup menu is visible, then select next completion
 -- if snippet has next jumpable anchor, then jump to it
 -- else just fallback to the default tab behavior
-keymap('i', '<tab>', '', {
-    desc = 'tab DWIM',
-    callback = function()
-        local luasnip = require 'luasnip'
+for _, mode in ipairs { 'i', 's' } do
+    keymap(mode, '<tab>', '', {
+        desc = 'tab DWIM',
+        callback = function()
+            local luasnip = require 'luasnip'
 
-        if vim.fn.pumvisible() == 1 then
-            feedkeys '<C-n>'
-        elseif luasnip.expand_or_jumpable() then
-            luasnip.expand_or_jump()
-        else
-            feedkeys '<tab>'
-        end
-    end,
-    noremap = true,
-})
+            if vim.fn.pumvisible() == 1 then
+                feedkeys '<C-n>'
+            elseif luasnip.expand_or_jumpable() then
+                luasnip.expand_or_jump()
+            elseif vim.snippet.active() then
+                vim.snippet.jump(1)
+            else
+                feedkeys '<tab>'
+            end
+        end,
+        noremap = true,
+    })
+end
 
 -- the behavior of backtab is depending on scenario:
 -- if popup menu is visible, then select prev completion
 -- if snippet has previous jumpable anchor, then jump to it
 -- else just fallback to the default backtab behavior
-keymap('i', '<S-tab>', '', {
-    desc = 'backtab DWIM',
-    callback = function()
-        local luasnip = require 'luasnip'
+for _, mode in ipairs { 'i', 's' } do
+    keymap(mode, '<S-tab>', '', {
+        desc = 'backtab DWIM',
+        callback = function()
+            local luasnip = require 'luasnip'
 
-        if vim.fn.pumvisible() == 1 then
-            feedkeys '<C-p>'
-        elseif luasnip.jumpable(-1) then
-            luasnip.jump(-1)
-        else
-            feedkeys '<S-tab>'
-        end
-    end,
-    noremap = true,
-})
+            if vim.fn.pumvisible() == 1 then
+                feedkeys '<C-p>'
+            elseif luasnip.jumpable(-1) then
+                luasnip.jump(-1)
+            elseif vim.snippet.active { direction = -1 } then
+                vim.snippet.jump(-1)
+            else
+                feedkeys '<S-tab>'
+            end
+        end,
+        noremap = true,
+    })
+end
 
 return M
