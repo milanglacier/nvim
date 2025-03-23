@@ -62,7 +62,13 @@ local gui_cursor = {
 vim.o.guifont = 'ComicShannsMono Nerd Font Mono:h15'
 vim.o.guicursor = table.concat(gui_cursor, ',')
 
+---@class MilanGlacierConfig
+---@field completion_frontend "blink" | "cmp" | "builtin" | "mini"
+---@field blink_use_main boolean
+---@field fuzzy_finder "telescope" | "fzf"
+
 -- Configuration options for Neovim plugins
+---@type MilanGlacierConfig
 Milanglacier = {
     completion_frontend = 'blink',
     blink_use_main = false,
