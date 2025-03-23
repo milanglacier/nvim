@@ -49,26 +49,26 @@ elseif Milanglacier.completion_frontend == 'mini' then
     })
 end
 
-local function keyrepr(keys)
+local function keycode(keys)
     return vim.api.nvim_replace_termcodes(keys, true, false, true)
 end
 
 local function feedkeys(keys)
     -- the magic character 'n' means that we want noremap behavior
-    vim.api.nvim_feedkeys(keyrepr(keys), 'n', true)
+    vim.api.nvim_feedkeys(keycode(keys), 'n', true)
 end
 
 keymap('i', '<A-y>', '<cmd>lua vim.lsp.completion.get()<CR>', { desc = 'Manual invoke LSP completion', noremap = true })
--- respect the default behavior (abort completion) for pum or go to line end otherwise
+-- Respect the default behavior: abort completion for `pum` or, otherwise, go to the line end.
 keymap('i', '<C-e>', '', {
     desc = 'Go to line end but respect pum',
     noremap = true,
     expr = true,
     callback = function()
         if vim.fn.pumvisible() == 1 then
-            return keyrepr '<C-e>'
+            return keycode '<C-e>'
         else
-            return keyrepr '<end>'
+            return keycode '<end>'
         end
     end,
 })
