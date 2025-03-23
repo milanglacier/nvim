@@ -34,7 +34,7 @@ elseif Milanglacier.completion_frontend == 'mini' then
                 -- don't let mini modify my completeopt
                 set_vim_settings = false,
                 delay = { signature = 1e7 }, -- disable signature help
-                lsp_completion = { auto_setup = false, source_func = 'omnifunc' },
+                lsp_completion = { auto_setup = false, source_func = 'completefunc' },
                 mappings = {
                     -- disable default mapping
                     force_twostep = '',
@@ -43,7 +43,7 @@ elseif Milanglacier.completion_frontend == 'mini' then
                     scroll_up = '',
                 },
             }
-            vim.o.omnifunc = 'v:lua.MiniCompletion.completefunc_lsp'
+            vim.o.completefunc = 'v:lua.MiniCompletion.completefunc_lsp'
         end,
         desc = 'Enable mini auto completion',
     })
