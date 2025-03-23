@@ -136,8 +136,11 @@ local M = {
         cond = Milanglacier.completion_frontend == 'cmp',
     },
     {
+        -- This file contains configurations for both builtin and
+        -- mini.completion as mini.completion is essentially a wrapper for
+        -- builtin completion.
         import = 'plugins.completions.builtin',
-        cond = Milanglacier.completion_frontend == 'builtin',
+        cond = Milanglacier.completion_frontend == 'builtin' or Milanglacier.completion_frontend == 'mini',
     },
 }
 
