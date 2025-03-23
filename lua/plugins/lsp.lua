@@ -4,6 +4,7 @@ local opts = function(options)
         silent = true,
         desc = options[1] or options.desc,
         callback = options[2] or options.callback,
+        nowait = options[3] or options.nowait,
     }
 end
 
@@ -19,7 +20,9 @@ local attach_keymaps = function(args)
     bufmap(bufnr, 'n', '<Leader>lt', '<cmd>FF lsp_type_definitions<cr>', opts { 'lsp type definition' })
 
     -- reference
-    bufmap(bufnr, 'n', 'gr', '<cmd>FF lsp_references<cr>', opts { 'lsp references' })
+    -- We aim to bypass LSP's default mappings for `grr`, `gra`, and similar
+    -- commands by setting `nowait = true` to execute `gr` immediately.
+    bufmap(bufnr, 'n', 'gr', '<cmd>FF lsp_references<cr>', opts { 'lsp references', nil, true })
 
     -- code action
     bufmap(bufnr, 'n', '<Leader>la', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts { 'lsp code action' })
