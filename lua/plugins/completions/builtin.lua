@@ -33,6 +33,7 @@ elseif Milanglacier.completion_frontend == 'mini' then
             require('mini.completion').setup {
                 -- don't let mini modify my completeopt
                 set_vim_settings = false,
+                delay = { signature = 1e7 }, -- disable signature help
                 lsp_completion = { auto_setup = false, source_func = 'omnifunc' },
                 mappings = {
                     -- disable default mapping
