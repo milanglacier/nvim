@@ -48,12 +48,29 @@ elseif Milanglacier.completion_frontend == 'mini' then
     })
 end
 
-keymap('i', '<A-y>', '<cmd>lua vim.lsp.completion.get()<CR>', { desc = 'Manual invoke LSP completion', noremap = true })
+local function keyrepr(keys)
+    return vim.api.nvim_replace_termcodes(keys, true, false, true)
+end
 
 local function feedkeys(keys)
     -- the magic character 'n' means that we want noremap behavior
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(keys, true, false, true), 'n', true)
+    vim.api.nvim_feedkeys(keyrepr(keys), 'n', true)
 end
+
+keymap('i', '<A-y>', '<cmd>lua vim.lsp.completion.get()<CR>', { desc = 'Manual invoke LSP completion', noremap = true })
+-- respect the default behavior (abort completion) for pum or go to line end otherwise
+keymap('i', '<C-e>', '', {
+    desc = 'Go to line end but respect pum',
+    noremap = true,
+    expr = true,
+    callback = function()
+        if vim.fn.pumvisible() == 1 then
+            return keyrepr '<C-e>'
+        else
+            return keyrepr '<end>'
+        end
+    end,
+})
 
 -- the behavior of tab is depending on scenario:
 -- if popup menu is visible, then select next completion
