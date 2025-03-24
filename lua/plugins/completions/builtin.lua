@@ -5,7 +5,9 @@ local keymap = vim.api.nvim_set_keymap
 
 -- TODO: move this to basic_settings.lua once neovim 0.11 is officially
 -- released.
-vim.o.completeopt = 'menu,menuone,noselect,popup,fuzzy'
+if vim.fn.has 'nvim-0.11' == 1 then
+    vim.o.completeopt = 'menu,menuone,noselect,popup,fuzzy'
+end
 
 if Milanglacier.completion_frontend == 'builtin' then
     -- use neovim built-in completion. Requires nvim-0.11+
