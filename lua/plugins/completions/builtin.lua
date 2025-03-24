@@ -61,12 +61,6 @@ local function feedkeys(keys)
 end
 
 keymap('i', '<A-y>', '<cmd>lua vim.lsp.completion.get()<CR>', { desc = 'Manual invoke LSP completion', noremap = true })
--- Respect the default behavior: abort completion for `pum` or, otherwise, go to the line end.
-keymap('i', '<C-e>', [[pumvisible() ? '<C-e>' : '<end>']], {
-    desc = 'Go to line end but respect pum',
-    noremap = true,
-    expr = true,
-})
 
 -- the behavior of tab is depending on scenario:
 -- if popup menu is visible, then select next completion

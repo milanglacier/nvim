@@ -23,14 +23,26 @@ end
 keymap('', [[\]], [[<localleader>]], {})
 
 keymap('i', '<C-b>', '<Left>', opts)
-keymap('i', '<C-p>', '<Up>', opts)
 keymap('i', '<C-f>', '<Right>', opts)
-keymap('i', '<C-n>', '<Down>', opts)
 keymap('i', '<C-a>', '<home>', opts)
-keymap('i', '<C-e>', '<end>', opts)
 keymap('i', '<C-h>', '<BS>', opts)
 keymap('i', '<C-d>', '<Del>', opts)
 keymap('i', '<C-k>', '<C-o>D', opts)
+keymap('i', '<C-e>', [[pumvisible() ? '<C-e>' : '<end>']], {
+    desc = 'go to line end or abort completion when pum is visible',
+    noremap = true,
+    expr = true,
+})
+keymap('i', '<C-n>', [[pumvisible() ? '<C-n>' : '<down>']], {
+    desc = 'Go to next line',
+    noremap = true,
+    expr = true,
+})
+keymap('i', '<C-p>', [[pumvisible() ? '<C-p>' : '<up>']], {
+    desc = 'Go to previous line',
+    noremap = true,
+    expr = true,
+})
 
 keymap('i', '<A-c><A-c>', '<C-x><C-]>', opts_desc 'Tag completion')
 keymap('i', '<A-c><A-f>', '<C-x><C-f>', opts_desc 'File completion')
