@@ -185,48 +185,6 @@ end, {
     desc = 'This command deactivates a python venv.',
 })
 
-local function run_toggleterm_cmd_for_curret_file(cmd, options)
-    local winid = vim.api.nvim_get_current_win()
-    local current_file = vim.fn.expand '%:p'
-    local term_id = options.args ~= '' and tonumber(options.args) or nil
-    cmd = string.format(cmd, current_file)
-    require('toggleterm').exec(cmd, term_id)
-    vim.cmd.normal { 'G', bang = true }
-    vim.api.nvim_set_current_win(winid)
-end
-
-autocmd('FileType', {
-    desc = 'set command for rendering rmarkdown',
-    pattern = 'rmd',
-    group = my_augroup,
-    callback = function()
-        bufcmd(0, 'RenderRmd', function(options)
-            run_toggleterm_cmd_for_curret_file([[R --quiet -e "rmarkdown::render(%s)"]], options)
-        end, {
-            nargs = '?', -- 0 or 1 arg
-        })
-    end,
-})
-
-autocmd('FileType', {
-    desc = 'set command for rendering quarto',
-    pattern = 'quarto',
-    group = my_augroup,
-    callback = function()
-        bufcmd(0, 'RenderQuarto', function(options)
-            run_toggleterm_cmd_for_curret_file([[quarto render %s]], options)
-        end, {
-            nargs = '?', -- 0 or 1 arg
-        })
-
-        bufcmd(0, 'PreviewQuarto', function(options)
-            run_toggleterm_cmd_for_curret_file([[quarto preview %s]], options)
-        end, {
-            nargs = '?', -- 0 or 1 arg
-        })
-    end,
-})
-
 M.edit_src_wincmd = function(buf, orig_buf)
     local filename = vim.fn.fnamemodify(api.nvim_buf_get_name(orig_buf), ':t')
     local ft = api.nvim_get_option_value('filetype', { buf = buf })

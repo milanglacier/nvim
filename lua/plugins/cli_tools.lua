@@ -13,39 +13,6 @@ return {
         end,
     },
     {
-        'akinsho/toggleterm.nvim',
-        cmd = 'ToggleTerm',
-        config = function()
-            require('toggleterm').setup {
-                -- size can be a number or function which is passed the current terminal
-                size = function(term)
-                    if term.direction == 'horizontal' then
-                        return 15
-                    elseif term.direction == 'vertical' then
-                        return vim.o.columns * 0.30
-                    end
-                end,
-                open_mapping = [[<Leader>ot]],
-                shade_terminals = false,
-                start_in_insert = false,
-                insert_mappings = false,
-                terminal_mappings = false,
-                persist_size = true,
-                direction = 'horizontal',
-                close_on_exit = true,
-            }
-        end,
-        init = function()
-            keymap('n', '<Leader>ot', '<cmd>exe v:count . "ToggleTerm"<CR>', { desc = 'Toggle display all terminals' })
-            keymap(
-                'n',
-                '<Leader>t!',
-                [[<cmd>execute v:count . "TermExec cmd='exit;'"<CR>]],
-                { silent = true, desc = 'quit terminal' }
-            )
-        end,
-    },
-    {
         'goerz/jupytext.vim',
         event = { 'VeryLazy', 'LazyFile' },
         lazy = vim.fn.argc(-1) == 0, -- load jupytext early when opening a file from the cmdline
@@ -70,7 +37,27 @@ return {
             local aider = require 'yarepl.extensions.aider'
 
             yarepl.setup {
-                metas = { aider = aider.create_aider_meta(), python = false, R = false },
+                metas = {
+                    aider = aider.create_aider_meta(),
+                    python = false,
+                    R = false,
+                    shell = {
+                        cmd = vim.o.shell,
+                        wincmd = function(bufnr, name)
+                            vim.api.nvim_open_win(bufnr, true, {
+                                relative = 'cursor',
+                                row = -4,
+                                col = -6,
+                                width = math.floor(vim.o.columns * 0.65),
+                                height = math.floor(vim.o.lines * 0.4),
+                                style = 'minimal',
+                                title = name,
+                                border = 'rounded',
+                                title_pos = 'center',
+                            })
+                        end,
+                    },
+                },
             }
 
             require('yarepl.extensions.code_cell').register_text_objects {
@@ -188,6 +175,17 @@ return {
             })
             keymap('n', '<Leader>a<space>', '<cmd>checktime<cr>', {
                 desc = 'sync file changes by aider to nvim buffer',
+            })
+
+            ----- Set Shell Keymap ------
+            keymap('n', '<Leader>ot', '<Plug>(REPLStart-shell)', {
+                desc = 'Start or focus a shell',
+            })
+            keymap('n', '<Leader>t1', '<Plug>(REPLFocus-shell)', {
+                desc = 'Focus on shell',
+            })
+            keymap('n', '<Leader>t0', '<Plug>(REPLHide-shell)', {
+                desc = 'Hide shell REPL',
             })
 
             ----- Set Filetype Specific keymap -----

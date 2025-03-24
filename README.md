@@ -537,20 +537,16 @@ The following keymaps rely on
 
 ## Integration with other tools
 
-### Terminal emulator keymaps
+### Terminal keymaps
 
 The following keymaps rely on
-[toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim)
+[yarepl.nvim](https://github.com/milanglacier/yarepl.nvim)
 
 | Mode | LHS          | RHS/Functionality                                        |
 | ---- | ------------ | -------------------------------------------------------- |
 | n    | `<Leader>ot` | open the `n`th terminal, e.g `<Leader>ot`, `2<Leader>ot` |
-| n    | `<Leader>t0` | Toggle all terminals                                     |
-| n    | `<Leader>t!` | Terminate the `n`th terminal                             |
-| n    | `<Leader>t1` | Toggle the 1st terminal                                  |
-| n    | `<Leader>t2` | Toggle the 2nd terminal                                  |
-| n    | `<Leader>t3` | Toggle the 3rd terminal                                  |
-| n    | `<Leader>t4` | Toggle the 4th terminal                                  |
+| n    | `<Leader>t0` | Hide current terminal                                    |
+| n    | `<Leader>t1` | Open or focus on current terminal                        |
 
 ### Git keymaps
 
