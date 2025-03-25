@@ -164,6 +164,9 @@ return {
             keymap('n', '<Leader>amc', '<Plug>(AiderSendCodeMode)', {
                 desc = 'Switch aider to code mode',
             })
+            keymap('n', '<Leader>amC', '<Plug>(AiderSendContextMode)', {
+                desc = 'Switch aider to context mode',
+            })
             keymap('n', '<Leader>amA', '<Plug>(AiderSendArchMode)', {
                 desc = 'Switch aider to architect mode',
             })
