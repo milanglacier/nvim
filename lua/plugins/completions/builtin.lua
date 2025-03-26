@@ -57,7 +57,7 @@ end
 
 local function feedkeys(keys)
     -- the magic character 'n' means that we want noremap behavior
-    vim.api.nvim_feedkeys(keycode(keys), 'n', true)
+    vim.api.nvim_feedkeys(keycode(keys), 'n', false)
 end
 
 keymap('i', '<A-y>', '<cmd>lua vim.lsp.completion.get()<CR>', { desc = 'Manual invoke LSP completion', noremap = true })
