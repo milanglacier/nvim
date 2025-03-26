@@ -1,4 +1,3 @@
-vim.o.modelines = 0
 vim.o.compatible = false
 vim.o.backspace = '2'
 
