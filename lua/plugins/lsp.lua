@@ -71,8 +71,8 @@ local attach_keymaps = function(args)
     -- diagnostic
     bufmap(bufnr, 'n', '<Leader>ld', '<cmd>FF buf_diagnositcs<CR>', opts { 'lsp buffer diagnostics' })
     bufmap(bufnr, 'n', '<Leader>lw', '<cmd>FF workspace_diagnositcs<CR>', opts { 'lsp workspace diagnostics' })
-    bufmap(bufnr, 'n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts { 'prev diagnostic' })
-    bufmap(bufnr, 'n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts { 'next diagnostic' })
+    bufmap(bufnr, 'n', '[d', '<cmd>lua vim.diagnostic.jump {count = 1, float = true}<CR>', opts { 'prev diagnostic' })
+    bufmap(bufnr, 'n', ']d', '<cmd>lua vim.diagnostic.jump {count = -1, float = true}<CR>', opts { 'next diagnostic' })
 
     bufmap(bufnr, 'n', '<leader>lo', '<cmd>AerialToggle!<CR>', opts { 'lsp symbol outline' })
 end
