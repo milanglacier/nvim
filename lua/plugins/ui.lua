@@ -156,6 +156,7 @@ return {
                 { '<Leader>f', group = '+find', mode = { 'n', 'v' } },
                 { '<Leader>d', group = '+debugger' },
                 { '<Leader>b', group = '+buffer' },
+                { '<Leader>l', group = '+lsp', mode = { 'n', 'v' } },
                 { '<Leader>w', group = '+window' },
                 { '<Leader>e', group = '+explorer' },
                 { '<Leader>t', group = '+terminal/toggle' },
@@ -188,16 +189,6 @@ return {
                         { '<Leader><Space>', group = '+localleader', buffer = 0 },
                         { '<Leader>oi', group = '+org insert', buffer = 0 },
                         { '<Leader>ox', group = '+org clock', buffer = 0 },
-                    }
-                end,
-            })
-
-            autocmd('LSPAttach', {
-                group = my_augroup,
-                desc = 'add which key description for lsp',
-                callback = function(args)
-                    which_key.add {
-                        { '<Leader>l', group = '+lsp', buffer = args.buf, mode = { 'n', 'v' } },
                     }
                 end,
             })
