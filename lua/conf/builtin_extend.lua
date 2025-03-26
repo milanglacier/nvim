@@ -141,7 +141,7 @@ M.my_augroup = augroup('MyAugroup', {})
 autocmd('TextYankPost', {
     group = M.my_augroup,
     callback = function()
-        vim.highlight.on_yank { higroup = 'IncSearch', timeout = 400 }
+        vim.hl.on_yank { higroup = 'IncSearch', timeout = 400 }
     end,
     desc = 'highlight yanked text',
 })

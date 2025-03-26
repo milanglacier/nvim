@@ -3,12 +3,6 @@ local my_augroup = require('conf.builtin_extend').my_augroup
 local autocmd = vim.api.nvim_create_autocmd
 local keymap = vim.api.nvim_set_keymap
 
--- TODO: move this to basic_settings.lua once neovim 0.11 is officially
--- released.
-if vim.fn.has 'nvim-0.11' == 1 then
-    vim.o.completeopt = 'menu,menuone,noselect,popup,fuzzy'
-end
-
 if Milanglacier.completion_frontend == 'builtin' then
     -- use neovim built-in completion. Requires nvim-0.11+
     autocmd('LspAttach', {
