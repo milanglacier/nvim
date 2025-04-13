@@ -138,7 +138,9 @@ local M = {
                         minuet = {
                             name = 'minuet',
                             module = 'minuet.blink',
-                            score_offset = 8,
+                            score_offset = 50,
+                            async = true,
+                            timeout_ms = 3000,
                         },
                     },
                 },
