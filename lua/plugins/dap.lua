@@ -1,4 +1,7 @@
 local keymap = vim.api.nvim_set_keymap
+local bufmap = vim.api.nvim_buf_set_keymap
+local autocmd = vim.api.nvim_create_autocmd
+local myaugroup = require('conf.builtin_extend').my_augroup
 
 return {
     {
@@ -7,49 +10,36 @@ return {
         dependencies = {
             { 'mfussenegger/nvim-dap-python' },
             { 'leoluz/nvim-dap-go' },
-            { 'rcarriga/nvim-dap-ui', dependencies = { 'nvim-neotest/nvim-nio' } },
+            { 'igorlfs/nvim-dap-view' },
             { 'theHamsta/nvim-dap-virtual-text' },
         },
         config = function()
             require('dap-python').setup 'python3'
             require('dap-go').setup {}
             local dap = require 'dap'
-            local dapui = require 'dapui'
+            local dv = require 'dap-view'
 
-            dapui.setup {
-                layouts = {
-                    {
-                        elements = {
-                            { id = 'breakpoints', size = 0.15 },
-                            { id = 'stacks', size = 0.3 },
-                            { id = 'watches', size = 0.25 },
-                            { id = 'scopes', size = 0.3 },
-                        },
-                        position = 'right',
-                        size = math.floor(vim.o.columns / 3),
-                    },
-                    {
-                        elements = {
-                            'repl',
-                            'console',
-                        },
-                        size = math.floor(vim.o.lines / 5),
-                        position = 'bottom',
-                    },
+            require('dap-view').setup {
+                winbar = {
+                    -- merge the integrated terminal (console) with other sections
+                    sections = { 'watches', 'scopes', 'exceptions', 'breakpoints', 'threads', 'repl', 'console' },
+                },
+                windows = {
+                    height = math.ceil(vim.o.lines / 3),
                 },
             }
 
-            dap.listeners.before.attach.dapui_config = function()
-                dapui.open()
+            dap.listeners.before.attach['dap-view-config'] = function()
+                dv.open()
             end
-            dap.listeners.before.launch.dapui_config = function()
-                dapui.open()
+            dap.listeners.before.launch['dap-view-config'] = function()
+                dv.open()
             end
-            dap.listeners.before.event_terminated.dapui_config = function()
-                dapui.close()
+            dap.listeners.before.event_terminated['dap-view-config'] = function()
+                dv.close()
             end
-            dap.listeners.before.event_exited.dapui_config = function()
-                dapui.close()
+            dap.listeners.before.event_exited['dap-view-config'] = function()
+                dv.close()
             end
 
             require('nvim-dap-virtual-text').setup {}
@@ -92,14 +82,17 @@ return {
                 opts 'dap conditional breakpoint'
             )
 
-            -- builtin dap ui
+            -- dapview
 
-            keymap('n', '<Leader>dh', '<cmd>lua require("dap.ui.widgets").hover()<CR>', opts 'dap hover')
-            keymap('n', '<Leader>dr', '<cmd>lua require("dap").repl.toggle()<CR>', opts 'dap repl')
-
-            -- plugin dap ui
-
-            keymap('n', '<Leader>du', '<cmd>lua require"dapui".toggle()<CR>', opts 'dap ui')
+            keymap('n', '<Leader>dt', '<cmd>DapViewToggle<CR>', opts 'dap view toggle')
+            keymap('n', '<Leader>dw', '<cmd>DapViewWatch<CR>', opts 'dap view watch symbol under cursor')
+            keymap('n', '<Leader>djr', '<cmd>DapViewJump repl<CR>', opts 'dap view jump to repl')
+            keymap('n', '<Leader>djs', '<cmd>DapViewJump scopes<CR>', opts 'dap view jump to scopes')
+            keymap('n', '<Leader>dje', '<cmd>DapViewJump exceptions<CR>', opts 'dap view jump to exceptions')
+            keymap('n', '<Leader>djb', '<cmd>DapViewJump breakpoints<CR>', opts 'dap view jump to breakpoints')
+            keymap('n', '<Leader>djw', '<cmd>DapViewJump watches<CR>', opts 'dap view jump to watches')
+            keymap('n', '<Leader>djt', '<cmd>DapViewJump threads<CR>', opts 'dap view jump to threads')
+            keymap('n', '<Leader>djc', '<cmd>DapViewJump console<CR>', opts 'dap view jump to console')
 
             -- telescope extensions
 
@@ -111,6 +104,21 @@ return {
 
             vim.fn.sign_define('DapBreakpoint', { text = '', texhl = 'TodoFgFIX' })
             vim.fn.sign_define('DapBreakpointCondition', { text = '', texhl = 'TodoFgFIX' })
+
+            autocmd('FileType', {
+                group = myaugroup,
+                pattern = { 'dap-view', 'dap-repl', 'dap-view-term' },
+                desc = 'set dapview keymap',
+                callback = function()
+                    bufmap(0, 'n', ']r', '<cmd>DapViewJump repl<CR>', opts 'dap view jump to repl')
+                    bufmap(0, 'n', ']s', '<cmd>DapViewJump scopes<CR>', opts 'dap view jump to scopes')
+                    bufmap(0, 'n', ']e', '<cmd>DapViewJump exceptions<CR>', opts 'dap view jump to exceptions')
+                    bufmap(0, 'n', ']b', '<cmd>DapViewJump breakpoints<CR>', opts 'dap view jump to breakpoints')
+                    bufmap(0, 'n', ']w', '<cmd>DapViewJump watches<CR>', opts 'dap view jump to watches')
+                    bufmap(0, 'n', ']t', '<cmd>DapViewJump threads<CR>', opts 'dap view jump to threads')
+                    bufmap(0, 'n', ']c', '<cmd>DapViewJump console<CR>', opts 'dap view jump to console')
+                end,
+            })
         end,
     },
 }

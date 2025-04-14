@@ -47,6 +47,9 @@ return {
                             'NeogitStatus',
                             'NeogitCommitMessage',
                             'NeogitPopup',
+                            'dap-view',
+                            'dap-view-term',
+                            'dap-repl',
                         },
                         statusline = {
                             'starter',
