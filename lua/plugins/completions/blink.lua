@@ -100,7 +100,12 @@ local M = {
                     keymap = {
                         -- I want to use tab to confirm selection rather than
                         -- cycle between completion item
-                        preset = 'super-tab',
+                        preset = 'none',
+                        ['<C-n>'] = { 'select_next', 'fallback' },
+                        ['<C-p>'] = { 'select_prev', 'fallback' },
+                        ['<C-e>'] = { 'cancel' },
+                        ['<Tab>'] = { 'select_and_accept', 'fallback' },
+                        ['<S-Tab>'] = { 'select_prev', 'fallback' },
                     },
                     completion = {
                         menu = {
