@@ -62,10 +62,10 @@ local M = {
                     openai_compatible = {
                         api_key = 'OPENROUTER_API_KEY',
                         end_point = 'https://openrouter.ai/api/v1/chat/completions',
-                        model = 'qwen/qwen2.5-32b-instruct',
+                        model = 'deepseek/deepseek-chat-v3-0324',
                         name = 'Openrouter',
                         optional = {
-                            max_tokens = 128,
+                            max_tokens = 56,
                             top_p = 0.9,
                             provider = {
                                 -- Prioritize throughput for faster completion
