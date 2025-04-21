@@ -57,8 +57,8 @@ end
 keymap('i', '<A-y>', '<cmd>lua vim.lsp.completion.get()<CR>', { desc = 'Manual invoke LSP completion', noremap = true })
 
 -- the behavior of tab is depending on scenario:
--- if popup menu is visible, then select next completion
 -- if snippet has next jumpable anchor, then jump to it
+-- if popup menu is visible, then select next completion
 -- else just fallback to the default tab behavior
 for _, mode in ipairs { 'i', 's' } do
     keymap(mode, '<tab>', '', {
@@ -66,12 +66,12 @@ for _, mode in ipairs { 'i', 's' } do
         callback = function()
             local luasnip = require 'luasnip'
 
-            if vim.fn.pumvisible() == 1 then
-                feedkeys '<C-n>'
-            elseif luasnip.expand_or_jumpable() then
+            if luasnip.expand_or_jumpable() then
                 luasnip.expand_or_jump()
             elseif vim.snippet.active() then
                 vim.snippet.jump(1)
+            elseif vim.fn.pumvisible() == 1 then
+                feedkeys '<C-n>'
             else
                 feedkeys '<tab>'
             end
