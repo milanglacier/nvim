@@ -176,6 +176,7 @@ return {
     {
         'HiPhish/rainbow-delimiters.nvim',
         event = 'LazyFile',
+        submodules = false,
         config = function()
             vim.g.rainbow_delimiters = {
                 query = {

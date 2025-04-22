@@ -113,7 +113,7 @@ autocmd('LspAttach', {
     desc = 'Disable semantic highlight',
 })
 
-local enabled_lsps = { 'r', 'python', 'bash', 'cpp', 'vim', 'nvim', 'pinyin', 'sql', 'latex', 'go', 'rust', 'efm' }
+local enabled_lsps = { 'r', 'python', 'nvim', 'efm' }
 
 local lsp_configs = {}
 
