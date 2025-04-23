@@ -67,7 +67,11 @@ for _, mode in ipairs { 'i', 's' } do
             local luasnip = require 'luasnip'
 
             if luasnip.expand_or_jumpable() then
-                luasnip.expand_or_jump()
+                if vim.fn.pumvisible() == 1 then
+                    -- close pum firstly before expanding snippet
+                    feedkeys '<C-e>'
+                end
+                vim.schedule(luasnip.expand_or_jump)
             elseif vim.snippet.active() then
                 vim.snippet.jump(1)
             elseif vim.fn.pumvisible() == 1 then
