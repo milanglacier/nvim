@@ -25,7 +25,8 @@
         "prefix": "mc",
         "body": [
             "# %% [markdown]",
-            "# $0"
+            "# $0",
+            "# %%"
         ],
         "description": "create markdown code chunk"
     },
