@@ -103,12 +103,18 @@ return {
                 desc = 'Hide Aichat REPL',
             })
             keymap('v', '<Leader>cr', '<Plug>(REPLSourceVisual-aichat)', {
+                desc = 'Source visual region to Aichat',
+            })
+            keymap('v', '<Leader>cR', '<Plug>(REPLSendVisual-aichat)', {
                 desc = 'Send visual region to Aichat',
             })
             keymap('n', '<Leader>crr', '<Plug>(REPLSendLine-aichat)', {
                 desc = 'Send lines to Aichat',
             })
             keymap('n', '<Leader>cr', '<Plug>(REPLSourceOperator-aichat)', {
+                desc = 'Source Operator to Aichat',
+            })
+            keymap('n', '<Leader>cR', '<Plug>(REPLSendOperator-aichat)', {
                 desc = 'Send Operator to Aichat',
             })
             keymap('n', '<Leader>ce', '<Plug>(REPLExec-aichat)', {
@@ -223,12 +229,18 @@ return {
                         desc = 'Hide REPL',
                     })
                     bufmap(0, 'v', '<LocalLeader>s', '<Plug>(REPLSourceVisual)', {
+                        desc = 'Source visual region to REPL',
+                    })
+                    bufmap(0, 'v', '<LocalLeader>S', '<Plug>(REPLSendVisual)', {
                         desc = 'Send visual region to REPL',
                     })
                     bufmap(0, 'n', '<LocalLeader>ss', '<Plug>(REPLSendLine)', {
                         desc = 'Send line to REPL',
                     })
                     bufmap(0, 'n', '<LocalLeader>s', '<Plug>(REPLSourceOperator)', {
+                        desc = 'Source current line to REPL',
+                    })
+                    bufmap(0, 'n', '<LocalLeader>S', '<Plug>(REPLSendOperator)', {
                         desc = 'Send current line to REPL',
                     })
                     bufmap(0, 'n', '<LocalLeader>re', '<Plug>(REPLExec)', {
