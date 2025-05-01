@@ -176,6 +176,8 @@ command('PyVenvActivate', function(options)
         pattern = 'PythonEnvActivate',
         data = { venv_path = vim.env.VIRTUAL_ENV },
     })
+
+    vim.notify('Python venv activated: ' .. vim.env.VIRTUAL_ENV)
 end, {
     nargs = 1,
     complete = 'dir',
