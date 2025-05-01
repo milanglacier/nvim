@@ -5,7 +5,6 @@ local autocmd = vim.api.nvim_create_autocmd
 local my_augroup = require('conf.builtin_extend').my_augroup
 local command = vim.api.nvim_create_user_command
 local bufmap = vim.api.nvim_buf_set_keymap
-local bufcmd = vim.api.nvim_buf_create_user_command
 
 autocmd('FileType', {
     group = my_augroup,
@@ -64,6 +63,11 @@ command('CondaActivateEnv', function(options)
     vim.env.CONDA_SHLVL = 1
     vim.env.CONDA_PROMPT_MODIFIER = '(' .. vim.env.CONDA_DEFAULT_ENV .. ') '
 
+    vim.api.nvim_exec_autocmds('User', {
+        pattern = 'CondaEnvActivate',
+        data = { conda_env_path = conda_current_env_path },
+    })
+
     vim.notify 'conda env activated'
 end, {
     nargs = '?',
@@ -108,6 +112,10 @@ command('CondaDeactivate', function(_)
     vim.env.CONDA_PROMPT_MODIFIER = nil
 
     vim.notify 'conda env deactivated'
+
+    vim.api.nvim_exec_autocmds('User', {
+        pattern = 'CondaEnvDeactivate',
+    })
 end, {
     desc = [[This command deactivates a conda environment. Note that after the
 execution, the conda env will be completely cleared (i.e. without base
@@ -163,6 +171,11 @@ command('PyVenvActivate', function(options)
     path = path .. '/bin'
     -- remove the trailing `/` in the string.
     vim.env.PATH = path .. ':' .. vim.env.PATH
+
+    vim.api.nvim_exec_autocmds('User', {
+        pattern = 'PythonEnvActivate',
+        data = { venv_path = vim.env.VIRTUAL_ENV },
+    })
 end, {
     nargs = 1,
     complete = 'dir',
@@ -173,6 +186,7 @@ command('PyVenvDeactivate', function(_)
     if vim.env.VIRTUAL_ENV == nil or vim.env.VIRTUAL_ENV == '' then
         return
     end
+
     local env_split = vim.split(vim.env.PATH, ':')
     for idx, path in ipairs(env_split) do
         if path == vim.env.VIRTUAL_ENV .. '/bin' then
@@ -181,6 +195,10 @@ command('PyVenvDeactivate', function(_)
     end
     vim.env.PATH = table.concat(env_split, ':')
     vim.env.VIRTUAL_ENV = nil
+
+    vim.api.nvim_exec_autocmds('User', {
+        pattern = 'PythonEnvDeactivate',
+    })
 end, {
     desc = 'This command deactivates a python venv.',
 })
