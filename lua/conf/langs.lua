@@ -133,21 +133,31 @@ command('PoetryEnvActivate', function()
             end, out)
         end,
         on_exit = function(_, success, _)
-            if success == 0 then
-                vim.ui.select(poetry_envs, {
-                    prompt = 'select a poetry env',
-                    format_item = function(x)
-                        return vim.fn.fnamemodify(x, ':t')
-                    end,
-                }, function(choice)
-                    if choice ~= nil then
-                        choice = string.gsub(choice, ' %(Activated%)$', '')
-                        vim.cmd.PyVenvActivate { args = { choice } }
-                    end
-                end)
-            else
+            if success ~= 0 then
                 vim.notify 'current project is not a poetry project or poetry is not installed!'
+                return
             end
+
+            if #poetry_envs == 1 then
+                -- If only one environment, activate it directly
+                local choice = poetry_envs[1]
+                choice = string.gsub(choice, ' %(Activated%)$', '')
+                vim.cmd.PyVenvActivate { args = { choice } }
+                return
+            end
+
+            -- If multiple environments, show the selection UI
+            vim.ui.select(poetry_envs, {
+                prompt = 'select a poetry env',
+                format_item = function(x)
+                    return vim.fn.fnamemodify(x, ':t')
+                end,
+            }, function(choice)
+                if choice ~= nil then
+                    choice = string.gsub(choice, ' %(Activated%)$', '')
+                    vim.cmd.PyVenvActivate { args = { choice } }
+                end
+            end)
         end,
     })
 end, {
