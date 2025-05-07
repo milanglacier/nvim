@@ -6,7 +6,7 @@ local bufmap = vim.api.nvim_buf_set_keymap
 return {
     -- an installer for a bunch of CLI tools (e.g. LSP, linters)
     {
-        'williamboman/mason.nvim',
+        'mason-org/mason.nvim',
         cmd = { 'Mason', 'MasonInstall', 'MasonUpdate', 'MasonUninstall' },
         config = function()
             require('mason').setup()
