@@ -135,7 +135,7 @@ return {
     },
     {
         'andymass/vim-matchup',
-        event = 'VeryLazy',
+        event = 'LazyFile',
         init = function()
             -- don't need this binding, remap them to some keys not likely to trigger
             keymap('n', '%', '<plug>(matchup-z%)', {})
