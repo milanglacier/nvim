@@ -137,11 +137,12 @@ return {
         'andymass/vim-matchup',
         event = 'LazyFile',
         init = function()
-            -- don't need this binding, remap them to some keys not likely to trigger
-            keymap('n', '%', '<plug>(matchup-z%)', {})
-            keymap('o', '%', '<plug>(matchup-z%)', {})
-            keymap('x', '%', '<plug>(matchup-z%)', {})
-            keymap('i', '%', '<plug>(matchup-c_g%)', {})
+            -- disable builtin keymaps
+            vim.g.matchup_mappings_enabled = 0
+            vim.keymap.set({ 'n', 'x', 'o' }, '%', '<plug>(matchup-%)', { noremap = false })
+
+            vim.keymap.set({ 'x', 'o' }, 'a%', '<plug>(matchup-a%)', { noremap = false })
+            vim.keymap.set({ 'x', 'o' }, 'i%', '<plug>(matchup-i%)', { noremap = false })
         end,
     },
     { 'tommcdo/vim-exchange', event = 'VeryLazy' },
