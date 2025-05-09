@@ -215,6 +215,40 @@ end, {
     desc = 'This command deactivates a python venv.',
 })
 
+local function set_python_path(path)
+    local clients = vim.lsp.get_clients {
+        bufnr = vim.api.nvim_get_current_buf(),
+        name = 'basedpyright',
+    }
+    for _, client in ipairs(clients) do
+        if client.settings then
+            client.settings.python = vim.tbl_deep_extend('force', client.settings.python or {}, { pythonPath = path })
+        else
+            client.config.settings =
+                vim.tbl_deep_extend('force', client.config.settings, { python = { pythonPath = path } })
+        end
+        client.notify('workspace/didChangeConfiguration', {})
+    end
+end
+
+autocmd('User', {
+    group = my_augroup,
+    desc = 'set python path',
+    pattern = 'PythonEnvActivate',
+    callback = function(event)
+        set_python_path(event.data.venv_path .. '/bin/python3')
+    end,
+})
+
+autocmd('User', {
+    group = my_augroup,
+    pattern = 'CondaEnvActivate',
+    desc = 'set python path',
+    callback = function(event)
+        set_python_path(event.data.conda_env_path .. '/bin/python3')
+    end,
+})
+
 M.edit_src_wincmd = function(buf, orig_buf)
     local filename = vim.fn.fnamemodify(api.nvim_buf_get_name(orig_buf), ':t')
     local ft = api.nvim_get_option_value('filetype', { buf = buf })
