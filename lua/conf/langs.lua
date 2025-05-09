@@ -222,12 +222,13 @@ local function set_python_path(path)
     }
     for _, client in ipairs(clients) do
         if client.settings then
+            ---@diagnostic disable-next-line:param-type-mismatch
             client.settings.python = vim.tbl_deep_extend('force', client.settings.python or {}, { pythonPath = path })
         else
             client.config.settings =
                 vim.tbl_deep_extend('force', client.config.settings, { python = { pythonPath = path } })
         end
-        client.notify('workspace/didChangeConfiguration', {})
+        client:notify('workspace/didChangeConfiguration', {})
     end
 end
 
