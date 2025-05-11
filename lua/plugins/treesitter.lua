@@ -2,10 +2,14 @@ local autocmd = vim.api.nvim_create_autocmd
 local my_augroup = require('conf.builtin_extend').my_augroup
 local keymap = vim.api.nvim_set_keymap
 
-local function list_filter(parent_list, excluded_list)
+---@param base_set string[]
+---@param subtract_set string[]
+---@return string[]
+---return the difference base_set - subtract_set
+local function setdiff(base_set, subtract_set)
     return vim.tbl_filter(function(item)
-        return not vim.tbl_contains(excluded_list, item)
-    end, parent_list)
+        return not vim.tbl_contains(subtract_set, item)
+    end, base_set)
 end
 
 TS_Parsers = {
@@ -33,13 +37,13 @@ TS_Parsers = {
 
 -- highlight
 local disable_highlight = { 'sql', 'tex', 'latex', 'markdown_inline', 'regex', 'bash' }
-TS_Parsers_Enabled_for_Highlight = list_filter(TS_Parsers, disable_highlight)
+TS_Parsers_Enabled_for_Highlight = setdiff(TS_Parsers, disable_highlight)
 table.insert(TS_Parsers_Enabled_for_Highlight, 'quarto')
 table.insert(TS_Parsers_Enabled_for_Highlight, 'rmd')
 
 -- indent
 local disable_indent = { 'python', 'sql', 'tex', 'latex', 'markdown_inline', 'regex', 'bash' }
-TS_Parsers_Enabled_for_Indent = list_filter(TS_Parsers, disable_indent)
+TS_Parsers_Enabled_for_Indent = setdiff(TS_Parsers, disable_indent)
 
 -- fold
 TS_Parsers_Enabled_for_Fold = {
@@ -60,7 +64,7 @@ TS_Parsers_Enabled_for_Fold = {
 }
 
 local disable_textobj = { 'sql', 'tex', 'latex', 'markdown_inline', 'regex', 'bash', 'vimdoc' }
-TS_Parsers_Enabled_for_Text_Objs = list_filter(TS_Parsers, disable_textobj)
+TS_Parsers_Enabled_for_Text_Objs = setdiff(TS_Parsers, disable_textobj)
 
 return {
     {
