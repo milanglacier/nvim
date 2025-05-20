@@ -268,6 +268,8 @@ In case you forget the keymaps you can always use `<Leader>fk`
 | i    | `<A-c><A-c>` | Tag completion                    |
 | i    | `<A-c><A-f>` | File completion                   |
 | i    | `<A-c><A-d>` | Document word completion          |
+| i    | `<C-x><C-x>` | Tag completion                    |
+| i    | `<C-x><C-d>` | Document word completion          |
 
 ### Builtin window keymaps
 

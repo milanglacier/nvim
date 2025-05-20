@@ -48,6 +48,9 @@ keymap('i', '<A-c><A-c>', '<C-x><C-]>', opts_desc 'Tag completion')
 keymap('i', '<A-c><A-f>', '<C-x><C-f>', opts_desc 'File completion')
 keymap('i', '<A-c><A-d>', '<C-n>', opts_desc 'Document completion')
 
+keymap('i', '<C-x><C-x>', '<C-x><C-]>', opts_desc 'Tag completion')
+keymap('i', '<C-x><C-d>', '<C-n>', opts_desc 'Document completion')
+
 -- cannot use { silent = true } here, the reason is unknown.
 keymap('c', '<C-b>', '<Left>', { noremap = true })
 keymap('c', '<C-f>', '<Right>', { noremap = true })
