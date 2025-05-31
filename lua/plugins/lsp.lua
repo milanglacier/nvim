@@ -113,32 +113,53 @@ autocmd('LspAttach', {
     desc = 'Disable semantic highlight',
 })
 
-local enabled_lsps = { 'r', 'python', 'nvim', 'efm', 'latex', 'go', 'rust' }
+local enabled_lsps =
+    { 'r_language_server', 'basedpyright', 'texlab', 'rust_analyzer', 'gopls', 'lua_ls', 'efm', 'bashls', 'clangd' }
 
-local lsp_configs = {}
+local lsp_to_executable = {
+    r_language_server = 'R',
+    basedpyright = 'basedpyright',
+    texlab = 'texlab',
+    rust_analyzer = 'rust-analyzer',
+    gopls = 'gopls',
+    lua_ls = 'lua-language-server',
+    clangd = 'clangd',
+    efm = 'efm-langserver',
+    bashls = 'bash-language-server',
+}
 
-lsp_configs.python = function()
-    require('lspconfig').basedpyright.setup {}
+local lsp_to_ft = {
+    r_language_server = { 'r', 'rmd' },
+    bashls = { 'sh', 'bash' },
+    basedpyright = { 'python' },
+    texlab = { 'tex' },
+    rust_analyzer = { 'rust' },
+    gopls = { 'go' },
+    lua_ls = { 'lua' },
+    clangd = { 'c', 'cpp' },
+    efm = {
+        'python',
+        'lua',
+        'markdown',
+        'rmd',
+        'quarto',
+        'json',
+        'yaml',
+        'sql',
+    },
+}
+
+local enabled_fts = {}
+for _, lsp in ipairs(enabled_lsps) do
+    for _, ft in ipairs(lsp_to_ft[lsp]) do
+        enabled_fts[ft] = true
+    end
 end
 
-lsp_configs.r = function()
-    require('lspconfig').r_language_server.setup {}
-end
+enabled_fts = vim.tbl_keys(enabled_fts)
 
-lsp_configs.latex = function()
-    require('lspconfig').texlab.setup {}
-end
-
-lsp_configs.bash = function()
-    require('lspconfig').bashls.setup {}
-end
-
-lsp_configs.cpp = function()
-    require('lspconfig').clangd.setup {}
-end
-
-lsp_configs.nvim = function()
-    require('lspconfig').lua_ls.setup {
+local setup_lspconfig = function()
+    vim.lsp.config('lua_ls', {
         on_attach = function(client, _)
             client.server_capabilities.documentFormattingProvider = false
         end,
@@ -152,11 +173,9 @@ lsp_configs.nvim = function()
                 },
             },
         },
-    }
-end
+    })
 
-lsp_configs.sql = function()
-    require('lspconfig').sqls.setup {
+    vim.lsp.config('sqls', {
         on_attach = function(client, bufnr)
             -- The document formatting implementation of sqls is buggy.
             client.server_capabilities.documentFormattingProvider = false
@@ -167,29 +186,9 @@ lsp_configs.sql = function()
             bufmap(bufnr, 'n', '<LocalLeader>sv', '<cmd>SqlsExecuteQueryVertical<CR>', { silent = true })
             bufmap(bufnr, 'v', '<LocalLeader>sv', '<cmd>SqlsExecuteQueryVertical<CR>', { silent = true })
         end,
-    }
-end
+    })
 
-lsp_configs.pinyin = function()
-    require('lspconfig').ds_pinyin_lsp.setup {
-        filetypes = { 'markdown', 'rmd', 'quarto' },
-        init_options = {
-            db_path = os.getenv 'HOME' .. '/.local/share/ds-pinyin-lsp/dict.db3',
-            completion_on = false, -- don't enable the completion by default
-        },
-    }
-end
-
-lsp_configs.go = function()
-    require('lspconfig').gopls.setup {}
-end
-
-lsp_configs.rust = function()
-    require('lspconfig').rust_analyzer.setup {}
-end
-
-lsp_configs.efm = function()
-    require('lspconfig').efm.setup {
+    vim.lsp.config('efm', {
         filetypes = {
             'python',
             'lua',
@@ -206,8 +205,24 @@ lsp_configs.efm = function()
             documentRangeFormatting = true,
             codeAction = true,
         },
-    }
+    })
 end
+
+autocmd('FileType', {
+    once = true,
+    desc = 'vim.lsp.enable with lazyloading',
+    group = my_augroup,
+    pattern = enabled_fts,
+    callback = function()
+        setup_lspconfig()
+        for _, lsp in ipairs(enabled_lsps) do
+            local executable = lsp_to_executable[lsp]
+            if vim.fn.executable(executable) == 1 then
+                vim.lsp.enable(lsp)
+            end
+        end
+    end,
+})
 
 local has_virtual_text = false
 local has_underline = false
@@ -245,22 +260,6 @@ return {
     {
         'neovim/nvim-lspconfig',
         event = 'LazyFile',
-        config = function()
-            local capabilities = {}
-
-            if Milanglacier.completion_frontend == 'blink' then
-                capabilities = require('blink.cmp').get_lsp_capabilities()
-            elseif Milanglacier.completion_frontend == 'cmp' then
-                capabilities = require('cmp_nvim_lsp').default_capabilities()
-            end
-
-            local lspconfig = require 'lspconfig'
-            lspconfig.util.default_config = vim.tbl_extend('force', lspconfig.util.default_config, capabilities)
-
-            for _, lsp in pairs(enabled_lsps) do
-                lsp_configs[lsp]()
-            end
-        end,
     },
 
     -- lsp related tools, including lsp symbols, symbol outline, etc.
