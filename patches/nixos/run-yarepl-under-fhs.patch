@@ -1,23 +1,18 @@
 diff --git a/lua/plugins/cli_tools.lua b/lua/plugins/cli_tools.lua
-index 449bf93..e76bb5b 100644
+index e268256..44c3592 100644
 --- a/lua/plugins/cli_tools.lua
 +++ b/lua/plugins/cli_tools.lua
-@@ -36,6 +36,10 @@ return {
+@@ -36,8 +36,13 @@ return {
              local yarepl = require 'yarepl'
              local aider = require 'yarepl.extensions.aider'
- 
+
 +            aider.setup {
 +                aider_cmd = { 'fhs', 'aider' },
 +            }
 +
              yarepl.setup {
                  metas = {
-                     aider = aider.create_aider_meta(),
-@@ -57,6 +61,7 @@ return {
-                             })
-                         end,
-                     },
 +                    ipython = { cmd = { 'fhs', 'ipython' } },
-                 },
-             }
- 
+                     aider = aider.create_aider_meta(),
+                     python = false,
+                     R = false,
