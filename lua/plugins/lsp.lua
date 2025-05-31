@@ -11,6 +11,7 @@ local lsp_to_executable = {
     clangd = 'clangd',
     efm = 'efm-langserver',
     bashls = 'bash-language-server',
+    sqls = 'sqls',
 }
 
 local lsp_to_ft = {
@@ -22,6 +23,7 @@ local lsp_to_ft = {
     gopls = { 'go' },
     lua_ls = { 'lua' },
     clangd = { 'c', 'cpp' },
+    sqls = { 'sql' },
     efm = {
         'python',
         'lua',
