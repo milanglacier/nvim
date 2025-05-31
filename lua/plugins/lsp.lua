@@ -155,10 +155,6 @@ lsp_configs.nvim = function()
     }
 end
 
-lsp_configs.vim = function()
-    require('lspconfig').vimls.setup {}
-end
-
 lsp_configs.sql = function()
     require('lspconfig').sqls.setup {
         on_attach = function(client, bufnr)
