@@ -6,7 +6,6 @@ don't require separate branch management (unlike the `vscode` branch used for
 `vscode-neovim` configurations). For organizational simplicity, all patches are
 consolidated in this single directory.
 
-- **`minimal-enabled-lsp.patch`**: Enables a minimal set of LSPs for usage.
 - **`extended-jk-as-esc-waiting-period.patch`**: Extends the waiting period for
   interpreting `jk` as the `Esc` key. In environments with slower response times
   (e.g., under an SSH connection), the default `100ms` timeout may be
