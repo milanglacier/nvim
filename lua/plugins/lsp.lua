@@ -38,7 +38,7 @@ local lsp_to_ft = {
 
 local enabled_fts = {}
 for _, lsp in ipairs(enabled_lsps) do
-    for _, ft in ipairs(lsp_to_ft[lsp]) do
+    for _, ft in ipairs(lsp_to_ft[lsp] or {}) do
         enabled_fts[ft] = true
     end
 end
@@ -218,7 +218,7 @@ autocmd('FileType', {
     callback = function()
         setup_lspconfig()
         for _, lsp in ipairs(enabled_lsps) do
-            local executable = lsp_to_executable[lsp]
+            local executable = lsp_to_executable[lsp] or lsp
             if vim.fn.executable(executable) == 1 then
                 vim.lsp.enable(lsp)
             end
