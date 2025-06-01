@@ -58,6 +58,7 @@ end
 local bufmap = vim.api.nvim_buf_set_keymap
 local my_augroup = require('conf.builtin_extend').my_augroup
 local autocmd = vim.api.nvim_create_autocmd
+local augroup = vim.api.nvim_create_augroup
 local bufcmd = vim.api.nvim_buf_create_user_command
 local command = vim.api.nvim_create_user_command
 
@@ -212,8 +213,8 @@ end
 
 autocmd('FileType', {
     once = true,
-    desc = 'vim.lsp.enable with lazyloading',
-    group = my_augroup,
+    desc = 'Setup LSP lazily',
+    group = augroup('MyLSPSetup', {}),
     pattern = enabled_fts,
     callback = function()
         setup_lspconfig()
@@ -223,6 +224,12 @@ autocmd('FileType', {
                 vim.lsp.enable(lsp)
             end
         end
+
+        -- NOTE: When specifying `once = true`, the autocommand will execute
+        -- once *per filetype*, not just once in total. Therefore, we remove
+        -- the autocmd itself afterward since all LSPs will already have been
+        -- setup by that point.
+        vim.api.nvim_del_augroup_by_name 'MyLSPSetup'
     end,
 })
 
