@@ -229,13 +229,12 @@ return {
     },
 
     {
-        'romgrk/nvim-treesitter-context',
+        'nvim-treesitter/nvim-treesitter-context',
         event = { 'LazyFile' },
         lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
         config = function()
             require('treesitter-context').setup {
                 enable = true,
-                throttle = true,
             }
         end,
     },
