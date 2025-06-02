@@ -39,7 +39,6 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = [[  ]]
 
 vim.o.mouse = 'a'
-vim.env.NVIM_TUI_ENABLE_TRUE_COLOR = 1
 vim.o.termguicolors = true
 vim.opt.tags:append '.tags;' -- ; means upper search parent directory with .tags file
 
