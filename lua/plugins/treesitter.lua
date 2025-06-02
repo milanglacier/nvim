@@ -74,11 +74,15 @@ return {
         -- will consult to lazyvim.
         event = { 'LazyFile' },
         cmd = { 'TSUpdate', 'TSInstall' },
-        build = ':TSUpdate',
+        build = function()
+            require('nvim-treesitter').install(TS_Parsers):wait(300000)
+            require('nvim-treesitter').update():wait(300000)
+            -- wait max. 5 minutes
+        end,
         lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
-        branch = 'master',
+        branch = 'main',
         dependencies = {
-            { 'nvim-treesitter/nvim-treesitter-textobjects', branch = 'master' },
+            { 'nvim-treesitter/nvim-treesitter-textobjects', branch = 'main' },
         },
         config = function()
             if vim.fn.executable 'tree-sitter' == 0 then
@@ -87,66 +91,7 @@ return {
                 end
             end
 
-            require('nvim-treesitter.configs').setup {
-                ensure_installed = TS_Parsers,
-                auto_install = false,
-                highlight = {
-                    -- we manage highlight by ourself
-                    enable = false,
-                },
-                indent = {
-                    enable = TS_Parsers_Enabled_for_Indent,
-                },
-                textobjects = {
-                    select = {
-                        enable = true,
-                        lookahead = true,
-                        keymaps = {
-                            ['af'] = '@function.outer',
-                            ['if'] = '@function.inner',
-                            ['ak'] = '@class.outer',
-                            ['ik'] = '@class.inner',
-                            ['al'] = '@loop.outer',
-                            ['il'] = '@loop.inner',
-                            ['ac'] = '@conditional.outer',
-                            ['ic'] = '@conditional.inner',
-                            ['ie'] = '@call.inner',
-                            ['ae'] = '@call.outer',
-                            -- mini.ai's regex based argument (`a`) one works better
-                            ['aA'] = '@parameter.outer',
-                            ['ia'] = '@parameter.inner',
-                        },
-                    },
-                    move = {
-                        enable = true,
-                        set_jumps = true,
-                        goto_next_start = {
-                            [']f'] = '@function.outer',
-                            [']k'] = '@class.outer',
-                            [']l'] = '@loop.outer',
-                            [']c'] = '@conditional.outer',
-                        },
-                        goto_next_end = {
-                            [']F'] = '@function.outer',
-                            [']K'] = '@class.outer',
-                            [']L'] = '@loop.outer',
-                            [']C'] = '@conditional.outer',
-                        },
-                        goto_previous_start = {
-                            ['[f'] = '@function.outer',
-                            ['[k'] = '@class.outer',
-                            ['[l'] = '@loop.outer',
-                            ['[c'] = '@conditional.outer',
-                        },
-                        goto_previous_end = {
-                            ['[F'] = '@function.outer',
-                            ['[K'] = '@class.outer',
-                            ['[L'] = '@loop.outer',
-                            ['[C'] = '@conditional.outer',
-                        },
-                    },
-                },
-            }
+            require('nvim-treesitter').setup {}
 
             vim.treesitter.language.register('markdown', { 'quarto', 'rmd' })
 
@@ -163,9 +108,7 @@ return {
                 pattern = { 'quarto', 'rmd' },
                 group = my_augroup,
                 desc = 'Enable regex highlight with treesitter',
-                callback = function()
-                    vim.cmd [[setlocal syntax=on]]
-                end,
+                command = 'setlocal syntax=on',
             })
 
             autocmd('FileType', {
@@ -173,6 +116,99 @@ return {
                 group = my_augroup,
                 desc = 'Use treesitter fold',
                 command = 'setlocal foldmethod=expr foldexpr=v:lua.vim.treesitter.foldexpr()',
+            })
+
+            autocmd('FileType', {
+                pattern = TS_Parsers_Enabled_for_Indent,
+                group = my_augroup,
+                desc = 'Enable treesitter indent',
+                command = "setlocal indentexpr=v:lua.require'nvim-treesitter'.indentexpr()",
+            })
+        end,
+    },
+
+    {
+        'nvim-treesitter/nvim-treesitter-textobjects',
+        branch = 'main',
+        config = function()
+            require('nvim-treesitter-textobjects').setup {
+                select = {
+                    -- Automatically jump forward to textobj, similar to targets.vim
+                    lookahead = true,
+                    include_surrounding_whitespace = false,
+                },
+                move = {
+                    -- whether to set jumps in the jumplist
+                    set_jumps = true,
+                },
+            }
+
+            local selectors = {
+                ['af'] = '@function.outer',
+                ['if'] = '@function.inner',
+                ['ak'] = '@class.outer',
+                ['ik'] = '@class.inner',
+                ['al'] = '@loop.outer',
+                ['il'] = '@loop.inner',
+                ['ac'] = '@conditional.outer',
+                ['ic'] = '@conditional.inner',
+                ['ie'] = '@call.inner',
+                ['ae'] = '@call.outer',
+                ['aA'] = '@parameter.outer', -- mini.ai's regex based argument (`a`) one works better
+                ['iA'] = '@parameter.inner',
+            }
+
+            local movers = {
+                ['f'] = '@function.outer',
+                ['k'] = '@class.outer',
+                ['l'] = '@loop.outer',
+                ['c'] = '@conditional.outer',
+            }
+
+            autocmd('FileType', {
+                pattern = TS_Parsers_Enabled_for_Text_Objs,
+                group = my_augroup,
+                desc = 'Enable treesitter textobjects',
+                callback = function()
+                    for k, obj in pairs(selectors) do
+                        vim.keymap.set({ 'x', 'o' }, k, function()
+                            require('nvim-treesitter-textobjects.select').select_textobject(obj, 'textobjects')
+                        end, {
+                            desc = obj,
+                            buffer = true,
+                        })
+                    end
+
+                    for k, obj in pairs(movers) do
+                        vim.keymap.set({ 'n', 'x', 'o' }, ']' .. k, function()
+                            require('nvim-treesitter-textobjects.move').goto_next_start(obj, 'textobjects')
+                        end, {
+                            desc = obj .. ' next start',
+                            buffer = true,
+                        })
+
+                        vim.keymap.set({ 'n', 'x', 'o' }, '[' .. k, function()
+                            require('nvim-treesitter-textobjects.move').goto_previous_start(obj, 'textobjects')
+                        end, {
+                            desc = obj .. ' prev start',
+                            buffer = true,
+                        })
+
+                        vim.keymap.set({ 'n', 'x', 'o' }, ']' .. k:upper(), function()
+                            require('nvim-treesitter-textobjects.move').goto_next_end(obj, 'textobjects')
+                        end, {
+                            desc = obj .. ' next End',
+                            buffer = true,
+                        })
+
+                        vim.keymap.set({ 'n', 'x', 'o' }, '[' .. k:upper(), function()
+                            require('nvim-treesitter-textobjects.move').goto_previous_end(obj, 'textobjects')
+                        end, {
+                            desc = obj .. ' prev End',
+                            buffer = true,
+                        })
+                    end
+                end,
             })
         end,
     },
