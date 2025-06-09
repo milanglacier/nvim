@@ -321,6 +321,11 @@ return {
                     local bufnr = args.buf
                     local client = vim.lsp.get_client_by_id(args.data.client_id)
 
+                    -- disable navic for quarto, as navic does not work well with otter-ls.
+                    if vim.bo[bufnr].ft == 'quarto' then
+                        return
+                    end
+
                     ---@diagnostic disable-next-line
                     if client.server_capabilities.documentSymbolProvider then
                         require('nvim-navic').attach(client, bufnr)
