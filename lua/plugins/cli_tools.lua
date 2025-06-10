@@ -37,6 +37,7 @@ return {
             local aider = require 'yarepl.extensions.aider'
 
             yarepl.setup {
+                source_command_hint = { enabled = true },
                 metas = {
                     aider = aider.create_aider_meta(),
                     python = false,
