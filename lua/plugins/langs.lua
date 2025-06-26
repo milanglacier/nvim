@@ -114,20 +114,4 @@ return {
             })
         end,
     },
-    {
-        'MeanderingProgrammer/render-markdown.nvim',
-        ft = { 'markdown', 'rmd', 'quarto' },
-        config = function()
-            require('render-markdown').setup {
-                file_types = { 'markdown', 'rmd', 'quarto' },
-                code = {
-                    sign = false,
-                },
-                heading = {
-                    sign = false,
-                    icons = { '󰬺 ', '󰬻 ', '󰬼 ', '󰬽 ', '󰬾 ', '󰬿 ' },
-                },
-            }
-        end,
-    },
 }
