@@ -149,6 +149,10 @@ function M.edit_inline_string()
     local orig_buf = api.nvim_get_current_buf()
     local content = vim.treesitter.get_node_text(node, 0)
     local start_row, start_col, end_row, end_col = node:range()
+    if end_col == 0 then
+        end_col = -1
+        end_row = end_row - 1
+    end
 
     local ft
     for _, func in ipairs(edit_inline_string_guess_ft_functions) do
