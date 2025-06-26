@@ -68,25 +68,13 @@ autocmd('User', {
 })
 
 autocmd('FileType', {
-    pattern = 'python',
+    pattern = { 'python', 'markdown', 'quarto', 'rmd' },
     group = my_augroup,
-    desc = 'Add edit src keymap to python',
+    desc = 'Add edit inline keymap',
     callback = function()
         bufmap(0, 'n', "<LocalLeader>'", '', {
-            desc = 'edit src under cursor in a dedicated buffer',
-            callback = require('conf.edit_inline').edit_inline_string,
-        })
-    end,
-})
-
-autocmd('FileType', {
-    pattern = { 'markdown', 'quarto', 'rmd' },
-    group = my_augroup,
-    desc = 'Add edit src keymap to markdown',
-    callback = function()
-        bufmap(0, 'n', "<LocalLeader>'", '', {
-            desc = 'edit code block under cursor in a dedicated buffer',
-            callback = require('conf.edit_inline').edit_markdown_code_block,
+            desc = 'Edit inline string (typically inline SQL)or code block in a dedicated temporary buffer',
+            callback = require('conf.edit_inline').edit_inline,
         })
     end,
 })
