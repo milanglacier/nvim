@@ -302,6 +302,74 @@ local function edit_src_commit_change(bufnr, orig_buf, start_row, start_col, end
     vim.cmd('bwipeout! ' .. bufnr)
 end
 
+local function edit_markdown_code_block()
+    local bufnr = api.nvim_get_current_buf()
+    local cursor_pos = api.nvim_win_get_cursor(0)
+    local row = cursor_pos[1] - 1
+
+    local query = vim.treesitter.query.parse(
+        'markdown',
+        [[
+        (fenced_code_block
+            (info_string (language) @lang)
+            (code_fence_content) @content
+        ) @block
+    ]]
+    )
+
+    local parser = vim.treesitter.get_parser(bufnr, 'markdown')
+    ---@diagnostic disable-next-line: need-check-nil
+    local tree = parser:parse()[1]
+    local root = tree:root()
+
+    for _, match, _ in query:iter_matches(root, bufnr, 0, -1) do
+        local code_lang_node = match[1][1]
+        local content_node = match[2][1]
+        local block_node = match[3][1]
+
+        local block_row_start, _, block_row_end, _ = block_node:range()
+
+        if row >= block_row_start and row <= block_row_end then
+            local code_lang = vim.treesitter.get_node_text(code_lang_node, bufnr)
+
+            -- NOTE: setting the buffer as non-scratch is to ensure lsp can be
+            -- activated in the temp buffer, since lsp will not activate on scratch
+            -- buffer.
+            local buf = api.nvim_create_buf(true, false)
+            if code_lang and code_lang ~= '' then
+                api.nvim_set_option_value('filetype', code_lang, { buf = buf })
+            end
+            -- Setting buftype to nofile is to prevent from LSP complaining about it
+            -- cannot find a file corresponding to the buffer.
+            api.nvim_set_option_value('buftype', 'nofile', { buf = buf })
+            -- when the window is closed, destroy the temporary buffer
+            -- automatically.
+            api.nvim_set_option_value('bufhidden', 'wipe', { buf = buf })
+
+            local code_content = vim.treesitter.get_node_text(content_node, bufnr)
+            api.nvim_buf_set_lines(buf, 0, -1, false, vim.split(code_content, '\n'))
+
+            M.edit_src_wincmd(buf, bufnr)
+
+            bufmap(buf, 'n', '<LocalLeader>c', '', {
+                desc = 'commit change to original file',
+                callback = function()
+                    local content_start_row, _, content_end_row, _ = content_node:range()
+                    edit_src_commit_change(buf, bufnr, content_start_row, 0, content_end_row - 1, -1)
+                end,
+            })
+
+            bufmap(buf, 'n', '<LocalLeader>k', '<cmd>bwipeout<cr>', {
+                desc = 'discard change',
+            })
+
+            return
+        end
+    end
+
+    vim.notify 'cursor not in a markdown code block'
+end
+
 local function edit_src_in_dedicated_buffer()
     local node = vim.treesitter.get_node()
     if not node then
@@ -365,6 +433,18 @@ autocmd('FileType', {
         bufmap(0, 'n', "<LocalLeader>'", '', {
             desc = 'edit src under cursor in a dedicated buffer',
             callback = edit_src_in_dedicated_buffer,
+        })
+    end,
+})
+
+autocmd('FileType', {
+    pattern = { 'markdown', 'quarto', 'rmd' },
+    group = my_augroup,
+    desc = 'Add edit src keymap to markdown',
+    callback = function()
+        bufmap(0, 'n', "<LocalLeader>'", '', {
+            desc = 'edit code block under cursor in a dedicated buffer',
+            callback = edit_markdown_code_block,
         })
     end,
 })
