@@ -85,9 +85,9 @@ command('CondaDeactivate', function(_)
         pattern = 'CondaEnvDeactivate',
     })
 end, {
-    desc = [[This command deactivates a conda environment. Note that after the
-execution, the conda env will be completely cleared (i.e. without base
-environment activated).]],
+    desc = [[Deactivate a conda environment.
+Note that after the execution, the conda env will be completely cleared (i.e.
+without base environment activated).]],
 })
 
 command('PoetryEnvActivate', function()
@@ -129,13 +129,13 @@ command('PoetryEnvActivate', function()
         end,
     })
 end, {
-    desc = [[This command finds the current poetry venvs by using `poetry env list` command and activate the env selected by the user.]],
+    desc = [[Find the current poetry venvs by using `poetry env list` command and activate the env selected by the user.]],
 })
 
 command('PoetryEnvDeactivate', function()
     vim.cmd.PyVenvDeactivate()
 end, {
-    desc = [[This command finds the current poetry venvs by using `poetry env list` command and activate the env selected by the user.]],
+    desc = [[Find the current poetry venvs by using `poetry env list` command and activate the env selected by the user.]],
 })
 
 command('PyVenvActivate', function(options)
@@ -159,7 +159,7 @@ command('PyVenvActivate', function(options)
 end, {
     nargs = 1,
     complete = 'dir',
-    desc = [[This command activates a python venv. The path to the python virtual environment may include "/bin/" or not.]],
+    desc = [[Activate a python venv. The path to the python virtual environment can either include "/bin/" or not.]],
 })
 
 command('PyVenvDeactivate', function(_)
@@ -180,5 +180,5 @@ command('PyVenvDeactivate', function(_)
         pattern = 'PythonEnvDeactivate',
     })
 end, {
-    desc = 'This command deactivates a python venv.',
+    desc = 'Deactivate a python venv.',
 })
