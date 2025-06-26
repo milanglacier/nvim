@@ -2,7 +2,7 @@ local M = {}
 local api = vim.api
 local bufmap = vim.api.nvim_buf_set_keymap
 
-M.edit_src_wincmd = function(buf, orig_buf)
+M.edit_inline_wincmd = function(buf, orig_buf)
     local filename = vim.fn.fnamemodify(api.nvim_buf_get_name(orig_buf), ':t')
     local ft = api.nvim_get_option_value('filetype', { buf = buf })
     if ft == nil or ft == '' then
@@ -46,7 +46,7 @@ local edit_src_guess_ft_functions = {
     end,
 }
 
-local function edit_src_commit_change(bufnr, orig_buf, start_row, start_col, end_row, end_col)
+local function edit_inline_commit_change(bufnr, orig_buf, start_row, start_col, end_row, end_col)
     local lines = api.nvim_buf_get_lines(bufnr, 0, -1, false)
     vim.schedule(function()
         api.nvim_buf_set_text(orig_buf, start_row, start_col, end_row, end_col, lines)
@@ -101,13 +101,13 @@ function M.edit_markdown_code_block()
             local code_content = vim.treesitter.get_node_text(content_node, bufnr)
             api.nvim_buf_set_lines(buf, 0, -1, false, vim.split(code_content, '\n'))
 
-            M.edit_src_wincmd(buf, bufnr)
+            M.edit_inline_wincmd(buf, bufnr)
 
             bufmap(buf, 'n', '<LocalLeader>c', '', {
                 desc = 'commit change to original file',
                 callback = function()
                     local content_start_row, _, content_end_row, _ = content_node:range()
-                    edit_src_commit_change(buf, bufnr, content_start_row, 0, content_end_row - 1, -1)
+                    edit_inline_commit_change(buf, bufnr, content_start_row, 0, content_end_row - 1, -1)
                 end,
             })
 
@@ -122,7 +122,7 @@ function M.edit_markdown_code_block()
     vim.notify 'cursor not in a markdown code block'
 end
 
-function M.edit_src_in_dedicated_buffer()
+function M.edit_inline_string()
     local node = vim.treesitter.get_node()
     if not node then
         vim.notify 'not a valid treesitter node'
@@ -163,12 +163,12 @@ function M.edit_src_in_dedicated_buffer()
 
     api.nvim_buf_set_lines(buf, 0, -1, false, vim.split(content, '\n'))
 
-    M.edit_src_wincmd(buf, orig_buf)
+    M.edit_inline_wincmd(buf, orig_buf)
 
     bufmap(buf, 'n', '<LocalLeader>c', '', {
         desc = 'commit change to original file',
         callback = function()
-            edit_src_commit_change(buf, orig_buf, start_row, start_col, end_row, end_col)
+            edit_inline_commit_change(buf, orig_buf, start_row, start_col, end_row, end_col)
         end,
     })
 

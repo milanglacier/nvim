@@ -74,7 +74,7 @@ autocmd('FileType', {
     callback = function()
         bufmap(0, 'n', "<LocalLeader>'", '', {
             desc = 'edit src under cursor in a dedicated buffer',
-            callback = require('conf.edit_inline').edit_src_in_dedicated_buffer,
+            callback = require('conf.edit_inline').edit_inline_string,
         })
     end,
 })
