@@ -6,7 +6,7 @@ M.edit_inline_wincmd = function(buf, orig_buf)
     local filename = vim.fn.fnamemodify(api.nvim_buf_get_name(orig_buf), ':t')
     local ft = api.nvim_get_option_value('filetype', { buf = buf })
     if ft == nil or ft == '' then
-        ft = 'editsrc'
+        ft = 'edit_inline'
     end
 
     vim.api.nvim_open_win(buf, true, {
