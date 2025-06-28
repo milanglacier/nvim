@@ -214,6 +214,15 @@ return {
                     },
                 },
             }
+
+            -- To accommodate Emacs's `jupyter-python` language identifier for
+            -- Org Mode source blocks, we map this identifier to the Python
+            -- file type. This configuration allows `orgmode.nvim` to correctly
+            -- set the file type of temporary editing buffers for code blocks
+            -- that leverage the `emacs-jupyter` package.
+            vim.filetype.add {
+                extension = { ['jupyter-python'] = 'python' },
+            }
         end,
     },
 }
