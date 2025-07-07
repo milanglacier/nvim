@@ -98,6 +98,7 @@ return {
                 org_startup_folded = 'inherit', -- use global foldlevel
 
                 org_src_window_setup = 'belowright 40 new',
+                org_edit_src_filetype_map = { ['jupyter-python'] = 'python' },
 
                 org_capture_templates = {
                     t = { description = 'personal todo', template = '* TODO %? :\nSCHEDULED: %t' },
@@ -213,15 +214,6 @@ return {
                         around_subtree_from_root = 'aR',
                     },
                 },
-            }
-
-            -- To accommodate Emacs's `jupyter-python` language identifier for
-            -- Org Mode source blocks, we map this identifier to the Python
-            -- file type. This configuration allows `orgmode.nvim` to correctly
-            -- set the file type of temporary editing buffers for code blocks
-            -- that leverage the `emacs-jupyter` package.
-            vim.filetype.add {
-                extension = { ['jupyter-python'] = 'python' },
             }
         end,
     },
