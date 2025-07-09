@@ -63,6 +63,12 @@ keymap('c', '<C-k>', [[<C-\>e(strpart(getcmdline(), 0, getcmdpos() - 1))<CR>]], 
 keymap('c', '<A-b>', '<S-Left>', { noremap = true })
 keymap('c', '<A-f>', '<S-Right>', { noremap = true })
 
+
+-- In Vim, `C-b` and `C-f` scroll by a full page, while `C-u` and `C-d` scroll
+-- by half a page.  We want to always scroll by a half page.
+keymap('n', '<C-f>', '<C-d>', {})
+keymap('n', '<C-b>', '<C-u>', {})
+
 keymap('n', '<Leader>mdc', [[:cd %:h|pwd<cr>]], opts)
 keymap('n', '<Leader>mdu', [[:cd ..|pwd<cr>]], opts)
 
