@@ -22,6 +22,9 @@ end
 
 keymap('', [[\]], [[<localleader>]], {})
 
+-- Disable the middle mouse button to prevent accidental clicks.
+keymap('', [[<MiddleMouse>]], [[<nop>]], {})
+
 keymap('i', '<C-b>', '<Left>', opts)
 keymap('i', '<C-f>', '<Right>', opts)
 keymap('i', '<C-a>', '<home>', opts)
