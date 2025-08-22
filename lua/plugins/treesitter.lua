@@ -40,6 +40,7 @@ local disable_highlight = { 'sql', 'tex', 'latex', 'markdown_inline', 'regex', '
 TS_Parsers_Enabled_for_Highlight = setdiff(TS_Parsers, disable_highlight)
 table.insert(TS_Parsers_Enabled_for_Highlight, 'quarto')
 table.insert(TS_Parsers_Enabled_for_Highlight, 'rmd')
+table.insert(TS_Parsers_Enabled_for_Highlight, 'sh')
 
 -- indent
 local disable_indent = { 'python', 'sql', 'tex', 'latex', 'markdown_inline', 'regex', 'bash' }
@@ -65,6 +66,7 @@ TS_Parsers_Enabled_for_Fold = {
 
 local disable_textobj = { 'sql', 'tex', 'latex', 'markdown_inline', 'regex', 'bash', 'vimdoc' }
 TS_Parsers_Enabled_for_Text_Objs = setdiff(TS_Parsers, disable_textobj)
+table.insert(TS_Parsers_Enabled_for_Text_Objs, 'sh')
 
 return {
     {
