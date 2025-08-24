@@ -35,11 +35,13 @@ return {
         config = function()
             local yarepl = require 'yarepl'
             local aider = require 'yarepl.extensions.aider'
+            local codex = require 'yarepl.extensions.codex'
 
             yarepl.setup {
                 source_command_hint = { enabled = true },
                 metas = {
                     aider = aider.create_aider_meta(),
+                    codex = codex.create_codex_meta(),
                     python = false,
                     R = false,
                     shell = {
@@ -126,6 +128,32 @@ return {
             })
             keymap('n', '<Leader>cc', '<CMD>REPLCleanup<CR>', {
                 desc = 'Clear aichat REPLs.',
+            })
+
+            ----- Set codex Keymap ------
+            keymap('n', '<Leader>zs', '<Plug>(REPLStart-codex)', {
+                desc = 'Start an codex REPL',
+            })
+            keymap('n', '<Leader>zf', '<Plug>(REPLFocus-codex)', {
+                desc = 'Focus on codex REPL',
+            })
+            keymap('n', '<Leader>zh', '<Plug>(REPLHide-codex)', {
+                desc = 'Hide codex REPL',
+            })
+            keymap('v', '<Leader>zr', '<Plug>(REPLSendVisual-codex)', {
+                desc = 'Send visual region to codex',
+            })
+            keymap('n', '<Leader>zrr', '<Plug>(REPLSendLine-codex)', {
+                desc = 'Send lines to codex',
+            })
+            keymap('n', '<Leader>zr', '<Plug>(REPLSendOperator-codex)', {
+                desc = 'Send Operator to codex',
+            })
+            keymap('n', '<Leader>ze', '<Plug>(CodexExec)', {
+                desc = 'Execute command in codex',
+            })
+            keymap('n', '<Leader>z<space>', '<cmd>checktime<cr>', {
+                desc = 'sync file changes by codex to nvim buffer',
             })
 
             ----- Set Aider Keymap ------
