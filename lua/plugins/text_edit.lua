@@ -4,7 +4,7 @@ local keymap = vim.api.nvim_set_keymap
 
 return {
     {
-        'echasnovski/mini.nvim',
+        'nvim-mini/mini.nvim',
         cmd = 'Git',
         event = 'LazyFile',
         init = function()
