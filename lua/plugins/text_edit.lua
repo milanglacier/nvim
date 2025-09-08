@@ -176,8 +176,8 @@ return {
             keymap('n', '<C-x>', '<Plug>(dial-decrement)', { desc = 'decrement' })
             keymap('x', '<C-a>', '<Plug>(dial-increment)', { desc = 'increment' })
             keymap('x', '<C-x>', '<Plug>(dial-decrement)', { desc = 'decrement' })
-            keymap('x', 'g<C-a>', 'g<Plug>(dial-increment)', { desc = 'ordered increment' })
-            keymap('x', 'g<C-x>', 'g<Plug>(dial-decrement)', { desc = 'ordered decrement' })
+            keymap('x', 'g<C-a>', '<Plug>(dial-g-increment)', { desc = 'ordered increment' })
+            keymap('x', 'g<C-x>', '<Plug>(dial-g-decrement)', { desc = 'ordered decrement' })
         end,
         config = function()
             local augend = require 'dial.augend'
