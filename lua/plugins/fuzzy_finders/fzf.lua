@@ -53,7 +53,7 @@ local M = {
             local actions = require 'fzf-lua.actions'
 
             require('fzf-lua').setup {
-                'default-title',
+                { 'border-fused' },
 
                 winopts = {
                     height = 0.85,
