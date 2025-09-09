@@ -68,7 +68,7 @@ vim.o.guicursor = table.concat(gui_cursor, ',')
 -- Configuration options for Neovim plugins
 ---@type MilanGlacierConfig
 Milanglacier = {
-    completion_frontend = 'mini',
+    completion_frontend = 'blink',
     blink_use_main = false,
     fuzzy_finder = 'fzf',
 }
