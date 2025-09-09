@@ -124,7 +124,7 @@ local M = {
                     min_keyword_length = 0,
                     providers = {
                         snippets = {
-                            score_offset = 4,
+                            score_offset = 2,
                         },
                         tags = {
                             name = 'tags',
