@@ -103,7 +103,7 @@ local M = {
                         preset = 'none',
                         ['<C-n>'] = { 'select_next', 'fallback' },
                         ['<C-p>'] = { 'select_prev', 'fallback' },
-                        ['<C-e>'] = { 'cancel' },
+                        ['<C-e>'] = { 'cancel', 'fallback' },
                         ['<Tab>'] = { 'select_and_accept', 'fallback' },
                         ['<S-Tab>'] = { 'select_prev', 'fallback' },
                     },
@@ -123,6 +123,15 @@ local M = {
                     },
                     min_keyword_length = 0,
                     providers = {
+                        lsp = {
+                            opts = {
+                                -- By default, "buffers" serve as the fallback for the LSP.
+                                -- This means buffer completions are shown only when the LSP
+                                -- provides no completion items. Instead, we want buffer
+                                -- completions to always be visible.
+                                fallbacks = {},
+                            },
+                        },
                         snippets = {
                             score_offset = 2,
                         },
