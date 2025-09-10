@@ -124,13 +124,12 @@ local M = {
                     min_keyword_length = 0,
                     providers = {
                         lsp = {
-                            opts = {
-                                -- By default, "buffers" serve as the fallback for the LSP.
-                                -- This means buffer completions are shown only when the LSP
-                                -- provides no completion items. Instead, we want buffer
-                                -- completions to always be visible.
-                                fallbacks = {},
-                            },
+                            -- By default, "buffers" serve as the fallback for
+                            -- the LSP. This means buffer completions are shown
+                            -- only when the LSP provides no completion items.
+                            -- Instead, we want buffer completions to always be
+                            -- visible.
+                            fallbacks = {},
                         },
                         snippets = {
                             score_offset = 2,
