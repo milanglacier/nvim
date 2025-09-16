@@ -54,7 +54,10 @@ return {
                     find_left = '<Plug>(mini-surround-find_left)',
                     highlight = '<Plug>(mini-surround-highlight)',
                     replace = '<Plug>(mini-surround-replace)',
-                    update_n_lines = '<Plug>(mini-surround-update_n_lines)',
+                    -- Disable mini.nvim's extended mappings to prevent
+                    -- potential confusion.
+                    suffix_last = '',
+                    suffix_next = '',
                 },
             }
 
