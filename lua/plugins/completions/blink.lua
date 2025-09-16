@@ -104,7 +104,7 @@ local M = {
                         ['<C-n>'] = { 'select_next', 'fallback' },
                         ['<C-p>'] = { 'select_prev', 'fallback' },
                         ['<C-e>'] = { 'cancel', 'fallback' },
-                        ['<Tab>'] = { 'select_and_accept', 'fallback' },
+                        ['<Tab>'] = { 'show_and_insert_or_accept_single', 'select_next', 'fallback' },
                         ['<S-Tab>'] = { 'select_prev', 'fallback' },
                     },
                     completion = {
