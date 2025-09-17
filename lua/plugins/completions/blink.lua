@@ -98,9 +98,9 @@ local M = {
 
                 cmdline = {
                     keymap = {
-                        -- I want to use tab to confirm selection rather than
-                        -- cycle between completion item
                         preset = 'none',
+                        ['<up>'] = { 'select_next', 'fallback' },
+                        ['<down>'] = { 'select_prev', 'fallback' },
                         ['<C-n>'] = { 'select_next', 'fallback' },
                         ['<C-p>'] = { 'select_prev', 'fallback' },
                         ['<C-e>'] = { 'cancel', 'fallback' },
