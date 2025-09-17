@@ -100,6 +100,8 @@ return {
                 org_src_window_setup = 'belowright 40 new',
                 org_edit_src_filetype_map = { ['jupyter-python'] = 'python' },
 
+                org_archive_location = org_dir .. '/archive/' .. '%s.archive.org',
+
                 org_capture_templates = {
                     t = { description = 'personal todo', template = '* TODO %? :\nSCHEDULED: %t' },
                     n = {
