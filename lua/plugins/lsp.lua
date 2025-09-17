@@ -14,37 +14,6 @@ local lsp_to_executable = {
     sqls = 'sqls',
 }
 
-local lsp_to_ft = {
-    r_language_server = { 'r', 'rmd' },
-    bashls = { 'sh', 'bash' },
-    basedpyright = { 'python' },
-    texlab = { 'tex' },
-    rust_analyzer = { 'rust' },
-    gopls = { 'go' },
-    lua_ls = { 'lua' },
-    clangd = { 'c', 'cpp' },
-    sqls = { 'sql' },
-    efm = {
-        'python',
-        'lua',
-        'markdown',
-        'rmd',
-        'quarto',
-        'json',
-        'yaml',
-        'sql',
-    },
-}
-
-local enabled_fts = {}
-for _, lsp in ipairs(enabled_lsps) do
-    for _, ft in ipairs(lsp_to_ft[lsp] or {}) do
-        enabled_fts[ft] = true
-    end
-end
-
-enabled_fts = vim.tbl_keys(enabled_fts)
-
 local opts = function(options)
     return {
         noremap = true,
@@ -58,7 +27,6 @@ end
 local bufmap = vim.api.nvim_buf_set_keymap
 local my_augroup = require('conf.builtin_extend').my_augroup
 local autocmd = vim.api.nvim_create_autocmd
-local augroup = vim.api.nvim_create_augroup
 local bufcmd = vim.api.nvim_buf_create_user_command
 local command = vim.api.nvim_create_user_command
 
@@ -211,28 +179,6 @@ local setup_lspconfig = function()
     })
 end
 
-autocmd('FileType', {
-    once = true,
-    desc = 'Setup LSP lazily',
-    group = augroup('MyLSPSetup', {}),
-    pattern = enabled_fts,
-    callback = function()
-        setup_lspconfig()
-        for _, lsp in ipairs(enabled_lsps) do
-            local executable = lsp_to_executable[lsp] or lsp
-            if vim.fn.executable(executable) == 1 then
-                vim.lsp.enable(lsp)
-            end
-        end
-
-        -- NOTE: When specifying `once = true`, the autocommand will execute
-        -- once *per filetype*, not just once in total. Therefore, we remove
-        -- the autocmd itself afterward since all LSPs will already have been
-        -- setup by that point.
-        vim.api.nvim_del_augroup_by_name 'MyLSPSetup'
-    end,
-})
-
 local has_virtual_text = false
 local has_underline = false
 
@@ -268,7 +214,16 @@ return {
     -- LSP config
     {
         'neovim/nvim-lspconfig',
-        event = 'LazyFile',
+        event = { 'BufReadPre', 'BufNewFile', 'BufWritePre' },
+        config = function()
+            setup_lspconfig()
+            for _, lsp in ipairs(enabled_lsps) do
+                local executable = lsp_to_executable[lsp] or lsp
+                if vim.fn.executable(executable) == 1 then
+                    vim.lsp.enable(lsp)
+                end
+            end
+        end,
     },
 
     -- lsp related tools, including lsp symbols, symbol outline, etc.
