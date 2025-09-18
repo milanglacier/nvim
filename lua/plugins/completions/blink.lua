@@ -106,6 +106,7 @@ local M = {
                         ['<C-e>'] = { 'cancel', 'fallback' },
                         ['<Tab>'] = { 'show_and_insert_or_accept_single', 'select_next', 'fallback' },
                         ['<S-Tab>'] = { 'select_prev', 'fallback' },
+                        ['<C-y>'] = { 'select_and_accept', 'fallback' },
                     },
                     completion = {
                         menu = {
