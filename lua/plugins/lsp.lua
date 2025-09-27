@@ -214,8 +214,11 @@ return {
     -- LSP config
     {
         'neovim/nvim-lspconfig',
-        event = { 'BufReadPre', 'BufNewFile', 'BufWritePre' },
-        config = function()
+        event = 'LazyFile',
+        -- referenced from LazyVim Issue #6456 and commit 75a3809. Ensure
+        -- `nvim-lspconfig` is properly lazy-loaded, and prevent unexpected
+        -- behavior when restoring a session.
+        config = vim.schedule_wrap(function()
             setup_lspconfig()
             for _, lsp in ipairs(enabled_lsps) do
                 local executable = lsp_to_executable[lsp] or lsp
@@ -223,7 +226,7 @@ return {
                     vim.lsp.enable(lsp)
                 end
             end
-        end,
+        end),
     },
 
     -- lsp related tools, including lsp symbols, symbol outline, etc.
