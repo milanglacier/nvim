@@ -66,7 +66,9 @@ local scheme_options = {
                         which_key = true,
                         lsp_saga = true,
                         notify = true,
-                        mini = true,
+                        mini = {
+                            enabled = true,
+                        },
                         vim_sneak = true,
                         dap = true,
                         dap_ui = true,
