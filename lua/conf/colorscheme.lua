@@ -40,10 +40,8 @@ local scheme_options = {
             'kanagawa',
             function()
                 require('kanagawa').setup {
-                    globalStatus = vim.o.laststatus == 3,
                     commentStyle = { italic = false },
                     keywordStyle = { italic = false },
-                    variablebuiltinStyle = { italic = false },
                     statementStyle = { bold = false },
                 }
             end,
