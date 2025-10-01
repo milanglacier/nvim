@@ -150,6 +150,7 @@ return {
         config = function()
             local which_key = require 'which-key'
             which_key.setup {
+                preset = 'helix',
                 triggers = {
                     { '<auto>', mode = 'nso' },
                 },
@@ -170,6 +171,7 @@ return {
                 { '<Leader>gm', group = '+misc' },
                 { '<Leader>x', group = '+qf' },
                 { '<Leader>a', group = '+aider', mode = { 'n', 'v' } },
+                { '<Leader>z', group = '+codex', mode = { 'n', 'v' } },
                 { '<Leader>c', group = '+chat', mode = { 'n', 'v' } },
                 { '<Leader><Tab>', group = '+tab' },
                 { '<Leader>m', group = '+misc', mode = { 'n', 'v' } },
