@@ -48,9 +48,12 @@ return {
                         cmd = vim.o.shell,
                         wincmd = function(bufnr, name)
                             vim.api.nvim_open_win(bufnr, true, {
-                                relative = 'cursor',
-                                row = -4,
-                                col = -6,
+                                -- Position the terminal window at the
+                                -- bottom-right corner, relative to the
+                                -- statusline.
+                                relative = 'laststatus',
+                                row = 0,
+                                col = math.floor(vim.o.columns * 0.65),
                                 width = math.floor(vim.o.columns * 0.65),
                                 height = math.floor(vim.o.lines * 0.4),
                                 style = 'minimal',
