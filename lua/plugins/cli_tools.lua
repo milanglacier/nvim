@@ -53,8 +53,8 @@ return {
                                 -- statusline.
                                 relative = 'laststatus',
                                 row = 0,
-                                col = math.floor(vim.o.columns * 0.65),
-                                width = math.floor(vim.o.columns * 0.65),
+                                col = math.floor(vim.o.columns * 0.75),
+                                width = math.floor(vim.o.columns * 0.5),
                                 height = math.floor(vim.o.lines * 0.4),
                                 style = 'minimal',
                                 title = name,
