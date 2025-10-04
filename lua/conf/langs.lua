@@ -15,6 +15,15 @@ autocmd('FileType', {
 
 autocmd('FileType', {
     group = my_augroup,
+    pattern = { 'nix' },
+    desc = 'set nix keyword pattern to include -',
+    callback = function()
+        vim.bo.iskeyword = vim.bo.iskeyword .. ',-'
+    end,
+})
+
+autocmd('FileType', {
+    group = my_augroup,
     pattern = 'go',
     desc = 'set buffer opts for go',
     callback = function()
