@@ -162,8 +162,8 @@ local function pick_colorscheme(bg, id)
     end
 end
 
-local day_to_night = 23
-local night_to_day = 7
+local day_to_night = 19
+local night_to_day = 8
 
 function F.pick_randomly()
     math.randomseed(os.time()) -- random initialize
