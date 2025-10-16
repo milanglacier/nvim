@@ -1,9 +1,7 @@
 return {
     { 'hrsh7th/cmp-nvim-lsp' },
     {
-        -- 'hrsh7th/nvim-cmp',
-        -- use the fork of nvim-cmp
-        'iguanacucumber/magazine.nvim',
+        'hrsh7th/nvim-cmp',
         name = 'nvim-cmp',
         dependencies = {
             { 'hrsh7th/cmp-buffer' },
