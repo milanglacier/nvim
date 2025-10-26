@@ -77,5 +77,26 @@
             "}))"
         ],
         "description": "pd pipe series shortcut"
+    },
+
+    "multiline string single quote": {
+        "prefix": "mss",
+        "body": [
+            "'''",
+            "$0",
+            "'''"
+        ],
+        "description": "multiline string with single quotes"
+    },
+
+    "multiline string double quote": {
+        "prefix": "msd",
+        "body": [
+            "\"\"\"",
+            "$0",
+            "\"\"\""
+        ],
+        "description": "multiline string with double quotes"
     }
+
 }
