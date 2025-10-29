@@ -62,6 +62,7 @@ return {
                                 title_pos = 'center',
                             })
                         end,
+                        formatter = 'bracketed_pasting',
                     },
                 },
             }
