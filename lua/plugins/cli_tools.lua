@@ -235,9 +235,6 @@ return {
             local ft_to_repl = {
                 r = 'radian',
                 R = 'radian',
-                rmd = 'radian',
-                quarto = 'radian',
-                markdown = 'radian',
                 python = 'ipython',
                 sh = 'bash',
             }
@@ -253,34 +250,34 @@ return {
                     bufmap(0, 'n', '<LocalLeader>rs', string.format('<Plug>(REPLStart%s)', repl), {
                         desc = 'Start an REPL',
                     })
-                    bufmap(0, 'n', '<LocalLeader>rf', '<Plug>(REPLFocus)', {
+                    bufmap(0, 'n', '<LocalLeader>rf', string.format('<Plug>(REPLFocus%s)', repl), {
                         desc = 'Focus on REPL',
                     })
                     bufmap(0, 'n', '<LocalLeader>rv', '<CMD>FF repl_show<CR>', {
                         desc = 'View REPLs in telescope',
                     })
-                    bufmap(0, 'n', '<LocalLeader>rh', '<Plug>(REPLHide)', {
+                    bufmap(0, 'n', '<LocalLeader>rh', string.format('<Plug>(REPLHide%s)', repl), {
                         desc = 'Hide REPL',
                     })
-                    bufmap(0, 'v', '<LocalLeader>s', '<Plug>(REPLSourceVisual)', {
+                    bufmap(0, 'v', '<LocalLeader>s', string.format('<Plug>(REPLSourceVisual%s)', repl), {
                         desc = 'Source visual region to REPL',
                     })
-                    bufmap(0, 'v', '<LocalLeader>S', '<Plug>(REPLSendVisual)', {
+                    bufmap(0, 'v', '<LocalLeader>S', string.format('<Plug>(REPLSendVisual%s)', repl), {
                         desc = 'Send visual region to REPL',
                     })
-                    bufmap(0, 'n', '<LocalLeader>ss', '<Plug>(REPLSendLine)', {
+                    bufmap(0, 'n', '<LocalLeader>ss', string.format('<Plug>(REPLSendLine%s)', repl), {
                         desc = 'Send line to REPL',
                     })
-                    bufmap(0, 'n', '<LocalLeader>s', '<Plug>(REPLSourceOperator)', {
+                    bufmap(0, 'n', '<LocalLeader>s', string.format('<Plug>(REPLSourceOperator%s)', repl), {
                         desc = 'Source Operator to REPL',
                     })
-                    bufmap(0, 'n', '<LocalLeader>S', '<Plug>(REPLSendOperator)', {
+                    bufmap(0, 'n', '<LocalLeader>S', string.format('<Plug>(REPLSendOperator%s)', repl), {
                         desc = 'Send Operator to REPL',
                     })
-                    bufmap(0, 'n', '<LocalLeader>re', '<Plug>(REPLExec)', {
+                    bufmap(0, 'n', '<LocalLeader>re', string.format('<Plug>(REPLExec%s)', repl), {
                         desc = 'Execute command in REPL',
                     })
-                    bufmap(0, 'n', '<LocalLeader>rq', '<Plug>(REPLClose)', {
+                    bufmap(0, 'n', '<LocalLeader>rq', string.format('<Plug>(REPLClose%s)', repl), {
                         desc = 'Quit REPL',
                     })
                     bufmap(0, 'n', '<LocalLeader>rc', '<CMD>REPLCleanup<CR>', {
