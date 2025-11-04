@@ -47,7 +47,7 @@ return {
                     shell = {
                         cmd = vim.o.shell,
                         wincmd = function(bufnr, name)
-                            vim.api.nvim_open_win(bufnr, true, {
+                            local winid = vim.api.nvim_open_win(bufnr, true, {
                                 -- Position the terminal window at the
                                 -- bottom-right corner, relative to the
                                 -- statusline.
@@ -61,6 +61,7 @@ return {
                                 border = 'rounded',
                                 title_pos = 'center',
                             })
+                            vim.wo[winid].winbar = '%t'
                         end,
                         formatter = 'bracketed_pasting',
                     },
