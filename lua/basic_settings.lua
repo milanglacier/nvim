@@ -63,7 +63,12 @@ vim.o.guicursor = table.concat(gui_cursor, ',')
 ---@class MilanGlacierConfig
 ---@field completion_frontend "blink" | "cmp" | "builtin" | "mini"
 ---@field blink_use_main boolean
----@field fuzzy_finder "telescope" | "fzf"
+---@field fuzzy_finder "telescope" | "fzf" | "snacks"
+---@field snacks MilanGlacier.SnacksConfig
+
+---@class MilanGlacier.SnacksConfig
+---@field module table<string, fun()>
+---@field opts table
 
 -- Configuration options for Neovim plugins
 ---@type MilanGlacierConfig
@@ -71,4 +76,8 @@ Milanglacier = {
     completion_frontend = 'blink',
     blink_use_main = false,
     fuzzy_finder = 'fzf',
+    snacks = {
+        module = {},
+        opts = {},
+    },
 }

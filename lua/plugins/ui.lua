@@ -9,6 +9,20 @@ local function opts(desc, callback)
     return { silent = true, desc = desc, noremap = true, callback = callback }
 end
 
+-- Enable Snacks.notifer module
+Milanglacier.snacks.module.notifier = function()
+    keymap('n', '<leader>fn', '<cmd>lua Snacks.notifier.show_history()<cr>', opts 'Notification History')
+    Milanglacier.snacks.opts.notifier = {
+        enabled = true,
+        timeout = 2000,
+    }
+
+    ---@diagnostic disable-next-line duplicate-set-field
+    vim.notify = function(...)
+        require('snacks').notifier.notify(...)
+    end
+end
+
 return {
     {
         'nvim-lualine/lualine.nvim',
@@ -109,18 +123,6 @@ return {
                     },
                 },
                 extensions = { 'aerial', 'neo-tree', 'quickfix', 'toggleterm', 'fzf' },
-            }
-        end,
-    },
-    {
-        'folke/snacks.nvim',
-        event = 'VeryLazy',
-        init = function()
-            keymap('n', '<leader>fn', '<cmd>lua Snacks.notifier.show_history()<cr>', opts 'Notification History')
-        end,
-        config = function()
-            require('snacks').setup {
-                notifier = { enabled = true, timeout = 2000 },
             }
         end,
     },
