@@ -11,7 +11,7 @@ end
 
 -- Enable Snacks.notifer module
 Milanglacier.snacks.module.notifier = function()
-    keymap('n', '<leader>fn', '<cmd>lua Snacks.notifier.show_history()<cr>', opts 'Notification History')
+    keymap('n', '<leader>fn', '<cmd>lua require("snacks.notifier").show_history()<cr>', opts 'Notification History')
     Milanglacier.snacks.opts.notifier = {
         enabled = true,
         timeout = 2000,
