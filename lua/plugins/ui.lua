@@ -130,11 +130,22 @@ return {
         'folke/trouble.nvim',
         cmd = 'Trouble',
         config = function()
-            require('trouble').setup {}
+            require('trouble').setup {
+                modes = {
+                    diagnostics_workspaces = {
+                        mode = 'diagnostics',
+                        filter = function(items)
+                            return vim.tbl_filter(function(item)
+                                return item.dirname:find(vim.uv.cwd(), 1, true)
+                            end, items)
+                        end,
+                    },
+                },
+            }
         end,
         init = function()
             local ui = require 'conf.ui'
-            keymap('n', '<leader>xw', '', opts('Workspace dianostics', ui.trouble_workspace_diagnostics))
+            keymap('n', '<leader>xw', '<cmd>Trouble diagnostics_workspaces<cr>', opts 'Workspace Diagnostics')
             keymap('n', '<leader>xd', '<cmd>Trouble diagnostics toggle filter.buf=0<cr>', opts 'Document Diagnostics')
             keymap('n', '<leader>xl', '<cmd>TroubleToggle loclist<cr>', opts 'Open loclist')
             keymap('n', '<leader>xq', '', opts('Open quickfix', ui.reopen_qflist_by_trouble))
