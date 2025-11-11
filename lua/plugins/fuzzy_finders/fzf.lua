@@ -137,6 +137,7 @@ local M = {
                     actions = {
                         ['ctrl-g'] = false,
                     },
+                    hidden = true,
                 },
 
                 old_files = {
