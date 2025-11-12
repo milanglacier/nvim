@@ -9,6 +9,10 @@ local M = {
         import = 'plugins.fuzzy_finders.fzf',
         cond = Milanglacier.fuzzy_finder == 'fzf',
     },
+    {
+        import = 'plugins.fuzzy_finders.snacks',
+        cond = Milanglacier.fuzzy_finder == 'snacks',
+    },
 }
 
 ---- Fzf ----
@@ -104,7 +108,81 @@ telescope.lsp_outgoing_calls = 'Telescope lsp_outgoing_calls jump_type=tab'
 telescope.buf_diagnositcs = 'Telescope diagnostics bufnr=0'
 telescope.workspace_diagnositcs = 'Telescope diagnostics root_dir=true'
 
-M.actions = Milanglacier.fuzzy_finder == 'telescope' and telescope or fzf
+---- snacks ----
+
+local snacks = {}
+
+local snacks_cmd = function(picker, opts)
+    return function()
+        require('snacks').picker[picker](opts)
+    end
+end
+
+-- By default, `snacks.picker.projects` displays only the project name. we
+-- want it to show the full path instead.
+snacks.projects = snacks_cmd('projects', { format = 'text' })
+snacks.find_files = snacks_cmd('files', { hidden = true })
+snacks.oldfiles = snacks_cmd 'recent'
+
+snacks.repl_show = function()
+    require('yarepl.extensions.snacks').repl_show()
+end
+
+-- Emulates FzfLua's `grep` or Telescope's `grep_string` command by performing
+-- a fuzzy grep with a predefined search query (non-live).
+snacks.grep_string = function()
+    vim.ui.input({ prompt = 'Enter the string for search: ' }, function(input)
+        if not input then
+            return
+        end
+
+        require('snacks').picker.grep {
+            hidden = true,
+            search = function()
+                return input
+            end,
+            live = false,
+        }
+    end)
+end
+
+-- lsp
+snacks.lsp_type_definitions = snacks_cmd 'lsp_type_definitions'
+snacks.lsp_references = snacks_cmd 'lsp_references'
+snacks.lsp_definitions = snacks_cmd 'lsp_definitions'
+snacks.lsp_implementations = snacks_cmd 'lsp_implementations'
+
+snacks.lsp_incoming_calls = snacks_cmd 'lsp_incoming_calls'
+snacks.lsp_outgoing_calls = snacks_cmd 'lsp_outgoing_calls'
+
+snacks.buf_diagnositcs = snacks_cmd 'diagnostics_buffer'
+-- only show diagnostics from the cwd by default
+snacks.workspace_diagnositcs = snacks_cmd('diagnostics', { filter = { cwd = true } })
+
+-- DAP
+-- NOTE: Snacks does not provide pickers for dap.nvim. Therefore, we implement
+-- some minimal pickers to handle basic DAP-related functionality, without
+-- attempting to replicate the full capabilities of comprehensive picker
+-- plugins such as Telescope or fzf.
+snacks.dap_commands = function()
+    require('snacks').picker.commands()
+    vim.defer_fn(function()
+        -- Filter by DAP
+        vim.api.nvim_feedkeys('Dap', 'n', false)
+    end, 300)
+end
+
+snacks.dap_configurations = function()
+    require('dap').continue()
+end
+
+if Milanglacier.fuzzy_finder == 'telescope' then
+    M.actions = telescope
+elseif Milanglacier.fuzzy_finder == 'fzf' then
+    M.actions = fzf
+else
+    M.actions = snacks
+end
 
 command('FF', function(args)
     local fn = M.actions[args.args]
