@@ -145,7 +145,7 @@ return {
         end,
         init = function()
             local ui = require 'conf.ui'
-            keymap('n', '<leader>xw', '<cmd>Trouble diagnostics_workspaces<cr>', opts 'Workspace Diagnostics')
+            keymap('n', '<leader>xw', '<cmd>Trouble diagnostics_workspaces toggle<cr>', opts 'Workspace Diagnostics')
             keymap('n', '<leader>xd', '<cmd>Trouble diagnostics toggle filter.buf=0<cr>', opts 'Document Diagnostics')
             keymap('n', '<leader>xl', '<cmd>TroubleToggle loclist<cr>', opts 'Open loclist')
             keymap('n', '<leader>xq', '', opts('Open quickfix', ui.reopen_qflist_by_trouble))
