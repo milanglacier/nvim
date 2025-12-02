@@ -13,19 +13,16 @@ return {
         end,
     },
     {
-        'goerz/jupytext.vim',
+        'goerz/jupytext.nvim',
         event = { 'VeryLazy', 'LazyFile' },
         lazy = vim.fn.argc(-1) == 0, -- load jupytext early when opening a file from the cmdline
-        init = function()
-            vim.g.jupytext_enabled = 1
-            -- the jupytext_fmt is not flexible enough to support fetch the format
-            -- dynamically for example if you want to use jupytext for both python and
-            -- R and given two different formats like py:percent and R:percent (or just
-            -- auto:percent). Since it is expected that one will use jupyter notebook
-            -- mainly for python I will just set the default format to py:percent.
-
-            -- TODO: write a PR to jupytext.vim to support multiple format.
-            vim.g.jupytext_fmt = 'py:percent'
+        config = function()
+            require('jupytext').setup {
+                format = 'py:percent',
+                -- prevent jupytext.nvim create too many autocmds in non-ipynb
+                -- file which is too intrusive
+                autosync = false,
+            }
         end,
     },
     {
@@ -44,6 +41,7 @@ return {
                     codex = codex.create_codex_meta(),
                     python = false,
                     R = false,
+                    radian = { cmd = 'R' },
                     shell = {
                         cmd = vim.o.shell,
                         wincmd = function(bufnr, name)
