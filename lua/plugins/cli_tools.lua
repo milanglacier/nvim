@@ -13,9 +13,17 @@ return {
         end,
     },
     {
-        'goerz/jupytext.nvim',
+        -- FIXME:
+        -- 1. We are using our own fork instead of the original upstream
+        -- (goerz/jupytext.nvim) because our PRs are still awaiting upstream
+        -- approval. Until those are merged, we will continue using our fork. A
+        -- GitHub Action is configured to perform a daily fast-forward merge
+        -- with the upstream repository. This ensures that our fork remains
+        -- consistently up to date.
+        'milanglacier/jupytext.nvim',
         event = { 'VeryLazy', 'LazyFile' },
         lazy = vim.fn.argc(-1) == 0, -- load jupytext early when opening a file from the cmdline
+        branch = 'dev',
         config = function()
             require('jupytext').setup {
                 format = 'py:percent',
