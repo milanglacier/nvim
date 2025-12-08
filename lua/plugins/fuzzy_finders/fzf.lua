@@ -42,6 +42,7 @@ local M = {
             keymap('n', '<leader>fT', '<cmd>FzfLua treesitter<cr>', opts_desc 'Fzf treesitter')
             keymap('n', '<leader>ft', '<cmd>FzfLua tags<cr>', opts_desc 'Fzf tags')
             keymap('n', '<leader>fm', '<cmd>FzfLua marks<cr>', opts_desc 'Fzf marks')
+            keymap('n', '<leader>fu', '<cmd>FzfLua undotree<cr>', opts_desc 'Fzf undotree')
 
             keymap('n', '<leader>fe', '<cmd>FzfLua builtin<cr>', opts_desc 'Fzf extensions')
 

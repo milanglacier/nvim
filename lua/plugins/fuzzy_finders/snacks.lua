@@ -36,6 +36,7 @@ Milanglacier.snacks.module.picker = function()
     keymap('n', '<leader>fT', snacks 'treesitter()', opts_desc 'Find Treesitter')
     keymap('n', '<leader>ft', snacks 'tags()', opts_desc 'Find Tags')
     keymap('n', '<leader>fm', snacks 'marks()', opts_desc 'Find Marks')
+    keymap('n', '<leader>fu', snacks 'undo', opts_desc 'Find Undotree')
 
     keymap('n', '<leader>fe', snacks 'pickers()', opts_desc 'Find extensions')
     keymap('n', '<leader>gml', snacks 'git_log()', opts_desc 'Git Log')
