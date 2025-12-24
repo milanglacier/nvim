@@ -25,6 +25,7 @@ vim.o.cmdheight = 0
 vim.o.clipboard = 'unnamedplus'
 vim.o.completeopt = 'menu,menuone,noselect,popup,fuzzy'
 vim.o.wildoptions = 'fuzzy,pum,tagfile'
+vim.o.wildmode = 'noselect,full'
 
 -- don't fold any text at startup
 vim.o.foldmethod = 'indent'

@@ -45,6 +45,21 @@ elseif Milanglacier.completion_frontend == 'mini' then
     })
 end
 
+autocmd('CmdlineEnter', {
+    group = my_augroup,
+    nested = true,
+    once = true,
+    callback = function()
+        require('mini.cmdline').setup {
+            autocomplete = {
+                delay = 0.1,
+            },
+            autopeek = { enable = false },
+        }
+    end,
+    desc = 'Enable mini cmdline completion',
+})
+
 local function keycode(keys)
     return vim.api.nvim_replace_termcodes(keys, true, false, true)
 end
