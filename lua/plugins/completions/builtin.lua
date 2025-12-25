@@ -56,6 +56,15 @@ autocmd('CmdlineEnter', {
             },
             autopeek = { enable = false },
         }
+        -- Manually trigger the CmdlineEnter autocmd from the
+        -- MiniCmdline group. This is necessary because
+        -- mini.cmdline is being lazy-loaded during the
+        -- CmdlineEnter event itself. To ensure it works
+        -- immediately, we must manually invoke the relevant
+        -- autocmd.
+        vim.api.nvim_exec_autocmds('CmdLineEnter', {
+            group = 'MiniCmdline',
+        })
     end,
     desc = 'Enable mini cmdline completion',
 })
