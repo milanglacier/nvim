@@ -43,6 +43,15 @@ elseif Milanglacier.completion_frontend == 'mini' then
         end,
         desc = 'Enable mini auto completion',
     })
+
+    autocmd('FileType', {
+        group = my_augroup,
+        pattern = { 'snacks_picker_input' },
+        desc = 'Disable mini.completion',
+        callback = function()
+            vim.b.minicompletion_disable = true
+        end,
+    })
 end
 
 autocmd('CmdlineEnter', {
