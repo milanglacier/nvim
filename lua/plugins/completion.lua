@@ -1,3 +1,5 @@
+local keymap = vim.api.nvim_set_keymap
+
 local M = {
     {
         'milanglacier/minuet-ai.nvim',
@@ -75,6 +77,24 @@ local M = {
                     },
                 },
             }
+
+            -- Define Minuet completion keymaps prefixed with <A-c>, following
+            -- my convention for manually invoked completions. This avoids
+            -- issues with <A-'> and <A-;> being blocked by remote desktop
+            -- applications on iOS.
+            keymap('i', [[<A-c>']], '', {
+                callback = function()
+                    require('minuet.virtualtext').action.next()
+                end,
+                desc = 'Minuet next completion',
+            })
+
+            keymap('i', [[<A-c>;]], '', {
+                callback = function()
+                    require('minuet.virtualtext').action.prev()
+                end,
+                desc = 'Minuet previous completion',
+            })
         end,
     },
     { 'quangnguyen30192/cmp-nvim-tags' },
