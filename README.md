@@ -604,14 +604,16 @@ The following keymaps rely on `Minuet`, a code completion plugin as an
 alternative to github copilot. Minuet allows you to select your preferred LLM
 for code completion.
 
-| Mode | LHS     | RHS/Functionality                                          |
-| ---- | ------- | ---------------------------------------------------------- |
-| i    | `<M-'>` | Invoke `minuet` completion or cycle to next completion     |
-| i    | `<M-;>` | Invoke `minuet` completion or cycle to previous completion |
-| i    | `<M-a>` | Accept line                                                |
-| i    | `<M-z>` | Accept n lines of completion                               |
-| i    | `<M-A>` | Accept whole completion                                    |
-| i    | `<M-e>` | Reject completion                                          |
+| Mode | LHS      | RHS/Functionality                                          |
+| ---- | -------- | ---------------------------------------------------------- |
+| i    | `<M-'>`  | Invoke `minuet` completion or cycle to next completion     |
+| i    | `<M-;>`  | Invoke `minuet` completion or cycle to previous completion |
+| i    | `<M-c>'` | Invoke `minuet` completion or cycle to next completion     |
+| i    | `<M-c>;` | Invoke `minuet` completion or cycle to previous completion |
+| i    | `<M-a>`  | Accept line                                                |
+| i    | `<M-z>`  | Accept n lines of completion                               |
+| i    | `<M-A>`  | Accept whole completion                                    |
+| i    | `<M-e>`  | Reject completion                                          |
 
 ## REPL keymaps
 
