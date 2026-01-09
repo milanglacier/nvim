@@ -171,6 +171,9 @@ return {
             keymap('n', '<Leader>ze', '<Plug>(CodexExec)', {
                 desc = 'Execute command in codex',
             })
+            keymap('n', '<Leader>zg', '<Plug>(CodexSendOpenEditor)', {
+                desc = 'Open Editor in codex',
+            })
             keymap('n', '<Leader>z<space>', '<cmd>checktime<cr>', {
                 desc = 'sync file changes by codex to nvim buffer',
             })
