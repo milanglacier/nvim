@@ -42,6 +42,14 @@ return {
             local aider = require 'yarepl.extensions.aider'
             local codex = require 'yarepl.extensions.codex'
 
+            -- Set the $EDITOR env var to use `nvr` (neovim-remote). Thivariables
+            -- ensures that external commands, such as Codex's <C-g> shortcut,
+            -- open buffers back into the current Neovim instance instead of
+            -- spawning a nested one.
+            if vim.fn.executable 'nvr' == 1 then
+                vim.env.EDITOR = 'nvr -cc tabnew --remote-wait'
+            end
+
             yarepl.setup {
                 source_command_hint = { enabled = true },
                 metas = {
