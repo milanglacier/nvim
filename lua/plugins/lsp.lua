@@ -1,9 +1,20 @@
-local enabled_lsps =
-    { 'r_language_server', 'basedpyright', 'texlab', 'rust_analyzer', 'gopls', 'lua_ls', 'efm', 'bashls', 'clangd' }
+local enabled_lsps = {
+    'r_language_server',
+    'basedpyright',
+    'ruff',
+    'texlab',
+    'rust_analyzer',
+    'gopls',
+    'lua_ls',
+    'efm',
+    'bashls',
+    'clangd',
+}
 
 local lsp_to_executable = {
     r_language_server = 'R',
     basedpyright = 'basedpyright',
+    ruff = 'ruff',
     texlab = 'texlab',
     rust_analyzer = 'rust-analyzer',
     gopls = 'gopls',
@@ -161,7 +172,6 @@ local setup_lspconfig = function()
 
     vim.lsp.config('efm', {
         filetypes = {
-            'python',
             'lua',
             'markdown',
             'lua',
