@@ -170,6 +170,17 @@ local setup_lspconfig = function()
         end,
     })
 
+    vim.lsp.config('basedpyright', {
+        settings = {
+            basedpyright = {
+                analysis = {
+                    diagnosticMode = 'openFilesOnly',
+                    autoImportCompletions = false,
+                },
+            },
+        },
+    })
+
     vim.lsp.config('efm', {
         filetypes = {
             'lua',
