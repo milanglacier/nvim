@@ -25,7 +25,7 @@ return {
                     sections = { 'watches', 'scopes', 'exceptions', 'breakpoints', 'threads', 'repl', 'console' },
                 },
                 windows = {
-                    height = math.ceil(vim.o.lines / 3),
+                    size = 0.33,
                 },
             }
 
