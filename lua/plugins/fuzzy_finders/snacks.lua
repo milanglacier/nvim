@@ -70,7 +70,7 @@ Milanglacier.snacks.module.picker = function()
                 -- updates.
                 [3] = { win = 'preview', title = '{preview}', height = 0.6, border = 'top' },
                 width = 0.85,
-                height = 0.6,
+                height = 0.85,
             },
         },
     }
