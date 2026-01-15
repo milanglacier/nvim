@@ -196,7 +196,7 @@ autocmd('BufEnter', {
 -- ':WQ' (save the result) to finish the editing.
 command('WQ', 'w | bd', { desc = 'Finishing Editing with nvr.' })
 
-function Benchmark(func, iterations, ...)
+function M.benchmark(func, iterations, ...)
     local start_time = os.clock()
     local result
 
