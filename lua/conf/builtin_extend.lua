@@ -66,7 +66,6 @@ keymap('c', '<C-k>', [[<C-\>e(strpart(getcmdline(), 0, getcmdpos() - 1))<CR>]], 
 keymap('c', '<A-b>', '<S-Left>', { noremap = true })
 keymap('c', '<A-f>', '<S-Right>', { noremap = true })
 
-
 -- In Vim, `C-b` and `C-f` scroll by a full page, while `C-u` and `C-d` scroll
 -- by half a page.  We want to always scroll by a half page.
 keymap('n', '<C-f>', '<C-d>', {})
@@ -187,7 +186,6 @@ autocmd('BufEnter', {
     end,
 })
 
-command('WQ', 'w | bd', { desc = 'Finishing Editing with nvr.' })
 -- this is useful with integration with `nvr` which allows you to prevent from
 -- nested nvim instance when neovim's builtin terminal trys to invoke nvim
 -- instance.
@@ -196,5 +194,28 @@ command('WQ', 'w | bd', { desc = 'Finishing Editing with nvr.' })
 -- standard `:wq` to quit the instance since it is still running. You need to
 -- delete the buffer. That is, either using ':bd' (don't save the result), or
 -- ':WQ' (save the result) to finish the editing.
+command('WQ', 'w | bd', { desc = 'Finishing Editing with nvr.' })
+
+function Benchmark(func, iterations, ...)
+    local start_time = os.clock()
+    local result
+
+    for _ = 1, iterations do
+        result = func(...)
+    end
+
+    local end_time = os.clock()
+    local total_time = end_time - start_time
+    local average_time = total_time / iterations
+
+    print(string.format '-----------------------------')
+    print(string.format 'Benchmark Results:')
+    print(string.format('Iterations:  %d', iterations))
+    print(string.format('Total Time:  %.6f sec', total_time))
+    print(string.format('Avg per run: %.8f sec', average_time))
+    print(string.format '-----------------------------')
+
+    return result, total_time, average_time
+end
 
 return M
