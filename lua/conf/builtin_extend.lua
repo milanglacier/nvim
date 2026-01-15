@@ -205,14 +205,14 @@ function Benchmark(func, iterations, ...)
     end
 
     local end_time = os.clock()
-    local total_time = end_time - start_time
+    local total_time = (end_time - start_time) * 1000
     local average_time = total_time / iterations
 
     print(string.format '-----------------------------')
     print(string.format 'Benchmark Results:')
     print(string.format('Iterations:  %d', iterations))
-    print(string.format('Total Time:  %.6f sec', total_time))
-    print(string.format('Avg per run: %.8f sec', average_time))
+    print(string.format('Total Time:  %.6f ms', total_time))
+    print(string.format('Avg per run: %.8f ms', average_time))
     print(string.format '-----------------------------')
 
     return result, total_time, average_time
