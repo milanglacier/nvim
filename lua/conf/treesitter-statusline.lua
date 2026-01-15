@@ -8,6 +8,12 @@
 
 local M = {}
 
+local uv = vim.uv or vim.loop
+local state = {
+    cache = {},
+    last_cleanup = 0,
+}
+
 -- Trim spaces and opening brackets from end
 local transform_line = function(line)
     return vim.trim(line:gsub('%s*[%[%(%{]*%s*$', ''))
@@ -44,17 +50,14 @@ local function get_line_for_node(node, type_patterns, transform_fn, bufnr)
     return line:gsub('%%', '%%%%')
 end
 
-function M.statusline(opts)
-    if not vim.treesitter.get_parser(nil, nil, { error = false }) then
-        return
-    end
+local function normalize_options(opts)
     local options = opts or {}
     if type(opts) == 'number' then
         options = { indicator_size = opts }
     end
-    local bufnr = options.bufnr or 0
-    local indicator_size = options.indicator_size or 100
-    local type_patterns = options.type_patterns
+    options.bufnr = options.bufnr or 0
+    options.indicator_size = options.indicator_size or 100
+    options.type_patterns = options.type_patterns
         or {
             'type_declaration',
             'class_declaration',
@@ -73,9 +76,36 @@ function M.statusline(opts)
             'struct_specifier',
             'class_specifier',
         }
-    local transform_fn = options.transform_fn or transform_line
-    local separator = options.separator or ' -> '
-    local allow_duplicates = options.allow_duplicates or false
+    options.transform_fn = options.transform_fn or transform_line
+    options.separator = options.separator or ' -> '
+
+    if options.debounce_ms == false then
+        options.debounce_ms = 0
+    elseif options.debounce_ms == nil then
+        options.debounce_ms = 200
+    end
+
+    if not options.cache_cleanup_ms then
+        options.cache_cleanup_ms = 10000
+    end
+
+    return options
+end
+
+local function cleanup_cache(options)
+    local now = uv.now()
+    if now - state.last_cleanup < options.cache_cleanup_ms then
+        return
+    end
+
+    state.last_cleanup = now
+    state.cache = {}
+end
+
+local function compute_statusline(options)
+    if not vim.treesitter.get_parser(options.bufnr, nil, { error = false }) then
+        return ''
+    end
 
     local current_node = vim.treesitter.get_node()
     if not current_node then
@@ -86,9 +116,9 @@ function M.statusline(opts)
     local expr = current_node
 
     while expr do
-        local line = get_line_for_node(expr, type_patterns, transform_fn, bufnr)
+        local line = get_line_for_node(expr, options.type_patterns, options.transform_fn, options.bufnr)
         if line ~= '' then
-            if allow_duplicates or not vim.tbl_contains(lines, line) then
+            if not vim.tbl_contains(lines, line) then
                 table.insert(lines, 1, line)
             end
         end
@@ -96,13 +126,44 @@ function M.statusline(opts)
         expr = expr:parent()
     end
 
-    local text = table.concat(lines, separator)
+    local text = table.concat(lines, options.separator)
     local text_len = #text
-    if text_len > indicator_size then
-        return '...' .. text:sub(text_len - indicator_size, text_len)
+    if text_len > options.indicator_size then
+        return '...' .. text:sub(text_len - options.indicator_size, text_len)
     end
 
     return text
+end
+
+function M.statusline(opts)
+    local options = normalize_options(opts)
+
+    cleanup_cache(options)
+
+    local winid = vim.api.nvim_get_current_win()
+    if options.bufnr == 0 then
+        options.bufnr = vim.api.nvim_win_get_buf(winid)
+    end
+
+    local cache_key = options.cache_key or (winid .. ':' .. options.bufnr)
+    local entry = state.cache[cache_key]
+    if not entry then
+        entry = { text = '', last_update = 0 }
+        state.cache[cache_key] = entry
+    end
+    if options.debounce_ms <= 0 then
+        entry.text = compute_statusline(options) or ''
+        entry.last_update = uv.now()
+        return entry.text
+    end
+
+    local now = uv.now()
+    if now - entry.last_update >= options.debounce_ms then
+        entry.text = compute_statusline(options) or ''
+        entry.last_update = now
+    end
+
+    return entry.text
 end
 
 return M
