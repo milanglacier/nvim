@@ -30,6 +30,7 @@ TS_Parsers = {
     'markdown',
     'markdown_inline',
     'go',
+    'rust',
     'sql',
     'bash',
     'nix',
