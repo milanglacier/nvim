@@ -92,6 +92,7 @@ function M.statusline(opts)
                 table.insert(lines, 1, line)
             end
         end
+        ---@diagnostic disable-next-line: cast-local-type
         expr = expr:parent()
     end
 

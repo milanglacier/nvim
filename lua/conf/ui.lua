@@ -163,10 +163,35 @@ M.get_diagnostics_in_current_root_dir = function()
     return n_diagnostics.ERROR, n_diagnostics.WARN, n_diagnostics.INFO, n_diagnostics.HINT
 end
 
+M.treesitter_winbar_symbol = function()
+    local winwidth = vim.api.nvim_win_get_width(0)
+    local filename = vim.fn.expand '%:.'
+
+    local winbar = filename
+
+    local rest_length = winwidth - #winbar - 3
+    local ts_status = ''
+
+    if rest_length > 5 then
+        local size = math.floor(rest_length * 0.8)
+
+        ts_status = require('conf.treesitter-statusline').statusline {
+            indicator_size = size,
+            separator = '  ',
+        } or ''
+
+        if ts_status ~= nil and ts_status ~= '' then
+            ts_status = ts_status:gsub('%s+', ' ')
+        end
+    end
+
+    return ts_status
+end
+
 M.winbar_symbol = function()
     ---@diagnostic disable-next-line
     if not vim.lsp.buf_is_attached(0) then
-        return ''
+        return M.treesitter_winbar_symbol()
     end
 
     local ok, navic = pcall(require, 'nvim-navic')
