@@ -1,6 +1,6 @@
 local enabled_lsps = {
     'r_language_server',
-    'basedpyright',
+    'ty',
     'ruff',
     'texlab',
     'rust_analyzer',
@@ -13,7 +13,7 @@ local enabled_lsps = {
 
 local lsp_to_executable = {
     r_language_server = 'R',
-    basedpyright = 'basedpyright',
+    ty = 'ty',
     ruff = 'ruff',
     texlab = 'texlab',
     rust_analyzer = 'rust-analyzer',
@@ -170,12 +170,12 @@ local setup_lspconfig = function()
         end,
     })
 
-    vim.lsp.config('basedpyright', {
+    vim.lsp.config('ty', {
         settings = {
-            basedpyright = {
-                analysis = {
-                    diagnosticMode = 'openFilesOnly',
-                    autoImportCompletions = false,
+            ty = {
+                diagnosticMode = 'openFilesOnly',
+                completions = {
+                    autoImport = false,
                 },
             },
         },
