@@ -165,7 +165,7 @@ end
 
 M.treesitter_winbar_symbol = function()
     local winwidth = vim.api.nvim_win_get_width(0)
-    local filename = vim.fn.expand '%:.'
+    local filename = vim.fn.expand '%:t'
 
     local winbar = filename
 
@@ -174,6 +174,7 @@ M.treesitter_winbar_symbol = function()
 
     if rest_length > 5 then
         local size = math.floor(rest_length * 0.8)
+        JAMES = size
 
         ts_status = require('conf.treesitter-statusline').statusline {
             indicator_size = size,

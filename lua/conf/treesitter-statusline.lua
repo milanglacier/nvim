@@ -10,7 +10,7 @@ local M = {}
 
 -- Trim spaces and opening brackets from end
 local transform_line = function(line)
-    return line:gsub('%s*[%[%(%{]*%s*$', '')
+    return vim.trim(line:gsub('%s*[%[%(%{]*%s*$', ''))
 end
 
 ---@param node TSNode
