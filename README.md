@@ -190,8 +190,7 @@ use this example configuration, simply copy the folder to `~/.config/`.
    `$PATH`.
 3. `ipython`
 4. `ruff*`
-5. `efm-langserver*`
-6. `ty*`
+6. `pyrefly*`
 
 ## r deps
 
