@@ -1,6 +1,6 @@
 local enabled_lsps = {
     'r_language_server',
-    'ty',
+    'pyrefly',
     'ruff',
     'texlab',
     'rust_analyzer',
@@ -13,7 +13,10 @@ local enabled_lsps = {
 
 local lsp_to_executable = {
     r_language_server = 'R',
-    ty = 'ty',
+    -- The reason I prefer Pyrefly over ty (both are Python language servers
+    -- implemented in Rust) is that, at the current stage, Pyrefly offers
+    -- better code completion, particularly within pandas-related libraries.
+    pyrefly = 'pyrefly',
     ruff = 'ruff',
     texlab = 'texlab',
     rust_analyzer = 'rust-analyzer',
@@ -168,17 +171,6 @@ local setup_lspconfig = function()
             bufmap(bufnr, 'n', '<LocalLeader>sv', '<cmd>SqlsExecuteQueryVertical<CR>', { silent = true })
             bufmap(bufnr, 'v', '<LocalLeader>sv', '<cmd>SqlsExecuteQueryVertical<CR>', { silent = true })
         end,
-    })
-
-    vim.lsp.config('ty', {
-        settings = {
-            ty = {
-                diagnosticMode = 'openFilesOnly',
-                completions = {
-                    autoImport = false,
-                },
-            },
-        },
     })
 
     vim.lsp.config('efm', {
