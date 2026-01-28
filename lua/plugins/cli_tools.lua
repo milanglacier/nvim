@@ -457,7 +457,7 @@ return {
             vim.g.gutentags_generate_on_new = 0
             vim.g.gutentags_generate_on_missing = 0
             vim.g.gutentags_ctags_tagfile = '.tags'
-            vim.g.gutentags_ctags_extra_args = { [[--fields=*]] }
+            vim.g.gutentags_ctags_extra_args = { [[--fields=*]], [[--languages=all]] }
 
             vim.filetype.add {
                 pattern = {
