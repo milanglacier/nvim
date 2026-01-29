@@ -11,7 +11,7 @@ return {
         config = function()
             require('project_nvim').setup {
                 detection_methods = { 'pattern' },
-                patterns = { '.git', '.svn', 'Makefile', 'package.json', 'NAMESPACE', 'setup.py' },
+                patterns = { '.git', '.svn', 'Makefile', 'NAMESPACE', '.hg', 'setup.py' },
                 show_hidden = true,
             }
         end,
