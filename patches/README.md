@@ -12,3 +12,10 @@ consolidated in this single directory.
   insufficient to register the `Esc` key correctly when typing `jk` in quick
   succession. This patch adjusts the waiting period to accommodate such
   conditions.
+- **`perf-disable-heavy-ui-plugins.patch`**: Disables several heavy UI
+  plugins—including `vim-matchup`, `rainbow-delimiters`, `treesitter-context`,
+  and `indent-blankline`—to minimize editor latency and startup time.
+  Additionally, it throttles `lualine` refresh rates to reduce UI churn. This
+  configuration is ideal for resource-constrained environments (such as
+  single-core VPS instances or QEMU-emulated VMs) where responsiveness takes
+  precedence over visual polishment.
