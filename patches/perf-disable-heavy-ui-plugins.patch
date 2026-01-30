@@ -1,0 +1,77 @@
+From 81b464cccc86c81c6cb3a6f3b76beec8af48ad47 Mon Sep 17 00:00:00 2001
+From: Milan Glacier <dev@milanglacier.com>
+Date: Fri, 30 Jan 2026 18:35:56 +0000
+Subject: [PATCH] perf: disable resource-intensive UI plugins and throttle
+ lualine
+
+Disables several visual plugins to improve editor latency and startup time:
+- vim-matchup
+- rainbow-delimiters
+- nvim-treesitter-context
+- indent-blankline
+
+---
+ lua/plugins/text_edit.lua  | 1 +
+ lua/plugins/treesitter.lua | 2 ++
+ lua/plugins/ui.lua         | 7 +++++++
+ 3 files changed, 10 insertions(+)
+
+diff --git a/lua/plugins/text_edit.lua b/lua/plugins/text_edit.lua
+index 04f3290..2f38844 100644
+--- a/lua/plugins/text_edit.lua
++++ b/lua/plugins/text_edit.lua
+@@ -138,6 +138,7 @@ return {
+     },
+     {
+         'andymass/vim-matchup',
++        cond = false,
+         event = 'LazyFile',
+         init = function()
+             -- disable builtin keymaps
+diff --git a/lua/plugins/treesitter.lua b/lua/plugins/treesitter.lua
+index 006787d..4dbbc21 100644
+--- a/lua/plugins/treesitter.lua
++++ b/lua/plugins/treesitter.lua
+@@ -218,6 +218,7 @@ return {
+
+     {
+         'HiPhish/rainbow-delimiters.nvim',
++        cond = false,
+         event = 'LazyFile',
+         submodules = false,
+         config = function()
+@@ -233,6 +234,7 @@ return {
+
+     {
+         'nvim-treesitter/nvim-treesitter-context',
++        cond = false,
+         event = { 'LazyFile' },
+         lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
+         config = function()
+diff --git a/lua/plugins/ui.lua b/lua/plugins/ui.lua
+index 802271e..d7ec6d0 100644
+--- a/lua/plugins/ui.lua
++++ b/lua/plugins/ui.lua
+@@ -44,6 +44,12 @@ return {
+
+             lualine.setup {
+                 options = {
++                    refresh = {
++                        statusline = 300,
++                        tabline = 300,
++                        winbar = 300,
++                        refresh_time = 100, -- Refresh at most 10 times per second
++                    },
+                     icons_enabled = true,
+                     theme = 'auto',
+                     component_separators = { left = '', right = '' },
+@@ -237,6 +243,7 @@ return {
+     },
+     {
+         'lukas-reineke/indent-blankline.nvim',
++        cond = false,
+         event = 'LazyFile',
+         config = function()
+             require('ibl').setup {
+--
+2.52.0
