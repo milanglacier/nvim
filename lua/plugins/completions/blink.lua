@@ -32,6 +32,7 @@ local M = {
                 keymap = {
                     preset = 'super-tab',
                     ['<C-space>'] = {},
+                    ['<C-k>'] = {},
                     ['<C-e>'] = { 'cancel', 'fallback' },
                     ['<A-y>'] = {
                         function(cmp)
