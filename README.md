@@ -190,7 +190,7 @@ use this example configuration, simply copy the folder to `~/.config/`.
    `$PATH`.
 3. `ipython`
 4. `ruff*`
-6. `pyrefly*`
+5. `pyrefly*`
 
 ## r deps
 
@@ -714,6 +714,7 @@ The following keymaps rely on
 | n    | `<Leader>fC` | Show command history                 |
 | n    | `<Leader>fs` | Show lsp document symbols            |
 | n    | `<Leader>fr` | Show registers                       |
+| n    | `<Leader>fR` | Show running REPls                   |
 | n    | `<Leader>fj` | Show jumplist                        |
 | n    | `<Leader>fn` | Show notifications                   |
 | n    | `<Leader>fT` | Show treesitter nodes                |
