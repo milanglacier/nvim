@@ -1,4 +1,5 @@
 local command = vim.api.nvim_create_user_command
+local keymap = vim.api.nvim_set_keymap
 
 local M = {
     {
@@ -197,5 +198,7 @@ end, {
         return vim.tbl_keys(M.actions)
     end,
 })
+
+keymap('n', '<Leader>fR', '<CMD>FF repl_show<CR>', { desc = 'View running REPLs' })
 
 return M
