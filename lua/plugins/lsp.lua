@@ -153,8 +153,18 @@ local setup_lspconfig = function()
                 diagnostics = {
                     globals = { 'vim' },
                 },
-                telemetry = {
-                    enable = false,
+                workspace = {
+                    checkThirdParty = false,
+                    library = {
+                        -- Workaround for lua-language-server v3.17+ breaking
+                        -- changes with lazydev.nvim. Refer to:
+                        -- https://github.com/folke/lazydev.nvim/issues/136#issuecomment-3855867406
+                        -- Loading vim.env.VIMRUNTIME during startup is
+                        -- acceptable as it is lighter than loading the library
+                        -- paths for all Neovim plugins.
+                        vim.env.VIMRUNTIME,
+                        { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
+                    },
                 },
             },
         },
