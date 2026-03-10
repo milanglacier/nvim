@@ -30,6 +30,7 @@ local M = {
                         },
                     },
                     gemini = {
+                        model = 'gemini-3.1-flash-lite-preview',
                         optional = {
                             generationConfig = {
                                 maxOutputTokens = 256,
