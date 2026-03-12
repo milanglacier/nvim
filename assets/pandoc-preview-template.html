@@ -46,6 +46,8 @@
     }
     body {
     margin: 0;
+    width: auto;
+    max-width: none;
     min-height: 100vh;
     padding: 4rem 1.5rem 6rem;
     color: var(--text);
@@ -71,9 +73,7 @@
     body > * {
     position: relative;
     z-index: 1;
-    width: min(100%, 52rem);
-    margin-left: auto;
-    margin-right: auto;
+    max-width: none;
     }
     p,
     ul,
@@ -101,11 +101,13 @@
     background: rgba(144, 122, 169, 0.22);
     }
     #title-block-header {
-    width: min(100%, 56rem);
+    width: 100%;
+    max-width: none;
     margin-bottom: 2.5rem;
     padding: 2.5rem 2.7rem;
     border: 1px solid rgba(206, 202, 205, 0.9);
     border-radius: 28px;
+    box-sizing: border-box;
     background:
     linear-gradient(135deg, rgba(255, 250, 243, 0.98), rgba(242, 233, 225, 0.96)),
     rgba(255, 250, 243, 0.95);
