@@ -1,8 +1,8 @@
 local M = {}
 
 M.pandoc_cmd = 'pandoc'
-
 M.pandoc_args = {}
+M.template_file = vim.fn.stdpath 'config' .. '/assets/pandoc-preview-template.html'
 
 local autocmd = vim.api.nvim_create_autocmd
 local my_augroup = require('conf.builtin_extend').my_augroup
@@ -24,9 +24,17 @@ local function create_temp_file(filename)
 end
 
 local function build_pandoc_command(filename, temp_file)
-    local pandoc_args = vim.deepcopy(M.pandoc_args)
+    local pandoc_args = {
+        M.pandoc_cmd,
+        '--to=html5',
+        '--standalone',
+        '--template',
+        M.template_file,
+        '--metadata',
+        'pagetitle:' .. vim.fn.fnamemodify(filename, ':t:r'),
+    }
 
-    table.insert(pandoc_args, 1, M.pandoc_cmd)
+    vim.list_extend(pandoc_args, M.pandoc_args)
     table.insert(pandoc_args, filename)
     table.insert(pandoc_args, '-o')
     table.insert(pandoc_args, temp_file)
@@ -48,6 +56,11 @@ function M.preview(buf)
 
     if vim.fn.executable(M.pandoc_cmd) == 0 then
         vim.notify 'Pandoc is not installed'
+        return
+    end
+
+    if vim.fn.filereadable(M.template_file) == 0 then
+        vim.notify('Pandoc preview template is missing: ' .. M.template_file)
         return
     end
 

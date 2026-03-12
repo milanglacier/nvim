@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"$if(lang)$ lang="$lang$" xml:lang="$lang$"$endif$$if(dir)$ dir="$dir$"$endif$>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  $for(author-meta)$
+  <meta name="author" content="$author-meta$" />
+  $endfor$
+  $if(date-meta)$
+  <meta name="dcterms.date" content="$date-meta$" />
+  $endif$
+  $if(keywords)$
+  <meta name="keywords" content="$for(keywords)$$keywords$$sep$, $endfor$" />
+  $endif$
+  $if(description-meta)$
+  <meta name="description" content="$description-meta$" />
+  $endif$
+  <title>$if(title-prefix)$$title-prefix$ - $endif$$pagetitle$</title>
+  <style>
+    $styles.html()$
+    :root {
+    --base: #faf4ed;
+    --surface: #fffaf3;
+    --overlay: #f2e9e1;
+    --muted: #9893a5;
+    --subtle: #797593;
+    --text: #575279;
+    --love: #b4637a;
+    --gold: #ea9d34;
+    --rose: #d7827e;
+    --pine: #286983;
+    --foam: #56949f;
+    --iris: #907aa9;
+    --highlight-low: #f4ede8;
+    --highlight-med: #dfdad9;
+    --highlight-high: #cecacd;
+    --shadow: 0 24px 80px rgba(87, 82, 121, 0.12);
+    --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+    --sans: "Avenir Next", "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+    --mono: "JetBrains Mono", "SFMono-Regular", "Cascadia Code", "Fira Code", Consolas, monospace;
+    }
+    html {
+    font-size: 18px;
+    scroll-behavior: smooth;
+    }
+    body {
+    margin: 0;
+    min-height: 100vh;
+    padding: 4rem 1.5rem 6rem;
+    color: var(--text);
+    font-family: var(--serif);
+    line-height: 1.75;
+    background:
+    radial-gradient(circle at top left, rgba(215, 130, 126, 0.14), transparent 28rem),
+    radial-gradient(circle at top right, rgba(144, 122, 169, 0.12), transparent 24rem),
+    linear-gradient(180deg, #fffaf3 0%, #faf4ed 100%);
+    text-rendering: optimizeLegibility;
+    }
+    body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+    linear-gradient(rgba(242, 233, 225, 0.35) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(242, 233, 225, 0.35) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.3), transparent 75%);
+    }
+    body > * {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 52rem);
+    margin-left: auto;
+    margin-right: auto;
+    }
+    p,
+    ul,
+    ol,
+    dl,
+    blockquote,
+    table,
+    pre,
+    figure {
+    margin-top: 0;
+    margin-bottom: 1.4rem;
+    }
+    a {
+    color: var(--pine);
+    text-decoration-color: rgba(40, 105, 131, 0.35);
+    text-decoration-thickness: 0.09em;
+    text-underline-offset: 0.14em;
+    }
+    a:hover,
+    a:focus-visible {
+    color: var(--love);
+    text-decoration-color: rgba(180, 99, 122, 0.55);
+    }
+    ::selection {
+    background: rgba(144, 122, 169, 0.22);
+    }
+    #title-block-header {
+    width: min(100%, 56rem);
+    margin-bottom: 2.5rem;
+    padding: 2.5rem 2.7rem;
+    border: 1px solid rgba(206, 202, 205, 0.9);
+    border-radius: 28px;
+    background:
+    linear-gradient(135deg, rgba(255, 250, 243, 0.98), rgba(242, 233, 225, 0.96)),
+    rgba(255, 250, 243, 0.95);
+    box-shadow: var(--shadow);
+    }
+    .title {
+    margin: 0;
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    }
+    .subtitle,
+    .author,
+    .date {
+    margin-bottom: 0;
+    font-family: var(--sans);
+    color: var(--subtle);
+    }
+    .subtitle {
+    margin-top: 1rem;
+    font-size: 1.05rem;
+    color: var(--iris);
+    }
+    .author,
+    .date {
+    margin-top: 0.5rem;
+    font-size: 0.92rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    }
+    .abstract {
+    margin-top: 1.75rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(206, 202, 205, 0.9);
+    }
+    .abstract-title {
+    margin-bottom: 0.65rem;
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--rose);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    }
+    #TOC {
+    margin-bottom: 2.5rem;
+    padding: 1.5rem 1.6rem;
+    border: 1px solid rgba(206, 202, 205, 0.85);
+    border-radius: 22px;
+    background: rgba(255, 250, 243, 0.78);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 18px 50px rgba(87, 82, 121, 0.08);
+    font-family: var(--sans);
+    }
+    #TOC h2 {
+    margin-top: 0;
+    margin-bottom: 0.9rem;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--rose);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    }
+    #TOC ul {
+    padding-left: 1.1rem;
+    margin-bottom: 0;
+    }
+    #TOC li {
+    margin: 0.3rem 0;
+    }
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+    margin-top: 2.4rem;
+    margin-bottom: 0.9rem;
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    }
+    h1:not(.title) {
+    font-size: 2rem;
+    }
+    h2 {
+    font-size: 1.55rem;
+    border-bottom: 1px solid rgba(206, 202, 205, 0.75);
+    padding-bottom: 0.35rem;
+    }
+    h3 {
+    font-size: 1.28rem;
+    color: var(--pine);
+    }
+    h4,
+    h5,
+    h6 {
+    font-size: 1.05rem;
+    color: var(--iris);
+    }
+    hr {
+    height: 1px;
+    margin: 2rem auto;
+    border: 0;
+    background: linear-gradient(90deg, transparent, var(--highlight-high), transparent);
+    }
+    blockquote {
+    padding: 1.1rem 1.3rem;
+    border-left: 4px solid var(--foam);
+    border-radius: 0 18px 18px 0;
+    background: rgba(242, 233, 225, 0.65);
+    color: var(--subtle);
+    }
+    code {
+    padding: 0.12rem 0.35rem;
+    border-radius: 0.45rem;
+    background: var(--highlight-low);
+    color: var(--love);
+    font-family: var(--mono);
+    font-size: 0.9em;
+    }
+    pre {
+    overflow-x: auto;
+    padding: 1.1rem 1.25rem;
+    border: 1px solid rgba(206, 202, 205, 0.85);
+    border-radius: 20px;
+    background: rgba(255, 250, 243, 0.88);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+    }
+    pre code {
+    padding: 0;
+    background: transparent;
+    color: inherit;
+    font-size: 0.88rem;
+    }
+    div.sourceCode {
+    margin-bottom: 1.4rem;
+    }
+    table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    border: 1px solid rgba(206, 202, 205, 0.85);
+    border-radius: 18px;
+    background: rgba(255, 250, 243, 0.84);
+    box-shadow: 0 16px 40px rgba(87, 82, 121, 0.06);
+    }
+    thead {
+    background: rgba(242, 233, 225, 0.9);
+    }
+    th,
+    td {
+    padding: 0.8rem 0.95rem;
+    border-bottom: 1px solid rgba(223, 218, 217, 0.85);
+    text-align: left;
+    }
+    tbody tr:last-child td {
+    border-bottom: 0;
+    }
+    img,
+    svg,
+    video {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 1.8rem auto;
+    border-radius: 22px;
+    box-shadow: 0 24px 60px rgba(87, 82, 121, 0.12);
+    }
+    figure {
+    text-align: center;
+    }
+    figcaption {
+    margin-top: 0.75rem;
+    color: var(--muted);
+    font-size: 0.92rem;
+    font-family: var(--sans);
+    }
+    ul::marker,
+    ol::marker {
+    color: var(--rose);
+    }
+    li > ul,
+    li > ol {
+    margin-top: 0.5rem;
+    }
+    .footnotes {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(206, 202, 205, 0.85);
+    color: var(--subtle);
+    font-size: 0.94rem;
+    }
+    @media (max-width: 720px) {
+    html {
+    font-size: 16px;
+    }
+    body {
+    padding: 1.4rem 0.9rem 3rem;
+    }
+    #title-block-header,
+    #TOC {
+    padding-left: 1.15rem;
+    padding-right: 1.15rem;
+    border-radius: 22px;
+    }
+    }
+  </style>
+  $for(css)$
+  <link rel="stylesheet" href="$css$" />
+  $endfor$
+  $for(header-includes)$
+  $header-includes$
+  $endfor$
+  $if(math)$
+  $math$
+  $endif$
+</head>
+<body>
+  $for(include-before)$
+  $include-before$
+  $endfor$
+  $if(title)$
+  <header id="title-block-header">
+    <h1 class="title">$title$</h1>
+    $if(subtitle)$
+    <p class="subtitle">$subtitle$</p>
+    $endif$
+    $for(author)$
+    <p class="author">$author$</p>
+    $endfor$
+    $if(date)$
+    <p class="date">$date$</p>
+    $endif$
+    $if(abstract)$
+    <div class="abstract">
+      <div class="abstract-title">$abstract-title$</div>
+      $abstract$
+    </div>
+    $endif$
+  </header>
+  $endif$
+  $if(toc)$
+  <nav id="$idprefix$TOC" role="doc-toc">
+    $if(toc-title)$
+    <h2 id="$idprefix$toc-title">$toc-title$</h2>
+    $endif$
+    $table-of-contents$
+  </nav>
+  $endif$
+  $body$
+  $for(include-after)$
+  $include-after$
+  $endfor$
+</body>
+</html>
