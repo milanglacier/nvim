@@ -7,7 +7,6 @@ M.template_file = vim.fn.stdpath 'config' .. '/assets/pandoc-preview-template.ht
 local autocmd = vim.api.nvim_create_autocmd
 local my_augroup = require('conf.builtin_extend').my_augroup
 local bufmap = vim.api.nvim_buf_set_keymap
-local open = require('conf.builtin_extend').open
 
 M.enabled_fts = {
     'markdown',
@@ -15,6 +14,14 @@ M.enabled_fts = {
     'rmd',
     'org',
 }
+
+function M.setup(opts)
+    opts = opts or {}
+
+    if opts.template_file ~= nil then
+        M.template_file = opts.template_file or nil
+    end
+end
 
 local function create_temp_file(filename)
     -- get the directory of current buffer
@@ -28,9 +35,12 @@ local function build_pandoc_command(filename, temp_file)
         M.pandoc_cmd,
         '--to=html5',
         '--standalone',
-        '--template',
-        M.template_file,
     }
+
+    if M.template_file then
+        table.insert(pandoc_args, '--template')
+        table.insert(pandoc_args, M.template_file)
+    end
 
     vim.list_extend(pandoc_args, M.pandoc_args)
     table.insert(pandoc_args, filename)
@@ -57,7 +67,7 @@ function M.preview(buf)
         return
     end
 
-    if vim.fn.filereadable(M.template_file) == 0 then
+    if M.template_file and vim.fn.filereadable(M.template_file) == 0 then
         vim.notify('Pandoc preview template is missing: ' .. M.template_file)
         return
     end
