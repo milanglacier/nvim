@@ -30,8 +30,6 @@ local function build_pandoc_command(filename, temp_file)
         '--standalone',
         '--template',
         M.template_file,
-        '--metadata',
-        'pagetitle:' .. vim.fn.fnamemodify(filename, ':t:r'),
     }
 
     vim.list_extend(pandoc_args, M.pandoc_args)
