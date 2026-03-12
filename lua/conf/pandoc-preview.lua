@@ -1,8 +1,10 @@
 local M = {}
 
-M.pandoc_cmd = 'pandoc'
-M.pandoc_args = {}
-M.template_file = vim.fn.stdpath 'config' .. '/assets/pandoc-preview-template.html'
+M.config = {
+    pandoc_cmd = 'pandoc',
+    pandoc_args = {},
+    template_file = vim.fn.stdpath 'config' .. '/assets/pandoc-preview-template.html',
+}
 
 local autocmd = vim.api.nvim_create_autocmd
 local my_augroup = require('conf.builtin_extend').my_augroup
@@ -16,10 +18,10 @@ M.enabled_fts = {
 }
 
 function M.setup(opts)
-    opts = opts or {}
+    M.config = vim.tbl_deep_extend('force', M.config, opts or {})
 
-    if opts.template_file ~= nil then
-        M.template_file = opts.template_file or nil
+    if M.config.template_file == false then
+        M.config.template_file = nil
     end
 end
 
@@ -32,17 +34,17 @@ end
 
 local function build_pandoc_command(filename, temp_file)
     local pandoc_args = {
-        M.pandoc_cmd,
+        M.config.pandoc_cmd,
         '--to=html5',
         '--standalone',
     }
 
-    if M.template_file then
+    if M.config.template_file then
         table.insert(pandoc_args, '--template')
-        table.insert(pandoc_args, M.template_file)
+        table.insert(pandoc_args, M.config.template_file)
     end
 
-    vim.list_extend(pandoc_args, M.pandoc_args)
+    vim.list_extend(pandoc_args, M.config.pandoc_args)
     table.insert(pandoc_args, filename)
     table.insert(pandoc_args, '-o')
     table.insert(pandoc_args, temp_file)
@@ -62,13 +64,13 @@ function M.preview(buf)
         return
     end
 
-    if vim.fn.executable(M.pandoc_cmd) == 0 then
+    if vim.fn.executable(M.config.pandoc_cmd) == 0 then
         vim.notify 'Pandoc is not installed'
         return
     end
 
-    if M.template_file and vim.fn.filereadable(M.template_file) == 0 then
-        vim.notify('Pandoc preview template is missing: ' .. M.template_file)
+    if M.config.template_file and vim.fn.filereadable(M.config.template_file) == 0 then
+        vim.notify('Pandoc preview template is missing: ' .. M.config.template_file)
         return
     end
 
