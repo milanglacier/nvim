@@ -1,5 +1,4 @@
 return {
-    { 'hrsh7th/cmp-nvim-lsp' },
     {
         'hrsh7th/nvim-cmp',
         name = 'nvim-cmp',
@@ -11,6 +10,7 @@ return {
             { 'saadparwaiz1/cmp_luasnip' },
             { 'quangnguyen30192/cmp-nvim-tags' },
             { 'petertriho/cmp-git' },
+            { 'hrsh7th/cmp-nvim-lsp' },
         },
         event = { 'InsertEnter', 'CmdLineEnter' },
         config = function()
