@@ -57,9 +57,10 @@ local M = {
                         },
                     },
                     openai = {
+                        model = 'gpt-5.4-nano',
                         optional = {
-                            max_tokens = 256,
-                            top_p = 0.9,
+                            max_completion_tokens = 128,
+                            reasoning_effort = 'none',
                         },
                     },
                     openai_compatible = {
