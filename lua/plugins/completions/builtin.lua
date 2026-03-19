@@ -43,7 +43,9 @@ autocmd('FileType', {
     desc = 'Disable autocompletion',
     callback = function()
         vim.b.minicompletion_disable = true
-        vim.bo.autocomplete = false
+        if vim.fn.has 'nvim-0.12' == 1 then
+            vim.b.autocomplete = false
+        end
     end,
 })
 
