@@ -71,7 +71,7 @@ autocmd('CmdlineEnter', {
         -- CmdlineEnter event itself. To ensure it works
         -- immediately, we must manually invoke the relevant
         -- autocmd.
-        vim.api.nvim_exec_autocmds('CmdLineEnter', {
+        vim.api.nvim_exec_autocmds('CmdlineEnter', {
             group = 'MiniCmdline',
         })
     end,
