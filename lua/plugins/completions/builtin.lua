@@ -4,23 +4,15 @@ local autocmd = vim.api.nvim_create_autocmd
 local keymap = vim.api.nvim_set_keymap
 
 if Milanglacier.completion_frontend == 'builtin' then
-    -- use neovim built-in completion. Requires nvim-0.11+
-    autocmd('LspAttach', {
-        group = my_augroup,
-        callback = function(args)
-            local client_id = args.data.client_id
-            local bufnr = args.buf
-            local client = vim.lsp.get_client_by_id(client_id)
-            if not client then
-                return
-            end
-
-            if client.server_capabilities.completionProvider and client.name ~= 'minuet' then
-                vim.lsp.completion.enable(true, client_id, bufnr, { autotrigger = true })
-            end
-        end,
-        desc = 'Enable built-in auto completion',
-    })
+    if vim.fn.has 'nvim-0.12' == 1 then
+        vim.o.autocomplete = true
+        -- Add omnifunc (`o`) to the `complete` list, which is bound to
+        -- `vim.lsp.omnifunc` by default.
+        vim.o.complete = 'o,.^15,w^10,b^10,t^20'
+        vim.o.autocompletedelay = 100
+    else
+        vim.notify 'vim.o.autocomplete requires Neovim 0.12+'
+    end
 elseif Milanglacier.completion_frontend == 'mini' then
     autocmd('InsertEnter', {
         group = my_augroup,
@@ -43,16 +35,17 @@ elseif Milanglacier.completion_frontend == 'mini' then
         end,
         desc = 'Enable mini auto completion',
     })
-
-    autocmd('FileType', {
-        group = my_augroup,
-        pattern = { 'snacks_picker_input' },
-        desc = 'Disable mini.completion',
-        callback = function()
-            vim.b.minicompletion_disable = true
-        end,
-    })
 end
+
+autocmd('FileType', {
+    group = my_augroup,
+    pattern = { 'snacks_picker_input' },
+    desc = 'Disable autocompletion',
+    callback = function()
+        vim.b.minicompletion_disable = true
+        vim.bo.autocomplete = false
+    end,
+})
 
 autocmd('CmdlineEnter', {
     group = my_augroup,
@@ -87,7 +80,9 @@ local function feedkeys(keys)
     vim.api.nvim_feedkeys(keycode(keys), 'n', false)
 end
 
-keymap('i', '<A-y>', '<cmd>lua vim.lsp.completion.get()<CR>', { desc = 'Manual invoke LSP completion', noremap = true })
+keymap('i', '<A-y>', '<C-x><C-o>', {
+    desc = 'Manual invoke LSP completion',
+})
 
 -- the behavior of tab is depending on scenario:
 -- if snippet has next jumpable anchor, then jump to it
