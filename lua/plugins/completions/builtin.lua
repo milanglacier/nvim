@@ -44,7 +44,7 @@ autocmd('FileType', {
     callback = function()
         vim.b.minicompletion_disable = true
         if vim.fn.has 'nvim-0.12' == 1 then
-            vim.b.autocomplete = false
+            vim.bo.autocomplete = false
         end
     end,
 })
