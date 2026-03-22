@@ -41,6 +41,17 @@ autocmd('FileType', {
     end,
 })
 
+autocmd('FileType', {
+    group = my_augroup,
+    pattern = 'sql',
+    desc = 'disable sql omnifunc',
+    callback = function()
+        -- avoid the following error: SQLComplete:The dbext plugin must be
+        -- loaded for dynamic SQL completion
+        vim.bo.omnifunc = vim.NIL
+    end,
+})
+
 local function set_python_path(path)
     local clients = vim.lsp.get_clients {
         bufnr = vim.api.nvim_get_current_buf(),
