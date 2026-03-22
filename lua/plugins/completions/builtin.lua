@@ -11,7 +11,24 @@ if Milanglacier.completion_frontend == 'builtin' then
         vim.o.complete = 'o,.^15,w^10,b^10,t^20'
         vim.o.autocompletedelay = 100
     else
-        vim.notify 'vim.o.autocomplete requires Neovim 0.12+'
+        -- For Neovim 0.11, use `vim.lsp.completion.enable` instead of
+        -- `vim.o.autocomplete`.
+        autocmd('LspAttach', {
+            group = my_augroup,
+            callback = function(args)
+                local client_id = args.data.client_id
+                local bufnr = args.buf
+                local client = vim.lsp.get_client_by_id(client_id)
+                if not client then
+                    return
+                end
+
+                if client.server_capabilities.completionProvider and client.name ~= 'minuet' then
+                    vim.lsp.completion.enable(true, client_id, bufnr, { autotrigger = true })
+                end
+            end,
+            desc = 'Enable built-in auto completion',
+        })
     end
 elseif Milanglacier.completion_frontend == 'mini' then
     autocmd('InsertEnter', {
