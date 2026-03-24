@@ -170,6 +170,16 @@ end
 
 command('PingCursor', 'lua require("conf.builtin_extend").ping_cursor()', {})
 
+function M.enable_osc52_clipboard()
+    vim.g.clipboard = 'osc52'
+    vim.g.loaded_clipboard_provider = nil
+    vim.cmd.runtime 'autoload/provider/clipboard.vim'
+end
+
+command('OSC52', function()
+    require('conf.builtin_extend').enable_osc52_clipboard()
+end, { desc = 'Enable OSC52 clipboard provider' })
+
 autocmd('BufEnter', {
     pattern = { '*.pdf', '*.png', '*.jpg', '*.jpeg' },
     group = M.my_augroup,
