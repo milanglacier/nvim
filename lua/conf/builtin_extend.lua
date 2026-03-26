@@ -218,28 +218,15 @@ function M.benchmark(func, iterations, ...)
     return result, total_time, average_time
 end
 
-local function reload_clipboard_provider()
-    vim.g.loaded_clipboard_provider = nil
-    vim.cmd.runtime 'autoload/provider/clipboard.vim'
-end
-
-function M.enable_osc52_clipboard()
-    vim.g.clipboard = 'osc52'
-    reload_clipboard_provider()
-end
-
-function M.disable_osc52_clipboard()
-    vim.g.clipboard = nil
-    reload_clipboard_provider()
-end
-
 function M.toggle_osc52_clipboard()
     if vim.g.clipboard == 'osc52' then
-        M.disable_osc52_clipboard()
-        return
+        vim.g.clipboard = nil
+    else
+        vim.g.clipboard = 'osc52'
     end
 
-    M.enable_osc52_clipboard()
+    vim.g.loaded_clipboard_provider = nil
+    vim.cmd.runtime 'autoload/provider/clipboard.vim'
 end
 
 command('OSC52', function()
