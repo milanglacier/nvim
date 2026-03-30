@@ -194,7 +194,7 @@ return {
 
             local keymap_for_repl = {
                 { '<Leader><Space>', group = '+localleader', buffer = 0 },
-                { '<Leader><Space>r', group = '+REPL', buffer = 0 },
+                { '<Leader><Space>r', group = '+yarepl', buffer = 0 },
                 { '<Leader><Space>s', group = '+send to REPL(motion)', buffer = 0, mode = { 'n', 'v' } },
             }
 

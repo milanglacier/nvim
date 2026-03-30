@@ -75,7 +75,7 @@ local telescope = {}
 telescope.projects = 'Telescope projects'
 telescope.oldfiles = 'Telescope oldfiles'
 telescope.find_files = 'Telescope find_files'
-telescope.repl_show = 'Telescope REPLShow'
+telescope.repl_show = 'Telescope yarepl_show'
 
 -- dap
 telescope.dap_commands = function()

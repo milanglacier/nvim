@@ -115,63 +115,63 @@ return {
         end,
         init = function()
             ----- Set Aichat Keymap ------
-            keymap('n', '<Leader>cs', '<Plug>(REPLStart-aichat)', {
+            keymap('n', '<Leader>cs', '<Plug>(Yarepl-start-aichat)', {
                 desc = 'Start an Aichat REPL',
             })
-            keymap('n', '<Leader>cf', '<Plug>(REPLFocus-aichat)', {
+            keymap('n', '<Leader>cf', '<Plug>(Yarepl-focus-aichat)', {
                 desc = 'Focus on Aichat REPL',
             })
-            keymap('n', '<Leader>ch', '<Plug>(REPLHide-aichat)', {
+            keymap('n', '<Leader>ch', '<Plug>(Yarepl-hide-aichat)', {
                 desc = 'Hide Aichat REPL',
             })
-            keymap('v', '<Leader>cr', '<Plug>(REPLSourceVisual-aichat)', {
+            keymap('v', '<Leader>cr', '<Plug>(Yarepl-source-visual-aichat)', {
                 desc = 'Source visual region to Aichat',
             })
-            keymap('v', '<Leader>cR', '<Plug>(REPLSendVisual-aichat)', {
+            keymap('v', '<Leader>cR', '<Plug>(Yarepl-send-visual-aichat)', {
                 desc = 'Send visual region to Aichat',
             })
-            keymap('n', '<Leader>crr', '<Plug>(REPLSendLine-aichat)', {
+            keymap('n', '<Leader>crr', '<Plug>(Yarepl-send-line-aichat)', {
                 desc = 'Send line to Aichat',
             })
-            keymap('n', '<Leader>cr', '<Plug>(REPLSourceOperator-aichat)', {
+            keymap('n', '<Leader>cr', '<Plug>(Yarepl-source-operator-aichat)', {
                 desc = 'Source Operator to Aichat',
             })
-            keymap('n', '<Leader>cR', '<Plug>(REPLSendOperator-aichat)', {
+            keymap('n', '<Leader>cR', '<Plug>(Yarepl-send-operator-aichat)', {
                 desc = 'Send Operator to Aichat',
             })
-            keymap('n', '<Leader>ce', '<Plug>(REPLExec-aichat)', {
+            keymap('n', '<Leader>ce', '<Plug>(Yarepl-exec-aichat)', {
                 desc = 'Execute command in aichat',
             })
-            keymap('n', '<Leader>cq', '<Plug>(REPLClose-aichat)', {
+            keymap('n', '<Leader>cq', '<Plug>(Yarepl-close-aichat)', {
                 desc = 'Quit Aichat',
             })
-            keymap('n', '<Leader>cc', '<CMD>REPLCleanup<CR>', {
+            keymap('n', '<Leader>cc', '<CMD>Yarepl cleanup<CR>', {
                 desc = 'Clear aichat REPLs.',
             })
 
             ----- Set codex Keymap ------
-            keymap('n', '<Leader>zs', '<Plug>(REPLStart-codex)', {
+            keymap('n', '<Leader>zs', '<Plug>(Yarepl-start-codex)', {
                 desc = 'Start an codex REPL',
             })
-            keymap('n', '<Leader>zf', '<Plug>(REPLFocus-codex)', {
+            keymap('n', '<Leader>zf', '<Plug>(Yarepl-focus-codex)', {
                 desc = 'Focus on codex REPL',
             })
-            keymap('n', '<Leader>zh', '<Plug>(REPLHide-codex)', {
+            keymap('n', '<Leader>zh', '<Plug>(Yarepl-hide-codex)', {
                 desc = 'Hide codex REPL',
             })
-            keymap('v', '<Leader>zr', '<Plug>(REPLSendVisual-codex)', {
+            keymap('v', '<Leader>zr', '<Plug>(Yarepl-send-visual-codex)', {
                 desc = 'Send visual region to codex',
             })
-            keymap('n', '<Leader>zrr', '<Plug>(REPLSendLine-codex)', {
+            keymap('n', '<Leader>zrr', '<Plug>(Yarepl-send-line-codex)', {
                 desc = 'Send lines to codex',
             })
-            keymap('n', '<Leader>zr', '<Plug>(REPLSendOperator-codex)', {
+            keymap('n', '<Leader>zr', '<Plug>(Yarepl-send-operator-codex)', {
                 desc = 'Send Operator to codex',
             })
-            keymap('n', '<Leader>ze', '<Plug>(CodexExec)', {
+            keymap('n', '<Leader>ze', '<Plug>(yarepl-codex-exec)', {
                 desc = 'Execute command in codex',
             })
-            keymap('n', '<Leader>zg', '<Plug>(CodexSendOpenEditor)', {
+            keymap('n', '<Leader>zg', '<Plug>(yarepl-codex-send-open-editor)', {
                 desc = 'Open Editor in codex',
             })
             keymap('n', '<Leader>z<space>', '<cmd>checktime<cr>', {
@@ -180,57 +180,57 @@ return {
 
             ----- Set Aider Keymap ------
             -- general keymap from yarepl
-            keymap('n', '<Leader>as', '<Plug>(REPLStart-aider)', {
+            keymap('n', '<Leader>as', '<Plug>(Yarepl-start-aider)', {
                 desc = 'Start an aider REPL',
             })
-            keymap('n', '<Leader>af', '<Plug>(REPLFocus-aider)', {
+            keymap('n', '<Leader>af', '<Plug>(Yarepl-focus-aider)', {
                 desc = 'Focus on aider REPL',
             })
-            keymap('n', '<Leader>ah', '<Plug>(REPLHide-aider)', {
+            keymap('n', '<Leader>ah', '<Plug>(Yarepl-hide-aider)', {
                 desc = 'Hide aider REPL',
             })
-            keymap('v', '<Leader>ar', '<Plug>(REPLSendVisual-aider)', {
+            keymap('v', '<Leader>ar', '<Plug>(Yarepl-send-visual-aider)', {
                 desc = 'Send visual region to aider',
             })
-            keymap('n', '<Leader>arr', '<Plug>(REPLSendLine-aider)', {
+            keymap('n', '<Leader>arr', '<Plug>(Yarepl-send-line-aider)', {
                 desc = 'Send lines to aider',
             })
-            keymap('n', '<Leader>ar', '<Plug>(REPLSendOperator-aider)', {
+            keymap('n', '<Leader>ar', '<Plug>(Yarepl-send-operator-aider)', {
                 desc = 'Send Operator to aider',
             })
 
             -- special keymap from aider
-            keymap('n', '<Leader>ae', '<Plug>(AiderExec)', {
+            keymap('n', '<Leader>ae', '<Plug>(yarepl-aider-exec)', {
                 desc = 'Execute command in aider',
             })
-            keymap('n', '<Leader>ay', '<Plug>(AiderSendYes)', {
+            keymap('n', '<Leader>ay', '<Plug>(yarepl-aider-send-yes)', {
                 desc = 'Send y to aider',
             })
-            keymap('n', '<Leader>an', '<Plug>(AiderSendNo)', {
+            keymap('n', '<Leader>an', '<Plug>(yarepl-aider-send-no)', {
                 desc = 'Send n to aider',
             })
-            keymap('n', '<Leader>aa', '<Plug>(AiderSendAbort)', {
+            keymap('n', '<Leader>aa', '<Plug>(yarepl-aider-send-abort)', {
                 desc = 'Send abort to aider',
             })
-            keymap('n', '<Leader>aq', '<Plug>(AiderSendExit)', {
+            keymap('n', '<Leader>aq', '<Plug>(yarepl-aider-send-exit)', {
                 desc = 'Send exit to aider',
             })
-            keymap('n', '<Leader>ama', '<Plug>(AiderSendAskMode)', {
+            keymap('n', '<Leader>ama', '<Plug>(yarepl-aider-send-ask-mode)', {
                 desc = 'Switch aider to ask mode',
             })
-            keymap('n', '<Leader>amc', '<Plug>(AiderSendCodeMode)', {
+            keymap('n', '<Leader>amc', '<Plug>(yarepl-aider-send-code-mode)', {
                 desc = 'Switch aider to code mode',
             })
-            keymap('n', '<Leader>amC', '<Plug>(AiderSendContextMode)', {
+            keymap('n', '<Leader>amC', '<Plug>(yarepl-aider-send-context-mode)', {
                 desc = 'Switch aider to context mode',
             })
-            keymap('n', '<Leader>amA', '<Plug>(AiderSendArchMode)', {
+            keymap('n', '<Leader>amA', '<Plug>(yarepl-aider-send-arch-mode)', {
                 desc = 'Switch aider to architect mode',
             })
-            keymap('n', '<Leader>ag', '<cmd>AiderSetPrefix<cr>', {
+            keymap('n', '<Leader>ag', '<cmd>Yarepl aider set_prefix<cr>', {
                 desc = 'set aider prefix',
             })
-            keymap('n', '<Leader>aG', '<cmd>AiderRemovePrefix<cr>', {
+            keymap('n', '<Leader>aG', '<cmd>Yarepl aider remove_prefix<cr>', {
                 desc = 'remove aider prefix',
             })
             keymap('n', '<Leader>a<space>', '<cmd>checktime<cr>', {
@@ -238,13 +238,13 @@ return {
             })
 
             ----- Set Shell Keymap ------
-            keymap('n', '<Leader>ot', '<Plug>(REPLStart-shell)', {
+            keymap('n', '<Leader>ot', '<Plug>(Yarepl-start-shell)', {
                 desc = 'Start or focus a shell',
             })
-            keymap('n', '<Leader>t1', '<Plug>(REPLFocus-shell)', {
+            keymap('n', '<Leader>t1', '<Plug>(Yarepl-focus-shell)', {
                 desc = 'Focus on shell',
             })
-            keymap('n', '<Leader>t0', '<Plug>(REPLHide-shell)', {
+            keymap('n', '<Leader>t0', '<Plug>(Yarepl-hide-shell)', {
                 desc = 'Hide shell REPL',
             })
 
@@ -264,49 +264,49 @@ return {
                     local repl = ft_to_repl[vim.bo.filetype]
                     repl = repl and ('-' .. repl) or ''
 
-                    bufmap(0, 'n', '<LocalLeader>rs', string.format('<Plug>(REPLStart%s)', repl), {
+                    bufmap(0, 'n', '<LocalLeader>rs', string.format('<Plug>(Yarepl-start%s)', repl), {
                         desc = 'Start an REPL',
                     })
-                    bufmap(0, 'n', '<LocalLeader>rf', string.format('<Plug>(REPLFocus%s)', repl), {
+                    bufmap(0, 'n', '<LocalLeader>rf', string.format('<Plug>(Yarepl-focus%s)', repl), {
                         desc = 'Focus on REPL',
                     })
-                    bufmap(0, 'n', '<LocalLeader>rh', string.format('<Plug>(REPLHide%s)', repl), {
+                    bufmap(0, 'n', '<LocalLeader>rh', string.format('<Plug>(Yarepl-hide%s)', repl), {
                         desc = 'Hide REPL',
                     })
-                    bufmap(0, 'v', '<LocalLeader>s', string.format('<Plug>(REPLSourceVisual%s)', repl), {
+                    bufmap(0, 'v', '<LocalLeader>s', string.format('<Plug>(Yarepl-source-visual%s)', repl), {
                         desc = 'Source visual region to REPL',
                     })
-                    bufmap(0, 'v', '<LocalLeader>S', string.format('<Plug>(REPLSendVisual%s)', repl), {
+                    bufmap(0, 'v', '<LocalLeader>S', string.format('<Plug>(Yarepl-send-visual%s)', repl), {
                         desc = 'Send visual region to REPL',
                     })
-                    bufmap(0, 'n', '<LocalLeader>ss', string.format('<Plug>(REPLSendLine%s)', repl), {
+                    bufmap(0, 'n', '<LocalLeader>ss', string.format('<Plug>(Yarepl-send-line%s)', repl), {
                         desc = 'Send line to REPL',
                     })
-                    bufmap(0, 'n', '<LocalLeader>s', string.format('<Plug>(REPLSourceOperator%s)', repl), {
+                    bufmap(0, 'n', '<LocalLeader>s', string.format('<Plug>(Yarepl-source-operator%s)', repl), {
                         desc = 'Source Operator to REPL',
                     })
-                    bufmap(0, 'n', '<LocalLeader>S', string.format('<Plug>(REPLSendOperator%s)', repl), {
+                    bufmap(0, 'n', '<LocalLeader>S', string.format('<Plug>(Yarepl-send-operator%s)', repl), {
                         desc = 'Send Operator to REPL',
                     })
-                    bufmap(0, 'n', '<LocalLeader>re', string.format('<Plug>(REPLExec%s)', repl), {
+                    bufmap(0, 'n', '<LocalLeader>re', string.format('<Plug>(Yarepl-exec%s)', repl), {
                         desc = 'Execute command in REPL',
                     })
-                    bufmap(0, 'n', '<LocalLeader>rq', string.format('<Plug>(REPLClose%s)', repl), {
+                    bufmap(0, 'n', '<LocalLeader>rq', string.format('<Plug>(Yarepl-close%s)', repl), {
                         desc = 'Quit REPL',
                     })
-                    bufmap(0, 'n', '<LocalLeader>rc', '<CMD>REPLCleanup<CR>', {
+                    bufmap(0, 'n', '<LocalLeader>rc', '<CMD>Yarepl cleanup<CR>', {
                         desc = 'Clear REPLs.',
                     })
-                    bufmap(0, 'n', '<LocalLeader>rS', '<CMD>REPLSwap<CR>', {
+                    bufmap(0, 'n', '<LocalLeader>rS', '<CMD>Yarepl swap<CR>', {
                         desc = 'Swap REPLs.',
                     })
-                    bufmap(0, 'n', '<LocalLeader>r?', '<Plug>(REPLStart)', {
+                    bufmap(0, 'n', '<LocalLeader>r?', '<Plug>(Yarepl-start)', {
                         desc = 'Start an REPL from available REPL metas',
                     })
-                    bufmap(0, 'n', '<LocalLeader>ra', '<CMD>REPLAttachBufferToREPL<CR>', {
+                    bufmap(0, 'n', '<LocalLeader>ra', '<CMD>Yarepl attach_buffer<CR>', {
                         desc = 'Attach current buffer to a REPL',
                     })
-                    bufmap(0, 'n', '<LocalLeader>rd', '<CMD>REPLDetachBufferToREPL<CR>', {
+                    bufmap(0, 'n', '<LocalLeader>rd', '<CMD>Yarepl detach_buffer<CR>', {
                         desc = 'Detach current buffer to any REPL',
                     })
 
