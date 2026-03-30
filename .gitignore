@@ -4,3 +4,5 @@
 .aider*
 .env
 reference
+.codex
+.nvim_log
