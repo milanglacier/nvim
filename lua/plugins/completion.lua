@@ -5,8 +5,10 @@ local M = {
         'milanglacier/minuet-ai.nvim',
         event = { 'InsertEnter' },
         config = function()
+            local mv = require 'minuet.config'
+
             require('minuet').setup {
-                provider = 'gemini',
+                provider = 'openai_compatible',
                 request_timeout = 2,
                 throttle = 2000,
                 virtualtext = {
@@ -64,17 +66,21 @@ local M = {
                         },
                     },
                     openai_compatible = {
-                        api_key = 'OPENROUTER_API_KEY',
-                        end_point = 'https://openrouter.ai/api/v1/chat/completions',
-                        model = 'mistralai/devstral-small',
-                        name = 'Openrouter',
+                        api_key = 'FIREWORKS_API_KEY',
+                        end_point = 'https://api.fireworks.ai/inference/v1/chat/completions',
+                        model = 'accounts/fireworks/routers/kimi-k2p5-turbo',
+                        name = 'Fireworks',
+                        system = mv.default_system_prefix_first,
+                        few_shots = mv.default_few_shots_prefix_first,
+                        chat_input = mv.default_chat_input_prefix_first,
                         optional = {
+                            reasoning_effort = 'none',
                             max_tokens = 56,
                             top_p = 0.9,
-                            provider = {
-                                -- Prioritize throughput for faster completion
-                                sort = 'throughput',
-                            },
+                            -- provider = {
+                            --     -- Prioritize throughput for faster completion
+                            --     sort = 'throughput',
+                            -- },
                         },
                     },
                 },
