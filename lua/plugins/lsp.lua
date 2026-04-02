@@ -192,6 +192,7 @@ local setup_lspconfig = function()
             'rmd',
             'quarto',
             'json',
+            'jsonc',
             'yaml',
         },
         init_options = {
