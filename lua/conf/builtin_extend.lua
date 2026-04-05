@@ -111,6 +111,29 @@ keymap(
     opts_desc 'toggle cmdheight'
 )
 
+-- Bultin packages introduced since neovim v0.12 but not activated by default
+-- Undotree
+keymap('n', '<Leader>u', '', {
+    desc = 'undotree',
+    callback = function()
+        if not vim.api.nvim_get_commands({})['Undotree'] then
+            vim.cmd.packadd 'nvim.undotree'
+        end
+        vim.cmd.Undotree()
+    end,
+})
+-- Difftool
+keymap('n', '<Leader>gt', '', {
+    desc = 'difftool',
+    callback = function()
+        if not vim.api.nvim_get_commands({})['DiffTool'] then
+            vim.cmd.packadd 'nvim.difftool'
+        end
+        return ':DiffTool '
+    end,
+    expr = true,
+})
+
 M.jk_as_esc = function()
     keymap('t', 'k', [[]], {
         noremap = true,
