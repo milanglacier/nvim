@@ -39,7 +39,6 @@ return {
         lazy = vim.fn.argc(-1) == 0,
         config = function()
             local yarepl = require 'yarepl'
-            local aider = require 'yarepl.extensions.aider'
             local codex = require 'yarepl.extensions.codex'
 
             -- Set the $EDITOR env var to use `nvr` (neovim-remote). Thivariables
@@ -53,7 +52,6 @@ return {
             yarepl.setup {
                 source_command_hint = { enabled = true },
                 metas = {
-                    aider = aider.create_aider_meta(),
                     codex = codex.create_codex_meta(),
                     python = false,
                     R = false,
@@ -176,65 +174,6 @@ return {
             })
             keymap('n', '<Leader>z<space>', '<cmd>checktime<cr>', {
                 desc = 'sync file changes by codex to nvim buffer',
-            })
-
-            ----- Set Aider Keymap ------
-            -- general keymap from yarepl
-            keymap('n', '<Leader>as', '<Plug>(Yarepl-start-aider)', {
-                desc = 'Start an aider REPL',
-            })
-            keymap('n', '<Leader>af', '<Plug>(Yarepl-focus-aider)', {
-                desc = 'Focus on aider REPL',
-            })
-            keymap('n', '<Leader>ah', '<Plug>(Yarepl-hide-aider)', {
-                desc = 'Hide aider REPL',
-            })
-            keymap('v', '<Leader>ar', '<Plug>(Yarepl-send-visual-aider)', {
-                desc = 'Send visual region to aider',
-            })
-            keymap('n', '<Leader>arr', '<Plug>(Yarepl-send-line-aider)', {
-                desc = 'Send lines to aider',
-            })
-            keymap('n', '<Leader>ar', '<Plug>(Yarepl-send-operator-aider)', {
-                desc = 'Send Operator to aider',
-            })
-
-            -- special keymap from aider
-            keymap('n', '<Leader>ae', '<Plug>(yarepl-aider-exec)', {
-                desc = 'Execute command in aider',
-            })
-            keymap('n', '<Leader>ay', '<Plug>(yarepl-aider-send-yes)', {
-                desc = 'Send y to aider',
-            })
-            keymap('n', '<Leader>an', '<Plug>(yarepl-aider-send-no)', {
-                desc = 'Send n to aider',
-            })
-            keymap('n', '<Leader>aa', '<Plug>(yarepl-aider-send-abort)', {
-                desc = 'Send abort to aider',
-            })
-            keymap('n', '<Leader>aq', '<Plug>(yarepl-aider-send-exit)', {
-                desc = 'Send exit to aider',
-            })
-            keymap('n', '<Leader>ama', '<Plug>(yarepl-aider-send-ask-mode)', {
-                desc = 'Switch aider to ask mode',
-            })
-            keymap('n', '<Leader>amc', '<Plug>(yarepl-aider-send-code-mode)', {
-                desc = 'Switch aider to code mode',
-            })
-            keymap('n', '<Leader>amC', '<Plug>(yarepl-aider-send-context-mode)', {
-                desc = 'Switch aider to context mode',
-            })
-            keymap('n', '<Leader>amA', '<Plug>(yarepl-aider-send-arch-mode)', {
-                desc = 'Switch aider to architect mode',
-            })
-            keymap('n', '<Leader>ag', '<cmd>Yarepl aider set_prefix<cr>', {
-                desc = 'set aider prefix',
-            })
-            keymap('n', '<Leader>aG', '<cmd>Yarepl aider remove_prefix<cr>', {
-                desc = 'remove aider prefix',
-            })
-            keymap('n', '<Leader>a<space>', '<cmd>checktime<cr>', {
-                desc = 'sync file changes by aider to nvim buffer',
             })
 
             ----- Set Shell Keymap ------
