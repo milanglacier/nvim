@@ -75,7 +75,7 @@ local M = {
                         chat_input = mv.default_chat_input_prefix_first,
                         optional = {
                             reasoning_effort = 'none',
-                            max_tokens = 56,
+                            max_tokens = 256,
                             top_p = 0.9,
                             -- provider = {
                             --     -- Prioritize throughput for faster completion
