@@ -168,10 +168,10 @@ return {
             keymap('n', '<Leader>zr', '<Plug>(yarepl-send-operator-codex)', {
                 desc = 'Send Operator to codex',
             })
-            keymap('n', '<Leader>ze', '<Plug(Yarepl-codex-exec)', {
+            keymap('n', '<Leader>ze', '<Plug>(yarepl-codex-exec)', {
                 desc = 'Execute command in codex',
             })
-            keymap('n', '<Leader>zg', '<Plug(Yarepl-codex-send-open-editor)', {
+            keymap('n', '<Leader>zg', '<Plug>(yarepl-codex-send-open-editor)', {
                 desc = 'Open Editor in codex',
             })
             keymap('n', '<Leader>z<space>', '<cmd>checktime<cr>', {
