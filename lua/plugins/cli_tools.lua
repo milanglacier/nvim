@@ -186,7 +186,7 @@ return {
             keymap('n', '<Leader>arr', '<Plug>(Yarepl-send-line-opencode)', { desc = 'Send line to OpenCode' })
             keymap('n', '<Leader>ar', '<Plug>(Yarepl-send-operator-opencode)', { desc = 'Send operator to OpenCode' })
             keymap('n', '<Leader>ae', '<Plug>(Yarepl-opencode-exec)', { desc = 'Exec in OpenCode' })
-            keymap('n', '<Leader>ao', '<Plug>(Yarepl-opencode-send-open-editor)', { desc = 'Open editor' })
+            keymap('n', '<Leader>ag', '<Plug>(Yarepl-opencode-send-open-editor)', { desc = 'Open editor' })
             keymap('n', '<Leader>au', '<Plug>(Yarepl-opencode-send-scroll-up)', { desc = 'Scroll up' })
             keymap('n', '<Leader>ad', '<Plug>(Yarepl-opencode-send-scroll-down)', { desc = 'Scroll down' })
 
