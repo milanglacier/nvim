@@ -64,5 +64,5 @@
   "vimtex": { "branch": "master", "commit": "82d2305ff71dfb3bd91602534cc9bb9a195bcb38" },
   "which-key.nvim": { "branch": "main", "commit": "3aab2147e74890957785941f0c1ad87d0a44c15a" },
   "winshift.nvim": { "branch": "main", "commit": "37468ed6f385dfb50402368669766504c0e15583" },
-  "yarepl.nvim": { "branch": "main", "commit": "6d1d479d6c43d6acda983d3d4a910e7a31fd2ab6" }
+  "yarepl.nvim": { "branch": "main", "commit": "3bf36cbcf311e10ca3ce3a43929080c2850e60ae" }
 }
