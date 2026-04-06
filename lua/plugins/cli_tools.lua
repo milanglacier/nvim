@@ -40,6 +40,7 @@ return {
         config = function()
             local yarepl = require 'yarepl'
             local codex = require 'yarepl.extensions.codex'
+            local opencode = require 'yarepl.extensions.opencode'
 
             -- Set the $EDITOR env var to use `nvr` (neovim-remote). Thivariables
             -- ensures that external commands, such as Codex's <C-g> shortcut,
@@ -53,6 +54,7 @@ return {
                 source_command_hint = { enabled = true },
                 metas = {
                     codex = codex.create_codex_meta(),
+                    opencode = opencode.create_opencode_meta(),
                     python = false,
                     R = false,
                     radian = { cmd = 'R' },
@@ -175,6 +177,18 @@ return {
             keymap('n', '<Leader>z<space>', '<cmd>checktime<cr>', {
                 desc = 'sync file changes by codex to nvim buffer',
             })
+
+            ----- Set Opencode Keymap -----
+            keymap('n', '<Leader>as', '<Plug>(Yarepl-start-opencode)', { desc = 'Start OpenCode' })
+            keymap('n', '<Leader>af', '<Plug>(Yarepl-focus-opencode)', { desc = 'Focus OpenCode' })
+            keymap('n', '<Leader>ah', '<Plug>(Yarepl-hide-opencode)', { desc = 'Hide OpenCode' })
+            keymap('v', '<Leader>ar', '<Plug>(Yarepl-send-visual-opencode)', { desc = 'Send visual to OpenCode' })
+            keymap('n', '<Leader>arr', '<Plug>(Yarepl-send-line-opencode)', { desc = 'Send line to OpenCode' })
+            keymap('n', '<Leader>ar', '<Plug>(Yarepl-send-operator-opencode)', { desc = 'Send operator to OpenCode' })
+            keymap('n', '<Leader>ae', '<Plug>(Yarepl-opencode-exec)', { desc = 'Exec in OpenCode' })
+            keymap('n', '<Leader>ao', '<Plug>(Yarepl-opencode-send-open-editor)', { desc = 'Open editor' })
+            keymap('n', '<Leader>au', '<Plug>(Yarepl-opencode-send-scroll-up)', { desc = 'Scroll up' })
+            keymap('n', '<Leader>ad', '<Plug>(Yarepl-opencode-send-scroll-down)', { desc = 'Scroll down' })
 
             ----- Set Shell Keymap ------
             keymap('n', '<Leader>ot', '<Plug>(Yarepl-start-shell)', {

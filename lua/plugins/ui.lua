@@ -183,7 +183,7 @@ return {
                 { '<Leader>g', group = '+git', mode = { 'n', 'v' } },
                 { '<Leader>gm', group = '+misc' },
                 { '<Leader>x', group = '+qf' },
-                { '<Leader>a', group = '+aider', mode = { 'n', 'v' } },
+                { '<Leader>a', group = '+opencode', mode = { 'n', 'v' } },
                 { '<Leader>z', group = '+codex', mode = { 'n', 'v' } },
                 { '<Leader>c', group = '+chat', mode = { 'n', 'v' } },
                 { '<Leader><Tab>', group = '+tab' },
