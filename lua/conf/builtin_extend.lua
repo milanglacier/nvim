@@ -241,9 +241,54 @@ function M.benchmark(func, iterations, ...)
     return result, total_time, average_time
 end
 
-function M.toggle_osc52_clipboard()
-    if vim.g.clipboard == 'osc52' then
+---@class OSC52ClipboardConfig
+---@field name string
+---@field copy table<string, function>
+---@field paste table<string, function>
+---@field cache_enabled boolean
+
+--- Toggle OSC52 clipboard provider.
+--- When write_only is true, only writing to the remote clipboard is supported.
+--- Reading from the remote clipboard will be disabled.
+--- This is useful for terminal emulators or multiplexers (such as zellij) that
+--- do not support reading from the remote clipboard via OSC 52.
+---@param opts? { write_only?: boolean }
+---@diagnostic disable-next-line: redefined-local
+function M.toggle_osc52_clipboard(opts)
+    ---@param clipboard unknown
+    ---@return boolean
+    local function is_osc52_clipboard_enabled(clipboard)
+        return clipboard == 'osc52' or (type(clipboard) == 'table' and clipboard.name == 'osc52')
+    end
+
+    ---@return OSC52ClipboardConfig
+    local function make_osc52_write_only_clipboard()
+        local osc52 = require 'vim.ui.clipboard.osc52'
+
+        return {
+            name = 'osc52',
+            copy = {
+                ['+'] = osc52.copy '+',
+                ['*'] = osc52.copy '*',
+            },
+            paste = {
+                ['+'] = function()
+                    return 0
+                end,
+                ['*'] = function()
+                    return 0
+                end,
+            },
+            cache_enabled = false,
+        }
+    end
+
+    opts = opts or {}
+
+    if is_osc52_clipboard_enabled(vim.g.clipboard) then
         vim.g.clipboard = nil
+    elseif opts.write_only then
+        vim.g.clipboard = make_osc52_write_only_clipboard()
     else
         vim.g.clipboard = 'osc52'
     end
@@ -252,8 +297,15 @@ function M.toggle_osc52_clipboard()
     vim.cmd.runtime 'autoload/provider/clipboard.vim'
 end
 
-command('OSC52', function()
-    require('conf.builtin_extend').toggle_osc52_clipboard()
-end, { desc = 'Toggle OSC52 clipboard provider override' })
+command('OSC52', function(args)
+    local write_only = args.args == 'write_only'
+    require('conf.builtin_extend').toggle_osc52_clipboard { write_only = write_only }
+end, {
+    desc = 'Toggle OSC52 clipboard provider. Use `write_only` to avoid attempting to read from the remote clipboard.',
+    nargs = '?',
+    complete = function()
+        return { 'write_only' }
+    end,
+})
 
 return M
