@@ -603,16 +603,28 @@ The following keymaps rely on `Minuet`, a code completion plugin as an
 alternative to github copilot. Minuet allows you to select your preferred LLM
 for code completion.
 
+#### Virtualtext Completion Keymaps
+
 | Mode | LHS      | RHS/Functionality                                          |
 | ---- | -------- | ---------------------------------------------------------- |
 | i    | `<M-'>`  | Invoke `minuet` completion or cycle to next completion     |
 | i    | `<M-;>`  | Invoke `minuet` completion or cycle to previous completion |
-| i    | `<M-c>'` | Invoke `minuet` completion or cycle to next completion     |
-| i    | `<M-c>;` | Invoke `minuet` completion or cycle to previous completion |
-| i    | `<M-a>`  | Accept line                                                |
-| i    | `<M-z>`  | Accept n lines of completion                               |
+| i    | `<M-c>'` | Cycle to next completion (alternative keymap)              |
+| i    | `<M-c>;` | Cycle to previous completion (alternative keymap)          |
 | i    | `<M-A>`  | Accept whole completion                                    |
-| i    | `<M-e>`  | Reject completion                                          |
+| i    | `<M-a>`  | Accept line                                                |
+| i    | `<M-e>`  | Dismiss completion                                         |
+
+#### Duet (Next Edit Suggestion) Keymaps
+
+| Mode | LHS          | RHS/Functionality              |
+| ---- | ------------ | ------------------------------ |
+| i    | `<M-z>z`     | Trigger Minuet duet prediction |
+| i    | `<M-z>a`     | Apply duet suggestion          |
+| i    | `<M-c>x`     | Dismiss duet suggestion        |
+| n    | `<Leader>mz` | Trigger Minuet duet prediction |
+| n    | `<Leader>ma` | Apply duet suggestion          |
+| n    | `<Leader>mx` | Dismiss duet suggestion        |
 
 ## REPL keymaps
 
