@@ -314,7 +314,9 @@ return {
                     if vim.wo.diff then
                         vim.cmd 'normal! ]c'
                     else
-                        require('gitsigns').nav_hunk 'next'
+                        -- go to the next staged/unstaged hunk
+                        ---@diagnostic disable-next-line: missing-fields
+                        require('gitsigns').nav_hunk('next', { target = 'all' })
                     end
                 end,
             })
@@ -324,7 +326,8 @@ return {
                     if vim.wo.diff then
                         vim.cmd 'normal! [c'
                     else
-                        require('gitsigns').nav_hunk 'prev'
+                        ---@diagnostic disable-next-line: missing-fields
+                        require('gitsigns').nav_hunk('prev', { target = 'all' })
                     end
                 end,
             })
