@@ -8,7 +8,7 @@ local M = {
         init = function()
             keymap('i', [[<A-z>z]], '<cmd>Minuet duet predict<CR>', {})
             keymap('i', [[<A-z>a]], '<cmd>Minuet duet apply<CR>', {})
-            keymap('i', [[<A-c>x]], '<cmd>Minuet duet dismiss<CR>', {})
+            keymap('i', [[<A-z>x]], '<cmd>Minuet duet dismiss<CR>', {})
             keymap('n', [[<Leader>mz]], '<cmd>Minuet duet predict<CR>', {})
             keymap('n', [[<Leader>ma]], '<cmd>Minuet duet apply<CR>', {})
             keymap('n', [[<Leader>mx]], '<cmd>Minuet duet dismiss<CR>', {})

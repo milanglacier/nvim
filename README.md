@@ -621,7 +621,7 @@ for code completion.
 | ---- | ------------ | ------------------------------ |
 | i    | `<M-z>z`     | Trigger Minuet duet prediction |
 | i    | `<M-z>a`     | Apply duet suggestion          |
-| i    | `<M-c>x`     | Dismiss duet suggestion        |
+| i    | `<M-z>x`     | Dismiss duet suggestion        |
 | n    | `<Leader>mz` | Trigger Minuet duet prediction |
 | n    | `<Leader>ma` | Apply duet suggestion          |
 | n    | `<Leader>mx` | Dismiss duet suggestion        |
