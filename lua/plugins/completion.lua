@@ -4,6 +4,15 @@ local M = {
     {
         'milanglacier/minuet-ai.nvim',
         event = { 'InsertEnter' },
+        cmd = { 'Minuet' },
+        init = function()
+            keymap('i', [[<A-z>z]], '<cmd>Minuet duet predict<CR>', {})
+            keymap('i', [[<A-z>a]], '<cmd>Minuet duet apply<CR>', {})
+            keymap('i', [[<A-c>x]], '<cmd>Minuet duet dismiss<CR>', {})
+            keymap('n', [[<Leader>mz]], '<cmd>Minuet duet predict<CR>', {})
+            keymap('n', [[<Leader>ma]], '<cmd>Minuet duet apply<CR>', {})
+            keymap('n', [[<Leader>mx]], '<cmd>Minuet duet dismiss<CR>', {})
+        end,
         config = function()
             local mv = require 'minuet.config'
 
@@ -16,7 +25,7 @@ local M = {
                     keymap = {
                         accept = '<A-A>',
                         accept_line = '<A-a>',
-                        accept_n_lines = '<A-z>',
+                        accept_n_lines = nil,
                         prev = '<A-;>',
                         next = "<A-'>",
                         dismiss = '<A-e>',
@@ -81,6 +90,30 @@ local M = {
                             --     -- Prioritize throughput for faster completion
                             --     sort = 'throughput',
                             -- },
+                        },
+                    },
+                },
+                duet = {
+                    provider = 'gemini',
+                    provider_options = {
+                        gemini = {
+                            model = 'gemini-3-flash-preview',
+                            optional = {
+                                generationConfig = {
+                                    thinkingConfig = {
+                                        thinkingLevel = 'minimal',
+                                    },
+                                },
+                            },
+                        },
+                        openai_compatible = {
+                            api_key = 'FIREWORKS_API_KEY',
+                            end_point = 'https://api.fireworks.ai/inference/v1/chat/completions',
+                            model = 'accounts/fireworks/routers/kimi-k2p5-turbo',
+                            name = 'Fireworks',
+                            optional = {
+                                reasoning_effort = 'none',
+                            },
                         },
                     },
                 },
