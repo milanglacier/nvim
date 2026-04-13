@@ -159,15 +159,9 @@ local setup_lspconfig = function()
     })
 
     vim.lsp.config('sqls', {
-        on_attach = function(client, bufnr)
+        on_attach = function(client, _)
             -- The document formatting implementation of sqls is buggy.
             client.server_capabilities.documentFormattingProvider = false
-
-            require('sqls').on_attach(client, bufnr)
-            bufmap(bufnr, 'n', '<LocalLeader>ss', '<cmd>SqlsExecuteQuery<CR>', { silent = true })
-            bufmap(bufnr, 'v', '<LocalLeader>ss', '<cmd>SqlsExecuteQuery<CR>', { silent = true })
-            bufmap(bufnr, 'n', '<LocalLeader>sv', '<cmd>SqlsExecuteQueryVertical<CR>', { silent = true })
-            bufmap(bufnr, 'v', '<LocalLeader>sv', '<cmd>SqlsExecuteQueryVertical<CR>', { silent = true })
         end,
     })
 
@@ -324,5 +318,4 @@ return {
             }
         end,
     },
-    { 'nanotee/sqls.nvim' },
 }
