@@ -174,7 +174,6 @@ M.treesitter_winbar_symbol = function()
 
     if rest_length > 5 then
         local size = math.floor(rest_length * 0.8)
-        JAMES = size
 
         ts_status = require('conf.treesitter-statusline').statusline {
             indicator_size = size,
