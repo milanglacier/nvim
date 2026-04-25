@@ -249,34 +249,6 @@ return {
         end,
     },
     {
-        'ThePrimeagen/refactoring.nvim',
-        init = function()
-            autocmd('FileType', {
-                pattern = { 'go', 'python', 'lua' },
-                desc = 'Load refactoring.nvim',
-                callback = function()
-                    bufmap(
-                        0,
-                        'n',
-                        '<Leader>lr',
-                        '<CMD>lua require("refactoring").select_refactor()<CR>',
-                        opts { 'refactoring' }
-                    )
-                    bufmap(
-                        0,
-                        'v',
-                        '<Leader>lr',
-                        ':lua require("refactoring").select_refactor()<CR>',
-                        opts { 'refactoring' }
-                    )
-                end,
-            })
-        end,
-        config = function()
-            require('refactoring').setup {}
-        end,
-    },
-    {
         'SmiteshP/nvim-navic',
         init = function()
             autocmd('LspAttach', {
