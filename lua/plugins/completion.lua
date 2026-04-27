@@ -14,8 +14,6 @@ local M = {
             keymap('n', [[<Leader>mx]], '<cmd>Minuet duet dismiss<CR>', {})
         end,
         config = function()
-            local mv = require 'minuet.config'
-
             require('minuet').setup {
                 provider = 'openai_compatible',
                 request_timeout = 2,
@@ -75,15 +73,13 @@ local M = {
                         },
                     },
                     openai_compatible = {
-                        api_key = 'FIREWORKS_API_KEY',
-                        end_point = 'https://api.fireworks.ai/inference/v1/chat/completions',
-                        model = 'accounts/fireworks/routers/kimi-k2p5-turbo',
-                        name = 'Fireworks',
-                        system = mv.default_system_prefix_first,
-                        few_shots = mv.default_few_shots_prefix_first,
-                        chat_input = mv.default_chat_input_prefix_first,
+                        api_key = 'OPENCODE_API_KEY',
+                        end_point = 'https://opencode.ai/zen/go/v1/chat/completions',
+                        model = 'deepseek-v4-flash',
+                        name = 'Opencode',
                         optional = {
-                            reasoning_effort = 'none',
+                            -- reasoning_effort = 'none',
+                            thinking = { type = 'disabled' },
                             max_tokens = 256,
                             top_p = 0.9,
                             -- provider = {
