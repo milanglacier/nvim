@@ -103,10 +103,7 @@ local M = {
                             },
                         },
                         openai_compatible = {
-                            api_key = 'FIREWORKS_API_KEY',
-                            end_point = 'https://api.fireworks.ai/inference/v1/chat/completions',
-                            model = 'accounts/fireworks/routers/kimi-k2p5-turbo',
-                            name = 'Fireworks',
+                            model = 'google/gemini-3.1-flash-lite-preview',
                             optional = {
                                 reasoning_effort = 'none',
                             },
