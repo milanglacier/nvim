@@ -549,6 +549,23 @@ The following keymaps rely on
 | n    | `<Leader>t0` | Hide current terminal                                    |
 | n    | `<Leader>t1` | Open or focus on current terminal                        |
 
+### AI CLI keymaps
+
+The following keymaps rely on
+[yarepl.nvim](https://github.com/milanglacier/yarepl.nvim) and the `pi` CLI
+extension.
+
+| Mode | LHS           | RHS/Functionality                  |
+| ---- | ------------- | ---------------------------------- |
+| n    | `<Leader>as`  | Start pi                           |
+| n    | `<Leader>af`  | Focus pi                           |
+| n    | `<Leader>ah`  | Hide pi                            |
+| v    | `<Leader>ar`  | Send visual selection to pi        |
+| n    | `<Leader>arr` | Send current line to pi            |
+| n    | `<Leader>ar`  | Send motion / text object to pi    |
+| n    | `<Leader>ae`  | Execute a command in pi            |
+| n    | `<Leader>ag`  | Open editor in pi (requires `nvr`) |
+
 ### Git keymaps
 
 The following keymaps rely on

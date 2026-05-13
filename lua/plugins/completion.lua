@@ -90,7 +90,7 @@ local M = {
                     },
                 },
                 duet = {
-                    provider = 'gemini',
+                    provider = 'openai_compatible',
                     provider_options = {
                         gemini = {
                             model = 'gemini-3-flash-preview',

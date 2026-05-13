@@ -40,7 +40,7 @@ return {
         config = function()
             local yarepl = require 'yarepl'
             local codex = require 'yarepl.extensions.codex'
-            local opencode = require 'yarepl.extensions.opencode'
+            local pi = require 'yarepl.extensions.pi'
 
             -- Set the $EDITOR env var to use `nvr` (neovim-remote). Thivariables
             -- ensures that external commands, such as Codex's <C-g> shortcut,
@@ -54,7 +54,7 @@ return {
                 source_command_hint = { enabled = true },
                 metas = {
                     codex = codex.create_codex_meta(),
-                    opencode = opencode.create_opencode_meta(),
+                    pi = pi.create_pi_meta(),
                     python = false,
                     R = false,
                     radian = { cmd = 'R' },
@@ -178,17 +178,15 @@ return {
                 desc = 'sync file changes by codex to nvim buffer',
             })
 
-            ----- Set Opencode Keymap -----
-            keymap('n', '<Leader>as', '<Plug>(yarepl-start-opencode)', { desc = 'Start OpenCode' })
-            keymap('n', '<Leader>af', '<Plug>(yarepl-focus-opencode)', { desc = 'Focus OpenCode' })
-            keymap('n', '<Leader>ah', '<Plug>(yarepl-hide-opencode)', { desc = 'Hide OpenCode' })
-            keymap('v', '<Leader>ar', '<Plug>(yarepl-send-visual-opencode)', { desc = 'Send visual to OpenCode' })
-            keymap('n', '<Leader>arr', '<Plug>(yarepl-send-line-opencode)', { desc = 'Send line to OpenCode' })
-            keymap('n', '<Leader>ar', '<Plug>(yarepl-send-operator-opencode)', { desc = 'Send operator to OpenCode' })
-            keymap('n', '<Leader>ae', '<Plug>(yarepl-opencode-exec)', { desc = 'Exec in OpenCode' })
-            keymap('n', '<Leader>ag', '<Plug>(yarepl-opencode-send-open-editor)', { desc = 'Open editor' })
-            keymap('n', '<Leader>au', '<Plug>(yarepl-opencode-send-scroll-up)', { desc = 'Scroll up' })
-            keymap('n', '<Leader>ad', '<Plug>(yarepl-opencode-send-scroll-down)', { desc = 'Scroll down' })
+            ----- Set pi Keymap -----
+            keymap('n', '<Leader>as', '<Plug>(yarepl-start-pi)', { desc = 'Start pi' })
+            keymap('n', '<Leader>af', '<Plug>(yarepl-focus-pi)', { desc = 'Focus pi' })
+            keymap('n', '<Leader>ah', '<Plug>(yarepl-hide-pi)', { desc = 'Hide pi' })
+            keymap('v', '<Leader>ar', '<Plug>(yarepl-send-visual-pi)', { desc = 'Send visual to pi' })
+            keymap('n', '<Leader>arr', '<Plug>(yarepl-send-line-pi)', { desc = 'Send line to pi' })
+            keymap('n', '<Leader>ar', '<Plug>(yarepl-send-operator-pi)', { desc = 'Send operator to pi' })
+            keymap('n', '<Leader>ae', '<Plug>(yarepl-pi-exec)', { desc = 'Exec in pi' })
+            keymap('n', '<Leader>ag', '<Plug>(yarepl-pi-send-open-editor)', { desc = 'Open editor' })
 
             ----- Set Shell Keymap ------
             keymap('n', '<Leader>ot', '<Plug>(yarepl-start-shell)', {
