@@ -39,7 +39,7 @@ local M = {
                         },
                     },
                     gemini = {
-                        model = 'gemini-3.1-flash-lite-preview',
+                        model = 'gemini-3.1-flash-lite',
                         optional = {
                             generationConfig = {
                                 maxOutputTokens = 256,
@@ -103,7 +103,7 @@ local M = {
                             },
                         },
                         openai_compatible = {
-                            model = 'google/gemini-3.1-flash-lite-preview',
+                            model = 'google/gemini-3.1-flash-lite',
                             optional = {
                                 reasoning_effort = 'none',
                             },
