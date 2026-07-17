@@ -11,10 +11,11 @@ M.open_lazygit = function()
         return
     end
 
-    vim.cmd 'tabedit'
+    vim.cmd '-tabedit' -- open a new tab before current tab
     vim.cmd 'setlocal nonumber signcolumn=no'
 
-    vim.fn.termopen('lazygit', {
+    vim.fn.jobstart('lazygit', {
+        term = true,
         on_exit = function()
             vim.cmd 'silent! :checktime'
             -- Check if any buffers were changed outside of Vim.
