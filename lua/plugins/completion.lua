@@ -66,7 +66,7 @@ local M = {
                         },
                     },
                     openai = {
-                        model = 'gpt-5.4-nano',
+                        model = 'gpt-5.6-luna',
                         optional = {
                             max_completion_tokens = 128,
                             reasoning_effort = 'none',
