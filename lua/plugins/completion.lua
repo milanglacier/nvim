@@ -109,6 +109,15 @@ local M = {
                             },
                         },
                     },
+                    auto_trigger = {
+                        enable_predicates = {
+                            function()
+                                -- Auto trigger duet prediction only in normal mode; inline
+                                -- completion happens in insert mode.
+                                return vim.fn.mode() == 'n'
+                            end,
+                        },
+                    },
                 },
             }
 
