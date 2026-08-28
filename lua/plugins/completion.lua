@@ -15,7 +15,7 @@ local M = {
         end,
         config = function()
             require('minuet').setup {
-                provider = 'openai_compatible',
+                provider = 'gemini',
                 request_timeout = 2,
                 throttle = 2000,
                 virtualtext = {
