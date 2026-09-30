@@ -63,6 +63,12 @@ return {
                     require('orgmode').action 'capture.prompt'
                 end,
             })
+            keymap('n', '<Leader>oo', '', {
+                desc = 'org clock goto',
+                callback = function()
+                    require('orgmode').action 'clock.org_clock_goto'
+                end,
+            })
         end,
         ft = 'org',
         config = function()
@@ -82,14 +88,16 @@ return {
                 org_agenda_files = {
                     org_dir .. '/*.org',
                     org_dir .. '/capture/*.org',
-                    org_dir .. '/interview/*.org',
-                    org_dir .. '/roam/*.org',
                     org_dir .. '/work/*.org',
                 },
                 org_default_notes_file = org_dir .. '/capture/todo.org',
                 org_highlight_latex_and_related = 'entities',
                 org_todo_keywords = { 'TODO(t)', 'STRT', 'WAIT', 'HOLD', '|', 'DONE', 'KILL' },
                 win_split_mode = 'tabnew',
+                -- Show 10 days, starting 3 days before today.
+                org_agenda_span = 10,
+                org_agenda_start_on_weekday = false,
+                org_agenda_start_day = '-3d',
                 org_hide_leading_stars = true,
                 org_hide_emphasis_markers = true,
                 org_startup_indented = true,
@@ -112,18 +120,21 @@ return {
 
                     e = 'english',
                     em = {
+                        datetree = true,
                         description = 'manually fill',
                         target = org_dir .. '/capture/english.org',
                         template = '* %^{PROMPT}\n%x\n%a\n:explanation:\n%?\n:END:',
                         -- the sentence is the content in register "+" (i.e %x)
                     },
                     er = {
+                        datetree = true,
                         description = 'quick fill with selected region and sentence under point',
                         target = org_dir .. '/capture/english.org',
                         template = '* %(return vim.fn.getreg "r")\n%(return vim.fn.getreg "s")\n%a\n:explanation:\n%?\n:END:',
                         -- make sure call GetVisualRegionAndSentenceUnderPoint before fill with this template
                     },
                     ew = {
+                        datetree = true,
                         description = 'quick fill with word and sentence under point',
                         target = org_dir .. '/capture/english.org',
                         template = '* %(return vim.fn.getreg "w")\n%(return vim.fn.getreg "s")\n\n%a\n:explanation:\n%?\n:END:',
