@@ -265,6 +265,13 @@ function M.toggle_osc52_clipboard(opts)
     local function make_osc52_write_only_clipboard()
         local osc52 = require 'vim.ui.clipboard.osc52'
 
+        -- We can't read the remote clipboard, so return the last yanked text
+        -- instead. Without this, `getreg('+')` returns an empty string, and
+        -- plugins that use it (e.g. substitute.nvim) paste nothing.
+        local function paste()
+            return { vim.fn.split(vim.fn.getreg '', '\n'), vim.fn.getregtype '' }
+        end
+
         return {
             name = 'osc52',
             copy = {
@@ -272,12 +279,8 @@ function M.toggle_osc52_clipboard(opts)
                 ['*'] = osc52.copy '*',
             },
             paste = {
-                ['+'] = function()
-                    return 0
-                end,
-                ['*'] = function()
-                    return 0
-                end,
+                ['+'] = paste,
+                ['*'] = paste,
             },
             cache_enabled = false,
         }
