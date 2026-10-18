@@ -81,6 +81,12 @@ local scheme_options = {
                 }
             end,
         },
+        {
+            'eink',
+            function()
+                require('eink').setup {}
+            end,
+        },
     },
     day = {
         { 'dawnfox' },
@@ -143,6 +149,12 @@ local scheme_options = {
                         treesitter_context = true,
                     },
                 }
+            end,
+        },
+        {
+            'eink',
+            function()
+                require('eink').setup {}
             end,
         },
     },

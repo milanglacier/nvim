@@ -5,6 +5,7 @@ local plugin_specs = {
     { 'sainnhe/everforest' },
     { 'rebelot/kanagawa.nvim' },
     { 'catppuccin/nvim', name = 'catppuccin' },
+    { 'milanglacier/eink.nvim' },
 }
 
 return plugin_specs
