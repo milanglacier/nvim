@@ -311,4 +311,34 @@ end, {
     end,
 })
 
+--- Operator function that copies the text covered by the motion (or the
+--- visual selection) to the system clipboard by sending the OSC 52 escape
+--- sequence directly to the terminal. Unlike the clipboard provider, this
+--- works regardless of `vim.g.clipboard` and does not touch any register.
+---@param type 'line' | 'char' | 'block'
+function M.osc52_yank_opfunc(type)
+    local regtype = ({ line = 'V', char = 'v', block = '\22' })[type]
+    local lines = vim.fn.getregion(vim.fn.getpos "'[", vim.fn.getpos "']", { type = regtype, exclusive = false })
+
+    local encoded = vim.base64.encode(table.concat(lines, '\n'))
+    vim.api.nvim_ui_send(string.format('\027]52;c;%s\027\\', encoded))
+
+    vim.hl.on_yank {
+        higroup = 'IncSearch',
+        timeout = 400,
+        event = { operator = 'y', regtype = regtype },
+    }
+end
+
+local function osc52_yank(motion)
+    return function()
+        vim.o.operatorfunc = "v:lua.require'conf.builtin_extend'.osc52_yank_opfunc"
+        return 'g@' .. motion
+    end
+end
+
+keymap('n', '<Leader>y', '', { expr = true, callback = osc52_yank '', desc = 'yank to clipboard via OSC52' })
+keymap('x', '<Leader>y', '', { expr = true, callback = osc52_yank '', desc = 'yank to clipboard via OSC52' })
+keymap('n', '<Leader>yy', '', { expr = true, callback = osc52_yank '_', desc = 'yank line to clipboard via OSC52' })
+
 return M
