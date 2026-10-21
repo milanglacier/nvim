@@ -311,11 +311,9 @@ end, {
     end,
 })
 
---- Operator function that copies the text covered by the motion (or the
---- visual selection) to the system clipboard by sending the OSC 52 escape
---- sequence directly to the terminal. Unlike the clipboard provider, this
---- works regardless of `vim.g.clipboard` and does not touch any register.
----@param type 'line' | 'char' | 'block'
+--- Yank to the local clipboard via OSC 52 directly, bypassing vim.g.clipboard,
+--- primarily for remote SSH sessions. Neovim's OSC 52 auto-detection is not
+--- always reliable.
 function M.osc52_yank_opfunc(type)
     local regtype = ({ line = 'V', char = 'v', block = '\22' })[type]
     local lines = vim.fn.getregion(vim.fn.getpos "'[", vim.fn.getpos "']", { type = regtype, exclusive = false })
