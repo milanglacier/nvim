@@ -217,7 +217,7 @@ SETUP_STARTER = function()
 
     -- Copied from mini.starter
     -- Having `noautocmd` is crucial for performance
-    vim.cmd 'noautocmd silent! set filetype=starter'
+    vim.cmd 'noautocmd silent! setlocal filetype=starter'
 
     local options = {
         -- Taken from 'vim-startify'
