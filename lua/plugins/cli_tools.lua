@@ -25,8 +25,18 @@ return {
         lazy = vim.fn.argc(-1) == 0, -- load jupytext early when opening a file from the cmdline
         branch = 'dev',
         config = function()
-            require('jupytext').setup {
+            local jupytext = require 'jupytext'
+            jupytext.setup {
                 format = 'py:percent',
+                -- fall back to python when the notebook has no kernelspec
+                -- language to detect the filetype from
+                filetype = function(...)
+                    local ft = jupytext.get_filetype(...)
+                    if ft == nil or ft == '' then
+                        return 'python'
+                    end
+                    return ft
+                end,
                 -- prevent jupytext.nvim create too many autocmds in non-ipynb
                 -- file which is too intrusive
                 autosync = false,
