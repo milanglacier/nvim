@@ -52,20 +52,19 @@ autocmd('FileType', {
     end,
 })
 
+-- Language servers that read the interpreter from `python.pythonPath` and
+-- reload it on `workspace/didChangeConfiguration`.
+local lsps_supporting_python_path = { basedpyright = true, pyrefly = true }
+
 local function set_python_path(path)
-    local clients = vim.lsp.get_clients {
-        bufnr = vim.api.nvim_get_current_buf(),
-        name = 'basedpyright',
-    }
+    local clients = vim.lsp.get_clients { bufnr = vim.api.nvim_get_current_buf() }
     for _, client in ipairs(clients) do
-        if client.settings then
-            ---@diagnostic disable-next-line:param-type-mismatch
-            client.settings.python = vim.tbl_deep_extend('force', client.settings.python or {}, { pythonPath = path })
-        else
-            client.config.settings =
-                vim.tbl_deep_extend('force', client.config.settings, { python = { pythonPath = path } })
+        if lsps_supporting_python_path[client.name] then
+            local settings = vim.tbl_deep_extend('force', client.settings or {}, { python = { pythonPath = path } })
+            client.settings = settings
+            client.config.settings = settings
+            client:notify('workspace/didChangeConfiguration', { settings = settings })
         end
-        client:notify('workspace/didChangeConfiguration', {})
     end
 end
 
